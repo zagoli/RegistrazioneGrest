@@ -113,7 +113,7 @@
 
                         <div class="form-group">
                             <label for="richieste">Eventuali richieste o proposte:</label>
-                            <textarea class="form-control" rows="5" id="richieste" name="richieste"><#if ragazzo.richieste??>${ragazzo.richieste}</#if></textarea>
+                            <textarea class="form-control" rows="5" id="richieste" name="richieste" placeholder="Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta."><#if ragazzo.richieste??>${ragazzo.richieste}</#if></textarea>
                         </div>
 
                         <div class="form-group">
