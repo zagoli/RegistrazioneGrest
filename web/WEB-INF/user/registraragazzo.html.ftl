@@ -128,7 +128,7 @@
 
                     <div class="form-group">
                         <label for="richieste" class="sr-only">Eventuali richieste o proposte</label>
-                        <textarea class="form-control" rows="5" id="richieste" name="richieste" placeholder="specificare SOLO se presenti"></textarea>
+                        <textarea class="form-control" rows="5" id="richieste" name="richieste" placeholder="specificare SOLO se presenti. Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta."></textarea>
                     </div>                       
 
                     <h3 class="text-center font-weight-bold text-uppercase"> 6 - richieste e dichiarazioni dei genitori  </h3>
