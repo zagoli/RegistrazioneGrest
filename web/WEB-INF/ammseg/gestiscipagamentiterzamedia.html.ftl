@@ -1,7 +1,7 @@
 ﻿<#include "../struct/header.html.ftl">      
 <#include "../struct/navbar.html.ftl">
     <div class="container-fluid mt-5 content">
-        <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 bg-light">
+        <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
             <#if terzamedia??>
                 <table class="table table-striped" id="t_pagamentiter">
                     <thead class="thead-dark">
@@ -43,7 +43,7 @@
                                             <input type="hidden" name="addPagamento" value="${datiter[0].id}"/>
                                                 <input type="number" class="form-control mr-2" name="ordineArrivo" placeholder="Ordine iscrizione" required>
                                                 <input type="number" class="form-control mr-2" name="quota"  value="${datiter[2]}" required>
-                                                <button type="submit" class="btn btn-success" required><img src="../risorse/img/octicons/plus.svg">Aggiungi Pagamento</button>
+                                                <button type="submit" class="btn btn-success" required>Aggiungi Pagamento</button>
                                         </form>
                                     </td>
                                 </#if>

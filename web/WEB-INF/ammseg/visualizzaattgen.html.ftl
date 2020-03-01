@@ -1,7 +1,7 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
     <div class="container-fluid mt-5 content">
-        <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 bg-light">
+        <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
             <#if attivita??>
                 <#assign count = 0>
                     <table class="table table-striped nowrap" id="t_collab">

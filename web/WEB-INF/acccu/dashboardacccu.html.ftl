@@ -2,12 +2,12 @@
 <#include "../struct/navbar.html.ftl">
     <div class="container-fluid mt-5 content">
         <!--TABELLE ACCOMPAGNATORI CONTATTI-->
-        <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 bg-light">
+        <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
             <#if accompagnatori??>
                 <h5 class="text-center pb-1"> Accompagnatori autorizzati </h5>
                 <#assign count = 0>
-                <table class="table table-striped">
-                    <thead class="thead-dark">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
                             <th scope="col" style="width: 2%">#</th>
                             <th scope="col">Nome</th>
@@ -30,15 +30,15 @@
                     </tbody>
                 </table>
             </#if>
-            <a href="/RegistrazioneGrest/App/InserisciAccompagnatore" class="btn btn-block btn-primary"><img src="../risorse/img/octicons/plus.svg"> Autorizza un accompagnatore </a>
+            <a href="/RegistrazioneGrest/App/InserisciAccompagnatore" class="btn btn-block btn-primary">Autorizza un accompagnatore</a>
         </div>
         
-        <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 mt-4 bg-light">
+        <div class="container shadow pt-2 pl-3 pr-3 pb-2 mt-4 bg-white">
             <#if contatti??>
                 <h5 class="text-center pb-1"> Contatti telefonici urgenze </h5>
                 <#assign count = 0>
-                <table class="table table-striped">
-                    <thead class="thead-dark">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
                             <th scope="col" style="width: 2%">#</th>
                             <th scope="col">Nome</th>
@@ -67,7 +67,7 @@
                     </tbody>
                 </table>
             </#if>
-            <a href="/RegistrazioneGrest/App/InserisciCU" class="btn btn-block btn-primary"><img src="../risorse/img/octicons/plus.svg"> Inserisci un contatto telefonico urgenze </a>
+            <a href="/RegistrazioneGrest/App/InserisciCU" class="btn btn-block btn-primary">Inserisci un contatto telefonico urgenze</a>
         </div>
         
     </div>

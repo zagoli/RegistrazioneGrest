@@ -1,7 +1,7 @@
 <#include "../struct/header.html.ftl">      
 <#include "../struct/navbar.html.ftl">
     <div class="container-fluid mt-5 content">
-        <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 bg-light">
+        <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
             <#if animatori??>
                 <form action="/RegistrazioneGrest/App/Laboratori?target=an" method="POST">
                     <!-- l'input nascosto indica che abbiamo usato la pagina per impostare i laboratori-->

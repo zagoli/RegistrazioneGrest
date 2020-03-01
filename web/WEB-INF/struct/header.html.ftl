@@ -15,8 +15,8 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     </head>
-    <body>
-        <header class="p-3 mb-0 bg-primary text-white text-center container-fluid">  
+    <body class="bg-light">
+        <header class="p-3 mb-0 text-white text-center container-fluid bg-primary">  
             <div class="container-fluid">
                     <h1 class="title">GREST DI BALCONI</h1>		
             </div>

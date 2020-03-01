@@ -1,7 +1,7 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
         <div class="container mt-4 content">
-            <div class="border border-light rounded pt-2 pl-3 pr-3 pb-2 bg-light vertical-center">
+            <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
                 <div class="container">
                     <div class="title text-center">
                         <h5>Registrazione nuovo animatore</h5>
@@ -138,7 +138,7 @@
                             <!--fine-->
                             <#else>
                             <div id="divbtnreg" class="row">
-                                <input id="btnreg" class="form-control" type="submit" value="Registra"/>
+                                <input id="btnreg" class="form-control btn btn-primary" type="submit" value="Registra"/>
                             </div>
                             </#if>
                         </div>

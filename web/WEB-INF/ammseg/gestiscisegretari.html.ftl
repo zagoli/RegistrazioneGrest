@@ -1,12 +1,12 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
     <div class="container-fluid mt-5 content">
-            <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 bg-light">
+            <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
                 <#if segretari??>
                     <h5 class="text-center pb-1"> Segretari registrati </h5>
                     <#assign count = 0>
-                    <table class="table table-striped">
-                        <thead class="thead-dark">
+                    <table class="table table-bordered">
+                        <thead>
                             <tr>
                                 <th scope="col" style="width: 2%">#</th>
                                 <th scope="col">Nome</th>
@@ -29,7 +29,7 @@
                         </tbody>
                     </table>
                 </#if>
-                <a href="/RegistrazioneGrest/App/RegistraUtente" class="btn btn-block btn-primary"><img src="../risorse/img/octicons/plus.svg"> Registra un segretario </a>
+                <a href="/RegistrazioneGrest/App/RegistraUtente" class="btn btn-block btn-primary"> Registra un segretario </a>
             </div>
     </div>
 <#include "../struct/footer.html.ftl">

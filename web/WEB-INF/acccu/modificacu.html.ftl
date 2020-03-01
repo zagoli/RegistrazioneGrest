@@ -2,7 +2,7 @@
 <#include "../struct/navbar.html.ftl">
 <div class="container content">
     <div class="mt-5">
-        <div class="border border-light rounded pt-2 pl-3 pr-3 pb-2 bg-light">
+        <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white">
             <div class="title pb-1">
                 <h4>Modifica contatto telefonico urgenze</h4>
             </div>

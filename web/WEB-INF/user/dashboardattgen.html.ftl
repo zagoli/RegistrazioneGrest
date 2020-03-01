@@ -1,12 +1,12 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
     <div class="container-fluid mt-5 content">
-        <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 bg-light">
+        <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
             <#if attivita??>
-                <h5 class="text-center pb-1"> Collaborazioni prenotate </h5>
+                <h5 class="text-center mb-3"> Collaborazioni prenotate </h5>
                 <#assign count = 0>
-                <table class="table table-striped">
-                    <thead class="thead-dark">
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
                             <th scope="col" style="width: 2%">#</th>
                             <th scope="col">Attivit&agrave;</th>
@@ -21,7 +21,7 @@
                                 <th scope="row">${count}</th>
                                 <td>${att.descrizione}</td>
                                 <td><#if dataid[0]??>${dataid[0]}</#if></td>
-                                <td><a href="/RegistrazioneGrest/App/EliminaPrenotazioneAttGen?id=${dataid[1]}"><img src="../risorse/img/octicons/trashcan.svg"></a></td>
+                                <td align="center"><a href="/RegistrazioneGrest/App/EliminaPrenotazioneAttGen?id=${dataid[1]}"><img src="../risorse/img/octicons/trashcan.svg"></a></td>
                             </tr>
                         </#list>
                     </tbody>

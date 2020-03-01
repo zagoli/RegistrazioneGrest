@@ -2,7 +2,7 @@
 <#include "../struct/navbar.html.ftl">
 <#if !DONE>
 <div class="container mt-4 content">
-    <div class="border border-light rounded pt-2 pl-3 pr-3 bg-light vertical-center">
+    <div class="shadow pt-2 pl-3 pr-3 bg-white vertical-center">
         <div class="container">
             <div class="title text-center">
                 <h5>Registrazione nuovo segretario</h5>
@@ -33,7 +33,7 @@
                     <label class="form-check-label" for="consentiModifica"> Consenti la modifica </label> 
                 </div>
                 <div class="pt-3 form-group">
-                    <input class="form-control" type="submit" value="Registra">
+                    <input class="form-control btn btn-primary" type="submit" value="Registra">
                 </div>
             </form>
         </div>

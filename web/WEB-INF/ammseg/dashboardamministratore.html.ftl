@@ -2,32 +2,44 @@
 <#include "../struct/navbar.html.ftl">
     <div class="container-fluid mt-5 content">
         <div class="container">
-            <div class="border border-secondary rounded pt-2 pl-3 pr-3 pb-2 bg-light">
-                <div class="text-center">
+            <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white">
+                <div class="text-center pb-2">
                     <h3> Azioni segretario </h3>
                 </div>
                 <#include "dashboardsegretariointernal.html.ftl">
             </div>
-            <div class="border border-secondary rounded pt-2 pl-3 pr-3 pb-2 mt-3 bg-light">
+            <div class="shadow pt-2 pl-3 pr-3 pb-2 mt-3 bg-white">
                 <div class="text-center">
                     <h3> Azioni amministratore </h3>
                 </div>
-                <div class="row mt-2">
+                <!--attivazione iscrizioni varie-->
+                <div class="mt-4 row">
                     <div class="col">
-                        <div class="checkbox">
-                              <input id="ISCRRAG" type="checkbox" data-toggle="toggle" data-offstyle="danger" <#if ISCRRAG??>checked</#if>>
-                              <label id="labelISCRRAG">Attiva iscrizioni ragazzi</label>
+                        <div class="form-check form-check-inline">
+                            <div class="checkbox">
+                                  <input class="form-check-input" id="ISCRRAG" type="checkbox" data-toggle="toggle" data-offstyle="danger" <#if ISCRRAG??>checked</#if>>
+                                  <label class="form-check-label" id="labelISCRRAG">Attiva iscrizioni ragazzi</label>
+                            </div>
                         </div>
-                        <div class="checkbox mt-1">
-                              <input id="ISCRAN" type="checkbox" data-toggle="toggle" data-offstyle="danger" <#if ISCRAN??>checked</#if>>
-                              <label id="labelISCRAN">Attiva iscrizioni animatori</label>
+                    </div>
+                    <div class="col">
+                        <div class="form-check form-check-inline">
+                            <div class="checkbox">
+                                  <input class="form-check-input" id="ISCRAN" type="checkbox" data-toggle="toggle" data-offstyle="danger" <#if ISCRAN??>checked</#if>>
+                                  <label class="form-check-label" id="labelISCRAN">Attiva iscrizioni animatori</label>
+                            </div>
                         </div>
-                        <div class="checkbox mt-1">
-                              <input id="ISCRTER" type="checkbox" data-toggle="toggle" data-offstyle="danger" <#if ISCRTER??>checked</#if>>
-                              <label id="labelISCRTER">Attiva iscrizioni terza media</label>
+                    </div>
+                    <div class="col">
+                        <div class="form-check form-check-inline">
+                            <div class="checkbox">
+                                  <input class="form-check-input" id="ISCRTER" type="checkbox" data-toggle="toggle" data-offstyle="danger" <#if ISCRTER??>checked</#if>>
+                                  <label class="form-check-label" id="labelISCRTER">Attiva iscrizioni terza media</label>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <!--fine-->
                 <hr/>
                 <div class="row mt-2">
                     <div class="col">

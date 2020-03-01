@@ -3,7 +3,7 @@
     <div class="mt-3">
         <p class="font-weight-bold text-uppercase text-center"> da consegnare alla segreteria del grest al momento dell'iscrizione </p>
     </div>
-    <div class="border border-secondary rounded pt-2 pl-3 pr-3">
+    <div class="shadow pt-2 pl-3 pr-3">
         <div class="row">
             <div class="col-sm">
                 <strong>Nome</strong>
@@ -181,7 +181,7 @@
         </div>
         </#list>
     </div>
-    <div class="mt-3 border border-secondary rounded pt-2 pl-3 pr-3">
+    <div class="mt-3 shadow pt-2 pl-3 pr-3">
         <h4 class="text-center font-weight-bold"> Dichiarazioni dei genitori </h4>
         <p class="font-weight-normal">I sottoscritti genitori dichiarano:</p>
         <ul>

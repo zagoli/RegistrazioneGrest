@@ -6,11 +6,10 @@
             <p class="text-danger text-center font-weight-bold">Non sono ancora stati inseriti i contatti telefonici per le urgenze! Si prega di inserire <i>almeno</i> un contatto tramite la voce nel menu "Accompagnatori e Contatti telefonici Urgenze"!</p>
         </div>
         </#if>
-        <!--TABELLE RAGAZZI ANIMATORI TERZAMEDIA-->
-        <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 bg-light">
+        <div class="container shadow bg-white pt-2 pl-3 pr-3 pb-2">
             <#if ragazzi??>
                 <#assign count = 0>
-                <table class="table table-striped">
+                <table class="table">
                     <thead>
                         <tr>
                             <th scope="col" style="width: 2%">#</th>
@@ -44,13 +43,13 @@
                     </tbody>
                 </table>
             </#if>
-            <a href="/RegistrazioneGrest/App/RegistraRagazzo" class="btn btn-block btn-primary"><img src="../risorse/img/octicons/plus.svg"> Iscrivi un ragazzo </a>
+            <a href="/RegistrazioneGrest/App/RegistraRagazzo" class="btn btn-block btn-primary">Iscrivi un ragazzo</a>
         </div>
 
-        <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 mt-4 bg-light">
+        <div class="container shadow bg-white pt-2 pl-3 pr-3 pb-2 mt-4">
             <#if animatori??>
                 <#assign count = 0>
-                <table class="table table-striped">
+                <table class="table">
                     <thead>
                         <tr>
                             <th scope="col" style="width: 2%">#</th>
@@ -76,13 +75,13 @@
                     </tbody>
                 </table>
             </#if>
-            <a href="/RegistrazioneGrest/App/RegistraAnimatore" class="btn btn-block btn-primary"><img src="../risorse/img/octicons/plus.svg"> Iscrivi un animatore </a>
+            <a href="/RegistrazioneGrest/App/RegistraAnimatore" class="btn btn-block btn-primary">Iscrivi un animatore</a>
         </div>
         
-        <div class="container border border-secondary rounded pt-2 pl-3 pr-3 pb-2 mt-4 bg-light">
+        <div class="container shadow bg-white pt-2 pl-3 pr-3 pb-2 mt-4">
             <#if terzamedia??>
                 <#assign count = 0>
-                <table class="table table-striped">
+                <table class="table">
                     <thead>
                         <tr>
                             <th scope="col" style="width: 2%">#</th>
@@ -116,8 +115,7 @@
                     </tbody>
                 </table>
             </#if>
-            <a href="/RegistrazioneGrest/App/RegistraTerzamedia" class="btn btn-block btn-primary"><img src="../risorse/img/octicons/plus.svg"> Iscrivi un ragazzo di terza media </a>
+            <a href="/RegistrazioneGrest/App/RegistraTerzamedia" class="btn btn-block btn-primary">Iscrivi un ragazzo di terza media</a>
         </div>
-
     </div>
 <#include "../struct/footer.html.ftl">

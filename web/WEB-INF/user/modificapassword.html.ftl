@@ -2,8 +2,8 @@
 <#include "../struct/navbar.html.ftl">
 <div class="container content">
     <div class="mt-5">
-        <div class="border border-light rounded pt-2 pl-3 pr-3 pb-2 bg-light">
-            <div class="title pb-1">
+        <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white">
+            <div class="title pb-1 text-center">
                 <h4>Modifica password</h4>
             </div>
             <form action="/RegistrazioneGrest/App/ModificaPassword" method="POST" name="formLogin" data-parsley-validate>
@@ -16,7 +16,7 @@
                     <input class="form-control" type="password" required id="confpswd" name="password" placeholder="Password" data-parsley-equalto="#pswd"> 
                 </div>
                 <div class="pt-3 form-group">
-                    <input class="form-control" type="submit" value="Cambia la password">
+                    <input class="form-control btn btn-primary" type="submit" value="Cambia la password">
                 </div>
             </form>
         </div>

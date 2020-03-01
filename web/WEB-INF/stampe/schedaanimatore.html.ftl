@@ -3,7 +3,7 @@
     <div class="mt-3">
         <p class="font-weight-bold text-uppercase text-center"> da consegnare a Don Lorenzo </p>
     </div>
-    <div class="border border-secondary rounded pt-2 pl-3 pr-3">
+    <div class="shadow pt-2 pl-3 pr-3">
         <div class="row">
             <div class="col-sm">
                 <strong>Nome</strong>
@@ -127,7 +127,7 @@
         </div>
     </div>
     
-    <div class="border border-secondary rounded mt-5 pt-2 pl-3 pr-3">
+    <div class="shadow mt-5 pt-2 pl-3 pr-3">
         <p class="text-center font-weight-light font-italic mt-4 mb-4"> Firme di chi richiede di fare l'animatore </p>
         <hr class="mb-5 border-bottom border-dark"/>
         <p class="text-center font-weight-light font-italic mb-4"> Firme di entrambi i genitori (per i minorenni) </p>
