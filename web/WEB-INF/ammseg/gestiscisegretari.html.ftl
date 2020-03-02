@@ -30,6 +30,19 @@
                     </table>
                 </#if>
                 <a href="/RegistrazioneGrest/App/RegistraUtente" class="btn btn-block btn-primary"> Registra un segretario </a>
+                <hr/>
+                <h5>promuovi un utente</h5>
+                <form action="/RegistrazioneGrest/App/GestisciSegretari" class="form-inline">
+                    <input type="hidden" name="promote"/>
+                    <input type="text" placeholder="nome" name="nome" class="form-control" required/>
+                    <input type="text" placeholder="cognome" name="cognome" class="form-control ml-2" required/>
+                    <select class="form-control ml-2" name="level">
+                        <option value="1">Segretario con modifica</option>
+                        <option value="2">Segretario normale</option>
+                        <option value="3">Utente normale</option>
+                    </select>
+                    <input type="submit" class="btn btn-primary ml-2" value="promuovi"/>
+                </form>
             </div>
     </div>
 <#include "../struct/footer.html.ftl">

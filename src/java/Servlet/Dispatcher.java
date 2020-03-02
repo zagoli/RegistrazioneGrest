@@ -31,7 +31,7 @@ public class Dispatcher extends HttpServlet {
         ApplicationContext.getContext().put("DAO", dao);
         Configuration cfg = new freemarker.template.Configuration();
         cfg.setServletContextForTemplateLoading(getServletContext(), "WEB-INF");
-        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
+        cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setEncoding(Locale.ITALY, "utf-8");
         ApplicationContext.getContext().put("CfgTemplate", cfg);
         File conf = new File("C:/conf/RegistrazioneGrest/config.properties");
@@ -370,7 +370,7 @@ public class Dispatcher extends HttpServlet {
             case "/GestisciSegretari":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     if (request.getSession().getAttribute("tipoUtente").equals(0)) {
-                        c = new ControllerGestisciSegretari();
+                        c = new ControllerSegretari();
                     } else {
                         c = new Controller403();
                     }

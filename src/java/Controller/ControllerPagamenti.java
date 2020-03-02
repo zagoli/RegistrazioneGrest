@@ -25,6 +25,7 @@ public class ControllerPagamenti implements ControllerInterface {
         mv.addObject("TITOLOPAGINA", "Gestisci pagamenti ragazzi");
         if (request.getParameterMap().isEmpty()) {
             try {
+                //questo è lento
                 List<Ragazzo> listRagazzo = DAOMan.ragazzoDAO.findAll();
                 List<Object[]> datiRagazzi = new LinkedList<>();
                 if (!listRagazzo.isEmpty()) {
