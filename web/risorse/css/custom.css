@@ -119,7 +119,7 @@ textarea.parsley-error {
   opacity: 1 !important;
 }
 
-/* Bootstrap Toggle v2.2.2 corrections for Bootsrtap 4*/
+/* Bootstrap Toggle v2.2.2 corrections for Bootstrap 4*/
 .toggle-off {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125) !important;
 }

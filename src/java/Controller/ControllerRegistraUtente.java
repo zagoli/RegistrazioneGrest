@@ -37,13 +37,14 @@ public class ControllerRegistraUtente implements ControllerInterface {
                     r.setLocalita(request.getParameter("localita"));
                     r.setVia(request.getParameter("via"));
                     r.setCivico(request.getParameter("civico"));
-                    r.setTipoUt(3);
                     if (request.getSession().getAttribute("tipoUtente") != null && request.getSession().getAttribute("tipoUtente").equals(0)) {
                         if (request.getParameterMap().containsKey("consentiModifica")) {
                             r.setTipoUt(1);
                         } else {
                             r.setTipoUt(2);
                         }
+                    } else {
+                        r.setTipoUt(3);                        
                     }
                     DAOMan.registratoDAO.insert(r);
                     mv.addObject("TITOLOPAGINA", "Utente Registrato");

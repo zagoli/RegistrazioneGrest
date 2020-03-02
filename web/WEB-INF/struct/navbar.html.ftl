@@ -13,7 +13,7 @@
             </li>
             <#elseif tipoUt <= 2>
             <li class="nav-item pr-4">
-              <a href="../temp.html" class="btn btn-block btn-secondary">Non aprire</a>
+              <button class="btn btn-block btn-secondary" onclick="$(this).html('Grazie mille');">Cliccami</button>
             </li>
             </#if>
             <li class="nav-item pr-4">

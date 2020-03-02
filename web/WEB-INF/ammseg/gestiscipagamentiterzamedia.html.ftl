@@ -23,17 +23,23 @@
                                 <#if datiter[1]>
                                     <!--ha già pagato-->
                                     <td>
-                                        <form action="/RegistrazioneGrest/App/GestisciPagamentiTerzamedia" method="POST" class="form-inline ml-5">
+                                        <form action="/RegistrazioneGrest/App/GestisciPagamentiTerzamedia" method="POST" class="form-inline">
                                             <input type="hidden" name="deletePagamento" value="${datiter[0].id}"/>
-                                            <p class="font-weight-bold ml-5 mr-5">${datiter[2].ordineArrivo}</p>
-                                            <p class="ml-5 mr-5">Quota:
-                                                <b>${datiter[2].quota}&euro;</b>
-                                                <br/>
-                                                <small>
-                                                    <i>Evaso da ${datiter[2].registrato.nome+" "+datiter[2].registrato.cognome+" il "+datiter[2].data}</i>
-                                                </small>
-                                            </p> 
-                                            <button type="submit" class="btn btn-danger ml-2" required><img src="../risorse/img/octicons/trashcan.svg">Elimina Pagamento</button>  
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <p class="text-center" data-toggle="tooltip" title="Evaso da ${datiter[2].registrato.nome+" "+datiter[2].registrato.cognome+" il "+datiter[2].data}"><b>${datiter[2].ordineArrivo}</b></p>
+                                                    </div>
+                                                    <div class="col" align="center">
+                                                        <p>Quota:
+                                                            <b>${datiter[2].quota}&euro;</b>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col" align="center">
+                                                        <button type="submit" class="btn btn-danger ml-2" required><img src="../risorse/img/octicons/trashcan.svg">Elimina Pagamento</button>  
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
                                     </td>   
                                 <#else>
@@ -41,9 +47,19 @@
                                     <td>
                                         <form action="/RegistrazioneGrest/App/GestisciPagamentiTerzamedia" method="POST" class="form-inline">
                                             <input type="hidden" name="addPagamento" value="${datiter[0].id}"/>
-                                                <input type="number" class="form-control mr-2" name="ordineArrivo" placeholder="Ordine iscrizione" required>
-                                                <input type="number" class="form-control mr-2" name="quota"  value="${datiter[2]}" required>
-                                                <button type="submit" class="btn btn-success" required>Aggiungi Pagamento</button>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <input type="number" class="form-control mr-2" name="ordineArrivo" placeholder="Ordine iscrizione" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <input type="number" class="form-control mr-2" name="quota"  value="${datiter[2]}" required>
+                                                    </div>
+                                                    <div class="col">
+                                                        <button type="submit" class="btn btn-success" required>Aggiungi Pagamento</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </form>
                                     </td>
                                 </#if>
@@ -63,5 +79,8 @@
                 info: false
             });
         } );
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
     </script>
 <#include "../struct/footer.html.ftl">
