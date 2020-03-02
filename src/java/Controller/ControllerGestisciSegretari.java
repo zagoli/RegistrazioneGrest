@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,10 +23,8 @@ public class ControllerGestisciSegretari implements ControllerInterface {
         if (request.getParameterMap().isEmpty()) {
             try {
                 List<Registrato> lallut = DAOMan.registratoDAO.findAll();
-                List<Registrato> lseg = new LinkedList<>();
-                lallut.stream().filter((reg) -> (reg.getTipoUt() < 3 && reg.getTipoUt() > 0)).forEachOrdered((reg) -> {
-                    lseg.add(reg);
-                });
+                List<Registrato> lseg;
+                lseg = lallut.stream().filter(reg -> (reg.getTipoUt() < 3 && reg.getTipoUt() > 0)).collect(Collectors.toList());
                 mv.addObject("segretari", lseg);
                 mv.setView("ammseg/gestiscisegretari.html");
             } catch (NullPointerException | SQLException ex) {
