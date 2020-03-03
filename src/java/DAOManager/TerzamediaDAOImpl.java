@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-import org.apache.commons.lang3.BooleanUtils;
 
 public class TerzamediaDAOImpl implements TerzamediaDAO {
 

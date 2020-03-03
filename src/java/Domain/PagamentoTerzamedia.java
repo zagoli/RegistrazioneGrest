@@ -6,18 +6,18 @@ public class PagamentoTerzamedia {
     private int id;
     private Date data;
     private float quota;
-    private Terzamedia terzamedia;
+    private int terzamediaId;
     private Registrato registrato;
     private int ordineArrivo;
 
     public PagamentoTerzamedia() {
     }
 
-    public PagamentoTerzamedia(int id, Date data, float quota, Terzamedia terzamedia, Registrato registrato, int ordineArrivo) {
+    public PagamentoTerzamedia(int id, Date data, float quota, int terzamediaId, Registrato registrato, int ordineArrivo) {
         this.id = id;
         this.data = data;
         this.quota = quota;
-        this.terzamedia = terzamedia;
+        this.terzamediaId = terzamediaId;
         this.registrato = registrato;
         this.ordineArrivo = ordineArrivo;
     }
@@ -46,12 +46,12 @@ public class PagamentoTerzamedia {
         this.quota = quota;
     }
 
-    public Terzamedia getTerzamedia() {
-        return terzamedia;
+    public int getTerzamediaId() {
+        return terzamediaId;
     }
 
-    public void setTerzamedia(Terzamedia terzamedia) {
-        this.terzamedia = terzamedia;
+    public void setTerzamedia(int terzamediaId) {
+        this.terzamediaId = terzamediaId;
     }
 
     public Registrato getRegistrato() {

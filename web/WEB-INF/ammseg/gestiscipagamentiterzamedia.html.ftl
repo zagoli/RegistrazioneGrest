@@ -24,7 +24,7 @@
                                     <!--ha già pagato-->
                                     <td>
                                         <form action="/RegistrazioneGrest/App/GestisciPagamentiTerzamedia" method="POST" class="form-inline">
-                                            <input type="hidden" name="deletePagamento" value="${datiter[0].id}"/>
+                                            <input type="hidden" name="deletePagamento" value="${datiter[2].id}"/>
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-3">
@@ -36,7 +36,7 @@
                                                         </p>
                                                     </div>
                                                     <div class="col" align="center">
-                                                        <button type="submit" class="btn btn-danger ml-2" required><img src="../risorse/img/octicons/trashcan.svg">Elimina Pagamento</button>  
+                                                        <button type="submit" class="btn btn-danger ml-2" required>Elimina Pagamento</button>  
                                                     </div>
                                                 </div>
                                             </div>

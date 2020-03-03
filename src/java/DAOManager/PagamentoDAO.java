@@ -2,11 +2,13 @@ package DAOManager;
 
 import Domain.Pagamento;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 public interface PagamentoDAO {
     //CRUD
     public void insert(Pagamento p) throws SQLException;
+    public void insert(int ordineArrivo, Date data, float quota, int ragId, int regId) throws SQLException;
     public void update(Pagamento p) throws SQLException;
     public void delete(Integer idPagamento) throws SQLException;
     public void deleteFromRagazzoId(Integer idRagazzo) throws SQLException;

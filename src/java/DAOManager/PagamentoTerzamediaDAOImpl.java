@@ -1,12 +1,7 @@
 package DAOManager;
 
-import Domain.Circolo;
-import Domain.Laboratorio;
 import Domain.PagamentoTerzamedia;
-import Domain.Parrocchia;
 import Domain.Registrato;
-import Domain.Scuola;
-import Domain.Terzamedia;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -14,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import org.apache.commons.lang3.BooleanUtils;
 
 public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
 
@@ -23,44 +17,20 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
     private final String UPDATE_PAGAMENTO = "update PagamentoTerzamedia set data = ?, quota = ?, Terzamedia_id = ?, Registrato_id = ?, ordineArrivo = ? where id = ?;";
     private final String DELETE_PAGAMENTO = "delete from PagamentoTerzamedia where id = ?;";
     private final String DELETE_PAGAMENTO_FROM_TERZAMEDIA_ID = "delete from PagamentoTerzamedia where Terzamedia_id = ?;";
-    private final String FIND_PAGAMENTO_ID = "select ter.squadra as tersquadra, p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, reter.id as reterid, reter.mail as retermail, reter.password as reterpassword, reter.nome as reternome, reter.cognome as retercognome, reter.telefono as retertelefono, reter.localita as reterlocalita, reter.via as retervia, reter.civico as retercivico, reter.tipoUt as retertipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo, ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari,ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as ternTessera, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,  ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
+    private final String FIND_PAGAMENTO_ID = "select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
             + " from PagamentoTerzamedia p "
-            + " join Registrato re on (p.Registrato_id = re.id) "
-            + " join Terzamedia ter on (p.Terzamedia_id = ter.id)"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato reter on (ter.Registrato_id = reter.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
+            + " join Registrato re on (p.Registrato_id = re.id) "                                                                        
             + " where p.id = ?;";
-    private final String FIND_ALL_PAGAMENTO = "select ter.squadra as tersquadra, p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, reter.id as reterid, reter.mail as retermail, reter.password as reterpassword, reter.nome as reternome, reter.cognome as retercognome, reter.telefono as retertelefono, reter.localita as reterlocalita, reter.via as retervia, reter.civico as retercivico, reter.tipoUt as retertipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo, ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari,ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as ternTessera, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,  ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
+    private final String FIND_ALL_PAGAMENTO = "select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
             + " from PagamentoTerzamedia p "
-            + " join Registrato re on (p.Registrato_id = re.id) "
-            + " join Terzamedia ter on (p.Terzamedia_id = ter.id)"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato reter on (ter.Registrato_id = reter.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id);";
-    private final String FIND_PAGAMENTO_REGISTRATO_ID = "select ter.squadra as tersquadra, p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, reter.id as reterid, reter.mail as retermail, reter.password as reterpassword, reter.nome as reternome, reter.cognome as retercognome, reter.telefono as retertelefono, reter.localita as reterlocalita, reter.via as retervia, reter.civico as retercivico, reter.tipoUt as retertipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo, ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari,ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as ternTessera, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,  ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
+            + " join Registrato re on (p.Registrato_id = re.id) ";                                                                        
+    private final String FIND_PAGAMENTO_REGISTRATO_ID = "select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
             + " from PagamentoTerzamedia p "
-            + " join Registrato re on (p.Registrato_id = re.id) "
-            + " join Terzamedia ter on (p.Terzamedia_id = ter.id)"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato reter on (ter.Registrato_id = reter.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
+            + " join Registrato re on (p.Registrato_id = re.id) "                                                                        
             + " where p.Registrato_id = ?;";
-    private final String FIND_PAGAMENTO_TERZAMEDIA_ID = "select ter.squadra as tersquadra, p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, reter.id as reterid, reter.mail as retermail, reter.password as reterpassword, reter.nome as reternome, reter.cognome as retercognome, reter.telefono as retertelefono, reter.localita as reterlocalita, reter.via as retervia, reter.civico as retercivico, reter.tipoUt as retertipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo, ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari,ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as ternTessera, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,  ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
+    private final String FIND_PAGAMENTO_TERZAMEDIA_ID = "select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
             + " from PagamentoTerzamedia p "
-            + " join Registrato re on (p.Registrato_id = re.id) "
-            + " join Terzamedia ter on (p.Terzamedia_id = ter.id)"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato reter on (ter.Registrato_id = reter.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
+            + " join Registrato re on (p.Registrato_id = re.id) "                                                                        
             + " where p.Terzamedia_id = ?;";
     private final String COUNT_PAGAMENTO = "select count(*) from PagamentoTerzamedia;";
     // </editor-fold>
@@ -71,9 +41,21 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(INSERT_PAGAMENTO);
         pst.setDate(1, new Date(p.getData().getTime()));
         pst.setFloat(2, p.getQuota());
-        pst.setInt(3, p.getTerzamedia().getId());
+        pst.setInt(3, p.getTerzamediaId());
         pst.setInt(4, p.getRegistrato().getId());
         pst.setInt(5, p.getOrdineArrivo());
+        pst.executeUpdate();
+    }
+    
+    @Override
+    public void insert(int ordineArrivo, java.util.Date data, float quota, int terId, int regId) throws SQLException {
+        Connection con = DAOMan.getConnection();
+        PreparedStatement pst = con.prepareStatement(INSERT_PAGAMENTO);
+        pst.setDate(1, new Date(data.getTime()));
+        pst.setFloat(2, quota);
+        pst.setInt(3, terId);
+        pst.setInt(4, regId);
+        pst.setInt(5, ordineArrivo);
         pst.executeUpdate();
     }
 
@@ -83,7 +65,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(UPDATE_PAGAMENTO);
         pst.setDate(1, new Date(p.getData().getTime()));
         pst.setFloat(2, p.getQuota());
-        pst.setInt(3, p.getTerzamedia().getId());
+        pst.setInt(3, p.getTerzamediaId());
         pst.setInt(4, p.getRegistrato().getId());
         pst.setInt(5, p.getOrdineArrivo());
         pst.setInt(6, p.getId());
@@ -168,54 +150,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
                 rs.getInt("pid"),
                 rs.getDate("pdata"),
                 rs.getFloat("pquota"),
-                new Terzamedia(
-                        rs.getInt("terid"),
-                        rs.getString("ternome"),
-                        rs.getString("tercognome"),
-                        rs.getDate("terdataNascita"),
-                        rs.getString("terpresenza"),
-                        new Laboratorio(
-                                rs.getInt("laid"),
-                                rs.getString("ladescrizione"),
-                                rs.getBoolean("lariservato")
-                        ),
-                        new Parrocchia(
-                                rs.getInt("paid"),
-                                rs.getString("panome"),
-                                rs.getString("paluogo")
-                        ),
-                        new Registrato(
-                                rs.getInt("reid"),
-                                rs.getString("remail"),
-                                rs.getString("repassword"),
-                                rs.getString("renome"),
-                                rs.getString("recognome"),
-                                rs.getString("retelefono"),
-                                rs.getString("relocalita"),
-                                rs.getString("revia"),
-                                rs.getString("recivico"),
-                                rs.getInt("retipoUt")
-                        ),
-                        new Circolo(
-                                rs.getInt(("ciid")),
-                                rs.getString("cinome"),
-                                rs.getString("ciluogo")
-                        ),
-                        rs.getString("terrichieste"),
-                        rs.getString("ternoteAlimentari"),
-                        rs.getBoolean("tersaNuotare"),
-                        rs.getBoolean("terfestaPassaggio"),
-                        new Scuola(
-                                rs.getInt("scid"),
-                                rs.getString("scgrado"),
-                                rs.getString("scdescrizione")
-                        ),
-                        rs.getString("tersezione"),
-                        rs.getString("ternTessera"),
-                        rs.getString("tersquadra"),
-                        rs.getString("tercellulare"),
-                        rs.getString("termail")
-                ),
+                rs.getInt("pterid"),
                 new Registrato(
                         rs.getInt("reid"),
                         rs.getString("remail"),

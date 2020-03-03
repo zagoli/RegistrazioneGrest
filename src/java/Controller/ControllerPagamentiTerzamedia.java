@@ -9,8 +9,10 @@ import ModelAndView.ModelAndViewStandard;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
@@ -24,14 +26,14 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
         mv.addObject("TITOLOPAGINA", "Gestisci pagamenti terzamedia");
         try {
             if (request.getParameterMap().isEmpty()) {
-
                 List<Terzamedia> listTerzamedia = DAOMan.terzamediaDAO.findAll();
-                List<Object[]> datiTerzamedia = new LinkedList<>();
+                List<PagamentoTerzamedia> pagamenti = DAOMan.pagamentoTerzamediaDAO.findAll();
+                Set<Object[]> datiTerzamedia = new HashSet<>();
                 if (!listTerzamedia.isEmpty()) {
                     for (Terzamedia terzamedia : listTerzamedia) {
-                        PagamentoTerzamedia p = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(terzamedia.getId());
-                        if (p != null) {
-                            Object[] o = {terzamedia, true, p};
+                        Optional<PagamentoTerzamedia> p = pagamenti.parallelStream().filter(pag -> pag.getTerzamediaId() == terzamedia.getId()).findFirst();
+                        if (p.isPresent()) {
+                            Object[] o = {terzamedia, true, p.get()};
                             datiTerzamedia.add(o);
                         } else {
                             Object[] o = {terzamedia, false, ControllerPagamentiTerzamedia.calcolaQuota(terzamedia)};
@@ -41,25 +43,15 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
                     mv.addObject("terzamedia", datiTerzamedia);
                 }
                 mv.setView("ammseg/gestiscipagamentiterzamedia.html");
-
             } else if (request.getParameterMap().containsKey("addPagamento")) {
-
                 float quota = Float.parseFloat(request.getParameter("quota").replace(',', '.'));
                 int idTerzamedia = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
-                PagamentoTerzamedia p = new PagamentoTerzamedia();
-                p.setOrdineArrivo(Integer.parseInt(request.getParameter("ordineArrivo")));
-                p.setData(new Date());
-                p.setQuota(quota);
-                p.setTerzamedia(DAOMan.terzamediaDAO.findById(idTerzamedia));
-                p.setRegistrato(DAOMan.registratoDAO.findById(idUt));
-                DAOMan.pagamentoTerzamediaDAO.insert(p);
+                DAOMan.pagamentoTerzamediaDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")),new Date(),quota,idTerzamedia,idUt);
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
-
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
-
-                int idTerzamedia = Integer.parseInt(request.getParameter("deletePagamento"));
-                DAOMan.pagamentoTerzamediaDAO.deleteFromTerzamediaId(idTerzamedia);
+                int id = Integer.parseInt(request.getParameter("deletePagamento"));
+                DAOMan.pagamentoTerzamediaDAO.delete(id);
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
             }
         } catch (NullPointerException | IOException | SQLException ex) {

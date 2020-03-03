@@ -6,18 +6,18 @@ public class Pagamento {
     private int id;
     private Date data;
     private float quota;
-    private Ragazzo ragazzo;
+    private int ragazzoId;
     private Registrato registrato;
     private int ordineArrivo;
 
     public Pagamento() {
     }
 
-    public Pagamento(int id, Date data, float quota, Ragazzo ragazzo, Registrato registrato, int ordineArrivo) {
+    public Pagamento(int id, Date data, float quota, int ragazzoId, Registrato registrato, int ordineArrivo) {
         this.id = id;
         this.data = data;
         this.quota = quota;
-        this.ragazzo = ragazzo;
+        this.ragazzoId = ragazzoId;
         this.registrato = registrato;
         this.ordineArrivo = ordineArrivo;
     }
@@ -46,12 +46,12 @@ public class Pagamento {
         this.quota = quota;
     }
 
-    public Ragazzo getRagazzo() {
-        return ragazzo;
+    public int getRagazzoId() {
+        return ragazzoId;
     }
 
-    public void setRagazzo(Ragazzo ragazzo) {
-        this.ragazzo = ragazzo;
+    public void setRagazzoId(int ragazzoId) {
+        this.ragazzoId = ragazzoId;
     }
 
     public Registrato getRegistrato() {
