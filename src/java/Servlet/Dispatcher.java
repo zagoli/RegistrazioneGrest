@@ -34,6 +34,7 @@ public class Dispatcher extends HttpServlet {
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setEncoding(Locale.ITALY, "utf-8");
         ApplicationContext.getContext().put("CfgTemplate", cfg);
+        //verifica se esiste file registrazioni aperte o chiuse
         File conf = new File("C:/conf/RegistrazioneGrest/config.properties");
         try {
             if (!conf.exists()) {
@@ -439,8 +440,7 @@ public class Dispatcher extends HttpServlet {
             Template template = cfg.getTemplate(pathTemplate);
             template.process(mv.getMap(), out);
             out.close();
-        } catch (NullPointerException | TemplateException | IOException ex) {
-        }
+        } catch (NullPointerException | TemplateException | IOException ex) {}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -481,5 +481,4 @@ public class Dispatcher extends HttpServlet {
     public String getServletInfo() {
         return "Dispatcher";
     }// </editor-fold>
-
 }

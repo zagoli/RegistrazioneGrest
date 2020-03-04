@@ -38,51 +38,51 @@ body {
 }
 
 .arancio-grandi{
-    background-color: #fe5100;
+    background-color: #fe5100 !important;
 }
 
 .arancio-piccoli{
-    background-color: #ff711a;
+    background-color: #ff711a !important;
 }
 
 .azzurri-grandi{
-    background-color: #0093ff;
+    background-color: #0093ff !important;
 }
 
 .azzurri-piccoli{
-    background-color: #4bb3ff;
+    background-color: #4bb3ff !important;
 }
 
 .blu-grandi{
-    background-color: #003eff;
+    background-color: #003eff !important;
 }
 
 .blu-piccoli{
-    background-color: #3159ff;
+    background-color: #3159ff !important;
 }
 
 .gialli-grandi{
-    background-color: #f7fe01;
+    background-color: #f7fe01 !important;
 }
 
 .gialli-piccoli{
-    background-color: #fbff77;
+    background-color: #fbff77 !important;
 }
 
 .rossi-grandi{
-    background-color: #ff0000;
+    background-color: #ff0000 !important;
 }
 
 .rossi-piccoli{
-    background-color: #ff4343;
+    background-color: #ff4343 !important;
 }
 
 .verdi-grandi{
-    background-color: #27b900;
+    background-color: #27b900 !important;
 }
 
 .verdi-piccoli{
-    background-color: #51ca31;
+    background-color: #51ca31 !important;
 }
 
 input.parsley-success,
