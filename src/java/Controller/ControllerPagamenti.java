@@ -49,7 +49,7 @@ public class ControllerPagamenti implements ControllerInterface {
                 float quota = Float.parseFloat(request.getParameter("quota").replace(',', '.'));
                 int idRagazzo = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
-                DAOMan.pagamentoDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")),new Date(), quota, idRagazzo, idUt);
+                DAOMan.pagamentoDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")),quota, idRagazzo, idUt);
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamenti");
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));

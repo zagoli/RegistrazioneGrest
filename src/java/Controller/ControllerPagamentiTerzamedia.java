@@ -47,7 +47,7 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
                 float quota = Float.parseFloat(request.getParameter("quota").replace(',', '.'));
                 int idTerzamedia = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
-                DAOMan.pagamentoTerzamediaDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")),new Date(),quota,idTerzamedia,idUt);
+                DAOMan.pagamentoTerzamediaDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")),quota,idTerzamedia,idUt);
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));
