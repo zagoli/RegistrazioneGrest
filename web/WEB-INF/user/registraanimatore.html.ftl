@@ -147,5 +147,5 @@
                 </div>
             </div>
         </div>
-<script src="../risorse/js/ajaxsbloccaiscr.js"></script>
+<script src="../risorse/js/ajaxsbloccaiscr.min.js"></script>
 <#include "../struct/footer.html.ftl">

@@ -58,5 +58,5 @@
         } );
     </script>
     <!-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutti gli animatori compresi quelli che sono rimasti uguali-->
-    <script src="../risorse/js/salvasolomodificatoanimatori.js"></script>
+    <script src="../risorse/js/salvasolomodificatoanimatori.min.js"></script>
 <#include "../struct/footer.html.ftl">

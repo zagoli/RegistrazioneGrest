@@ -207,5 +207,5 @@
             </div>
         </div>
     </div>
-    <script src="../risorse/js/ajaxiscrizioni.js"></script>
+    <script src="../risorse/js/ajaxiscrizioni.min.js"></script>
 <#include "../struct/footer.html.ftl">

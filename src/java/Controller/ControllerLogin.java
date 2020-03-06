@@ -74,7 +74,6 @@ public class ControllerLogin implements ControllerInterface {
                         mv.addObject("ERRATO", true);
                     } else {
                         request.getSession().setAttribute("idUtente", r.getId());
-                        request.getSession().setAttribute("mailUtente", r.getMail());
                         request.getSession().setAttribute("tipoUtente", r.getTipoUt());
                         response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
                     }

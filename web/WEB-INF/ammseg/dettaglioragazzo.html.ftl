@@ -251,6 +251,7 @@
                 </div>
                 </#if>
             </div>
+            <#sep>
             <hr/>
         </#list>
     </div>
@@ -270,6 +271,7 @@
                     <p>${acc.nome+" "+acc.cognome}</p>
                 </div>
             </div>
+            <#sep>
             <hr/>
         </#list>
     </div>

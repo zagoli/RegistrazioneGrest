@@ -57,5 +57,5 @@
         } );
     </script>
     <!-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutto quello che è rimasto uguale-->
-    <script src="../risorse/js/salvasolomodificatoragter.js"></script>
+    <script src="../risorse/js/salvasolomodificatoragter.min.js"></script>
 <#include "../struct/footer.html.ftl">
