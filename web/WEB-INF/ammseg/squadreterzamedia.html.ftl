@@ -24,18 +24,18 @@
                                         <label class="sr-only" for="squadra">Squadra</label>
                                         <select class="custom-select mr-sm-2" id="squadra" name="squadra">
                                             <option value="${ter.id}" <#if !ter.squadra??>selected</#if>></option>
-                                            <option value="${ter.id},Arancio grandi" <#if ter.squadra?? && ter.squadra="Arancio grandi">selected</#if>>Arancio grandi</option>
-                                            <option value="${ter.id},Arancio piccoli" <#if ter.squadra?? && ter.squadra="Arancio piccoli">selected</#if>>Arancio piccoli</option>
-                                            <option value="${ter.id},Azzurri grandi" <#if ter.squadra?? && ter.squadra="Azzurri grandi">selected</#if>>Azzurri grandi</option>
-                                            <option value="${ter.id},Azzurri piccoli" <#if ter.squadra?? && ter.squadra="Azzurri piccoli">selected</#if>>Azzurri piccoli</option>
-                                            <option value="${ter.id},Blu grandi" <#if ter.squadra?? && ter.squadra="Blu grandi">selected</#if>>Blu grandi</option>
-                                            <option value="${ter.id},Blu piccoli" <#if ter.squadra?? && ter.squadra="Blu piccoli">selected</#if>>Blu piccoli</option>
-                                            <option value="${ter.id},Gialli grandi" <#if ter.squadra?? && ter.squadra="Gialli grandi">selected</#if>>Gialli grandi</option>
-                                            <option value="${ter.id},Gialli piccoli" <#if ter.squadra?? && ter.squadra="Gialli piccoli">selected</#if>>Gialli piccoli</option>
-                                            <option value="${ter.id},Rossi grandi" <#if ter.squadra?? && ter.squadra="Rossi grandi">selected</#if>>Rossi grandi</option>
-                                            <option value="${ter.id},Rossi piccoli" <#if ter.squadra?? && ter.squadra="Rossi piccoli">selected</#if>>Rossi piccoli</option>
-                                            <option value="${ter.id},Verdi grandi" <#if ter.squadra?? && ter.squadra="Verdi grandi">selected</#if>>Verdi grandi</option>
-                                            <option value="${ter.id},Verdi piccoli" <#if ter.squadra?? && ter.squadra="Verdi piccoli">selected</#if>>Verdi piccoli</option>
+                                            <option value="${ter.id},Arancio grandi" <#if ter.squadra! = "Arancio grandi">selected</#if>>Arancio grandi</option>
+                                            <option value="${ter.id},Arancio piccoli" <#if ter.squadra! = "Arancio piccoli">selected</#if>>Arancio piccoli</option>
+                                            <option value="${ter.id},Azzurri grandi" <#if ter.squadra! = "Azzurri grandi">selected</#if>>Azzurri grandi</option>
+                                            <option value="${ter.id},Azzurri piccoli" <#if ter.squadra! = "Azzurri piccoli">selected</#if>>Azzurri piccoli</option>
+                                            <option value="${ter.id},Blu grandi" <#if ter.squadra! = "Blu grandi">selected</#if>>Blu grandi</option>
+                                            <option value="${ter.id},Blu piccoli" <#if ter.squadra! = "Blu piccoli">selected</#if>>Blu piccoli</option>
+                                            <option value="${ter.id},Gialli grandi" <#if ter.squadra! = "Gialli grandi">selected</#if>>Gialli grandi</option>
+                                            <option value="${ter.id},Gialli piccoli" <#if ter.squadra! = "Gialli piccoli">selected</#if>>Gialli piccoli</option>
+                                            <option value="${ter.id},Rossi grandi" <#if ter.squadra! = "Rossi grandi">selected</#if>>Rossi grandi</option>
+                                            <option value="${ter.id},Rossi piccoli" <#if ter.squadra! = "Rossi piccoli">selected</#if>>Rossi piccoli</option>
+                                            <option value="${ter.id},Verdi grandi" <#if ter.squadra! = "Verdi grandi">selected</#if>>Verdi grandi</option>
+                                            <option value="${ter.id},Verdi piccoli" <#if ter.squadra! = "Verdi piccoli">selected</#if>>Verdi piccoli</option>
                                         </select>
                                     </td>
                                 </tr>

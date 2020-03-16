@@ -25,18 +25,18 @@
                                         <label class="sr-only" for="${ani.id}squadra">Squadra</label>
                                         <select class="custom-select mr-sm-2" id="${ani.id}squadra" name="${ani.id}">
                                             <option <#if !ani.squadra??>selected</#if>></option>
-                                            <option value="Arancio grandi" <#if ani.squadra?? && ani.squadra="Arancio grandi">selected</#if>>Arancio grandi</option>
-                                            <option value="Arancio piccoli" <#if ani.squadra?? && ani.squadra="Arancio piccoli">selected</#if>>Arancio piccoli</option>
-                                            <option value="Azzurri grandi" <#if ani.squadra?? && ani.squadra="Azzurri grandi">selected</#if>>Azzurri grandi</option>
-                                            <option value="Azzurri piccoli" <#if ani.squadra?? && ani.squadra="Azzurri piccoli">selected</#if>>Azzurri piccoli</option>
-                                            <option value="Blu grandi" <#if ani.squadra?? && ani.squadra="Blu grandi">selected</#if>>Blu grandi</option>
-                                            <option value="Blu piccoli" <#if ani.squadra?? && ani.squadra="Blu piccoli">selected</#if>>Blu piccoli</option>
-                                            <option value="Gialli grandi" <#if ani.squadra?? && ani.squadra="Gialli grandi">selected</#if>>Gialli grandi</option>
-                                            <option value="Gialli piccoli" <#if ani.squadra?? && ani.squadra="Gialli piccoli">selected</#if>>Gialli piccoli</option>
-                                            <option value="Rossi grandi" <#if ani.squadra?? && ani.squadra="Rossi grandi">selected</#if>>Rossi grandi</option>
-                                            <option value="Rossi piccoli" <#if ani.squadra?? && ani.squadra="Rossi piccoli">selected</#if>>Rossi piccoli</option>
-                                            <option value="Verdi grandi" <#if ani.squadra?? && ani.squadra="Verdi grandi">selected</#if>>Verdi grandi</option>
-                                            <option value="Verdi piccoli" <#if ani.squadra?? && ani.squadra="Verdi piccoli">selected</#if>>Verdi piccoli</option>
+                                            <option value="Arancio grandi" <#if ani.squadra! ="Arancio grandi">selected</#if>>Arancio grandi</option>
+                                            <option value="Arancio piccoli" <#if ani.squadra! ="Arancio piccoli">selected</#if>>Arancio piccoli</option>
+                                            <option value="Azzurri grandi" <#if ani.squadra! ="Azzurri grandi">selected</#if>>Azzurri grandi</option>
+                                            <option value="Azzurri piccoli" <#if ani.squadra! ="Azzurri piccoli">selected</#if>>Azzurri piccoli</option>
+                                            <option value="Blu grandi" <#if ani.squadra! ="Blu grandi">selected</#if>>Blu grandi</option>
+                                            <option value="Blu piccoli" <#if ani.squadra! ="Blu piccoli">selected</#if>>Blu piccoli</option>
+                                            <option value="Gialli grandi" <#if ani.squadra! ="Gialli grandi">selected</#if>>Gialli grandi</option>
+                                            <option value="Gialli piccoli" <#if ani.squadra! ="Gialli piccoli">selected</#if>>Gialli piccoli</option>
+                                            <option value="Rossi grandi" <#if ani.squadra! ="Rossi grandi">selected</#if>>Rossi grandi</option>
+                                            <option value="Rossi piccoli" <#if ani.squadra! ="Rossi piccoli">selected</#if>>Rossi piccoli</option>
+                                            <option value="Verdi grandi" <#if ani.squadra! ="Verdi grandi">selected</#if>>Verdi grandi</option>
+                                            <option value="Verdi piccoli" <#if ani.squadra! ="Verdi piccoli">selected</#if>>Verdi piccoli</option>
                                         </select>
                                     </td>
                                     <td align="center">

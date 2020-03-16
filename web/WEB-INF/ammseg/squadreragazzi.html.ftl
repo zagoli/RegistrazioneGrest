@@ -26,18 +26,18 @@
                                         <label class="sr-only" for="squadra">Squadra</label>
                                         <select class="custom-select mr-sm-2" id="squadra" name="squadra">
                                             <option value="${rag.id}" <#if !rag.squadra??>selected</#if>></option>
-                                            <option value="${rag.id},Arancio grandi" <#if rag.squadra?? && rag.squadra="Arancio grandi">selected</#if>>Arancio grandi</option>
-                                            <option value="${rag.id},Arancio piccoli" <#if rag.squadra?? && rag.squadra="Arancio piccoli">selected</#if>>Arancio piccoli</option>
-                                            <option value="${rag.id},Azzurri grandi" <#if rag.squadra?? && rag.squadra="Azzurri grandi">selected</#if>>Azzurri grandi</option>
-                                            <option value="${rag.id},Azzurri piccoli" <#if rag.squadra?? && rag.squadra="Azzurri piccoli">selected</#if>>Azzurri piccoli</option>
-                                            <option value="${rag.id},Blu grandi" <#if rag.squadra?? && rag.squadra="Blu grandi">selected</#if>>Blu grandi</option>
-                                            <option value="${rag.id},Blu piccoli" <#if rag.squadra?? && rag.squadra="Blu piccoli">selected</#if>>Blu piccoli</option>
-                                            <option value="${rag.id},Gialli grandi" <#if rag.squadra?? && rag.squadra="Gialli grandi">selected</#if>>Gialli grandi</option>
-                                            <option value="${rag.id},Gialli piccoli" <#if rag.squadra?? && rag.squadra="Gialli piccoli">selected</#if>>Gialli piccoli</option>
-                                            <option value="${rag.id},Rossi grandi" <#if rag.squadra?? && rag.squadra="Rossi grandi">selected</#if>>Rossi grandi</option>
-                                            <option value="${rag.id},Rossi piccoli" <#if rag.squadra?? && rag.squadra="Rossi piccoli">selected</#if>>Rossi piccoli</option>
-                                            <option value="${rag.id},Verdi grandi" <#if rag.squadra?? && rag.squadra="Verdi grandi">selected</#if>>Verdi grandi</option>
-                                            <option value="${rag.id},Verdi piccoli" <#if rag.squadra?? && rag.squadra="Verdi piccoli">selected</#if>>Verdi piccoli</option>
+                                            <option value="${rag.id},Arancio grandi" <#if rag.squadra! = "Arancio grandi">selected</#if>>Arancio grandi</option>
+                                            <option value="${rag.id},Arancio piccoli" <#if rag.squadra! = "Arancio piccoli">selected</#if>>Arancio piccoli</option>
+                                            <option value="${rag.id},Azzurri grandi" <#if rag.squadra! = "Azzurri grandi">selected</#if>>Azzurri grandi</option>
+                                            <option value="${rag.id},Azzurri piccoli" <#if rag.squadra! = "Azzurri piccoli">selected</#if>>Azzurri piccoli</option>
+                                            <option value="${rag.id},Blu grandi" <#if rag.squadra! = "Blu grandi">selected</#if>>Blu grandi</option>
+                                            <option value="${rag.id},Blu piccoli" <#if rag.squadra! = "Blu piccoli">selected</#if>>Blu piccoli</option>
+                                            <option value="${rag.id},Gialli grandi" <#if rag.squadra! = "Gialli grandi">selected</#if>>Gialli grandi</option>
+                                            <option value="${rag.id},Gialli piccoli" <#if rag.squadra! = "Gialli piccoli">selected</#if>>Gialli piccoli</option>
+                                            <option value="${rag.id},Rossi grandi" <#if rag.squadra! = "Rossi grandi">selected</#if>>Rossi grandi</option>
+                                            <option value="${rag.id},Rossi piccoli" <#if rag.squadra! = "Rossi piccoli">selected</#if>>Rossi piccoli</option>
+                                            <option value="${rag.id},Verdi grandi" <#if rag.squadra! = "Verdi grandi">selected</#if>>Verdi grandi</option>
+                                            <option value="${rag.id},Verdi piccoli" <#if rag.squadra! = "Verdi piccoli">selected</#if>>Verdi piccoli</option>
                                         </select>
                                     </td>
                                 </tr>
