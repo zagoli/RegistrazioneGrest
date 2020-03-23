@@ -23,14 +23,16 @@ public class ControllerDashboardAttGen implements ControllerInterface {
         mv.setView("user/dashboardattgen.html");
         try {
             int idUt = (int) request.getSession().getAttribute("idUtente");
-            Map<AttivitaGen,Object[]> mapAttivitaGen = new HashMap<>();
+            Map<AttivitaGen, Object[]> mapAttivitaGen = new HashMap<>();
             List<RelCollabora> listRelCollabora = DAOMan.relCollaboraDAO.findByRegistratoId(idUt);
-            for (RelCollabora rc : listRelCollabora) {
-                AttivitaGen ag = DAOMan.attivitaGenDAO.findById(rc.getAttivitaGenId());
-                Object[] o = {rc.getData(),rc.getId()};
-                mapAttivitaGen.put(ag, o);
+            if (!listRelCollabora.isEmpty()) {
+                for (RelCollabora rc : listRelCollabora) {
+                    AttivitaGen ag = DAOMan.attivitaGenDAO.findById(rc.getAttivitaGenId());
+                    Object[] o = {rc.getData(), rc.getId()};
+                    mapAttivitaGen.put(ag, o);
+                }
+                mv.addObject("attivita", mapAttivitaGen);
             }
-            mv.addObject("attivita", mapAttivitaGen);
             mv.addObject("allattivita", DAOMan.attivitaGenDAO.findAll());
         } catch (NullPointerException | SQLException ex) {
             Logger.getLogger(ControllerDashboardAttGen.class.getName()).log(Level.SEVERE, null, ex);

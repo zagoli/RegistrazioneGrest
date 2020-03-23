@@ -5,7 +5,6 @@
             <table id="t_anim" class="table table-hover table-responsive nowrap">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col" style="width: 2%">#</th>
                         <th scope="col" style="width: 6%">Azioni</th>
                         <th scope="col">Cognome</th>
                         <th scope="col">Nome</th>
@@ -23,7 +22,6 @@
                 <tbody class="list">
                     <#list animatori as ani>
                         <tr>
-                            <th scope="row">${ani.id}</th>
                             <td>
                                 <a href="javascript:;" onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoani&id=${ani.id}', 'Dettagli animatore', 'width=600, height=700, status, scrollbars=1, location');"><img src="../risorse/img/octicons/search.svg"></a>
                                 <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id}"><img src="../risorse/img/octicons/pencil.svg"></a>
@@ -66,7 +64,7 @@
                     render: $.fn.dataTable.render.ellipsis(15, true)
                 },
                 {
-                    targets: [1],
+                    targets: [0],
                     searchable: false,
                     orderable: false
                 }
