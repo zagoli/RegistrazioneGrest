@@ -37,7 +37,7 @@
                             </td>
                             <td>${rag[0].cognome?capitalize}</td>
                             <td>${rag[0].nome?capitalize}</td>                                    
-                            <td>${rag[0].dataNascita}</td>
+                            <td data-sort="${rag[0].dataNascita?string.iso}">${rag[0].dataNascita?string["dd/MM/yyyy"]}</td>
                             <td>${rag[0].registrato.via?capitalize+" "+rag[0].registrato.civico}</td>
                             <td>${rag[0].registrato.localita?capitalize}</td>
                             <td>${rag[0].parrocchia.nome}</td>

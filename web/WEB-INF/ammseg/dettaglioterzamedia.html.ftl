@@ -30,7 +30,7 @@
                 <strong>Data di nascita</strong>
             </div>
             <div class="col-sm">
-                <p>${terzamedia.dataNascita}</p>
+                <p>${terzamedia.dataNascita?string["dd/MM/yyyy"]}</p>
             </div>
         </div>
         <div class="row">

@@ -29,7 +29,7 @@
                             </td>
                             <td>${ani.cognome?capitalize}</td>
                             <td>${ani.nome?capitalize}</td>
-                            <td>${ani.dataNascita}</td>
+                            <td data-sort="${ani.dataNascita?string.iso}">${ani.dataNascita?string["dd/MM/yyyy"]}</td>
                             <td>${ani.codiceFiscale}</td>
                             <td>${ani.registrato.via?capitalize+" "+ani.registrato.civico+" "+ani.registrato.localita?capitalize}</td>
                             <td>${ani.parrocchia.nome+" - "+ani.parrocchia.luogo}</td>

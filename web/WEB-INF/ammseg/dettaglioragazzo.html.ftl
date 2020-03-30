@@ -30,7 +30,7 @@
                 <strong>Data di nascita</strong>
             </div>
             <div class="col-sm">
-                <p>${ragazzo.dataNascita}</p>
+                <p>${ragazzo.dataNascita?string["dd/MM/yyyy"]}</p>
             </div>
         </div>
         <div class="row">

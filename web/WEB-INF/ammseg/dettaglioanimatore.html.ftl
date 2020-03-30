@@ -30,7 +30,7 @@
                 <strong>Data di nascita</strong>
             </div>
             <div class="col-sm">
-                <p>${animatore.dataNascita}</p>
+                <p>${animatore.dataNascita?string["dd/MM/yyyy"]}</p>
             </div>
         </div>
         <div class="row">
