@@ -27,13 +27,13 @@
                                             <input type="hidden" name="deletePagamento" value="${datiter[2].id}"/>
                                             <div class="container">
                                                 <div class="row">
-                                                    <div class="col-3">
-                                                        <p class="text-center" data-toggle="tooltip" title="Evaso da ${datiter[2].registrato.nome+" "+datiter[2].registrato.cognome+" il "+datiter[2].data}"><b>${datiter[2].ordineArrivo}</b></p>
+                                                    <div align="center" class="col-3">
+                                                        <span title="Evaso da ${datiter[2].registrato.nome+" "+datiter[2].registrato.cognome+" il "+datiter[2].data}"><b>${datiter[2].ordineArrivo}</b></span>
                                                     </div>
                                                     <div class="col" align="center">
-                                                        <p>Quota:
+                                                        <span>Quota:
                                                             <b>${datiter[2].quota}&euro;</b>
-                                                        </p>
+                                                        </span>
                                                     </div>
                                                     <div class="col" align="center">
                                                         <button type="submit" class="btn btn-danger ml-2" required>Elimina Pagamento</button>  
@@ -79,8 +79,5 @@
                 info: false
             });
         } );
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        });
     </script>
 <#include "../struct/footer.html.ftl">

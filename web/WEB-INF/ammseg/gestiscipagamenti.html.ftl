@@ -27,8 +27,8 @@
                                             <input type="hidden" name="deletePagamento" value="${datirag[2].id}"/>
                                             <div class="container">
                                                 <div class="row">
-                                                    <div class="col-3">
-                                                        <p class="text-center" data-toggle="tooltip" title="Evaso da ${datirag[2].registrato.nome+" "+datirag[2].registrato.cognome+" il "+datirag[2].data}"> <b>${datirag[2].ordineArrivo}</b> </p>
+                                                    <div class="col-3" align="center">
+                                                        <span title="Evaso da ${datirag[2].registrato.nome+" "+datirag[2].registrato.cognome+" il "+datirag[2].data}"> <b>${datirag[2].ordineArrivo}</b> </span>
                                                     </div>
                                                     <div class="col" align="center">
                                                         <p>Quota:
@@ -79,8 +79,5 @@
                 info: false
             });
         } );
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        });
     </script>
 <#include "../struct/footer.html.ftl">
