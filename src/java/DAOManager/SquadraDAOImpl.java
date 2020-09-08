@@ -39,7 +39,7 @@ public class SquadraDAOImpl implements SquadraDAO {
     @Override
     public List<Squadra> findAll() throws SQLException {
         Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_BY_NOME);
+        PreparedStatement pst = con.prepareStatement(FIND_ALL);
         ResultSet rs = pst.executeQuery();
         LinkedList<Squadra> ls = new LinkedList<>();
         while (rs.next()) {
