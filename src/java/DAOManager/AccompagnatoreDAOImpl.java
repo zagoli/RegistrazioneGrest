@@ -22,8 +22,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
 
     @Override
     public void insert(Accompagnatore a) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_ACCOMPAGNATORE, Statement.RETURN_GENERATED_KEYS);
         pst.setString(1, a.getNome());
         pst.setString(2, a.getCognome());
@@ -37,8 +36,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
 
     @Override
     public void update(Accompagnatore a) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_ACCOMPAGNATORE);
         pst.setString(1, a.getNome());
         pst.setString(2, a.getCognome());
@@ -49,8 +47,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
 
     @Override
     public void delete(Integer idAccompagnatore) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(DELETE_ACCOMPAGNATORE);
         pst.setInt(1, idAccompagnatore);
         pst.executeUpdate();
@@ -58,8 +55,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
 
     @Override
     public Accompagnatore findById(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
@@ -69,37 +65,32 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
 
     @Override
     public List<Accompagnatore> findAll() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_ACCOMPAGNATORE);
         ResultSet rs = pst.executeQuery();
         LinkedList<Accompagnatore> la = new LinkedList();
         while (rs.next()) {
-            Accompagnatore a = this.mapRowToAccompagnatore(rs);
-            la.add(a);
+            la.add(this.mapRowToAccompagnatore(rs));
         }
         return la;
     }
 
     @Override
     public List<Accompagnatore> findByRegistratoId(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_REGISTRATO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Accompagnatore> la = new LinkedList();
         while (rs.next()) {
-            Accompagnatore a = this.mapRowToAccompagnatore(rs);
-            la.add(a);
+            la.add(this.mapRowToAccompagnatore(rs));
         }
         return la;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_ACCOMPAGNATORE);
         ResultSet rs = pst.executeQuery();
         rs.next();
@@ -108,7 +99,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
     }
 
     public Accompagnatore mapRowToAccompagnatore(ResultSet rs) throws SQLException {
-        Accompagnatore a = new Accompagnatore(
+        return new Accompagnatore(
                 rs.getInt("aid"),
                 rs.getString("anome"),
                 rs.getString("acognome"),
@@ -125,7 +116,6 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
                     rs.getInt("retipoUt")
                 )
         );
-        return a;
     }
 
 }

@@ -40,8 +40,7 @@ public class RelPresenzaRagDAOImpl implements RelPresenzaRagDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<RelPresenzaRag> lrpr = new LinkedList<>();
         while (rs.next()) {
-            RelPresenzaRag rpr = this.mapRowToRelPresenzaRag(rs);
-            lrpr.add(rpr);
+            lrpr.add(this.mapRowToRelPresenzaRag(rs));
         }
         return lrpr;
     }
@@ -54,18 +53,16 @@ public class RelPresenzaRagDAOImpl implements RelPresenzaRagDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<RelPresenzaRag> lrpr = new LinkedList<>();
         while (rs.next()) {
-            RelPresenzaRag rpr = this.mapRowToRelPresenzaRag(rs);
-            lrpr.add(rpr);
+            lrpr.add(this.mapRowToRelPresenzaRag(rs));
         }
         return lrpr;
     }
     
     public RelPresenzaRag mapRowToRelPresenzaRag (ResultSet rs) throws SQLException {
-        RelPresenzaRag rpr = new RelPresenzaRag(
+        return new RelPresenzaRag(
                 rs.getInt("Calendario_idSettimana"),
                 rs.getInt("Ragazzo_id")
         );
-        return rpr;
     }
     
 }

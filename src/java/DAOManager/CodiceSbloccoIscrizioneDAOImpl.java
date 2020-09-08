@@ -24,8 +24,7 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
 
     @Override
     public void insert(CodiceSbloccoIscrizione c) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_CODICE);
         pst.setString(1,c.getCodice());
         pst.executeUpdate();
@@ -33,8 +32,7 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
 
     @Override
     public void update(CodiceSbloccoIscrizione c) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_CODICE);
         pst.setShort(1,c.getUtilizzato());
         pst.setTimestamp(2, c.getDataUtilizzo());
@@ -44,8 +42,7 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
 
     @Override
     public void delete(CodiceSbloccoIscrizione c) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(DELETE_CODICE);
         pst.setString(1,c.getCodice());
         pst.executeUpdate();    
@@ -53,8 +50,7 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
 
     @Override
     public CodiceSbloccoIscrizione findByCodice(String codice) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_CODICE);
         pst.setString(1, codice);
         ResultSet rs = pst.executeQuery();
@@ -64,65 +60,56 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
 
     @Override
     public List<CodiceSbloccoIscrizione> findAll() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_CODICE);
         ResultSet rs = pst.executeQuery();
         LinkedList<CodiceSbloccoIscrizione> lc = new LinkedList<>();
         while (rs.next()){
-            CodiceSbloccoIscrizione c = this.mapRowToCodiceSbloccoIscrizione(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCodiceSbloccoIscrizione(rs));
         }
         return lc;
     }
 
     @Override
     public List<CodiceSbloccoIscrizione> findByRegistrato(short idRegistrato) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_CODICE_REGISTRATO);
         pst.setShort(1, idRegistrato);
         ResultSet rs = pst.executeQuery();
         LinkedList<CodiceSbloccoIscrizione> lc = new LinkedList<>();
         while (rs.next()){
-            CodiceSbloccoIscrizione c = this.mapRowToCodiceSbloccoIscrizione(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCodiceSbloccoIscrizione(rs));
         }
         return lc;    
     }
 
     @Override
     public List<CodiceSbloccoIscrizione> findAllUtilizzato() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_UTILIZZATO);
         ResultSet rs = pst.executeQuery();
         LinkedList<CodiceSbloccoIscrizione> lc = new LinkedList<>();
         while (rs.next()){
-            CodiceSbloccoIscrizione c = this.mapRowToCodiceSbloccoIscrizione(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCodiceSbloccoIscrizione(rs));
         }
         return lc;
     }
 
     @Override
     public List<CodiceSbloccoIscrizione> findAllNonUtilizzato() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_NON_UTILIZZATO);
         ResultSet rs = pst.executeQuery();
         LinkedList<CodiceSbloccoIscrizione> lc = new LinkedList<>();
         while (rs.next()){
-            CodiceSbloccoIscrizione c = this.mapRowToCodiceSbloccoIscrizione(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCodiceSbloccoIscrizione(rs));
         }
         return lc;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT);
         ResultSet rs = pst.executeQuery();
         return rs.getInt(1);
@@ -130,8 +117,7 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
 
     @Override
     public int countUtilizzato() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_UTILIZZATO);
         ResultSet rs = pst.executeQuery();
         return rs.getInt(1);
@@ -139,20 +125,18 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
 
     @Override
     public int countNonUtilizzato() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_NON_UTILIZZATO);
         ResultSet rs = pst.executeQuery();
         return rs.getInt(1);
     }
     
     public CodiceSbloccoIscrizione mapRowToCodiceSbloccoIscrizione(ResultSet rs) throws SQLException {
-        CodiceSbloccoIscrizione c = new CodiceSbloccoIscrizione(
+        return new CodiceSbloccoIscrizione(
                 rs.getString("codice"),
                 rs.getShort("utilizzato"),
                 rs.getTimestamp("dataUtilizzo")
-                );
-        return c;
+        );
     }
     
 }

@@ -107,8 +107,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
         ResultSet rs = pst.executeQuery();
         LinkedList<PagamentoTerzamedia> lp = new LinkedList<>();
         while (rs.next()) {
-            PagamentoTerzamedia p = this.mapRowToPagamentoTerzamedia(rs);
-            lp.add(p);
+            lp.add(this.mapRowToPagamentoTerzamedia(rs));
         }
         return lp;
     }
@@ -121,8 +120,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
         ResultSet rs = pst.executeQuery();
         LinkedList<PagamentoTerzamedia> lp = new LinkedList<>();
         while (rs.next()) {
-            PagamentoTerzamedia p = this.mapRowToPagamentoTerzamedia(rs);
-            lp.add(p);
+            lp.add(this.mapRowToPagamentoTerzamedia(rs));
         }
         return lp;
     }
@@ -148,7 +146,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
     }
 
     public PagamentoTerzamedia mapRowToPagamentoTerzamedia(ResultSet rs) throws SQLException {
-        PagamentoTerzamedia p = new PagamentoTerzamedia(
+        return new PagamentoTerzamedia(
                 rs.getInt("pid"),
                 rs.getDate("pdata"),
                 rs.getFloat("pquota"),
@@ -167,6 +165,5 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
                 ),
                  rs.getInt("pordineArrivo")
         );
-        return p;
     }
 }

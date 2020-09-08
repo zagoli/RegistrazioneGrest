@@ -18,8 +18,7 @@ public class ScuolaDAOImpl implements ScuolaDAO{
 
     @Override
     public void insert(Scuola s) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_SCUOLA);
         pst.setString(1, s.getGrado());
         pst.setString(2, s.getDescrizione());
@@ -28,8 +27,7 @@ public class ScuolaDAOImpl implements ScuolaDAO{
 
     @Override
     public void update(Scuola s) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_SCUOLA);
         pst.setString(1,s.getGrado());
         pst.setString(2,s.getDescrizione());
@@ -39,8 +37,7 @@ public class ScuolaDAOImpl implements ScuolaDAO{
 
     @Override
     public void delete(Integer idScuola) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(DELETE_SCUOLA);
         pst.setInt(1, idScuola);
         pst.executeUpdate();
@@ -48,8 +45,7 @@ public class ScuolaDAOImpl implements ScuolaDAO{
 
     @Override
     public Scuola findById(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_SCUOLA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
@@ -59,22 +55,19 @@ public class ScuolaDAOImpl implements ScuolaDAO{
 
     @Override
     public List<Scuola> findAll() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_SCUOLA);
         ResultSet rs = pst.executeQuery();
         LinkedList ls = new LinkedList();
         while (rs.next()) {
-            Scuola s  = mapRowToScuola(rs);
-            ls.add(s);
+            ls.add(mapRowToScuola(rs));
         }
         return ls;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_SCUOLA);
         ResultSet rs = pst.executeQuery();
         rs.next();
@@ -83,11 +76,10 @@ public class ScuolaDAOImpl implements ScuolaDAO{
     }
     
     public Scuola mapRowToScuola(ResultSet rs) throws SQLException {
-        Scuola s = new Scuola(
+        return new Scuola(
                 rs.getInt("id"),
                 rs.getString("grado"),
                 rs.getString("descrizione"));
-        return s;
     }
     
 }

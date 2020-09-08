@@ -210,8 +210,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
         while(rs.next()){
-            Ragazzo r = this.mapRowToRagazzo(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRagazzo(rs));
         }
         return lr;
     }
@@ -235,8 +234,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
         while (rs.next()){
-            Ragazzo r = this.mapRowToRagazzo(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRagazzo(rs));
         }
         return lr;
     }
@@ -249,8 +247,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
         while (rs.next()){
-            Ragazzo r = this.mapRowToRagazzo(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRagazzo(rs));
         }
         return lr;
     }
@@ -263,8 +260,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
         while (rs.next()){
-            Ragazzo r = this.mapRowToRagazzo(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRagazzo(rs));
         }
         return lr;
     }
@@ -277,8 +273,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
         while (rs.next()){
-            Ragazzo r = this.mapRowToRagazzo(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRagazzo(rs));
         }
         return lr;
     }
@@ -291,8 +286,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
         while (rs.next()){
-            Ragazzo r = this.mapRowToRagazzo(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRagazzo(rs));
         }
         return lr;
     }
@@ -305,8 +299,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
         while (rs.next()){
-            Ragazzo r = this.mapRowToRagazzo(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRagazzo(rs));
         }
         return lr;
     }
@@ -319,8 +312,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
         while (rs.next()){
-            Ragazzo r = this.mapRowToRagazzo(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRagazzo(rs));
         }
         return lr;
     }
@@ -400,8 +392,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
     }
 
     public Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException{
-        Ragazzo r = new Ragazzo(
-                            rs.getInt("raid"),
+        return new Ragazzo(                            rs.getInt("raid"),
                             rs.getString("ranome"),
                             rs.getString("racognome"),
                             rs.getDate("radataNascita"),
@@ -448,8 +439,7 @@ public class RagazzoDAOImpl implements RagazzoDAO{
                             rs.getString("raclasse"),
                             rs.getString("ranTessera"),
                             rs.getString("rasquadra")
-                    );
-        return r;
+        );
     }
 
 }

@@ -100,12 +100,11 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
     }
     
     public Laboratorio mapRowToLaboratorio(ResultSet rs) throws SQLException {
-        Laboratorio l = new Laboratorio(
+        return new Laboratorio(
                 rs.getInt("id"),
                 rs.getString("descrizione"),
                 rs.getBoolean("riservato")
         );
-        return l;
     }
 
 }

@@ -19,8 +19,7 @@ public class CircoloDAOImpl implements CircoloDAO{
 
     @Override
     public void insert(Circolo c) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_CIRCOLO);
         pst.setString(1,c.getNome());
         pst.setString(2,c.getLuogo());
@@ -29,8 +28,7 @@ public class CircoloDAOImpl implements CircoloDAO{
 
     @Override
     public void update(Circolo c) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_CIRCOLO);
         pst.setString(1, c.getNome());
         pst.setString(2, c.getLuogo());
@@ -40,8 +38,7 @@ public class CircoloDAOImpl implements CircoloDAO{
 
     @Override
     public void delete(Integer idCircolo) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(DELETE_CIRCOLO);
         pst.setInt(1, idCircolo);
         pst.executeUpdate();
@@ -49,8 +46,7 @@ public class CircoloDAOImpl implements CircoloDAO{
 
     @Override
     public Circolo findById(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_CIRCOLO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
@@ -60,37 +56,32 @@ public class CircoloDAOImpl implements CircoloDAO{
 
     @Override
     public List<Circolo> findAll() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_CIRCOLO);
         ResultSet rs = pst.executeQuery();
         LinkedList<Circolo> lc = new LinkedList();
         while (rs.next()){
-            Circolo c = this.mapRowToCircolo(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCircolo(rs));
         }
         return lc;
     }
 
     @Override
     public List<Circolo> findByName(String name) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_CIRCOLO_NAME);
         pst.setString(1, name);
         ResultSet rs = pst.executeQuery();
         LinkedList<Circolo> lc = new LinkedList();
         while (rs.next()){
-            Circolo c = this.mapRowToCircolo(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCircolo(rs));
         }
         return lc;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_CIRCOLO);
         ResultSet rs = pst.executeQuery();
         rs.next();
@@ -99,12 +90,11 @@ public class CircoloDAOImpl implements CircoloDAO{
     }
     
     public Circolo mapRowToCircolo(ResultSet rs) throws SQLException{
-        Circolo c = new Circolo(
+        return new Circolo(
                 rs.getInt("id"),
                 rs.getString("nome"),
                 rs.getString("luogo")
         );
-        return c;
     }
     
 }

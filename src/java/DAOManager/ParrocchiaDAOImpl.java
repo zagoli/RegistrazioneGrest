@@ -19,8 +19,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
 
     @Override
     public void insert(Parrocchia p) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_PARROCCHIA);
         pst.setString(1,p.getNome());
         pst.setString(2,p.getLuogo());
@@ -29,8 +28,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
 
     @Override
     public void update(Parrocchia p) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_PARROCCHIA);
         pst.setString(1, p.getNome());
         pst.setString(2, p.getLuogo());
@@ -40,8 +38,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
 
     @Override
     public void delete(Integer idParrocchia) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(DELETE_PARROCCHIA);
         pst.setInt(1, idParrocchia);
         pst.executeUpdate();
@@ -49,8 +46,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
 
     @Override
     public Parrocchia findById(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
@@ -60,37 +56,32 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
 
     @Override
     public List<Parrocchia> findAll() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_PARROCCHIA);
         ResultSet rs = pst.executeQuery();
         LinkedList<Parrocchia> lp = new LinkedList();
         while(rs.next()){
-            Parrocchia p = this.mapRowToParrocchia(rs);
-            lp.add(p);
+            lp.add(this.mapRowToParrocchia(rs));
         }
         return lp;
     }
 
     @Override
     public List<Parrocchia> findByName(String name) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_NOME);
         pst.setString(1, name);
         ResultSet rs = pst.executeQuery();
         LinkedList<Parrocchia> lp = new LinkedList();
         while(rs.next()){
-            Parrocchia p = this.mapRowToParrocchia(rs);
-            lp.add(p);
+            lp.add(this.mapRowToParrocchia(rs));
         }
         return lp;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_PARROCCHIA);
         ResultSet rs = pst.executeQuery();
         rs.next();
@@ -99,12 +90,11 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
     }
     
     public Parrocchia mapRowToParrocchia(ResultSet rs) throws SQLException {
-        Parrocchia p = new Parrocchia(
+        return new Parrocchia(
                 rs.getInt("id"),
                 rs.getString("nome"),
                 rs.getString("luogo")
-                );
-        return p;
+        );
     }
     
 }

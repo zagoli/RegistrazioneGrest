@@ -107,8 +107,7 @@ public class PagamentoDAOImpl implements PagamentoDAO{
         ResultSet rs = pst.executeQuery();
         List<Pagamento> lp = new LinkedList<>();
         while (rs.next()){
-            Pagamento p = this.mapRowToPagamento(rs);
-            lp.add(p);
+            lp.add(this.mapRowToPagamento(rs));
         }
         return lp;
     }
@@ -121,8 +120,7 @@ public class PagamentoDAOImpl implements PagamentoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Pagamento> lp = new LinkedList<>();
         while (rs.next()){
-            Pagamento p = this.mapRowToPagamento(rs);
-            lp.add(p);
+            lp.add(this.mapRowToPagamento(rs));
         }
         return lp;
     }
@@ -148,7 +146,7 @@ public class PagamentoDAOImpl implements PagamentoDAO{
     }
     
     public Pagamento mapRowToPagamento (ResultSet rs) throws SQLException{
-        Pagamento p = new Pagamento(
+        return new Pagamento(
                 rs.getInt("pid"), 
                 rs.getDate("pdata"), 
                 rs.getFloat("pquota"), 
@@ -167,6 +165,5 @@ public class PagamentoDAOImpl implements PagamentoDAO{
                 ),
                 rs.getInt("pordineArrivo")
         );
-        return p;
     }
 }

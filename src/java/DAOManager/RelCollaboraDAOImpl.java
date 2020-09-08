@@ -42,8 +42,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<RelCollabora> lrc = new LinkedList<>();
         while (rs.next()) {
-            RelCollabora rc = this.mapRowToRelCollabora(rs);
-            lrc.add(rc);
+            lrc.add(this.mapRowToRelCollabora(rs));
         }
         return lrc;
     }
@@ -56,8 +55,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<RelCollabora> lrc = new LinkedList<>();
         while (rs.next()) {
-            RelCollabora rc = this.mapRowToRelCollabora(rs);
-            lrc.add(rc);
+            lrc.add(this.mapRowToRelCollabora(rs));
         }
         return lrc;
     }
@@ -79,20 +77,18 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<RelCollabora> lrc = new LinkedList<>();
         while (rs.next()) {
-            RelCollabora rc = this.mapRowToRelCollabora(rs);
-            lrc.add(rc);
+            lrc.add(this.mapRowToRelCollabora(rs));
         }
         return lrc;
     }
     
     public RelCollabora mapRowToRelCollabora (ResultSet rs) throws SQLException {
-        RelCollabora rc = new RelCollabora(
+        return new RelCollabora(
                 rs.getInt("id"),
                 rs.getInt("Registrato_id"),
                 rs.getInt("Attivita_Gen_id"),
                 rs.getString("data")
         );
-        return rc;
     }
 
 }

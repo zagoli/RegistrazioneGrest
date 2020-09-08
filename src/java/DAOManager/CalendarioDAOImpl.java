@@ -24,8 +24,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
 
     @Override
     public void insert(Calendario c) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_CAL);
         pst.setDate(1, (java.sql.Date) c.getDaQuando());
         pst.setDate(2, (java.sql.Date) c.getaQuando());
@@ -34,8 +33,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
 
     @Override
     public void update(Calendario c) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_CAL);
         pst.setDate(1, (java.sql.Date) c.getDaQuando());
         pst.setDate(2, (java.sql.Date) c.getaQuando());
@@ -45,8 +43,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
 
     @Override
     public void delete(Integer idCalendario) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(DELETE_CAL);
         pst.setInt(1, idCalendario);
         pst.executeUpdate();
@@ -54,8 +51,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
 
     @Override
     public Calendario findById(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_CAL_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
@@ -65,22 +61,19 @@ public class CalendarioDAOImpl implements CalendarioDAO{
 
     @Override
     public List<Calendario> findAll() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_CAL);
         ResultSet rs = pst.executeQuery();
         LinkedList<Calendario> lc = new LinkedList();
         while (rs.next()){
-            Calendario c = this.mapRowToCalendario(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCalendario(rs));
         }
         return lc;
     }
 
     @Override
     public Calendario findByDataInizio(Date data) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_CAL_INIZIO);
         pst.setDate(1, (java.sql.Date) data);
         ResultSet rs = pst.executeQuery();
@@ -90,53 +83,46 @@ public class CalendarioDAOImpl implements CalendarioDAO{
 
     @Override
     public List<Calendario> findByRagazzoId(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_CAL_RAGAZZO);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Calendario> lc = new LinkedList();
         while (rs.next()){
-            Calendario c = this.mapRowToCalendario(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCalendario(rs));
         }
         return lc;
     }
     
     @Override
     public List<Calendario> findByTerzamediaId(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_CAL_TERZAMEDIA);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Calendario> lc = new LinkedList();
         while (rs.next()){
-            Calendario c = this.mapRowToCalendario(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCalendario(rs));
         }
         return lc;
     }
 
     @Override
     public List<Calendario> findByAnimatoreId(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_CAL_ANIMATORE);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Calendario> lc = new LinkedList();
         while (rs.next()){
-            Calendario c = this.mapRowToCalendario(rs);
-            lc.add(c);
+            lc.add(this.mapRowToCalendario(rs));
         }
         return lc;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_CAL);
         ResultSet rs = pst.executeQuery();
         rs.next();
@@ -145,11 +131,10 @@ public class CalendarioDAOImpl implements CalendarioDAO{
     }
     
     public Calendario mapRowToCalendario (ResultSet rs) throws SQLException{
-        Calendario c = new Calendario(
+        return new Calendario(
                 rs.getInt("idSettimana"),
                 rs.getDate("daQuando"),
                 rs.getDate("aQuando")
         );
-        return c;
     }
 }

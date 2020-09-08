@@ -19,8 +19,7 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO{
 
     @Override
     public void insert(AttivitaGen l) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_ATTIVITAGEN);
         pst.setString(1,l.getDescrizione());
         pst.executeUpdate();
@@ -28,8 +27,7 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO{
 
     @Override
     public void update(AttivitaGen l) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_ATTIVITAGEN);
         pst.setString(1, l.getDescrizione());
         pst.setInt(2,l.getId());
@@ -38,8 +36,7 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO{
 
     @Override
     public void delete(Integer idAttGen) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(DELETE_ATTIVITAGEN);
         pst.setInt(1, idAttGen);
         pst.executeUpdate();
@@ -47,8 +44,7 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO{
 
     @Override
     public AttivitaGen findById(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ATTIVITAGEN_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
@@ -58,37 +54,32 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO{
 
     @Override
     public List<AttivitaGen> findAll() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_ATTIVITAGEN);
         ResultSet rs = pst.executeQuery();
         LinkedList<AttivitaGen> la = new LinkedList();
         while(rs.next()){
-            AttivitaGen a = this.mapRowToAttivitaGen(rs);
-            la.add(a);
+            la.add(this.mapRowToAttivitaGen(rs));
         }
         return la;
     }
 
     @Override
     public List<AttivitaGen> findByRegistratoId(int id) throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ATTIVITAGEN_REGISTRATO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<AttivitaGen> la = new LinkedList();
         while(rs.next()){
-            AttivitaGen a = this.mapRowToAttivitaGen(rs);
-            la.add(a);
+            la.add(this.mapRowToAttivitaGen(rs));
         }
         return la;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con;
-        con = DAOMan.getConnection();
+        Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_ATTIVITAGEN);
         ResultSet rs = pst.executeQuery();
         rs.next();
@@ -97,11 +88,10 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO{
     }
     
     public AttivitaGen mapRowToAttivitaGen(ResultSet rs) throws SQLException{
-        AttivitaGen a = new AttivitaGen(
+        return new AttivitaGen(
                 rs.getInt("id"),
                 rs.getString("descrizione")
         );
-        return a;
     }
     
 }

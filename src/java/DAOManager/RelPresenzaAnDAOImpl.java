@@ -40,8 +40,7 @@ public class RelPresenzaAnDAOImpl implements RelPresenzaAnDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<RelPresenzaAn> lrpa = new LinkedList<>();
         while (rs.next()) {
-            RelPresenzaAn rpa = this.mapRowToRelPresenzaAn(rs);
-            lrpa.add(rpa);
+            lrpa.add(this.mapRowToRelPresenzaAn(rs));
         }
         return lrpa;
     }
@@ -54,18 +53,16 @@ public class RelPresenzaAnDAOImpl implements RelPresenzaAnDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<RelPresenzaAn> lrpa = new LinkedList<>();
         while (rs.next()) {
-            RelPresenzaAn rpa = this.mapRowToRelPresenzaAn(rs);
-            lrpa.add(rpa);
+            lrpa.add(this.mapRowToRelPresenzaAn(rs));
         }
         return lrpa;
     }
     
     public RelPresenzaAn mapRowToRelPresenzaAn (ResultSet rs) throws SQLException {
-        RelPresenzaAn rpa = new RelPresenzaAn(
+        return new RelPresenzaAn(
                 rs.getInt("Animatore_id"),
                 rs.getInt("Calendario_idSettimana")
         );
-        return rpa;
     }
     
 }

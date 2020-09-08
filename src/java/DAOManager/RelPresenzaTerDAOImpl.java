@@ -40,8 +40,7 @@ public class RelPresenzaTerDAOImpl implements RelPresenzaTerDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<RelPresenzaTer> lrpt = new LinkedList<>();
         while (rs.next()) {
-            RelPresenzaTer rpt = this.mapRowToRelPresenzaTer(rs);
-            lrpt.add(rpt);
+            lrpt.add(this.mapRowToRelPresenzaTer(rs));
         }
         return lrpt;
     }
@@ -54,18 +53,16 @@ public class RelPresenzaTerDAOImpl implements RelPresenzaTerDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<RelPresenzaTer> lrpt = new LinkedList<>();
         while (rs.next()) {
-            RelPresenzaTer rpt = this.mapRowToRelPresenzaTer(rs);
-            lrpt.add(rpt);
+            lrpt.add(this.mapRowToRelPresenzaTer(rs));
         }
         return lrpt;
     }
     
     public RelPresenzaTer mapRowToRelPresenzaTer (ResultSet rs) throws SQLException {
-        RelPresenzaTer rpt = new RelPresenzaTer(
+        return new RelPresenzaTer(
                 rs.getInt("Calendario_idSettimana"),
                 rs.getInt("Terzamedia_id")
         );
-        return rpt;
     }
     
 }

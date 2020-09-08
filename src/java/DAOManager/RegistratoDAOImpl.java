@@ -81,8 +81,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Registrato> lr = new LinkedList<>();
         while (rs.next()){
-            Registrato r = this.mapRowToRegistrato(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRegistrato(rs));
         }
         return lr;
     }
@@ -135,8 +134,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Registrato> lr = new LinkedList<>();
         while (rs.next()){
-            Registrato r = this.mapRowToRegistrato(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRegistrato(rs));
         }
         return lr;
     }
@@ -149,8 +147,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Registrato> lr = new LinkedList<>();
         while (rs.next()) {
-            Registrato r = this.mapRowToRegistrato(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRegistrato(rs));
         }
         return lr;
     }
@@ -163,8 +160,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Registrato> lr = new LinkedList<>();
         while (rs.next()) {
-            Registrato r = this.mapRowToRegistrato(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRegistrato(rs));
         }
         return lr;
     }
@@ -177,8 +173,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Registrato> lr = new LinkedList<>();
         while (rs.next()) {
-            Registrato r = this.mapRowToRegistrato(rs);
-            lr.add(r);
+            lr.add(this.mapRowToRegistrato(rs));
         }
         return lr;
     }
@@ -193,7 +188,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
     }
     
     public Registrato mapRowToRegistrato (ResultSet rs) throws SQLException{
-        Registrato r = new Registrato(
+        return new Registrato(
                 rs.getInt("id"),
                 rs.getString("mail"),
                 rs.getString("password"),
@@ -205,7 +200,6 @@ public class RegistratoDAOImpl implements RegistratoDAO{
                 rs.getString("civico"),
                 rs.getInt("tipoUt")
         );
-        return r;
     }
 
 }

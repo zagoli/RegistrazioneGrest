@@ -195,8 +195,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         ResultSet rs = pst.executeQuery();
         LinkedList<Terzamedia> lt = new LinkedList<>();
         while (rs.next()) {
-            Terzamedia t = this.mapRowToTerzamedia(rs);
-            lt.add(t);
+            lt.add(this.mapRowToTerzamedia(rs));
         }
         return lt;
     }
@@ -217,12 +216,11 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_LAB_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lr = new LinkedList<>();
+        LinkedList<Terzamedia> lt = new LinkedList<>();
         while (rs.next()) {
-            Terzamedia r = this.mapRowToTerzamedia(rs);
-            lr.add(r);
+            lt.add(this.mapRowToTerzamedia(rs));
         }
-        return lr;
+        return lt;
     }
 
     @Override
@@ -231,12 +229,11 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_SCUOLA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lr = new LinkedList<>();
+        LinkedList<Terzamedia> lt = new LinkedList<>();
         while (rs.next()) {
-            Terzamedia r = this.mapRowToTerzamedia(rs);
-            lr.add(r);
+            lt.add(this.mapRowToTerzamedia(rs));
         }
-        return lr;
+        return lt;
     }
 
     @Override
@@ -245,12 +242,11 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_PARROCCHIA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lr = new LinkedList<>();
+        LinkedList<Terzamedia> lt = new LinkedList<>();
         while (rs.next()) {
-            Terzamedia r = this.mapRowToTerzamedia(rs);
-            lr.add(r);
+            lt.add(this.mapRowToTerzamedia(rs));
         }
-        return lr;
+        return lt;
     }
 
     @Override
@@ -259,12 +255,11 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_CIRCOLO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lr = new LinkedList<>();
+        LinkedList<Terzamedia> lt = new LinkedList<>();
         while (rs.next()) {
-            Terzamedia r = this.mapRowToTerzamedia(rs);
-            lr.add(r);
+            lt.add(this.mapRowToTerzamedia(rs));
         }
-        return lr;
+        return lt;
     }
 
     @Override
@@ -273,12 +268,11 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_CAL_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lr = new LinkedList<>();
+        LinkedList<Terzamedia> lt = new LinkedList<>();
         while (rs.next()) {
-            Terzamedia r = this.mapRowToTerzamedia(rs);
-            lr.add(r);
+            lt.add(this.mapRowToTerzamedia(rs));
         }
-        return lr;
+        return lt;
     }
 
     @Override
@@ -287,12 +281,11 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_REGISTRATO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lr = new LinkedList<>();
+        LinkedList<Terzamedia> lt = new LinkedList<>();
         while (rs.next()) {
-            Terzamedia r = this.mapRowToTerzamedia(rs);
-            lr.add(r);
+            lt.add(this.mapRowToTerzamedia(rs));
         }
-        return lr;
+        return lt;
     }
 
     @Override
@@ -309,7 +302,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     }
 
     public Terzamedia mapRowToTerzamedia(ResultSet rs) throws SQLException {
-        Terzamedia t = new Terzamedia(
+        return new Terzamedia(
                 rs.getInt("terid"),
                 rs.getString("ternome"),
                 rs.getString("tercognome"),
@@ -357,7 +350,6 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
                 rs.getString("tercellulare"),
                 rs.getString("termail")
         );
-        return t;
     }
 
 }

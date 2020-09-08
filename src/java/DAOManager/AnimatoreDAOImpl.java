@@ -183,8 +183,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Animatore> la = new LinkedList<>();
         while (rs.next()){
-            Animatore a = this.mapRowToAnimatore(rs);
-            la.add(a);
+            la.add(this.mapRowToAnimatore(rs));
         }
         return la;
     }
@@ -218,8 +217,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Animatore> la = new LinkedList<>();
         while (rs.next()){
-            Animatore a = this.mapRowToAnimatore(rs);
-            la.add(a);
+            la.add(this.mapRowToAnimatore(rs));
         }
         return la;
     }
@@ -232,8 +230,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Animatore> la = new LinkedList<>();
         while (rs.next()){
-            Animatore a = this.mapRowToAnimatore(rs);
-            la.add(a);
+            la.add(this.mapRowToAnimatore(rs));
         }
         return la;
     }
@@ -246,8 +243,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Animatore> la = new LinkedList<>();
         while (rs.next()){
-            Animatore a = this.mapRowToAnimatore(rs);
-            la.add(a);
+            la.add(this.mapRowToAnimatore(rs));
         }
         return la;
     }
@@ -260,8 +256,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Animatore> la = new LinkedList<>();
         while (rs.next()){
-            Animatore a = this.mapRowToAnimatore(rs);
-            la.add(a);
+            la.add(this.mapRowToAnimatore(rs));
         }
         return la;
     }
@@ -275,14 +270,13 @@ public class AnimatoreDAOImpl implements AnimatoreDAO{
         ResultSet rs = pst.executeQuery();
         LinkedList<Animatore> la = new LinkedList<>();
         while (rs.next()){
-            Animatore a = this.mapRowToAnimatore(rs);
-            la.add(a);
+            la.add(this.mapRowToAnimatore(rs));
         }
         return la;
     }
     
     public Animatore mapRowToAnimatore (ResultSet rs) throws SQLException{
-        Animatore a = new Animatore(
+        return new Animatore(
                 rs.getInt("anid"), 
                 rs.getString("annome"),
                 rs.getString("ancognome"),
@@ -324,7 +318,6 @@ public class AnimatoreDAOImpl implements AnimatoreDAO{
                 rs.getBoolean("anisResponsabileSquadra"),
                 rs.getBoolean("anisResponsabileLaboratorio")
         );
-        return a;
     }
 
 }
