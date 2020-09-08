@@ -27,6 +27,7 @@ public class DAOMan {
     public static RelPresenzaTerDAO relPresenzaTerDAO = new RelPresenzaTerDAOImpl();
     public static PagamentoTerzamediaDAO pagamentoTerzamediaDAO = new PagamentoTerzamediaDAOImpl();
     public static CodiceSbloccoIscrizioneDAO codiceSbloccoIscrizioneDAO = new CodiceSbloccoIscrizioneDAOImpl();
+    public static SquadraDAO squadraDAO = new SquadraDAOImpl();
     
     /* connessione per MySql
     private static Connection initConnMysql() {
