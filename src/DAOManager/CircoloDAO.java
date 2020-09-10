@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface CircoloDAO {
     //CRUD
-    public void insert (Circolo c) throws SQLException;
-    public void update (Circolo c) throws SQLException;
-    public void delete (Integer idCircolo) throws SQLException;
-    public Circolo findById(int id) throws SQLException;
+    void insert(Circolo c) throws SQLException;
+    void update(Circolo c) throws SQLException;
+    void delete(Integer idCircolo) throws SQLException;
+    Circolo findById(int id) throws SQLException;
     
     //SELECT
-    public List<Circolo> findAll() throws SQLException;
-    public List<Circolo> findByName(String name) throws SQLException;
-    public int count() throws SQLException;
+    List<Circolo> findAll() throws SQLException;
+    List<Circolo> findByName(String name) throws SQLException;
+    int count() throws SQLException;
 }

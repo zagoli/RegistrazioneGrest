@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface RelPresenzaAnDAO {
     //CRD
-    public void insert (RelPresenzaAn rpa) throws SQLException;
-    public void delete (RelPresenzaAn rpa) throws SQLException;
-    public List<RelPresenzaAn> findByAnimatoreId (int id) throws SQLException;
-    public List<RelPresenzaAn> findByCalendarioId (int id) throws SQLException;
+    void insert(RelPresenzaAn rpa) throws SQLException;
+    void delete(RelPresenzaAn rpa) throws SQLException;
+    List<RelPresenzaAn> findByAnimatoreId(int id) throws SQLException;
+    List<RelPresenzaAn> findByCalendarioId(int id) throws SQLException;
 }

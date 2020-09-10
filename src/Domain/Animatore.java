@@ -16,7 +16,7 @@ public class Animatore {
     private String fasciaEtaRagazzi;
     private String mail;
     private String nTessera;
-    private String squadra;
+    private Squadra squadra;
     private String codiceFiscale;
     private boolean responsabileSquadra;
     private boolean responsabileLaboratorio;
@@ -24,7 +24,7 @@ public class Animatore {
     public Animatore() {
     }
 
-    public Animatore(int id, String nome, String cognome, Date dataNascita, String presenza, Laboratorio laboratorio, Parrocchia parrocchia, Registrato registrato, Circolo circolo, String cellulare, String fasciaEtaRagazzi, String mail, String nTessera, String squadra, String codiceFiscale, boolean isResponsabileSquadra, boolean isResponsabileLaboratorio) {
+    public Animatore(int id, String nome, String cognome, Date dataNascita, String presenza, Laboratorio laboratorio, Parrocchia parrocchia, Registrato registrato, Circolo circolo, String cellulare, String fasciaEtaRagazzi, String mail, String nTessera, Squadra squadra, String codiceFiscale, boolean isResponsabileSquadra, boolean isResponsabileLaboratorio) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -148,11 +148,11 @@ public class Animatore {
         this.nTessera = nTessera;
     }
 
-    public String getSquadra() {
+    public Squadra getSquadra() {
         return squadra;
     }
 
-    public void setSquadra(String squadra) {
+    public void setSquadra(Squadra squadra) {
         this.squadra = squadra;
     }
 

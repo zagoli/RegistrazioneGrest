@@ -50,8 +50,7 @@ public class CircoloDAOImpl implements CircoloDAO{
         PreparedStatement pst = con.prepareStatement(FIND_CIRCOLO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Circolo c = rs.next() ? this.mapRowToCircolo(rs) : null;
-        return c;
+        return rs.next() ? this.mapRowToCircolo(rs) : null;
     }
 
     @Override
@@ -59,7 +58,7 @@ public class CircoloDAOImpl implements CircoloDAO{
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_CIRCOLO);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Circolo> lc = new LinkedList();
+        LinkedList<Circolo> lc = new LinkedList<>();
         while (rs.next()){
             lc.add(this.mapRowToCircolo(rs));
         }
@@ -72,7 +71,7 @@ public class CircoloDAOImpl implements CircoloDAO{
         PreparedStatement pst = con.prepareStatement(FIND_CIRCOLO_NAME);
         pst.setString(1, name);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Circolo> lc = new LinkedList();
+        LinkedList<Circolo> lc = new LinkedList<>();
         while (rs.next()){
             lc.add(this.mapRowToCircolo(rs));
         }
@@ -85,8 +84,7 @@ public class CircoloDAOImpl implements CircoloDAO{
         PreparedStatement pst = con.prepareStatement(COUNT_CIRCOLO);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
     
     public Circolo mapRowToCircolo(ResultSet rs) throws SQLException{

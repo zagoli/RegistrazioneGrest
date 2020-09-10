@@ -37,11 +37,7 @@ public class ControllerDashboard implements ControllerInterface {
                     if (!listRagazzo.isEmpty()) {
                         for (Ragazzo ragazzo : listRagazzo) {
                             Pagamento p = DAOMan.pagamentoDAO.findByRagazzoId(ragazzo.getId());
-                            if (p != null) {
-                                mapRagazzoPagato.put(ragazzo, true);
-                            } else {
-                                mapRagazzoPagato.put(ragazzo, false);
-                            }
+                            mapRagazzoPagato.put(ragazzo, p != null);
                         }
                         mv.addObject("ragazzi", mapRagazzoPagato);
                     }
@@ -55,11 +51,7 @@ public class ControllerDashboard implements ControllerInterface {
                     if (!listTerzamedia.isEmpty()) {
                         for (Terzamedia ter : listTerzamedia) {
                             PagamentoTerzamedia p = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(ter.getId());
-                            if (p != null) {
-                                mapTerzamediaPagato.put(ter, true);
-                            } else {
-                                mapTerzamediaPagato.put(ter, false);
-                            }
+                            mapTerzamediaPagato.put(ter, p != null);
                         }
                         mv.addObject("terzamedia", mapTerzamediaPagato);
                     }

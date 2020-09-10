@@ -5,6 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface ControllerInterface {
 
-    public ModelAndView handleRequest ( HttpServletRequest request,HttpServletResponse response );
+    ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response);
 
 }

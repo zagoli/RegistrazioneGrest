@@ -52,7 +52,7 @@ public class Registrato {
 
     @SuppressWarnings("empty-statement")
     public void setPassword(String password) {
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public String getNome() {

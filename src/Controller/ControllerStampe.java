@@ -41,7 +41,7 @@ public class ControllerStampe implements ControllerInterface {
                             String periodoString = "";
                             List<RelPresenzaRag> periodo = DAOMan.relPresenzaRagDAO.findByRagazzoId(rag.getId());
                             periodoString = periodo.stream().map((relPresenzaRag) -> relPresenzaRag.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                            Object o[] = {rag, periodoString};
+                            Object[] o = {rag, periodoString};
                             ragGiusti.add(o);
                         } catch (SQLException ex) {
                             mv.setView("err/errore.html");
@@ -55,7 +55,7 @@ public class ControllerStampe implements ControllerInterface {
                             String periodoString = "";
                             List<RelPresenzaAn> periodo = DAOMan.relPresenzaAnDAO.findByAnimatoreId(an.getId());
                             periodoString = periodo.stream().map((RelPresenzaAn) -> RelPresenzaAn.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                            Object o[] = {an, periodoString};
+                            Object[] o = {an, periodoString};
                             anGiusti.add(o);
                         } catch (SQLException ex) {
                             mv.setView("err/errore.html");
@@ -80,7 +80,7 @@ public class ControllerStampe implements ControllerInterface {
                             periodoString = periodo.stream().map((relPresenzaRag) -> relPresenzaRag.getCalendarioId() + " ").reduce(periodoString, String::concat);
                             int idreg = rag.getRegistrato().getId();
                             List<ContattoUrgenze> cu = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idreg);
-                            Object o[] = {rag, periodoString, cu};
+                            Object[] o = {rag, periodoString, cu};
                             dati.add(o);
                         }
                         mv.addObject("ragazzi", dati);
@@ -89,18 +89,14 @@ public class ControllerStampe implements ControllerInterface {
                 }
                 break;
                 case "pressetlab": {
-                    Integer labid = Integer.parseInt(request.getParameter("lab"));
+                    int labid = Integer.parseInt(request.getParameter("lab"));
                     int idset = Integer.parseInt(request.getParameter("idset"));
                         List<Ragazzo> allRagazzi = DAOMan.ragazzoDAO.findByCalendarioId(idset);
                         List<Ragazzo> ragGiusti = new LinkedList<>();
                         List<Animatore> allAnimatori = DAOMan.animatoreDAO.findByCalendarioId(idset);
                         List<Animatore> anGiusti = new LinkedList<>();
-                        allRagazzi.stream().filter((rag) -> (rag.getLaboratorio().getId() == labid)).forEachOrdered((rag) -> {
-                            ragGiusti.add(rag);
-                        });
-                        allAnimatori.stream().filter((an) -> (an.getLaboratorio().getId() == labid)).forEachOrdered((an) -> {
-                            anGiusti.add(an);
-                        });
+                        allRagazzi.stream().filter((rag) -> (rag.getLaboratorio().getId() == labid)).forEachOrdered(ragGiusti::add);
+                        allAnimatori.stream().filter((an) -> (an.getLaboratorio().getId() == labid)).forEachOrdered(anGiusti::add);
                         mv.addObject("ragazzi", ragGiusti);
                         mv.addObject("animatori", anGiusti);
                         mv.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
@@ -202,7 +198,7 @@ public class ControllerStampe implements ControllerInterface {
                             periodoString = periodo.stream().map((relPresenzaTer) -> relPresenzaTer.getCalendarioId() + " ").reduce(periodoString, String::concat);
                             int idreg = ter.getRegistrato().getId();
                             List<ContattoUrgenze> cu = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idreg);
-                            Object o[] = {ter, periodoString, cu};
+                            Object[] o = {ter, periodoString, cu};
                             dati.add(o);
                         }
                         mv.addObject("terzamedia", dati);

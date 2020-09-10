@@ -20,14 +20,14 @@ public class Terzamedia {
     private Scuola scuola;
     private String sezione;
     private String nTessera;
-    private String squadra;
+    private Squadra squadra;
     private String cellulare;
     private String mail;
 
     public Terzamedia() {
     }
 
-    public Terzamedia(int id, String nome, String cognome, Date dataNascita, String presenza, Laboratorio laboratorio, Parrocchia parrocchia, Registrato registrato, Circolo circolo, String richieste, String noteAlimentari, Boolean saNuotare, Boolean festaPassaggio, Scuola scuola, String sezione, String nTessera, String squadra, String cellulare, String mail) {
+    public Terzamedia(int id, String nome, String cognome, Date dataNascita, String presenza, Laboratorio laboratorio, Parrocchia parrocchia, Registrato registrato, Circolo circolo, String richieste, String noteAlimentari, Boolean saNuotare, Boolean festaPassaggio, Scuola scuola, String sezione, String nTessera, Squadra squadra, String cellulare, String mail) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -177,11 +177,11 @@ public class Terzamedia {
         this.nTessera = nTessera;
     }
 
-    public String getSquadra() {
+    public Squadra getSquadra() {
         return squadra;
     }
 
-    public void setSquadra(String squadra) {
+    public void setSquadra(Squadra squadra) {
         this.squadra = squadra;
     }
 

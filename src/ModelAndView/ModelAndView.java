@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public interface ModelAndView {
 
-    public void addObject(String property , Object obj);
-    public HashMap<String, Object> getMap();
-    public String getView();
-    public void setView(String view);
+    void addObject(String property, Object obj);
+    HashMap<String, Object> getMap();
+    String getView();
+    void setView(String view);
 }

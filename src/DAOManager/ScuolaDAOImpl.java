@@ -1,4 +1,4 @@
- package DAOManager;
+package DAOManager;
 
 import Domain.Scuola;
 import java.sql.Connection;
@@ -49,8 +49,7 @@ public class ScuolaDAOImpl implements ScuolaDAO{
         PreparedStatement pst = con.prepareStatement(FIND_SCUOLA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Scuola s = rs.next() ? this.mapRowToScuola(rs) : null;
-        return s;
+        return rs.next() ? this.mapRowToScuola(rs) : null;
     }
 
     @Override
@@ -58,7 +57,7 @@ public class ScuolaDAOImpl implements ScuolaDAO{
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_SCUOLA);
         ResultSet rs = pst.executeQuery();
-        LinkedList ls = new LinkedList();
+        LinkedList<Scuola> ls = new LinkedList<>();
         while (rs.next()) {
             ls.add(mapRowToScuola(rs));
         }
@@ -71,8 +70,7 @@ public class ScuolaDAOImpl implements ScuolaDAO{
         PreparedStatement pst = con.prepareStatement(COUNT_SCUOLA);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
     
     public Scuola mapRowToScuola(ResultSet rs) throws SQLException {

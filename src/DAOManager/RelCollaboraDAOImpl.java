@@ -14,7 +14,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO{
     private final String FIND_RELCOLLABORA_REGISTRATO_ID = "select * from collabora where Registrato_id = ?;";
     private final String FIND_RELCOLLABORA_ATTGEN_ID = "select * from collabora where Attivita_Gen_id = ?;";
     private final String FIND_RELCOLLABORA_ID = "select * from collabora where id = ?;";
-    private final String FIND_ALL_RELCOLLABORA = "select * from collabora order by Attivita_Gen_id asc;";
+    private final String FIND_ALL_RELCOLLABORA = "select * from collabora order by Attivita_Gen_id;";
 
     @Override
     public void insert(RelCollabora rc) throws SQLException {
@@ -66,8 +66,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO{
         PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        RelCollabora rc = rs.next()? this.mapRowToRelCollabora(rs) : null;
-        return rc;
+        return rs.next()? this.mapRowToRelCollabora(rs) : null;
     }
     
     @Override

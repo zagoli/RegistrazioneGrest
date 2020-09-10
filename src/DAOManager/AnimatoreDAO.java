@@ -6,19 +6,19 @@ import java.util.List;
 
 public interface AnimatoreDAO {
     //CRUD
-    public void insert(Animatore a) throws SQLException;
-    public void update(Animatore a) throws SQLException;
-    public void updateSquadra(int id, String squadra, boolean responsabile) throws SQLException;
-    public void updateLaboratorio(int id, int idLaboratorio, boolean responsabile) throws SQLException;
-    public void delete(Integer idAnimatore) throws SQLException;
-    public Animatore findById(int id) throws SQLException;
+    void insert(Animatore a) throws SQLException;
+    void update(Animatore a) throws SQLException;
+    void updateSquadra(int id, int idSquadra, boolean responsabile) throws SQLException;
+    void updateLaboratorio(int id, int idLaboratorio, boolean responsabile) throws SQLException;
+    void delete(Integer idAnimatore) throws SQLException;
+    Animatore findById(int id) throws SQLException;
     //SELECT
-    public List<Animatore> findAll() throws SQLException;
-    public int count() throws SQLException;
-    public Animatore findByNominativo(String nome,String cognome) throws SQLException;
-    public List<Animatore> findByLab(int id) throws SQLException;
-    public List<Animatore> findByParrocchiaId(int id) throws SQLException;
-    public List<Animatore> findByCircoloId(int id) throws SQLException;
-    public List<Animatore> findByCalendarioId(int id) throws SQLException;
-    public List<Animatore> findByRegistratoId(int id) throws SQLException;
+    List<Animatore> findAll() throws SQLException;
+    int count() throws SQLException;
+    Animatore findByNominativo(String nome, String cognome) throws SQLException;
+    List<Animatore> findByLab(int id) throws SQLException;
+    List<Animatore> findByParrocchiaId(int id) throws SQLException;
+    List<Animatore> findByCircoloId(int id) throws SQLException;
+    List<Animatore> findByCalendarioId(int id) throws SQLException;
+    List<Animatore> findByRegistratoId(int id) throws SQLException;
 }

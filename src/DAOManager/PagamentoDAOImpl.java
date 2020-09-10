@@ -96,8 +96,7 @@ public class PagamentoDAOImpl implements PagamentoDAO{
         PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Pagamento p = rs.next() ? this.mapRowToPagamento(rs) : null;
-        return p;
+        return rs.next() ? this.mapRowToPagamento(rs) : null;
     }
 
     @Override
@@ -131,8 +130,7 @@ public class PagamentoDAOImpl implements PagamentoDAO{
         PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_RAGAZZO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Pagamento p = rs.next() ? this.mapRowToPagamento(rs) : null;
-        return p;
+        return rs.next() ? this.mapRowToPagamento(rs) : null;
     }
 
     @Override
@@ -141,8 +139,7 @@ public class PagamentoDAOImpl implements PagamentoDAO{
         PreparedStatement pst = con.prepareStatement(COUNT_PAGAMENTO);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
     
     public Pagamento mapRowToPagamento (ResultSet rs) throws SQLException{

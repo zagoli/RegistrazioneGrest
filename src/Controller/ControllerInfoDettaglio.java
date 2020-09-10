@@ -61,16 +61,16 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Ragazzo r = DAOMan.ragazzoDAO.findById(id);
                     mv.addObject("ragazzo", r);
                     int idRegistrato = r.getRegistrato().getId();
-                    List listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
+                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
                     if (!listCU.isEmpty()) {
                         mv.addObject("cu", listCU);
                     }
-                    List listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idRegistrato);
+                    List<Accompagnatore> listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idRegistrato);
                     if (!listAccompagnatore.isEmpty()) {
                         mv.addObject("accompagnatori", listAccompagnatore);
                     }
                     List<RelPresenzaRag> listRelPresenzaRag = DAOMan.relPresenzaRagDAO.findByRagazzoId(id);
-                    List listCalendario = new LinkedList<>();
+                    List<Calendario> listCalendario = new LinkedList<>();
                     for (RelPresenzaRag rpr : listRelPresenzaRag) {
                         Calendario c = DAOMan.calendarioDAO.findById(rpr.getCalendarioId());
                         listCalendario.add(c);
@@ -87,16 +87,16 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Ragazzo r = DAOMan.ragazzoDAO.findById(id);
                     mv.addObject("ragazzo", r);
                     int idRegistrato = r.getRegistrato().getId();
-                    List listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
+                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
                     if (!listCU.isEmpty()) {
                         mv.addObject("cu", listCU);
                     }
-                    List listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idRegistrato);
+                    List<Accompagnatore> listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idRegistrato);
                     if (!listAccompagnatore.isEmpty()) {
                         mv.addObject("accompagnatori", listAccompagnatore);
                     }
                     List<RelPresenzaRag> listRelPresenzaRag = DAOMan.relPresenzaRagDAO.findByRagazzoId(id);
-                    List listCalendario = new LinkedList<>();
+                    List<Calendario> listCalendario = new LinkedList<>();
                     for (RelPresenzaRag rpr : listRelPresenzaRag) {
                         Calendario c = DAOMan.calendarioDAO.findById(rpr.getCalendarioId());
                         listCalendario.add(c);
@@ -113,12 +113,12 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Terzamedia t = DAOMan.terzamediaDAO.findById(id);
                     mv.addObject("terzamedia", t);
                     int idRegistrato = t.getRegistrato().getId();
-                    List listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
+                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
                     if (!listCU.isEmpty()) {
                         mv.addObject("cu", listCU);
                     }
                     List<RelPresenzaTer> listRelPresenzaTer = DAOMan.relPresenzaTerDAO.findByTerzamediaId(id);
-                    List listCalendario = new LinkedList<>();
+                    List<Calendario> listCalendario = new LinkedList<>();
                     for (RelPresenzaTer rpt : listRelPresenzaTer) {
                         Calendario c = DAOMan.calendarioDAO.findById(rpt.getCalendarioId());
                         listCalendario.add(c);
@@ -135,12 +135,12 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Terzamedia t = DAOMan.terzamediaDAO.findById(id);
                     mv.addObject("terzamedia", t);
                     int idRegistrato = t.getRegistrato().getId();
-                    List listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
+                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
                     if (!listCU.isEmpty()) {
                         mv.addObject("cu", listCU);
                     }
                     List<RelPresenzaTer> listRelPresenzaTer = DAOMan.relPresenzaTerDAO.findByTerzamediaId(id);
-                    List listCalendario = new LinkedList<>();
+                    List<Calendario> listCalendario = new LinkedList<>();
                     for (RelPresenzaTer rpt : listRelPresenzaTer) {
                         Calendario c = DAOMan.calendarioDAO.findById(rpt.getCalendarioId());
                         listCalendario.add(c);
@@ -157,12 +157,12 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Animatore a = DAOMan.animatoreDAO.findById(id);
                     mv.addObject("animatore", a);
                     int idRegistrato = a.getRegistrato().getId();
-                    List listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
+                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
                     if (!listCU.isEmpty()) {
                         mv.addObject("cu", listCU);
                     }
                     List<RelPresenzaAn> listRelPresenzaAn = DAOMan.relPresenzaAnDAO.findByAnimatoreId(id);
-                    List listCalendario = new LinkedList<>();
+                    List<Calendario> listCalendario = new LinkedList<>();
                     for (RelPresenzaAn rpa : listRelPresenzaAn) {
                         Calendario c = DAOMan.calendarioDAO.findById(rpa.getCalendarioId());
                         listCalendario.add(c);

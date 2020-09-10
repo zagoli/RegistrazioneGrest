@@ -22,12 +22,12 @@ public class Ragazzo {
     private String sezione;
     private String classe;
     private String nTessera;
-    private String squadra;
+    private Squadra squadra;
 
     public Ragazzo() {
     }
 
-    public Ragazzo(int id, String nome, String cognome, Date dataNascita, String presenza, Laboratorio laboratorio, Parrocchia parrocchia, Registrato registrato, Circolo circolo, Boolean entrataAnticipata, String richieste, String noteAlimentari, Boolean mensa, Boolean saNuotare, Boolean fratelloIscritto, Scuola scuola, String sezione, String classe, String nTessera, String squadra) {
+    public Ragazzo(int id, String nome, String cognome, Date dataNascita, String presenza, Laboratorio laboratorio, Parrocchia parrocchia, Registrato registrato, Circolo circolo, Boolean entrataAnticipata, String richieste, String noteAlimentari, Boolean mensa, Boolean saNuotare, Boolean fratelloIscritto, Scuola scuola, String sezione, String classe, String nTessera, Squadra squadra) {
         this.id = id;
         this.nome = nome;
         this.cognome = cognome;
@@ -202,11 +202,11 @@ public class Ragazzo {
         this.nTessera = nTessera;
     }
 
-    public String getSquadra() {
+    public Squadra getSquadra() {
         return squadra;
     }
 
-    public void setSquadra(String squadra) {
+    public void setSquadra(Squadra squadra) {
         this.squadra = squadra;
     }
     

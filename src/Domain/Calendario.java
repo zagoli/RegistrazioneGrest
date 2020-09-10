@@ -53,7 +53,7 @@ public class Calendario implements Comparable<Calendario>{
     }
      @Override
     public boolean equals(Object obj) {
-        Boolean flag = false;
+        boolean flag = false;
         if (obj instanceof Calendario) {
             Calendario cal = (Calendario) obj;
             if (cal.getIdSettimana() == this.getIdSettimana()) {

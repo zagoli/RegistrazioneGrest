@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface RelCollaboraDAO {
     //CRD
-    public void insert (RelCollabora rc) throws SQLException;
-    public void delete (RelCollabora rc) throws SQLException;
-    public RelCollabora findById (int id) throws SQLException;
-    public List<RelCollabora> findByRegistratoId (int id) throws SQLException;
-    public List<RelCollabora> findByAttGenId (int id) throws SQLException;
-    public List<RelCollabora> findAll () throws SQLException;
+    void insert(RelCollabora rc) throws SQLException;
+    void delete(RelCollabora rc) throws SQLException;
+    RelCollabora findById(int id) throws SQLException;
+    List<RelCollabora> findByRegistratoId(int id) throws SQLException;
+    List<RelCollabora> findByAttGenId(int id) throws SQLException;
+    List<RelCollabora> findAll() throws SQLException;
 }

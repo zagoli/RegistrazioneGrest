@@ -10,15 +10,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CalendarioDAOImpl implements CalendarioDAO{
-    private final String INSERT_CAL = "inserto into Calendario (daQuando,aQuando) values (?,?);";
+    private final String INSERT_CAL = "insert into Calendario (daQuando,aQuando) values (?,?);";
     private final String UPDATE_CAL = "update Calendario set daQuando = ?, aQuando = ? where idSettimana = ?;";
     private final String DELETE_CAL = "delete from Calendario where idSettimana = ?;";
     private final String FIND_CAL_ID = "select * from Calendario where idSettimana = ?;";
-    private final String FIND_ALL_CAL = "select * from Calendario order by daQuando asc;";
+    private final String FIND_ALL_CAL = "select * from Calendario order by daQuando;";
     private final String FIND_CAL_INIZIO = "select * from Calendario where daQuando = ?;";
-    private final String FIND_CAL_RAGAZZO = "select * from Calendario c join presenzaRag p on (c.idSettimana = p.Calendario_idSettimana) where p.Ragazzo_id = ? order by daQuando asc;";
-    private final String FIND_CAL_ANIMATORE = "select * from Calendario c join presenzaAn p on (c.idSettimana = p.Calendario_idSettimana) where p.Animatore_id = ? order by daQuando asc;";
-    private final String FIND_CAL_TERZAMEDIA = "select * from Calendario c join presenzaTer p on (c.idSettimana = p.Calendario_idSettimana) where p.Terzamedia_id = ? order by daQuando asc;";
+    private final String FIND_CAL_RAGAZZO = "select * from Calendario c join presenzaRag p on (c.idSettimana = p.Calendario_idSettimana) where p.Ragazzo_id = ? order by daQuando;";
+    private final String FIND_CAL_ANIMATORE = "select * from Calendario c join presenzaAn p on (c.idSettimana = p.Calendario_idSettimana) where p.Animatore_id = ? order by daQuando;";
+    private final String FIND_CAL_TERZAMEDIA = "select * from Calendario c join presenzaTer p on (c.idSettimana = p.Calendario_idSettimana) where p.Terzamedia_id = ? order by daQuando;";
     private final String COUNT_CAL = "select count(*) from Calendario;";
     
 
@@ -55,8 +55,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
         PreparedStatement pst = con.prepareStatement(FIND_CAL_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Calendario c = rs.next() ? this.mapRowToCalendario(rs) : null;
-        return c;
+        return rs.next() ? this.mapRowToCalendario(rs) : null;
     }
 
     @Override
@@ -64,7 +63,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_CAL);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Calendario> lc = new LinkedList();
+        LinkedList<Calendario> lc = new LinkedList<>();
         while (rs.next()){
             lc.add(this.mapRowToCalendario(rs));
         }
@@ -77,8 +76,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
         PreparedStatement pst = con.prepareStatement(FIND_CAL_INIZIO);
         pst.setDate(1, (java.sql.Date) data);
         ResultSet rs = pst.executeQuery();
-        Calendario c = rs.next() ? this.mapRowToCalendario(rs) : null;
-        return c;
+        return rs.next() ? this.mapRowToCalendario(rs) : null;
     }
 
     @Override
@@ -87,7 +85,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
         PreparedStatement pst = con.prepareStatement(FIND_CAL_RAGAZZO);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Calendario> lc = new LinkedList();
+        LinkedList<Calendario> lc = new LinkedList<>();
         while (rs.next()){
             lc.add(this.mapRowToCalendario(rs));
         }
@@ -100,7 +98,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
         PreparedStatement pst = con.prepareStatement(FIND_CAL_TERZAMEDIA);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Calendario> lc = new LinkedList();
+        LinkedList<Calendario> lc = new LinkedList<>();
         while (rs.next()){
             lc.add(this.mapRowToCalendario(rs));
         }
@@ -113,7 +111,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
         PreparedStatement pst = con.prepareStatement(FIND_CAL_ANIMATORE);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Calendario> lc = new LinkedList();
+        LinkedList<Calendario> lc = new LinkedList<>();
         while (rs.next()){
             lc.add(this.mapRowToCalendario(rs));
         }
@@ -126,8 +124,7 @@ public class CalendarioDAOImpl implements CalendarioDAO{
         PreparedStatement pst = con.prepareStatement(COUNT_CAL);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
     
     public Calendario mapRowToCalendario (ResultSet rs) throws SQLException{

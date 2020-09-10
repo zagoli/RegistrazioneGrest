@@ -54,8 +54,7 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
         PreparedStatement pst = con.prepareStatement(FIND_CODICE);
         pst.setString(1, codice);
         ResultSet rs = pst.executeQuery();
-        CodiceSbloccoIscrizione c = rs.next() ? this.mapRowToCodiceSbloccoIscrizione(rs) : null;
-        return c;
+        return rs.next() ? this.mapRowToCodiceSbloccoIscrizione(rs) : null;
     }
 
     @Override

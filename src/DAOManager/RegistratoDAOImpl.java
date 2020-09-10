@@ -70,8 +70,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Registrato r = rs.next() ? this.mapRowToRegistrato(rs) : null;
-        return r;
+        return rs.next() ? this.mapRowToRegistrato(rs) : null;
     }
 
     @Override
@@ -92,8 +91,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         PreparedStatement pst = con.prepareStatement(COUNT_REGISTRATO);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
     
     @Override
@@ -102,8 +100,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         PreparedStatement pst = con.prepareStatement(COUNT_USERS);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
 
     @Override
@@ -112,8 +109,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_MAIL);
         pst.setString(1, mail);
         ResultSet rs = pst.executeQuery();
-        Registrato r = rs.next() ? this.mapRowToRegistrato(rs) : null;
-        return r;
+        return rs.next() ? this.mapRowToRegistrato(rs) : null;
     }
 
     @Override
@@ -123,8 +119,7 @@ public class RegistratoDAOImpl implements RegistratoDAO{
         pst.setString(1, nome);
         pst.setString(2, cognome);
         ResultSet rs = pst.executeQuery();
-        Registrato r = rs.next() ? this.mapRowToRegistrato(rs) : null;
-        return r;
+        return rs.next() ? this.mapRowToRegistrato(rs) : null;
     }
 
     @Override

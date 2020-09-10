@@ -20,7 +20,7 @@ public class ControllerEliminaPrenotazioneAttGen implements ControllerInterface{
             int id = Integer.parseInt(request.getParameter("id"));
             RelCollabora toDeleteCollabora = DAOMan.relCollaboraDAO.findById(id);
             DAOMan.relCollaboraDAO.delete(toDeleteCollabora);
-            response.sendRedirect("/RegistrazioneGrest/App/AttivitaGenitori");
+            response.sendRedirect("/RegistrazioneGrest/App/DashboardAttGen");
         } catch (NullPointerException | IOException | NumberFormatException | SQLException ex) {
             mv.setView("err/errore.html");
             mv.addObject("eccezione", ex);

@@ -6,7 +6,7 @@ public class ModelAndViewStandard implements ModelAndView   {
 
     protected String  view = "/err/errore.html";
     protected boolean redirect = false;
-    HashMap<String,Object> map = new HashMap<>();
+    final HashMap<String,Object> map = new HashMap<>();
 
     public ModelAndViewStandard() {
     }

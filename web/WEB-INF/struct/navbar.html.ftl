@@ -9,7 +9,7 @@
               <a href="/RegistrazioneGrest/App/AccompagnatoriContatti" class="btn btn-block btn-secondary">Accompagnatori e Contatti telefonici Urgenze</a>
             </li>
             <li class="nav-item pr-4">
-              <a href="/RegistrazioneGrest/App/AttivitaGenitori" class="btn btn-block btn-secondary">Collaborazione genitori</a>
+              <a href="/RegistrazioneGrest/App/DashboardAttGen" class="btn btn-block btn-secondary">Collaborazione genitori</a>
             </li>
             <#elseif tipoUt <= 2>
             <li class="nav-item pr-4">

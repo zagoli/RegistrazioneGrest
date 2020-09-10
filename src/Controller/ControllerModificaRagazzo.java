@@ -48,14 +48,8 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                 mv.addObject("scuole", listScuola);
                 List<Calendario> listaCalendari = DAOMan.calendarioDAO.findAll();
                 List<Calendario> listaCalendariRagazzo = DAOMan.calendarioDAO.findByRagazzoId(idRagazzo);
-                Map calendari = new TreeMap();
-                listaCalendari.forEach((calendario) -> {
-                    if (listaCalendariRagazzo.contains(calendario)) {
-                        calendari.put(calendario, true);
-                    } else {
-                        calendari.put(calendario, false);
-                    }
-                });
+                Map<Calendario,Boolean> calendari = new TreeMap<>();
+                listaCalendari.forEach((calendario) -> calendari.put(calendario, listaCalendariRagazzo.contains(calendario)));
                 mv.addObject("calendari", calendari);
                 mv.setView("user/modificaragazzo.html");
             } else {

@@ -96,8 +96,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        PagamentoTerzamedia p = rs.next() ? this.mapRowToPagamentoTerzamedia(rs) : null;
-        return p;
+        return rs.next() ? this.mapRowToPagamentoTerzamedia(rs) : null;
     }
 
     @Override
@@ -131,8 +130,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_TERZAMEDIA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        PagamentoTerzamedia p = rs.next() ? this.mapRowToPagamentoTerzamedia(rs) : null;
-        return p;
+        return rs.next() ? this.mapRowToPagamentoTerzamedia(rs) : null;
     }
 
     @Override
@@ -141,8 +139,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(COUNT_PAGAMENTO);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
 
     public PagamentoTerzamedia mapRowToPagamentoTerzamedia(ResultSet rs) throws SQLException {

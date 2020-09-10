@@ -88,7 +88,7 @@ public class ControllerLogin implements ControllerInterface {
     }
 
 
-    private void sendResetPasswordEmail(Registrato r, String newpswd) throws AddressException, MessagingException {
+    private void sendResetPasswordEmail(Registrato r, String newpswd) throws MessagingException {
         String destinatario = r.getMail();
         String mittente = "assistenzatecnica@parrocchiadibalconi.it";
         Properties properties = new Properties();

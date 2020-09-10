@@ -11,7 +11,6 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -22,7 +21,7 @@ import org.json.JSONObject;
 
 public class Checker {
 
-    public static boolean checkMail(String mail) throws IOException, UnirestException {
+    public static boolean checkMail(String mail) throws UnirestException {
         boolean flag = false;
         String key = /*assistenza*//*"bc92b98f15fbd6039d7d9437dea21d4c";*/ /*segreteria*/"99eb8b3fcc4698a5f33129569761e3af";
         HttpResponse<JsonNode> response = Unirest.get("http://apilayer.net/api/check").queryString("access_key", key).queryString("email", mail).asJson();
@@ -31,19 +30,19 @@ public class Checker {
             JSONArray array = response.getBody().getArray();
             JSONObject responsedata = array.getJSONObject(0);
             //controllo se ho esaurito la quota delle mail
-            if (responsedata.has("success") && responsedata.getBoolean("success") == false) {
+            if (responsedata.has("success") && !responsedata.getBoolean("success")) {
                 JSONObject errore = responsedata.getJSONObject("error");
                 if (errore.getInt("code") == 104) {
                     flag = true;
                 }
             //prima controllo se la mail è in formato valido, altrimenti se splitto e non è valido magari da NullPointer
-            } else if (responsedata.getBoolean("format_valid") == true) {
+            } else if (responsedata.getBoolean("format_valid")) {
                 String dominio = mail.split("@")[1];
                 if (dominio.equalsIgnoreCase("alice.it") || dominio.equalsIgnoreCase("tim.it") || dominio.equalsIgnoreCase("tin.it")|| dominio.equalsIgnoreCase("tiscali.it")) {
-                    if (responsedata.getBoolean("mx_found") == true) {
+                    if (responsedata.getBoolean("mx_found")) {
                         flag = true;
                     }
-                } else if (responsedata.getBoolean("mx_found") == true && responsedata.getBoolean("smtp_check") == true && responsedata.getBoolean("disposable") == false) {
+                } else if (responsedata.getBoolean("mx_found") && responsedata.getBoolean("smtp_check") && !responsedata.getBoolean("disposable")) {
                     flag = true;
                 }
             }
@@ -52,7 +51,7 @@ public class Checker {
     }
 
     public static Boolean checkActionCU(HttpServletRequest request) {
-        Boolean flag = false;
+        boolean flag = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idCU = Integer.parseInt(request.getParameter("id"));
@@ -68,7 +67,7 @@ public class Checker {
     }
 
     public static Boolean checkActionAccompagnatore(HttpServletRequest request) {
-        Boolean flag = false;
+        boolean flag = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idAccompagnatore = Integer.parseInt(request.getParameter("id"));
@@ -84,7 +83,7 @@ public class Checker {
     }
 
     public static Boolean checkActionRagazzo(HttpServletRequest request) {
-        Boolean flag = false;
+        boolean flag = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idRagazzo = Integer.parseInt(request.getParameter("id"));
@@ -104,7 +103,7 @@ public class Checker {
     }
 
     public static Boolean checkActionTerzamedia(HttpServletRequest request) {
-        Boolean flag = false;
+        boolean flag = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idTerzamedia = Integer.parseInt(request.getParameter("id"));
@@ -124,7 +123,7 @@ public class Checker {
     }
 
     public static Boolean checkActionAnimatore(HttpServletRequest request) {
-        Boolean flag = false;
+        boolean flag = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idAnimatore = Integer.parseInt(request.getParameter("id"));

@@ -29,7 +29,7 @@ public class ControllerRegistraAttGen implements ControllerInterface {
             rc.setRegistratoId(idUt);
             rc.setAttivitaGenId(idAttivita);
             DAOMan.relCollaboraDAO.insert(rc);
-            response.sendRedirect("/RegistrazioneGrest/App/AttivitaGenitori");
+            response.sendRedirect("/RegistrazioneGrest/App/DashboardAttGen");
         } catch (NullPointerException | SQLException | IOException ex) {
             mv.setView("err/errore.html");
             mv.addObject("eccezione", ex);

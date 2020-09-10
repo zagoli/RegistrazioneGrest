@@ -28,8 +28,7 @@ public class Dispatcher extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        DAOMan dao = new DAOMan();
-        ApplicationContext.getContext().put("DAO", dao);
+        ApplicationContext.getContext().put("DAO", new DAOMan());
         Configuration cfg = new freemarker.template.Configuration();
         cfg.setServletContextForTemplateLoading(getServletContext(), "WEB-INF");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -49,7 +48,7 @@ public class Dispatcher extends HttpServlet {
         }
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         ControllerInterface c = this.getHandler(request);
         ModelAndView mv = c.handleRequest(request, response);
@@ -263,17 +262,6 @@ public class Dispatcher extends HttpServlet {
                     c = new ControllerLogin();
                 }
                 break;
-            case "/AttivitaGenitori":
-                if (request.getSession().getAttribute("idUtente") != null) {
-                    if (request.getSession().getAttribute("tipoUtente").equals(3)) {
-                        c = new ControllerDashboardAttGen();
-                    } else {
-                        c = new Controller403();
-                    }
-                } else {
-                    c = new ControllerLogin();
-                }
-                break;
             case "/RegistraAttGen":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     if (request.getSession().getAttribute("tipoUtente").equals(3)) {
@@ -440,8 +428,7 @@ public class Dispatcher extends HttpServlet {
             String pathTemplate = view + ".ftl";
             Template template = cfg.getTemplate(pathTemplate);
             template.process(mv.getMap(), out);
-            out.close();
-        } catch (NullPointerException | TemplateException | IOException ex) {}
+        } catch (NullPointerException | TemplateException | IOException ignored) {}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -11,6 +11,8 @@ import Domain.Terzamedia;
 import ModelAndView.*;
 import Utility.Checker;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -118,14 +120,8 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 mv.addObject("terzamedia", t);
                 List<Calendario> listaCalendari = DAOMan.calendarioDAO.findAll();
                 List<Calendario> listaCalendariTerzamedia = DAOMan.calendarioDAO.findByTerzamediaId(idTerzamedia);
-                Map calendari = new TreeMap();
-                listaCalendari.forEach((calendario) -> {
-                    if (listaCalendariTerzamedia.contains(calendario)) {
-                        calendari.put(calendario, true);
-                    } else {
-                        calendari.put(calendario, false);
-                    }
-                });
+                Map<Calendario, Boolean> calendari = new TreeMap<>();
+                listaCalendari.forEach((calendario) -> calendari.put(calendario, listaCalendariTerzamedia.contains(calendario)));
                 mv.addObject("calendari", calendari);
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
                     mv.addObject("INVALIDMAIL", true);

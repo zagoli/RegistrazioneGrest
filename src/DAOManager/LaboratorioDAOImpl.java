@@ -51,8 +51,7 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
         PreparedStatement pst = con.prepareStatement(FIND_LABORATORIO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Laboratorio l = rs.next() ? this.mapRowToLaboratorio(rs) : null;
-        return l;
+        return rs.next() ? this.mapRowToLaboratorio(rs) : null;
     }
 
     @Override
@@ -60,7 +59,7 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_LABORATORIO);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Laboratorio> ll = new LinkedList();
+        LinkedList<Laboratorio> ll = new LinkedList<>();
         while (rs.next()){
             ll.add(this.mapRowToLaboratorio(rs));
         }
@@ -73,8 +72,7 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
         PreparedStatement pst = con.prepareStatement(FIND_LABORATORIO_DESCRIZIONE);
         pst.setString(1, descrizione);
         ResultSet rs = pst.executeQuery();
-        Laboratorio l = rs.next() ? this.mapRowToLaboratorio(rs) : null;
-        return l;
+        return rs.next() ? this.mapRowToLaboratorio(rs) : null;
     }
 
     @Override
@@ -83,8 +81,7 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
         PreparedStatement pst = con.prepareStatement(COUNT_LABORATORIO);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
 
     @Override
@@ -92,7 +89,7 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_NON_RISERVATO);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Laboratorio> ll = new LinkedList();
+        LinkedList<Laboratorio> ll = new LinkedList<>();
         while (rs.next()){
             ll.add(this.mapRowToLaboratorio(rs));
         }

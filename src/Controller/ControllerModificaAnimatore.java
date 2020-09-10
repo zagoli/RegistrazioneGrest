@@ -85,14 +85,8 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 mv.addObject("circoli", listCircolo);
                 List<Calendario> listaCalendari = DAOMan.calendarioDAO.findAll();
                 List<Calendario> listaCalendariAnimatore = DAOMan.calendarioDAO.findByAnimatoreId(idAnimatore);
-                Map calendari = new TreeMap();
-                listaCalendari.forEach((calendario) -> {
-                    if (listaCalendariAnimatore.contains(calendario)) {
-                        calendari.put(calendario, true);
-                    } else {
-                        calendari.put(calendario, false);
-                    }
-                });
+                Map<Calendario, Boolean> calendari = new TreeMap<>();
+                listaCalendari.forEach((calendario) -> calendari.put(calendario, listaCalendariAnimatore.contains(calendario)));
                 mv.addObject("calendari", calendari);
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
                     mv.addObject("INVALIDMAIL", true);

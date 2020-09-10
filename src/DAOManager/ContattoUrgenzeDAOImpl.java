@@ -63,8 +63,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO{
         PreparedStatement pst = conn.prepareStatement(FIND_CU_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        ContattoUrgenze cu = rs.next() ? this.mapRowToContattoUrgenze(rs) : null;
-        return cu;
+        return rs.next() ? this.mapRowToContattoUrgenze(rs) : null;
     }
 
     @Override
@@ -73,7 +72,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO{
         conn = DAOMan.getConnection();
         PreparedStatement pst = conn.prepareStatement(FIND_ALL_CU);
         ResultSet rs = pst.executeQuery();
-        LinkedList<ContattoUrgenze> lcu = new LinkedList();
+        LinkedList<ContattoUrgenze> lcu = new LinkedList<>();
         while (rs.next()){
             lcu.add(this.mapRowToContattoUrgenze(rs));
         }
@@ -87,7 +86,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO{
         PreparedStatement pst = conn.prepareStatement(FIND_CU_REGISTRATO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<ContattoUrgenze> lcu = new LinkedList();
+        LinkedList<ContattoUrgenze> lcu = new LinkedList<>();
         while (rs.next()){
             lcu.add(this.mapRowToContattoUrgenze(rs));
         }
@@ -101,8 +100,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO{
         PreparedStatement pst = conn.prepareStatement(COUNT_CU);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
     
     public ContattoUrgenze mapRowToContattoUrgenze(ResultSet rs) throws SQLException{

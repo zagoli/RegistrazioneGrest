@@ -50,8 +50,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
         PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Parrocchia p = rs.next() ? this.mapRowToParrocchia(rs) : null;
-        return p;
+        return rs.next() ? this.mapRowToParrocchia(rs) : null;
     }
 
     @Override
@@ -59,7 +58,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_PARROCCHIA);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Parrocchia> lp = new LinkedList();
+        LinkedList<Parrocchia> lp = new LinkedList<>();
         while(rs.next()){
             lp.add(this.mapRowToParrocchia(rs));
         }
@@ -72,7 +71,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
         PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_NOME);
         pst.setString(1, name);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Parrocchia> lp = new LinkedList();
+        LinkedList<Parrocchia> lp = new LinkedList<>();
         while(rs.next()){
             lp.add(this.mapRowToParrocchia(rs));
         }
@@ -85,8 +84,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO{
         PreparedStatement pst = con.prepareStatement(COUNT_PARROCCHIA);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
     
     public Parrocchia mapRowToParrocchia(ResultSet rs) throws SQLException {

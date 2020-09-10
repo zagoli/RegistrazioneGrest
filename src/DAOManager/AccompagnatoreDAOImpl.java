@@ -59,8 +59,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Accompagnatore a = rs.next() ? this.mapRowToAccompagnatore(rs) : null;
-        return a;
+        return rs.next() ? this.mapRowToAccompagnatore(rs) : null;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_ALL_ACCOMPAGNATORE);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Accompagnatore> la = new LinkedList();
+        LinkedList<Accompagnatore> la = new LinkedList<>();
         while (rs.next()) {
             la.add(this.mapRowToAccompagnatore(rs));
         }
@@ -81,7 +80,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_REGISTRATO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        LinkedList<Accompagnatore> la = new LinkedList();
+        LinkedList<Accompagnatore> la = new LinkedList<>();
         while (rs.next()) {
             la.add(this.mapRowToAccompagnatore(rs));
         }
@@ -94,8 +93,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
         PreparedStatement pst = con.prepareStatement(COUNT_ACCOMPAGNATORE);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        int count = rs.getInt(1);
-        return count;
+        return rs.getInt(1);
     }
 
     public Accompagnatore mapRowToAccompagnatore(ResultSet rs) throws SQLException {

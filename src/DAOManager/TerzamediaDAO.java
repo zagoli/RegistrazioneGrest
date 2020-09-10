@@ -6,20 +6,20 @@ import java.util.List;
 
 public interface TerzamediaDAO {
     //CRUD
-    public void insert(Terzamedia r) throws SQLException;
-    public void update(Terzamedia r) throws SQLException;
-    public void updateSquadra(int id, String squadra) throws SQLException;
-    public void updateLaboratorio(int id, int idLaboratorio) throws SQLException;
-    public void delete(Integer idTerzamedia) throws SQLException;
-    public Terzamedia findById(int id) throws SQLException;
+    void insert(Terzamedia r) throws SQLException;
+    void update(Terzamedia r) throws SQLException;
+    void updateSquadra(int id, String squadra) throws SQLException;
+    void updateLaboratorio(int id, int idLaboratorio) throws SQLException;
+    void delete(Integer idTerzamedia) throws SQLException;
+    Terzamedia findById(int id) throws SQLException;
     //SELECT
-    public List<Terzamedia> findAll() throws SQLException;
-    public int count() throws SQLException;
-    public List<Integer[]> countSettimanale() throws SQLException;
-    public List<Terzamedia> findByLabId(int id) throws SQLException;
-    public List<Terzamedia> findByScuolaId(int id) throws SQLException;
-    public List<Terzamedia> findByParrocchiaId(int id) throws SQLException;
-    public List<Terzamedia> findByCircoloId(int id) throws SQLException;
-    public List<Terzamedia> findByCalendarioId(int id) throws SQLException;
-    public List<Terzamedia> findByRegistratoId(int id) throws SQLException;
+    List<Terzamedia> findAll() throws SQLException;
+    int count() throws SQLException;
+    List<Integer[]> countSettimanale() throws SQLException;
+    List<Terzamedia> findByLabId(int id) throws SQLException;
+    List<Terzamedia> findByScuolaId(int id) throws SQLException;
+    List<Terzamedia> findByParrocchiaId(int id) throws SQLException;
+    List<Terzamedia> findByCircoloId(int id) throws SQLException;
+    List<Terzamedia> findByCalendarioId(int id) throws SQLException;
+    List<Terzamedia> findByRegistratoId(int id) throws SQLException;
 }

@@ -16,30 +16,28 @@ public class ControllerCodice implements ControllerInterface {
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        switch (request.getParameter("scope")) {
-            case "verifica": {
-                boolean result = false;
-                mv.setView("user/rispostacodice.json");
-                String codiceString = request.getParameter("codice");
-                try {
-                    CodiceSbloccoIscrizione c = DAOMan.codiceSbloccoIscrizioneDAO.findByCodice(codiceString);
-                    if (c != null && c.getUtilizzato() == 0) {
-                        //non so perchè ma l'oggetto preso dalla sessione è un intero
-                        Integer idoInteger = (Integer) request.getSession().getAttribute("idUtente");
-                        Short id = idoInteger.shortValue();
-                        c.setUtilizzato(id);
-                        c.setDataUtilizzo(new Timestamp(System.currentTimeMillis()));
-                        DAOMan.codiceSbloccoIscrizioneDAO.update(c);
-                        result = true;
-                    }
-                } catch (SQLException ex) {
-                    mv.addObject("TITOLOPAGINA", "errore");
-                    mv.setView("err/errore.html");
-                    mv.addObject("eccezione", ex);
-                    Logger.getLogger(ControllerCodice.class.getName()).log(Level.SEVERE, null, ex);
+        if ("verifica".equals(request.getParameter("scope"))) {
+            boolean result = false;
+            mv.setView("user/rispostacodice.json");
+            String codiceString = request.getParameter("codice");
+            try {
+                CodiceSbloccoIscrizione c = DAOMan.codiceSbloccoIscrizioneDAO.findByCodice(codiceString);
+                if (c != null && c.getUtilizzato() == 0) {
+                    //non so perchè ma l'oggetto preso dalla sessione è un intero
+                    Integer idoInteger = (Integer) request.getSession().getAttribute("idUtente");
+                    Short id = idoInteger.shortValue();
+                    c.setUtilizzato(id);
+                    c.setDataUtilizzo(new Timestamp(System.currentTimeMillis()));
+                    DAOMan.codiceSbloccoIscrizioneDAO.update(c);
+                    result = true;
                 }
-                mv.addObject("result", result);
+            } catch (SQLException ex) {
+                mv.addObject("TITOLOPAGINA", "errore");
+                mv.setView("err/errore.html");
+                mv.addObject("eccezione", ex);
+                Logger.getLogger(ControllerCodice.class.getName()).log(Level.SEVERE, null, ex);
             }
+            mv.addObject("result", result);
         }
         return mv;
     }

@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface LaboratorioDAO {
     //CRUD
-    public void insert (Laboratorio l) throws SQLException;
-    public void update (Laboratorio l) throws SQLException;
-    public void delete (Integer idLaboratorio) throws SQLException;
-    public Laboratorio findById(int id) throws SQLException;
+    void insert(Laboratorio l) throws SQLException;
+    void update(Laboratorio l) throws SQLException;
+    void delete(Integer idLaboratorio) throws SQLException;
+    Laboratorio findById(int id) throws SQLException;
     
     //SELECT
-    public List<Laboratorio> findAll() throws SQLException;
-    public List<Laboratorio> findNonRiservato() throws SQLException;
-    public Laboratorio findByDescrizione(String descrizione) throws SQLException;
-    public int count() throws SQLException;
+    List<Laboratorio> findAll() throws SQLException;
+    List<Laboratorio> findNonRiservato() throws SQLException;
+    Laboratorio findByDescrizione(String descrizione) throws SQLException;
+    int count() throws SQLException;
 }

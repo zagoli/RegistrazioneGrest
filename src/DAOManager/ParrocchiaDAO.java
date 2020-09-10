@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface ParrocchiaDAO {
     //CRUD
-    public void insert (Parrocchia p) throws SQLException;
-    public void update (Parrocchia p) throws SQLException;
-    public void delete (Integer idParrocchia) throws SQLException;
-    public Parrocchia findById(int id) throws SQLException;
+    void insert(Parrocchia p) throws SQLException;
+    void update(Parrocchia p) throws SQLException;
+    void delete(Integer idParrocchia) throws SQLException;
+    Parrocchia findById(int id) throws SQLException;
     
     //SELECT
-    public List<Parrocchia> findAll() throws SQLException;
-    public List<Parrocchia> findByName(String name) throws SQLException;
-    public int count() throws SQLException;
+    List<Parrocchia> findAll() throws SQLException;
+    List<Parrocchia> findByName(String name) throws SQLException;
+    int count() throws SQLException;
 }
