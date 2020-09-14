@@ -6,12 +6,12 @@ import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerRegistraUtente implements ControllerInterface {
 
@@ -59,7 +59,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                 mv.addObject("TITOLOPAGINA", "Registrazione Utente");
                 mv.addObject("DONE", false);
             }
-        } catch (NullPointerException | IOException | SQLException | UnirestException ex) {
+        } catch (NullPointerException | SQLException | UnirestException ex) {
             mv.setView("err/errore.html");
             mv.addObject("eccezione", ex);
             mv.addObject("TITOLOPAGINA", "Errore");

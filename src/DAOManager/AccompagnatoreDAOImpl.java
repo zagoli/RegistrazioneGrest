@@ -2,23 +2,20 @@ package DAOManager;
 
 import Domain.Accompagnatore;
 import Domain.Registrato;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
 
-    private final String INSERT_ACCOMPAGNATORE = "insert into Accompagnatore (nome,cognome,idRegistrato) values (?,?,?);";
-    private final String UPDATE_ACCOMPAGNATORE = "update Accompagnatore set nome = ?, cognome = ?, idRegistrato = ? where id = ?;";
-    private final String DELETE_ACCOMPAGNATORE = "delete from Accompagnatore where id = ?;";
-    private final String FIND_ACCOMPAGNATORE_ID = "select a.id as aid, a.nome as anome, a.cognome as acognome, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Accompagnatore a join Registrato re on (a.idRegistrato=re.id) where a.id = ?;";
-    private final String FIND_ALL_ACCOMPAGNATORE = "select a.id as aid, a.nome as anome, a.cognome as acognome, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Accompagnatore a join Registrato re on (a.idRegistrato=re.id);";
-    private final String FIND_ACCOMPAGNATORE_REGISTRATO_ID = "select a.id as aid, a.nome as anome, a.cognome as acognome, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Accompagnatore a join Registrato re on (a.idRegistrato=re.id) where re.id = ?";
-    private final String COUNT_ACCOMPAGNATORE = "select count(*) from Accompagnatore;";
+    private static final String INSERT_ACCOMPAGNATORE = "insert into Accompagnatore (nome,cognome,idRegistrato) values (?,?,?);";
+    private static final String UPDATE_ACCOMPAGNATORE = "update Accompagnatore set nome = ?, cognome = ?, idRegistrato = ? where id = ?;";
+    private static final String DELETE_ACCOMPAGNATORE = "delete from Accompagnatore where id = ?;";
+    private static final String FIND_ACCOMPAGNATORE_ID = "select a.id as aid, a.nome as anome, a.cognome as acognome, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Accompagnatore a join Registrato re on (a.idRegistrato=re.id) where a.id = ?;";
+    private static final String FIND_ALL_ACCOMPAGNATORE = "select a.id as aid, a.nome as anome, a.cognome as acognome, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Accompagnatore a join Registrato re on (a.idRegistrato=re.id);";
+    private static final String FIND_ACCOMPAGNATORE_REGISTRATO_ID = "select a.id as aid, a.nome as anome, a.cognome as acognome, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Accompagnatore a join Registrato re on (a.idRegistrato=re.id) where re.id = ?";
+    private static final String COUNT_ACCOMPAGNATORE = "select count(*) from Accompagnatore;";
 
     @Override
     public void insert(Accompagnatore a) throws SQLException {

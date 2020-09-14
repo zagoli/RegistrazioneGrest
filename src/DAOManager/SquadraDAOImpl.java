@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Squadra;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,14 +10,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
  * @author jacopo
  */
 public class SquadraDAOImpl implements SquadraDAO {
 
-    private final String FIND_BY_ID = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s where s.id = ?;";
-    private final String FIND_BY_NOME = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s where s.nome = ?";
-    private final String FIND_ALL = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s";
+    private static final String FIND_BY_ID = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s where s.id = ?;";
+    private static final String FIND_BY_NOME = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s where s.nome = ?";
+    private static final String FIND_ALL = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s";
 
     @Override
     public Squadra findById(int id) throws SQLException {

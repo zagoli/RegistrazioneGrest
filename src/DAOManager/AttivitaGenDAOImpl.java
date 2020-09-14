@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.AttivitaGen;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,20 +9,20 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AttivitaGenDAOImpl implements AttivitaGenDAO{
-    private final String INSERT_ATTIVITAGEN = "insert into Attivita_Gen (descrizione) values (?);";
-    private final String UPDATE_ATTIVITAGEN = "update Attivita_Gen set descrizione = ? where id = ?;";
-    private final String DELETE_ATTIVITAGEN = "delete from Attivita_Gen where id = ?;";
-    private final String FIND_ATTIVITAGEN_ID = "select * from Attivita_Gen where id = ?;";
-    private final String FIND_ALL_ATTIVITAGEN = "select * from Attivita_Gen;";
-    private final String FIND_ATTIVITAGEN_REGISTRATO_ID = "select * from Attivita_Gen ag join collabora c on (ag.id = c.Attivita_Gen_Id) where c.Registrato_Id = ?;";
-    private final String COUNT_ATTIVITAGEN = "select count(*) from Attivita_Gen;";
+public class AttivitaGenDAOImpl implements AttivitaGenDAO {
+    private static final String INSERT_ATTIVITAGEN = "insert into Attivita_Gen (descrizione) values (?);";
+    private static final String UPDATE_ATTIVITAGEN = "update Attivita_Gen set descrizione = ? where id = ?;";
+    private static final String DELETE_ATTIVITAGEN = "delete from Attivita_Gen where id = ?;";
+    private static final String FIND_ATTIVITAGEN_ID = "select * from Attivita_Gen where id = ?;";
+    private static final String FIND_ALL_ATTIVITAGEN = "select * from Attivita_Gen;";
+    private static final String FIND_ATTIVITAGEN_REGISTRATO_ID = "select * from Attivita_Gen ag join collabora c on (ag.id = c.Attivita_Gen_Id) where c.Registrato_Id = ?;";
+    private static final String COUNT_ATTIVITAGEN = "select count(*) from Attivita_Gen;";
 
     @Override
     public void insert(AttivitaGen l) throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_ATTIVITAGEN);
-        pst.setString(1,l.getDescrizione());
+        pst.setString(1, l.getDescrizione());
         pst.executeUpdate();
     }
 

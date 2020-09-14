@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.CodiceSbloccoIscrizione;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,25 +9,25 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDAO{
-    
-    private final String INSERT_CODICE = "insert into CodiceSbloccoIscrizione (codice) values (?);";
-    private final String UPDATE_CODICE = "update CodiceSbloccoIscrizione set utilizzato = ?,dataUtilizzo = ? where codice = ?;";
-    private final String DELETE_CODICE = "delete from CodiceSbloccoIscrizione where codice = ?;";
-    private final String FIND_CODICE = "select * from CodiceSbloccoIscrizione where codice = ?;";
-    private final String FIND_ALL_CODICE = "select * from CodiceSbloccoIscrizione;";
-    private final String FIND_CODICE_REGISTRATO = "select * from CodiceSbloccoIscrizione where utilizzato = ?;";
-    private final String FIND_ALL_UTILIZZATO = "select * from CodiceSbloccoIscrizione where utilizzato is not null;";
-    private final String FIND_ALL_NON_UTILIZZATO = "select * from CodiceSbloccoIscrizione where utilizzato is null;";
-    private final String COUNT = "select count(*) from CodiceSbloccoIscrizione;";
-    private final String COUNT_UTILIZZATO = "select count(*) from CodiceSbloccoIscrizione where utilizzato is not null;";
-    private final String COUNT_NON_UTILIZZATO = "select count(*) from CodiceSbloccoIscrizione where utilizzato is null;";
+public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDAO {
+
+    private static final String INSERT_CODICE = "insert into CodiceSbloccoIscrizione (codice) values (?);";
+    private static final String UPDATE_CODICE = "update CodiceSbloccoIscrizione set utilizzato = ?,dataUtilizzo = ? where codice = ?;";
+    private static final String DELETE_CODICE = "delete from CodiceSbloccoIscrizione where codice = ?;";
+    private static final String FIND_CODICE = "select * from CodiceSbloccoIscrizione where codice = ?;";
+    private static final String FIND_ALL_CODICE = "select * from CodiceSbloccoIscrizione;";
+    private static final String FIND_CODICE_REGISTRATO = "select * from CodiceSbloccoIscrizione where utilizzato = ?;";
+    private static final String FIND_ALL_UTILIZZATO = "select * from CodiceSbloccoIscrizione where utilizzato is not null;";
+    private static final String FIND_ALL_NON_UTILIZZATO = "select * from CodiceSbloccoIscrizione where utilizzato is null;";
+    private static final String COUNT = "select count(*) from CodiceSbloccoIscrizione;";
+    private static final String COUNT_UTILIZZATO = "select count(*) from CodiceSbloccoIscrizione where utilizzato is not null;";
+    private static final String COUNT_NON_UTILIZZATO = "select count(*) from CodiceSbloccoIscrizione where utilizzato is null;";
 
     @Override
     public void insert(CodiceSbloccoIscrizione c) throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_CODICE);
-        pst.setString(1,c.getCodice());
+        pst.setString(1, c.getCodice());
         pst.executeUpdate();
     }
 

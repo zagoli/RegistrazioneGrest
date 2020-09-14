@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Laboratorio;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,14 +11,14 @@ import java.util.List;
 
 public class LaboratorioDAOImpl implements LaboratorioDAO {
 
-    private final String INSERT_LABORATORIO = "insert into Laboratorio (descrizione,riservato) values (?,?);";
-    private final String UPDATE_LABORATORIO = "update Laboratorio set descrizione = ? where id = ?;";
-    private final String DELETE_LABORATORIO = "delete from Laboratorio where id = ?;";
-    private final String FIND_LABORATORIO_ID = "select * from Laboratorio where id = ?;";
-    private final String FIND_ALL_LABORATORIO = "select * from Laboratorio;";
-    private final String FIND_NON_RISERVATO = "select * from Laboratorio where riservato = 0;";
-    private final String FIND_LABORATORIO_DESCRIZIONE = "select * from Laboratorio where descrizione = ?;";
-    private final String COUNT_LABORATORIO = "select count(*) from Laboratorio;";
+    private static final String INSERT_LABORATORIO = "insert into Laboratorio (descrizione,riservato) values (?,?);";
+    private static final String UPDATE_LABORATORIO = "update Laboratorio set descrizione = ? where id = ?;";
+    private static final String DELETE_LABORATORIO = "delete from Laboratorio where id = ?;";
+    private static final String FIND_LABORATORIO_ID = "select * from Laboratorio where id = ?;";
+    private static final String FIND_ALL_LABORATORIO = "select * from Laboratorio;";
+    private static final String FIND_NON_RISERVATO = "select * from Laboratorio where riservato = 0;";
+    private static final String FIND_LABORATORIO_DESCRIZIONE = "select * from Laboratorio where descrizione = ?;";
+    private static final String COUNT_LABORATORIO = "select count(*) from Laboratorio;";
 
     @Override
     public void insert(Laboratorio l) throws SQLException {

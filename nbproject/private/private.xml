@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/poipo/OneDrive/scuola/java/TESINA/RegistrazioneGrest/src/DAOManager/TerzamediaDAOImpl.java</file>
-            <file>file:/C:/Users/poipo/OneDrive/scuola/java/TESINA/RegistrazioneGrest/src/DAOManager/TerzamediaDAO.java</file>
+            <file>file:/C:/Users/poipo/OneDrive/scuola/java/TESINA/RegistrazioneGrest/web/WEB-INF/ammseg/squadreterzamedia.html.ftl</file>
+            <file>file:/C:/Users/poipo/OneDrive/scuola/java/TESINA/RegistrazioneGrest/src/Controller/ControllerSquadre.java</file>
+            <file>file:/C:/Users/poipo/OneDrive/scuola/java/TESINA/RegistrazioneGrest/web/WEB-INF/ammseg/squadreragazzi.html.ftl</file>
+            <file>file:/C:/Users/poipo/OneDrive/scuola/java/TESINA/RegistrazioneGrest/web/WEB-INF/ammseg/squadreanimatori.html.ftl</file>
         </group>
     </open-files>
 </project-private>

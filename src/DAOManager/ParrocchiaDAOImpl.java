@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Parrocchia;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,21 +9,21 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ParrocchiaDAOImpl implements ParrocchiaDAO{
-    private final String INSERT_PARROCCHIA = "insert into Parrocchia (nome,luogo) values (?,?)";
-    private final String UPDATE_PARROCCHIA = "update Parrocchia set nome = ?, luogo = ? where id = ?;";
-    private final String DELETE_PARROCCHIA = "delete from Parrocchia where id = ?;";
-    private final String FIND_PARROCCHIA_ID = "select * from Parrocchia where id = ?;";
-    private final String FIND_ALL_PARROCCHIA = "select * from Parrocchia order by luogo,nome;";
-    private final String FIND_PARROCCHIA_NOME = "select * from Parrocchia where nome = ?;";
-    private final String COUNT_PARROCCHIA = "select count(*) from Parrocchia;";
+public class ParrocchiaDAOImpl implements ParrocchiaDAO {
+    private static final String INSERT_PARROCCHIA = "insert into Parrocchia (nome,luogo) values (?,?)";
+    private static final String UPDATE_PARROCCHIA = "update Parrocchia set nome = ?, luogo = ? where id = ?;";
+    private static final String DELETE_PARROCCHIA = "delete from Parrocchia where id = ?;";
+    private static final String FIND_PARROCCHIA_ID = "select * from Parrocchia where id = ?;";
+    private static final String FIND_ALL_PARROCCHIA = "select * from Parrocchia order by luogo,nome;";
+    private static final String FIND_PARROCCHIA_NOME = "select * from Parrocchia where nome = ?;";
+    private static final String COUNT_PARROCCHIA = "select count(*) from Parrocchia;";
 
     @Override
     public void insert(Parrocchia p) throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(INSERT_PARROCCHIA);
-        pst.setString(1,p.getNome());
-        pst.setString(2,p.getLuogo());
+        pst.setString(1, p.getNome());
+        pst.setString(2, p.getLuogo());
         pst.executeUpdate();
     }
 

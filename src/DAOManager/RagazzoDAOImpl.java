@@ -1,65 +1,56 @@
 package DAOManager;
 
-import Domain.Circolo;
-import Domain.Laboratorio;
-import Domain.Parrocchia;
-import Domain.Ragazzo;
-import Domain.Registrato;
-import Domain.Scuola;
-import Domain.Squadra;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import Domain.*;
+
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RagazzoDAOImpl implements RagazzoDAO{
-    
+public class RagazzoDAOImpl implements RagazzoDAO {
+
     // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private final String INSERT_RAGAZZO = "insert into Ragazzo (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,entrataAnticipata,richieste,noteAlimentari,mensa,saNuotare,fratelloIscritto,Scuola_id,sezione,classe,nTessera,Squadra_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    private final String UPDATE_RAGAZZO = "update Ragazzo set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, entrataAnticipata = ?, richieste = ?, noteAlimentari = ?, mensa = ?, saNuotare = ?, fratelloIscritto = ?, Scuola_id = ?, sezione = ?, classe = ?, nTessera = ?, Squadra_id = ? where id = ?;";
-    private final String UPDATE_SQUADRA_RAGAZZO = "update Ragazzo set Squadra_id = ? where id = ?;";
-    private final String UPDATE_LABORATORIO_RAGAZZO = "update Ragazzo set Laboratorio_id = ? where id = ?;";
-    private final String DELETE_RAGAZZO = "delete from Ragazzo where id = ?;";
-    private final String GENERIC_RAGAZZO_FIND = "select"
+    private static final String INSERT_RAGAZZO = "insert into Ragazzo (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,entrataAnticipata,richieste,noteAlimentari,mensa,saNuotare,fratelloIscritto,Scuola_id,sezione,classe,nTessera,squadra_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_RAGAZZO = "update Ragazzo set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, entrataAnticipata = ?, richieste = ?, noteAlimentari = ?, mensa = ?, saNuotare = ?, fratelloIscritto = ?, Scuola_id = ?, sezione = ?, classe = ?, nTessera = ?, squadra_id = ? where id = ?;";
+    private static final String UPDATE_SQUADRA_RAGAZZO = "update Ragazzo set squadra_id = ? where id = ?;";
+    private static final String UPDATE_LABORATORIO_RAGAZZO = "update Ragazzo set Laboratorio_id = ? where id = ?;";
+    private static final String DELETE_RAGAZZO = "delete from Ragazzo where id = ?;";
+    private static final String GENERIC_RAGAZZO_FIND = "select"
             + " ra.id as raid, ra.nome as ranome, ra.cognome as racognome, ra.dataNascita as radataNascita, ra.presenza as rapresenza,ra.entrataAnticipata as raentrataAnticipata, ra.richieste as rarichieste, ra.noteAlimentari as ranoteAlimentari, ra.mensa as ramensa, ra.saNuotare as rasaNuotare, ra.fratelloIscritto as rafratelloIscritto, ra.sezione as rasezione, ra.classe as raclasse, ra.nTessera as ranTessera,"
             + " la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato,"
             + " pa.id as paid, pa.nome as panome, pa.luogo as paluogo,"
             + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,"
             + " ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,"
             + " sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione,"
-            + " sq.id as sqid, sq.nome as sqnome, sq.colore as sqolore"
+            + " sq.id as sqid, sq.nome as sqnome, sq.colore as sqcolore"
             + " from Ragazzo ra"
             + " join Laboratorio la on (ra.Laboratorio_id = la.id)"
             + " join Parrocchia pa on (ra.Parrocchia_id = pa.id)"
             + " join Registrato re on (ra.Registrato_id = re.id)"
             + " join Circolo ci on (ra.Circolo_id = ci.id)"
             + " join Scuola sc on (ra.Scuola_id = sc.id)"
-            + " join Squadra sq on (ra.Squadra_id = sq.id)";
-    private final String FIND_RAGAZZO_ID = GENERIC_RAGAZZO_FIND + " where ra.id = ?;";
-    private final String FIND_ALL_RAGAZZO = GENERIC_RAGAZZO_FIND + " order by ra.cognome, ra.nome;";
-    private final String FIND_RAGAZZO_NOMINATIVO = GENERIC_RAGAZZO_FIND + " where ra.nome = ? and ra.cognome = ?;";
-    private final String FIND_RAGAZZO_LAB_ID = GENERIC_RAGAZZO_FIND + " where la.id = ? order by ra.cognome, ra.nome;";
-    private final String FIND_RAGAZZO_SCUOLA_ID = GENERIC_RAGAZZO_FIND + " where sc.id = ? order by ra.cognome, ra.nome;";
-    private final String FIND_RAGAZZO_PARROCCHIA_ID = GENERIC_RAGAZZO_FIND + " where pa.id = ? order by ra.cognome, ra.nome;";
-    private final String FIND_RAGAZZO_CIRCOLO_ID = GENERIC_RAGAZZO_FIND + " where ci.id = ? order by ra.cognome, ra.nome;";
-    private final String FIND_RAGAZZO_CAL_ID = GENERIC_RAGAZZO_FIND + " where pr.Calendario_idSettimana = ? order by ra.cognome, ra.nome;";
-    private final String FIND_RAGAZZO_REGISTRATO_ID = GENERIC_RAGAZZO_FIND + " where re.id = ? order by ra.cognome, ra.nome;";
-    private final String COUNT_RAGAZZO = "select count(*) from Ragazzo;";
-    private final String COUNT_MENSA_TOT = "select count(*) from Ragazzo where mensa = 1;";
-    private final String COUNT_MENSA_SETTIMANALE = "select pr.Calendario_IdSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id) where mensa = '1' group by pr.Calendario_idSettimana;";
-    private final String COUNT_ANTICIPATO_TOT = "select count(*) from Ragazzo where entrataAnticipata = 1;";
-    private final String COUNT_ANTICIPATO_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id)  where entrataAnticipata = 1 group by pr.Calendario_idSettimana;";
-    private final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id) group by pr.Calendario_idSettimana;";
-    private final String COUNT_LABORATORIO_PER_CLASSE = "select l.descrizione, r.sezione, r.classe, s.grado, count(*) from Ragazzo r join Scuola s on s.id=r.Scuola_id join Laboratorio l on l.id=r.Laboratorio_id group by l.descrizione, s.grado, r.classe;";
+            + " left join Squadra sq on (ra.squadra_id = sq.id)";
+    private static final String FIND_RAGAZZO_ID = GENERIC_RAGAZZO_FIND + " where ra.id = ?;";
+    private static final String FIND_ALL_RAGAZZO = GENERIC_RAGAZZO_FIND + " order by ra.cognome, ra.nome;";
+    private static final String FIND_RAGAZZO_NOMINATIVO = GENERIC_RAGAZZO_FIND + " where ra.nome = ? and ra.cognome = ?;";
+    private static final String FIND_RAGAZZO_LAB_ID = GENERIC_RAGAZZO_FIND + " where la.id = ? order by ra.cognome, ra.nome;";
+    private static final String FIND_RAGAZZO_SCUOLA_ID = GENERIC_RAGAZZO_FIND + " where sc.id = ? order by ra.cognome, ra.nome;";
+    private static final String FIND_RAGAZZO_PARROCCHIA_ID = GENERIC_RAGAZZO_FIND + " where pa.id = ? order by ra.cognome, ra.nome;";
+    private static final String FIND_RAGAZZO_CIRCOLO_ID = GENERIC_RAGAZZO_FIND + " where ci.id = ? order by ra.cognome, ra.nome;";
+    private static final String FIND_RAGAZZO_CAL_ID = GENERIC_RAGAZZO_FIND + " join presenzaRag pr on (ra.id = pr.Ragazzo_id) where pr.Calendario_idSettimana = ? order by ra.cognome, ra.nome;";
+    private static final String FIND_RAGAZZO_REGISTRATO_ID = GENERIC_RAGAZZO_FIND + " where re.id = ? order by ra.cognome, ra.nome;";
+    private static final String COUNT_RAGAZZO = "select count(*) from Ragazzo;";
+    private static final String COUNT_MENSA_TOT = "select count(*) from Ragazzo where mensa = 1;";
+    private static final String COUNT_MENSA_SETTIMANALE = "select pr.Calendario_IdSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id) where mensa = '1' group by pr.Calendario_idSettimana;";
+    private static final String COUNT_ANTICIPATO_TOT = "select count(*) from Ragazzo where entrataAnticipata = 1;";
+    private static final String COUNT_ANTICIPATO_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id)  where entrataAnticipata = 1 group by pr.Calendario_idSettimana;";
+    private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id) group by pr.Calendario_idSettimana;";
+    private static final String COUNT_LABORATORIO_PER_CLASSE = "select l.descrizione, r.sezione, r.classe, s.grado, count(*) from Ragazzo r join Scuola s on s.id=r.Scuola_id join Laboratorio l on l.id=r.Laboratorio_id group by l.descrizione, s.grado, r.classe;";
     // </editor-fold>
 
     @Override
     public void insert(Ragazzo r) throws SQLException {
         Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(INSERT_RAGAZZO,Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement pst = con.prepareStatement(INSERT_RAGAZZO, Statement.RETURN_GENERATED_KEYS);
         pst.setString(1, r.getNome());
         pst.setString(2, r.getCognome());
         pst.setDate(3, new java.sql.Date(r.getDataNascita().getTime()));
@@ -112,12 +103,16 @@ public class RagazzoDAOImpl implements RagazzoDAO{
         pst.setInt(20, r.getId());
         pst.executeUpdate();
     }
-    
+
     @Override
-    public void updateSquadra(int id, int idSquadra) throws SQLException {
+    public void updateSquadra(int id, Integer idSquadra) throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_RAGAZZO);
-        pst.setInt(1, idSquadra);
+        if (idSquadra == null) {
+            pst.setNull(1, Types.INTEGER);
+        } else {
+            pst.setInt(1, idSquadra);
+        }
         pst.setInt(2, id);
         pst.executeUpdate();
     }

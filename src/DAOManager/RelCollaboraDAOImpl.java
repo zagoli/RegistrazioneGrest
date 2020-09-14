@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.RelCollabora;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,13 +9,13 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RelCollaboraDAOImpl implements RelCollaboraDAO{
-    private final String INSERT_RELCOLLABORA = "insert into collabora (Registrato_id,Attivita_gen_id,data) values (?,?,?);";
-    private final String DELETE_RELCOLLABORA = "delete from collabora where id = ?;";
-    private final String FIND_RELCOLLABORA_REGISTRATO_ID = "select * from collabora where Registrato_id = ?;";
-    private final String FIND_RELCOLLABORA_ATTGEN_ID = "select * from collabora where Attivita_Gen_id = ?;";
-    private final String FIND_RELCOLLABORA_ID = "select * from collabora where id = ?;";
-    private final String FIND_ALL_RELCOLLABORA = "select * from collabora order by Attivita_Gen_id;";
+public class RelCollaboraDAOImpl implements RelCollaboraDAO {
+    private static final String INSERT_RELCOLLABORA = "insert into collabora (Registrato_id,Attivita_gen_id,data) values (?,?,?);";
+    private static final String DELETE_RELCOLLABORA = "delete from collabora where id = ?;";
+    private static final String FIND_RELCOLLABORA_REGISTRATO_ID = "select * from collabora where Registrato_id = ?;";
+    private static final String FIND_RELCOLLABORA_ATTGEN_ID = "select * from collabora where Attivita_Gen_id = ?;";
+    private static final String FIND_RELCOLLABORA_ID = "select * from collabora where id = ?;";
+    private static final String FIND_ALL_RELCOLLABORA = "select * from collabora order by Attivita_Gen_id;";
 
     @Override
     public void insert(RelCollabora rc) throws SQLException {

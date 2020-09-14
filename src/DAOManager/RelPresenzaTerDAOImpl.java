@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.RelPresenzaTer;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,11 +9,11 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RelPresenzaTerDAOImpl implements RelPresenzaTerDAO{
-    private final String INSERT_RELPRESENZATER = "insert into presenzaTer values (?,?);";
-    private final String DELETE_RELPRESENZATER = "delete from presenzaTer where Calendario_idSettimana = ? and Terzamedia_id = ?;";
-    private final String FIND_RELPRESENZATER_TER_ID = "select * from presenzaTer where Terzamedia_id = ?;";
-    private final String FIND_RELPRESENZATER_CAL_ID = "select * from presenzaTer where Calendario_idSettimana = ?;";
+public class RelPresenzaTerDAOImpl implements RelPresenzaTerDAO {
+    private static final String INSERT_RELPRESENZATER = "insert into presenzaTer values (?,?);";
+    private static final String DELETE_RELPRESENZATER = "delete from presenzaTer where Calendario_idSettimana = ? and Terzamedia_id = ?;";
+    private static final String FIND_RELPRESENZATER_TER_ID = "select * from presenzaTer where Terzamedia_id = ?;";
+    private static final String FIND_RELPRESENZATER_CAL_ID = "select * from presenzaTer where Calendario_idSettimana = ?;";
 
     @Override
     public void insert(RelPresenzaTer rpt) throws SQLException {

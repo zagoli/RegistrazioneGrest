@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Registrato;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,21 +9,21 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RegistratoDAOImpl implements RegistratoDAO{
-    private final String INSERT_REGISTRATO = "insert into Registrato (mail,password,nome,cognome,telefono,localita,via,civico,tipoUt) values (?,?,?,?,?,?,?,?,?);";
-    private final String UPDATE_REGISTRATO = "update Registrato set mail = ?,nome = ?,cognome = ?,telefono = ?,localita = ?,via = ?,civico = ?,tipoUt = ? where id = ?;";
-    private final String UPDATE_PASSWORD_REGISTRATO = "update Registrato set password = ? where id = ?;";
-    private final String DELETE_REGISTRATO = "delete from Registrato where id = ?;";
-    private final String FIND_REGISTRATO_ID = "select * from Registrato where id = ?;";
-    private final String FIND_ALL_REGISTRATO = "select * from Registrato;";
-    private final String COUNT_REGISTRATO = "select count(*) from Registrato;";
-    private final String COUNT_USERS = "select count(*) from Registrato where tipoUt = 3;";
-    private final String FIND_REGISTRATO_MAIL = "select * from Registrato where mail = ?;";
-    private final String FIND_REGISTRATO_NOMINATIVO = "select * from Registrato where nome = ? and cognome = ?;";
-    private final String FIND_ALL_USERS = "select * from Registrato where tipoUt = 3;";
-    private final String FIND_REGISTRATO_ACCOMPAGNATORE_ID = "select * from Registrato r join acc_ut ac on (r.id = ac.Registrato_id) where ac.Accompagnatore_id = ?;";
-    private final String FIND_REGISTRATO_CU_ID = "select * from Registrato r join urg_ut ur on (r.id = ur.Registrato_id) where ur.Contatto_Urgenze_id = ?;";
-    private final String FIND_REGISTRATO_ATTGEN_ID = "select * from Registrato r join collabora co on (r.id = co.Registrato_id) where co.Attivita_Gen_id = ?;";
+public class RegistratoDAOImpl implements RegistratoDAO {
+    private static final String INSERT_REGISTRATO = "insert into Registrato (mail,password,nome,cognome,telefono,localita,via,civico,tipoUt) values (?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_REGISTRATO = "update Registrato set mail = ?,nome = ?,cognome = ?,telefono = ?,localita = ?,via = ?,civico = ?,tipoUt = ? where id = ?;";
+    private static final String UPDATE_PASSWORD_REGISTRATO = "update Registrato set password = ? where id = ?;";
+    private static final String DELETE_REGISTRATO = "delete from Registrato where id = ?;";
+    private static final String FIND_REGISTRATO_ID = "select * from Registrato where id = ?;";
+    private static final String FIND_ALL_REGISTRATO = "select * from Registrato;";
+    private static final String COUNT_REGISTRATO = "select count(*) from Registrato;";
+    private static final String COUNT_USERS = "select count(*) from Registrato where tipoUt = 3;";
+    private static final String FIND_REGISTRATO_MAIL = "select * from Registrato where mail = ?;";
+    private static final String FIND_REGISTRATO_NOMINATIVO = "select * from Registrato where nome = ? and cognome = ?;";
+    private static final String FIND_ALL_USERS = "select * from Registrato where tipoUt = 3;";
+    private static final String FIND_REGISTRATO_ACCOMPAGNATORE_ID = "select * from Registrato r join acc_ut ac on (r.id = ac.Registrato_id) where ac.Accompagnatore_id = ?;";
+    private static final String FIND_REGISTRATO_CU_ID = "select * from Registrato r join urg_ut ur on (r.id = ur.Registrato_id) where ur.Contatto_Urgenze_id = ?;";
+    private static final String FIND_REGISTRATO_ATTGEN_ID = "select * from Registrato r join collabora co on (r.id = co.Registrato_id) where co.Attivita_Gen_id = ?;";
 
     @Override
     public void insert(Registrato r) throws SQLException {

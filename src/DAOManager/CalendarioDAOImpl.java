@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Calendario;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,18 +10,18 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CalendarioDAOImpl implements CalendarioDAO{
-    private final String INSERT_CAL = "insert into Calendario (daQuando,aQuando) values (?,?);";
-    private final String UPDATE_CAL = "update Calendario set daQuando = ?, aQuando = ? where idSettimana = ?;";
-    private final String DELETE_CAL = "delete from Calendario where idSettimana = ?;";
-    private final String FIND_CAL_ID = "select * from Calendario where idSettimana = ?;";
-    private final String FIND_ALL_CAL = "select * from Calendario order by daQuando;";
-    private final String FIND_CAL_INIZIO = "select * from Calendario where daQuando = ?;";
-    private final String FIND_CAL_RAGAZZO = "select * from Calendario c join presenzaRag p on (c.idSettimana = p.Calendario_idSettimana) where p.Ragazzo_id = ? order by daQuando;";
-    private final String FIND_CAL_ANIMATORE = "select * from Calendario c join presenzaAn p on (c.idSettimana = p.Calendario_idSettimana) where p.Animatore_id = ? order by daQuando;";
-    private final String FIND_CAL_TERZAMEDIA = "select * from Calendario c join presenzaTer p on (c.idSettimana = p.Calendario_idSettimana) where p.Terzamedia_id = ? order by daQuando;";
-    private final String COUNT_CAL = "select count(*) from Calendario;";
-    
+public class CalendarioDAOImpl implements CalendarioDAO {
+    private static final String INSERT_CAL = "insert into Calendario (daQuando,aQuando) values (?,?);";
+    private static final String UPDATE_CAL = "update Calendario set daQuando = ?, aQuando = ? where idSettimana = ?;";
+    private static final String DELETE_CAL = "delete from Calendario where idSettimana = ?;";
+    private static final String FIND_CAL_ID = "select * from Calendario where idSettimana = ?;";
+    private static final String FIND_ALL_CAL = "select * from Calendario order by daQuando;";
+    private static final String FIND_CAL_INIZIO = "select * from Calendario where daQuando = ?;";
+    private static final String FIND_CAL_RAGAZZO = "select * from Calendario c join presenzaRag p on (c.idSettimana = p.Calendario_idSettimana) where p.Ragazzo_id = ? order by daQuando;";
+    private static final String FIND_CAL_ANIMATORE = "select * from Calendario c join presenzaAn p on (c.idSettimana = p.Calendario_idSettimana) where p.Animatore_id = ? order by daQuando;";
+    private static final String FIND_CAL_TERZAMEDIA = "select * from Calendario c join presenzaTer p on (c.idSettimana = p.Calendario_idSettimana) where p.Terzamedia_id = ? order by daQuando;";
+    private static final String COUNT_CAL = "select count(*) from Calendario;";
+
 
     @Override
     public void insert(Calendario c) throws SQLException {

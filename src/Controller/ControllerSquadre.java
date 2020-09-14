@@ -3,13 +3,14 @@ package Controller;
 import DAOManager.DAOMan;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerSquadre implements ControllerInterface {
 
@@ -25,6 +26,7 @@ public class ControllerSquadre implements ControllerInterface {
                     if (!request.getParameterMap().containsKey("submitted")) {
                         //preparo i dati iniziali per visualizzare la pagina
                         mv.addObject("ragazzi", DAOMan.ragazzoDAO.findAll());
+                        mv.addObject("squadre", DAOMan.squadraDAO.findAll());
                         mv.setView("ammseg/squadreragazzi.html");
                     } else {
                         //salvo le modifiche
@@ -34,7 +36,7 @@ public class ControllerSquadre implements ControllerInterface {
                                 String[] ragSquadraArray = value.split(",");
                                 int idRagazzo = Integer.parseInt(ragSquadraArray[0]);
                                 if (ragSquadraArray.length == 2) {
-                                    DAOMan.ragazzoDAO.updateSquadra(idRagazzo, ragSquadraArray[1]);
+                                    DAOMan.ragazzoDAO.updateSquadra(idRagazzo, Integer.parseInt(ragSquadraArray[1]));
                                 } else {
                                     DAOMan.ragazzoDAO.updateSquadra(idRagazzo, null);
                                 }
@@ -47,12 +49,13 @@ public class ControllerSquadre implements ControllerInterface {
                     if (!request.getParameterMap().containsKey("submitted")) {
                         //preparo i dati iniziali per visualizzare la pagina
                         mv.addObject("animatori", DAOMan.animatoreDAO.findAll());
+                        mv.addObject("squadre", DAOMan.squadraDAO.findAll());
                         mv.setView("ammseg/squadreanimatori.html");
                     } else {
                         //salvo le modifiche
                         for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
                             if (entry.getKey().matches("\\d+")) { //vedi controller laboratori per spiegazione
-                                String squadra;
+                                Integer squadra;
                                 String[] value = entry.getValue();
                                 //TODO: cercare di sistemare meglio questi if
                                 //imposto la squadra, se non c'è metto null
@@ -62,7 +65,7 @@ public class ControllerSquadre implements ControllerInterface {
                                     }
                                     squadra = null;
                                 } else {
-                                    squadra = value[0];
+                                    squadra = Integer.parseInt(value[0]);
                                 }
                                 //il secondo elemento è presente solo se è a true, come nei checkbox
                                 DAOMan.animatoreDAO.updateSquadra(Integer.parseInt(entry.getKey()), squadra, value.length == 2); //figata di netbeans
@@ -75,6 +78,7 @@ public class ControllerSquadre implements ControllerInterface {
                     if (!request.getParameterMap().containsKey("submitted")) {
                         //preparo i dati iniziali per visualizzare la pagina
                         mv.addObject("terzamedia", DAOMan.terzamediaDAO.findAll());
+                        mv.addObject("squadre", DAOMan.squadraDAO.findAll());
                         mv.setView("ammseg/squadreterzamedia.html");
                     } else {
                         //salvo le modifiche
@@ -84,7 +88,7 @@ public class ControllerSquadre implements ControllerInterface {
                                 String[] terSquadraArray = value.split(",");
                                 int id = Integer.parseInt(terSquadraArray[0]);
                                 if (terSquadraArray.length == 2) {
-                                    DAOMan.terzamediaDAO.updateSquadra(id, terSquadraArray[1]);
+                                    DAOMan.terzamediaDAO.updateSquadra(id, Integer.parseInt(terSquadraArray[1]));
                                 } else {
                                     DAOMan.terzamediaDAO.updateSquadra(id, null);
                                 }

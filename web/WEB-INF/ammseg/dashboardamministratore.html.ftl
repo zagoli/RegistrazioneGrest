@@ -34,21 +34,23 @@
                         <div class="form-check form-check-inline">
                             <div class="checkbox">
                                   <input class="form-check-input" id="ISCRTER" type="checkbox" data-toggle="toggle" data-offstyle="danger" <#if ISCRTER??>checked</#if>>
-                                  <label class="form-check-label" id="labelISCRTER">Attiva iscrizioni terza media</label>
+                                <label class="form-check-label" id="labelISCRTER">Attiva iscrizioni terza media</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--fine-->
+                <!--fine attivazione iscrizioni-->
                 <hr/>
                 <div class="row mt-2">
                     <div class="col">
-                        <a href="/RegistrazioneGrest/App/GestisciSegretari" class="btn btn-info btn-block btn-lg"> GESTISCI SEGRETARI </a>
+                        <a href="/RegistrazioneGrest/App/GestisciSegretari" class="btn btn-info btn-block btn-lg">
+                            GESTISCI SEGRETARI </a>
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col">
-                        <a href="/RegistrazioneGrest/App/Statistiche" class="btn btn-info btn-block btn-lg"> STATISTICHE </a>
+                        <a href="/RegistrazioneGrest/App/Statistiche" class="btn btn-info btn-block btn-lg">
+                            STATISTICHE </a>
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -115,62 +117,27 @@
                     <#list settimane as set>
                         <div class="card">
                             <div class="card-header" id="headingpressetsqu${set.idSettimana}">
-                                <h5 class="mb-0 text-center"> 
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#pressetsqu${set.idSettimana}" aria-expanded="false" aria-controls="pressetsqu${set.idSettimana}">
+                                <h5 class="mb-0 text-center">
+                                    <button class="btn btn-link" data-toggle="collapse"
+                                            data-target="#pressetsqu${set.idSettimana}" aria-expanded="false"
+                                            aria-controls="pressetsqu${set.idSettimana}">
                                         Settimana dal ${set.daQuando} al ${set.aQuando}
                                     </button>
                                 </h5>
                             </div>
-                            <div id="pressetsqu${set.idSettimana}" class="collapse" aria-labelledby="headingpressetsqu${set.idSettimana}" data-parent="#accordionPressetsqu">
+                            <div id="pressetsqu${set.idSettimana}" class="collapse"
+                                 aria-labelledby="headingpressetsqu${set.idSettimana}"
+                                 data-parent="#accordionPressetsqu">
                                 <div class="card-body">
-                                    <div class="row mt-2">
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=arag" class="btn arancio-grandi btn-block btn-lg text-white"> ARANCIO GRANDI </a>
+                                    <#list squadre as sq>
+                                        <div class="row mt-2">
+                                            <div class="col">
+                                                <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=${sq.id}"
+                                                   class="btn btn-block btn-lg text-white"
+                                                   style="background-color: ${sq.colore} !important;">${sq.nome}</a>
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=arap" class="btn arancio-piccoli btn-block btn-lg text-white"> ARANCIO PICCOLI </a>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=azzg" class="btn azzurri-grandi btn-block btn-lg text-white"> AZZURRI GRANDI </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=azzp" class="btn azzurri-piccoli btn-block btn-lg text-white"> AZZURRI PICCOLI </a>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=blug" class="btn blu-grandi btn-block btn-lg text-white"> BLU GRANDI </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=blup" class="btn blu-piccoli btn-block btn-lg text-white"> BLU PICCOLI </a>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=giag" class="btn gialli-grandi btn-block btn-lg text-secondary"> GIALLI GRANDI </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=giap" class="btn gialli-piccoli btn-block btn-lg text-secondary"> GIALLI PICCOLI </a>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=rossg" class="btn rossi-grandi btn-block btn-lg text-white"> ROSSI GRANDI </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=rossp" class="btn rossi-piccoli btn-block btn-lg text-white"> ROSSI PICCOLI </a>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=verg" class="btn verdi-grandi btn-block btn-lg text-white"> VERDI GRANDI </a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=verp" class="btn verdi-piccoli btn-block btn-lg text-white"> VERDI PICCOLI </a>
-                                        </div>
-                                    </div>
+                                    </#list>
                                 </div>
                             </div>
                         </div>

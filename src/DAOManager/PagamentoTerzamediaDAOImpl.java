@@ -2,41 +2,38 @@ package DAOManager;
 
 import Domain.PagamentoTerzamedia;
 import Domain.Registrato;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
 
     // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private final String INSERT_PAGAMENTO = "insert into PagamentoTerzamedia (quota,Terzamedia_Id,Registrato_Id,ordineArrivo) values (?,?,?,?);";
-    private final String UPDATE_PAGAMENTO = "update PagamentoTerzamedia set data = ?, quota = ?, Terzamedia_id = ?, Registrato_id = ?, ordineArrivo = ? where id = ?;";
-    private final String DELETE_PAGAMENTO = "delete from PagamentoTerzamedia where id = ?;";
-    private final String DELETE_PAGAMENTO_FROM_TERZAMEDIA_ID = "delete from PagamentoTerzamedia where Terzamedia_id = ?;";
-    private final String FIND_PAGAMENTO_ID = "select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,"
+    private static final String INSERT_PAGAMENTO = "insert into PagamentoTerzamedia (quota,Terzamedia_Id,Registrato_Id,ordineArrivo) values (?,?,?,?);";
+    private static final String UPDATE_PAGAMENTO = "update PagamentoTerzamedia set data = ?, quota = ?, Terzamedia_id = ?, Registrato_id = ?, ordineArrivo = ? where id = ?;";
+    private static final String DELETE_PAGAMENTO = "delete from PagamentoTerzamedia where id = ?;";
+    private static final String DELETE_PAGAMENTO_FROM_TERZAMEDIA_ID = "delete from PagamentoTerzamedia where Terzamedia_id = ?;";
+    private static final String FIND_PAGAMENTO_ID = "select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,"
             + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
             + " from PagamentoTerzamedia p "
-            + " join Registrato re on (p.Registrato_id = re.id) "                                                                        
+            + " join Registrato re on (p.Registrato_id = re.id) "
             + " where p.id = ?;";
-    private final String FIND_ALL_PAGAMENTO = "select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,"
+    private static final String FIND_ALL_PAGAMENTO = "select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,"
             + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
             + " from PagamentoTerzamedia p "
-            + " join Registrato re on (p.Registrato_id = re.id) ";                                                                        
-    private final String FIND_PAGAMENTO_REGISTRATO_ID = "select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,"
+            + " join Registrato re on (p.Registrato_id = re.id) ";
+    private static final String FIND_PAGAMENTO_REGISTRATO_ID = "select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,"
             + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
             + " from PagamentoTerzamedia p "
-            + " join Registrato re on (p.Registrato_id = re.id) "                                                                        
+            + " join Registrato re on (p.Registrato_id = re.id) "
             + " where p.Registrato_id = ?;";
-    private final String FIND_PAGAMENTO_TERZAMEDIA_ID = "select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,"
+    private static final String FIND_PAGAMENTO_TERZAMEDIA_ID = "select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,"
             + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
             + " from PagamentoTerzamedia p "
-            + " join Registrato re on (p.Registrato_id = re.id) "                                                                        
+            + " join Registrato re on (p.Registrato_id = re.id) "
             + " where p.Terzamedia_id = ?;";
-    private final String COUNT_PAGAMENTO = "select count(*) from PagamentoTerzamedia;";
+    private static final String COUNT_PAGAMENTO = "select count(*) from PagamentoTerzamedia;";
     // </editor-fold>
 
     @Override

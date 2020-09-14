@@ -1,29 +1,20 @@
 package DAOManager;
 
-import Domain.Circolo;
-import Domain.Laboratorio;
-import Domain.Parrocchia;
-import Domain.Registrato;
-import Domain.Scuola;
-import Domain.Squadra;
-import Domain.Terzamedia;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import Domain.*;
+
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class TerzamediaDAOImpl implements TerzamediaDAO {
 
     // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private final String INSERT_TERZAMEDIA = "insert into Terzamedia (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,richieste,noteAlimentari,saNuotare,Scuola_id,sezione,nTessera,Squadra_id,cellulare,festaPassaggio,mail) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    private final String UPDATE_TERZAMEDIA = "update Terzamedia set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?,  richieste = ?, noteAlimentari = ?,  saNuotare = ?,  Scuola_id = ?, sezione = ?,  nTessera = ?, Squadra_id = ?, cellulare = ?, festaPassaggio = ?, mail = ? where id = ?;";
-    private final String UPDATE_SQUADRA_TERZAMEDIA = "update Terzamedia set Squadra_id = ? where id = ?;";
-    private final String UPDATE_LABORATORIO_TERZAMEDIA = "update Terzamedia set Laboratorio_id = ? where id = ?;";
-    private final String DELETE_TERZAMEDIA = "delete from Terzamedia where id = ?;";
-    private final String GENERIC_TERZAMEDIA_FIND = "select"
+    private static final String INSERT_TERZAMEDIA = "insert into Terzamedia (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,richieste,noteAlimentari,saNuotare,Scuola_id,sezione,nTessera,squadra_id,cellulare,festaPassaggio,mail) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_TERZAMEDIA = "update Terzamedia set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?,  richieste = ?, noteAlimentari = ?,  saNuotare = ?,  Scuola_id = ?, sezione = ?,  nTessera = ?, squadra_id = ?, cellulare = ?, festaPassaggio = ?, mail = ? where id = ?;";
+    private static final String UPDATE_SQUADRA_TERZAMEDIA = "update Terzamedia set squadra_id = ? where id = ?;";
+    private static final String UPDATE_LABORATORIO_TERZAMEDIA = "update Terzamedia set Laboratorio_id = ? where id = ?;";
+    private static final String DELETE_TERZAMEDIA = "delete from Terzamedia where id = ?;";
+    private static final String GENERIC_TERZAMEDIA_FIND = "select"
             + " ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio,"
             + " la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato,"
             + " pa.id as paid, pa.nome as panome, pa.luogo as paluogo,"
@@ -37,17 +28,17 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
             + " join Registrato re on (ter.Registrato_id = re.id)"
             + " join Circolo ci on (ter.Circolo_id = ci.id)"
             + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " join Squadra sq on (ter.Squadra_id = sq.id)";
-    private final String FIND_TERZAMEDIA_ID = GENERIC_TERZAMEDIA_FIND + " where ter.id = ?;";
-    private final String FIND_ALL_TERZAMEDIA = GENERIC_TERZAMEDIA_FIND + " order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_LAB_ID = GENERIC_TERZAMEDIA_FIND + " where la.id = ? order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_SCUOLA_ID = GENERIC_TERZAMEDIA_FIND + " where sc.id = ? order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_PARROCCHIA_ID = GENERIC_TERZAMEDIA_FIND + " where pa.id = ? order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_CIRCOLO_ID = GENERIC_TERZAMEDIA_FIND + " where ci.id = ? order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_CAL_ID = GENERIC_TERZAMEDIA_FIND + " where pr.Calendario_idSettimana = ? order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_REGISTRATO_ID = GENERIC_TERZAMEDIA_FIND + " where re.id = ? order by ter.cognome, ter.nome;";
-    private final String COUNT_TERZAMEDIA = "select count(*) from Terzamedia;";
-    private final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Terzamedia r join presenzaRag pr on (r.id = pr.Terzamedia_id) group by pr.Calendario_idSettimana;";
+            + " left join Squadra sq on (ter.squadra_id = sq.id)";
+    private static final String FIND_TERZAMEDIA_ID = GENERIC_TERZAMEDIA_FIND + " where ter.id = ?;";
+    private static final String FIND_ALL_TERZAMEDIA = GENERIC_TERZAMEDIA_FIND + " order by ter.cognome, ter.nome;";
+    private static final String FIND_TERZAMEDIA_LAB_ID = GENERIC_TERZAMEDIA_FIND + " where la.id = ? order by ter.cognome, ter.nome;";
+    private static final String FIND_TERZAMEDIA_SCUOLA_ID = GENERIC_TERZAMEDIA_FIND + " where sc.id = ? order by ter.cognome, ter.nome;";
+    private static final String FIND_TERZAMEDIA_PARROCCHIA_ID = GENERIC_TERZAMEDIA_FIND + " where pa.id = ? order by ter.cognome, ter.nome;";
+    private static final String FIND_TERZAMEDIA_CIRCOLO_ID = GENERIC_TERZAMEDIA_FIND + " where ci.id = ? order by ter.cognome, ter.nome;";
+    private static final String FIND_TERZAMEDIA_CAL_ID = GENERIC_TERZAMEDIA_FIND + " join presenzaTer pt on (ter.id = pt.Terzamedia_id) where pt.Calendario_idSettimana = ? order by ter.cognome, ter.nome;";
+    private static final String FIND_TERZAMEDIA_REGISTRATO_ID = GENERIC_TERZAMEDIA_FIND + " where re.id = ? order by ter.cognome, ter.nome;";
+    private static final String COUNT_TERZAMEDIA = "select count(*) from Terzamedia;";
+    private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Terzamedia r join presenzaTer pr on (r.id = pr.Terzamedia_id) group by pr.Calendario_idSettimana;";
     // </editor-fold>
 
     @Override
@@ -104,12 +95,16 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         pst.setInt(19, t.getId());
         pst.executeUpdate();
     }
-    
+
     @Override
-    public void updateSquadra(int id, int idSquadra) throws SQLException {
+    public void updateSquadra(int id, Integer idSquadra) throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_TERZAMEDIA);
-        pst.setInt(1, idSquadra);
+        if (idSquadra == null) {
+            pst.setNull(1, Types.INTEGER);
+        } else {
+            pst.setInt(1, idSquadra);
+        }
         pst.setInt(2, id);
         pst.executeUpdate();
     }

@@ -1,13 +1,12 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.Animatore;
-import Domain.Pagamento;
-import Domain.PagamentoTerzamedia;
-import Domain.Ragazzo;
-import Domain.Terzamedia;
+import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,8 +17,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerDashboard implements ControllerInterface {
 
@@ -84,6 +81,7 @@ public class ControllerDashboard implements ControllerInterface {
                 try {
                     mv.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
                     mv.addObject("settimane", DAOMan.calendarioDAO.findAll());
+                    mv.addObject("squadre", DAOMan.squadraDAO.findAll());
                     InputStream in = new FileInputStream("C:/conf/RegistrazioneGrest/config.properties");
                     properties.load(in);
                     if (properties.getProperty("ISCRRAG").equals("true")) {

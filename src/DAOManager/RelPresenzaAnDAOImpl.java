@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.RelPresenzaAn;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,11 +9,11 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RelPresenzaAnDAOImpl implements RelPresenzaAnDAO{
-    private final String INSERT_RELPRESENZAAN = "insert into presenzaAn values (?,?);";
-    private final String DELETE_RELPRESENZAAN = "delete from presenzaAn where Calendario_idSettimana = ? and Animatore_id = ?;";
-    private final String FIND_RELPRESENZAAN_ANIMATORE_ID = "select * from presenzaAn where Animatore_id = ?;";
-    private final String FIND_RELPRESENZAAN_CAL_ID = "select * from presenzaAn where Calendario_idSettimana = ?;";
+public class RelPresenzaAnDAOImpl implements RelPresenzaAnDAO {
+    private static final String INSERT_RELPRESENZAAN = "insert into presenzaAn values (?,?);";
+    private static final String DELETE_RELPRESENZAAN = "delete from presenzaAn where Calendario_idSettimana = ? and Animatore_id = ?;";
+    private static final String FIND_RELPRESENZAAN_ANIMATORE_ID = "select * from presenzaAn where Animatore_id = ?;";
+    private static final String FIND_RELPRESENZAAN_CAL_ID = "select * from presenzaAn where Calendario_idSettimana = ?;";
 
     @Override
     public void insert(RelPresenzaAn rpa) throws SQLException {

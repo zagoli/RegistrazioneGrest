@@ -5,7 +5,7 @@ package Domain;
  * @author jacopo
  */
 public class Squadra {
-    private int id;
+    private Integer id;
     private String nome;
     private String colore;
 

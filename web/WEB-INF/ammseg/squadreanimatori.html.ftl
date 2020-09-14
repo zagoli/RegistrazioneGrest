@@ -24,25 +24,20 @@
                                     <td>
                                         <label class="sr-only" for="${ani.id}squadra">Squadra</label>
                                         <select class="custom-select mr-sm-2" id="${ani.id}squadra" name="${ani.id}">
-                                            <option <#if !ani.squadra??>selected</#if>></option>
-                                            <option value="Arancio grandi" <#if ani.squadra! ="Arancio grandi">selected</#if>>Arancio grandi</option>
-                                            <option value="Arancio piccoli" <#if ani.squadra! ="Arancio piccoli">selected</#if>>Arancio piccoli</option>
-                                            <option value="Azzurri grandi" <#if ani.squadra! ="Azzurri grandi">selected</#if>>Azzurri grandi</option>
-                                            <option value="Azzurri piccoli" <#if ani.squadra! ="Azzurri piccoli">selected</#if>>Azzurri piccoli</option>
-                                            <option value="Blu grandi" <#if ani.squadra! ="Blu grandi">selected</#if>>Blu grandi</option>
-                                            <option value="Blu piccoli" <#if ani.squadra! ="Blu piccoli">selected</#if>>Blu piccoli</option>
-                                            <option value="Gialli grandi" <#if ani.squadra! ="Gialli grandi">selected</#if>>Gialli grandi</option>
-                                            <option value="Gialli piccoli" <#if ani.squadra! ="Gialli piccoli">selected</#if>>Gialli piccoli</option>
-                                            <option value="Rossi grandi" <#if ani.squadra! ="Rossi grandi">selected</#if>>Rossi grandi</option>
-                                            <option value="Rossi piccoli" <#if ani.squadra! ="Rossi piccoli">selected</#if>>Rossi piccoli</option>
-                                            <option value="Verdi grandi" <#if ani.squadra! ="Verdi grandi">selected</#if>>Verdi grandi</option>
-                                            <option value="Verdi piccoli" <#if ani.squadra! ="Verdi piccoli">selected</#if>>Verdi piccoli</option>
+                                            <option <#if !ani.squadra.id??>selected</#if>></option>
+                                            <#list squadre as sq>
+                                                <option value="${sq.id}"
+                                                        <#if ani.squadra.id! = sq.id>selected</#if>>${sq.nome}</option>
+                                            </#list>
                                         </select>
                                     </td>
                                     <td align="center">
                                         <div class="checkbox">
-                                            <label class="sr-only" for="${ani.id}responsabileSquadra">Responsabile squadra</label>
-                                            <input id="${ani.id}responsabileSquadra" name="${ani.id}" type="checkbox" data-toggle="toggle" data-off="No" data-on="S&igrave;" <#if ani.responsabileSquadra>checked</#if>>
+                                            <label class="sr-only" for="${ani.id}responsabileSquadra">Responsabile
+                                                squadra</label>
+                                            <input id="${ani.id}responsabileSquadra" name="${ani.id}" type="checkbox"
+                                                   data-toggle="toggle" data-off="No" data-on="S&igrave;"
+                                                   <#if ani.responsabileSquadra>checked</#if>>
                                         </div>
                                     </td>
                                 </tr>
