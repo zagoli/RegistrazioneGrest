@@ -5,6 +5,7 @@ import Domain.Laboratorio;
 import Domain.Parrocchia;
 import Domain.Registrato;
 import Domain.Scuola;
+import Domain.Squadra;
 import Domain.Terzamedia;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,82 +18,34 @@ import java.util.List;
 public class TerzamediaDAOImpl implements TerzamediaDAO {
 
     // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private final String INSERT_TERZAMEDIA = "insert into Terzamedia (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,richieste,noteAlimentari,saNuotare,Scuola_id,sezione,nTessera,squadra,cellulare,festaPassaggio,mail) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    private final String UPDATE_TERZAMEDIA = "update Terzamedia set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?,  richieste = ?, noteAlimentari = ?,  saNuotare = ?,  Scuola_id = ?, sezione = ?,  nTessera = ?, squadra = ?, cellulare = ?, festaPassaggio = ?, mail = ? where id = ?;";
-    private final String UPDATE_SQUADRA_TERZAMEDIA = "update Terzamedia set squadra = ? where id = ?;";
+    private final String INSERT_TERZAMEDIA = "insert into Terzamedia (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,richieste,noteAlimentari,saNuotare,Scuola_id,sezione,nTessera,Squadra_id,cellulare,festaPassaggio,mail) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private final String UPDATE_TERZAMEDIA = "update Terzamedia set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?,  richieste = ?, noteAlimentari = ?,  saNuotare = ?,  Scuola_id = ?, sezione = ?,  nTessera = ?, Squadra_id = ?, cellulare = ?, festaPassaggio = ?, mail = ? where id = ?;";
+    private final String UPDATE_SQUADRA_TERZAMEDIA = "update Terzamedia set Squadra_id = ? where id = ?;";
     private final String UPDATE_LABORATORIO_TERZAMEDIA = "update Terzamedia set Laboratorio_id = ? where id = ?;";
     private final String DELETE_TERZAMEDIA = "delete from Terzamedia where id = ?;";
-    private final String FIND_TERZAMEDIA_ID = "select ter.squadra as tersquadra, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,  ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
+    private final String GENERIC_TERZAMEDIA_FIND = "select"
+            + " ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio,"
+            + " la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato,"
+            + " pa.id as paid, pa.nome as panome, pa.luogo as paluogo,"
+            + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,"
+            + " ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,"
+            + " sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione,"
+            + " sq.id as sqid, sq.nome as sqnome, sq.colore as sqcolore"
             + " from Terzamedia ter"
             + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
             + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
             + " join Registrato re on (ter.Registrato_id = re.id)"
             + " join Circolo ci on (ter.Circolo_id = ci.id)"
             + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " where ter.id = ?;";
-    private final String FIND_ALL_TERZAMEDIA = "select ter.squadra as tersquadra, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,  ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
-            + " from Terzamedia ter"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato re on (ter.Registrato_id = re.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_LAB_ID = "select ter.squadra as tersquadra, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,  ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
-            + " from Terzamedia ter"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato re on (ter.Registrato_id = re.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " where la.id = ?"
-            + " order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_SCUOLA_ID = "select ter.squadra as tersquadra, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,  ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
-            + " from Terzamedia ter"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato re on (ter.Registrato_id = re.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " where sc.id = ?"
-            + " order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_PARROCCHIA_ID = "select ter.squadra as tersquadra, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,  ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
-            + " from Terzamedia ter"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato re on (ter.Registrato_id = re.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " where pa.id = ?"
-            + " order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_CIRCOLO_ID = "select ter.squadra as tersquadra, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,  ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
-            + " from Terzamedia ter"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato re on (ter.Registrato_id = re.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " where ci.id = ?"
-            + " order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_CAL_ID = "select ter.squadra as tersquadra, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,  ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
-            + " from Terzamedia ter"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato re on (ter.Registrato_id = re.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " join presenzaRag pr on (ter.id = pr.Terzamedia_id)"
-            + " where pr.Calendario_idSettimana = ?"
-            + " order by ter.cognome, ter.nome;";
-    private final String FIND_TERZAMEDIA_REGISTRATO_ID = "select ter.squadra as tersquadra, ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato, pa.id as paid, pa.nome as panome, pa.luogo as paluogo, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt, ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,  ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio "
-            + " from Terzamedia ter"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato re on (ter.Registrato_id = re.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " where re.id = ?"
-            + " order by ter.cognome, ter.nome;";
+            + " join Squadra sq on (ter.Squadra_id = sq.id)";
+    private final String FIND_TERZAMEDIA_ID = GENERIC_TERZAMEDIA_FIND + " where ter.id = ?;";
+    private final String FIND_ALL_TERZAMEDIA = GENERIC_TERZAMEDIA_FIND + " order by ter.cognome, ter.nome;";
+    private final String FIND_TERZAMEDIA_LAB_ID = GENERIC_TERZAMEDIA_FIND + " where la.id = ? order by ter.cognome, ter.nome;";
+    private final String FIND_TERZAMEDIA_SCUOLA_ID = GENERIC_TERZAMEDIA_FIND + " where sc.id = ? order by ter.cognome, ter.nome;";
+    private final String FIND_TERZAMEDIA_PARROCCHIA_ID = GENERIC_TERZAMEDIA_FIND + " where pa.id = ? order by ter.cognome, ter.nome;";
+    private final String FIND_TERZAMEDIA_CIRCOLO_ID = GENERIC_TERZAMEDIA_FIND + " where ci.id = ? order by ter.cognome, ter.nome;";
+    private final String FIND_TERZAMEDIA_CAL_ID = GENERIC_TERZAMEDIA_FIND + " where pr.Calendario_idSettimana = ? order by ter.cognome, ter.nome;";
+    private final String FIND_TERZAMEDIA_REGISTRATO_ID = GENERIC_TERZAMEDIA_FIND + " where re.id = ? order by ter.cognome, ter.nome;";
     private final String COUNT_TERZAMEDIA = "select count(*) from Terzamedia;";
     private final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Terzamedia r join presenzaRag pr on (r.id = pr.Terzamedia_id) group by pr.Calendario_idSettimana;";
     // </editor-fold>
@@ -115,7 +68,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         pst.setInt(12, t.getScuola().getId());
         pst.setString(13, t.getSezione());
         pst.setString(14, t.getnTessera());
-        pst.setString(15, t.getSquadra());
+        pst.setInt(15, t.getSquadra().getId());
         pst.setString(16, t.getCellulare());
         pst.setBoolean(17, t.getFestaPassaggio());
         pst.setString(18, t.getMail());
@@ -144,7 +97,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         pst.setInt(12, t.getScuola().getId());
         pst.setString(13, t.getSezione());
         pst.setString(14, t.getnTessera());
-        pst.setString(15, t.getSquadra());
+        pst.setInt(15, t.getSquadra().getId());
         pst.setString(16, t.getCellulare());
         pst.setBoolean(17, t.getFestaPassaggio());
         pst.setString(18, t.getMail());
@@ -153,10 +106,10 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     }
     
     @Override
-    public void updateSquadra(int id, String squadra) throws SQLException {
+    public void updateSquadra(int id, int idSquadra) throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_TERZAMEDIA);
-        pst.setString(1, squadra);
+        pst.setInt(1, idSquadra);
         pst.setInt(2, id);
         pst.executeUpdate();
     }
@@ -344,7 +297,11 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
                 ),
                 rs.getString("tersezione"),
                 rs.getString("terTessera"),
-                rs.getString("tersquadra"),
+                new Squadra(
+                        rs.getInt("sqid"),
+                        rs.getString("sqnome"),
+                        rs.getString("sqcolore")
+                ),
                 rs.getString("tercellulare"),
                 rs.getString("termail")
         );

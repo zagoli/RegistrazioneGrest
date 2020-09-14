@@ -8,7 +8,7 @@ public interface TerzamediaDAO {
     //CRUD
     void insert(Terzamedia r) throws SQLException;
     void update(Terzamedia r) throws SQLException;
-    void updateSquadra(int id, String squadra) throws SQLException;
+    void updateSquadra(int id, int idSquadra) throws SQLException;
     void updateLaboratorio(int id, int idLaboratorio) throws SQLException;
     void delete(Integer idTerzamedia) throws SQLException;
     Terzamedia findById(int id) throws SQLException;
