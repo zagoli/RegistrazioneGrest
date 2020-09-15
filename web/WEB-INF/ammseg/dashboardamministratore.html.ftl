@@ -132,7 +132,7 @@
                                     <#--Devo dividere le squadre in due colonne: per prima cosa creo una variabile contatore-->
                                     <#assign cont = 0>
                                     <#list squadre as sq>
-                                    <#--Salvo la colonna invece di ripeerla due volte-->
+                                    <#--Salvo la colonna invece di ripeterla due volte-->
                                         <#assign colonna>
                                             <div class="col">
                                                 <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=${sq.id}"

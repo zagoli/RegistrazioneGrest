@@ -152,13 +152,13 @@
                 </div>
             </div>
         </#if>
-        <#if terzamedia.squadra??>
+        <#if terzamedia.squadra.id!=0>
             <div class="row">
                 <div class="col-sm">
                     <strong>Squadra</strong>
                 </div>
                 <div class="col-sm">
-                    <p>${terzamedia.squadra}</p>
+                    <p>${terzamedia.squadra.nome}</p>
                 </div>
             </div>
         </#if>

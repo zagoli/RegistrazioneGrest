@@ -1,26 +1,17 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.Animatore;
-import Domain.AttivitaGen;
-import Domain.Calendario;
-import Domain.ContattoUrgenze;
-import Domain.Ragazzo;
-import Domain.Registrato;
-import Domain.RelCollabora;
-import Domain.RelPresenzaAn;
-import Domain.RelPresenzaRag;
-import Domain.RelPresenzaTer;
-import Domain.Terzamedia;
+import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerStampe implements ControllerInterface {
 
@@ -31,12 +22,12 @@ public class ControllerStampe implements ControllerInterface {
             switch (request.getParameter("target")) {
                 case "pressetsqu": {
                     int idset = Integer.parseInt(request.getParameter("idset"));
-                    String squadra = this.getSquadra(request.getParameter("squadra"));
+                    int squadra = Integer.parseInt(request.getParameter("squadra"));
 
                     List<Ragazzo> allRagazzi = DAOMan.ragazzoDAO.findByCalendarioId(idset);
                     List<Animatore> allAnimatori = DAOMan.animatoreDAO.findByCalendarioId(idset);
                     List<Object[]> ragGiusti = new LinkedList<>();
-                    allRagazzi.stream().filter((rag) -> (rag.getSquadra() != null && rag.getSquadra().equals(squadra))).forEachOrdered((Ragazzo rag) -> {
+                    allRagazzi.stream().filter((rag) -> (rag.getSquadra().getId() != 0 && rag.getSquadra().getId() == squadra)).forEachOrdered((Ragazzo rag) -> {
                         try {
                             String periodoString = "";
                             List<RelPresenzaRag> periodo = DAOMan.relPresenzaRagDAO.findByRagazzoId(rag.getId());
@@ -50,7 +41,7 @@ public class ControllerStampe implements ControllerInterface {
                         }
                     });
                     List<Object[]> anGiusti = new LinkedList<>();
-                    allAnimatori.stream().filter((an) -> (an.getSquadra() != null && an.getSquadra().equals(squadra))).forEachOrdered((an) -> {
+                    allAnimatori.stream().filter((an) -> (an.getSquadra().getId() != 0 && an.getSquadra().getId() == squadra)).forEachOrdered((an) -> {
                         try {
                             String periodoString = "";
                             List<RelPresenzaAn> periodo = DAOMan.relPresenzaAnDAO.findByAnimatoreId(an.getId());
@@ -66,7 +57,7 @@ public class ControllerStampe implements ControllerInterface {
                     mv.addObject("TITOLOPAGINA", "Presenze settimanali squadre");
                     mv.setView("stampe/pressetsqu.html");
                     mv.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
-                    mv.addObject("squadra", squadra);
+                    mv.addObject("squadra", DAOMan.squadraDAO.findById(squadra).getNome());
                     mv.addObject("ragazzi", ragGiusti);
                     mv.addObject("animatori", anGiusti);
                 }
@@ -213,49 +204,6 @@ public class ControllerStampe implements ControllerInterface {
             Logger.getLogger(ControllerStampe.class.getName()).log(Level.SEVERE, null, ex);
         }
         return mv;
-    }
-
-    private String getSquadra(String sq) {
-        String squadra = "";
-        switch (sq) {
-            case "arag":
-                squadra = "Arancio grandi";
-                break;
-            case "arap":
-                squadra = "Arancio piccoli";
-                break;
-            case "azzg":
-                squadra = "Azzurri grandi";
-                break;
-            case "azzp":
-                squadra = "Azzurri piccoli";
-                break;
-            case "blug":
-                squadra = "Blu grandi";
-                break;
-            case "blup":
-                squadra = "Blu piccoli";
-                break;
-            case "giag":
-                squadra = "Gialli grandi";
-                break;
-            case "giap":
-                squadra = "Gialli piccoli";
-                break;
-            case "rossg":
-                squadra = "Rossi grandi";
-                break;
-            case "rossp":
-                squadra = "Rossi piccoli";
-                break;
-            case "verg":
-                squadra = "Verdi grandi";
-                break;
-            case "verp":
-                squadra = "Verdi piccoli";
-                break;
-        }
-        return squadra;
     }
 
 }

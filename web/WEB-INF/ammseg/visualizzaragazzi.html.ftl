@@ -48,6 +48,7 @@
                         <td>${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
                         <td>${rag[0].sezione}</td>
                         <td>${rag[0].scuola.descrizione}</td>
+                        <#--Se nel db un intero è null, il resultset lo restituisce come zero-->
                         <td><#if rag[0].squadra.id!=0>${rag[0].squadra.nome}<#else><img
                                     src="../risorse/img/octicons/x.svg" alt="assente"></#if></td>
                         <td>${rag[0].laboratorio.descrizione}</td>

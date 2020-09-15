@@ -134,13 +134,13 @@
                 </div>
             </div>
         </#if>
-        <#if ragazzo.squadra??>
+        <#if ragazzo.squadra.id!=0>
             <div class="row">
                 <div class="col-sm">
                     <strong>Squadra</strong>
                 </div>
                 <div class="col-sm">
-                    <p>${ragazzo.squadra}</p>
+                    <p>${ragazzo.squadra.nome}</p>
                 </div>
             </div>
         </#if>
