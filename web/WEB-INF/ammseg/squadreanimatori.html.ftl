@@ -24,7 +24,7 @@
                                     <td>
                                         <label class="sr-only" for="${ani.id}squadra">Squadra</label>
                                         <select class="custom-select mr-sm-2" id="${ani.id}squadra" name="${ani.id}">
-                                            <option <#if !ani.squadra.id??>selected</#if>></option>
+                                            <option <#if ani.squadra.id==0>selected</#if>></option>
                                             <#list squadre as sq>
                                                 <option value="${sq.id}"
                                                         <#if ani.squadra.id! = sq.id>selected</#if>>${sq.nome}</option>

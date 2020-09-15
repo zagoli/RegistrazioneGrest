@@ -23,9 +23,13 @@
                     <#list animatori as ani>
                         <tr>
                             <td>
-                                <a href="javascript:;" onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoani&id=${ani.id}', 'Dettagli animatore', 'width=600, height=700, status, scrollbars=1, location');"><img src="../risorse/img/octicons/search.svg"></a>
-                                <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id}"><img src="../risorse/img/octicons/pencil.svg"></a>
-                                <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id}"><img src="../risorse/img/octicons/trashcan.svg"></a>
+                                <a href="javascript:"
+                                   onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoani&id=${ani.id}', 'Dettagli animatore', 'width=600, height=700, status, scrollbars=1, location');"><img
+                                            src="../risorse/img/octicons/search.svg" alt="dettagli"></a>
+                                <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id}"><img
+                                            src="../risorse/img/octicons/pencil.svg" alt="modifica"></a>
+                                <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id}"><img
+                                            src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
                             </td>
                             <td>${ani.cognome?capitalize}</td>
                             <td>${ani.nome?capitalize}</td>
@@ -36,14 +40,15 @@
                             <td>${ani.cellulare}</td>
                             <td>${ani.mail}</td>
                             <td <#if ani.responsabileLaboratorio>class="mark"</#if>>${ani.laboratorio.descrizione}</td>
-                            <td <#if ani.responsabileSquadra>class="mark"</#if>><#if ani.squadra??>${ani.squadra}<#else><img src="../risorse/img/octicons/x.svg"></#if></td>
+                            <td <#if ani.responsabileSquadra>class="mark"</#if>><#if ani.squadra.id!=0>${ani.squadra.nome}<#else>
+                                    <img src="../risorse/img/octicons/x.svg" alt="assente"></#if></td>
                             <td>
-                                <#if ani.fasciaEtaRagazzi = "P14"> 
-                                Piccoli
-                                <#elseif ani.fasciaEtaRagazzi = "G52"> 
-                                Grandi
-                                <#elseif ani.fasciaEtaRagazzi = "AA3"> 
-                                3 Media
+                                <#if ani.fasciaEtaRagazzi = "P14">
+                                    Piccoli
+                                <#elseif ani.fasciaEtaRagazzi = "G52">
+                                    Grandi
+                                <#elseif ani.fasciaEtaRagazzi = "AA3">
+                                    3 Media
                                 </#if>
                             </td>
                         </tr>
@@ -52,15 +57,16 @@
             </table>
         </div>
     </div>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/ellipsis.js"></script>
-    <script>
-        $(document).ready( function () {
-            $('#t_anim').DataTable({
-                paging: false,
-                columnDefs: [
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/ellipsis.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#t_anim').DataTable({
+            paging: false,
+            columnDefs: [
                 {
-                    targets: [2,3,4,6,7,10],
+                    targets: [2, 3, 4, 6, 7],
                     render: $.fn.dataTable.render.ellipsis(15, true)
                 },
                 {
@@ -68,9 +74,9 @@
                     searchable: false,
                     orderable: false
                 }
-                ],
-                info: false
-            });
+            ],
+            info: false
+        });
         } );
     </script>
 <#include "../struct/footer.html.ftl">
