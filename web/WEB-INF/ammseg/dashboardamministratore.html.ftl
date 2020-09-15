@@ -129,19 +129,39 @@
                                  aria-labelledby="headingpressetsqu${set.idSettimana}"
                                  data-parent="#accordionPressetsqu">
                                 <div class="card-body">
+                                    <#--Devo dividere le squadre in due colonne: per prima cosa creo una variabile contatore-->
+                                    <#assign cont = 0>
                                     <#list squadre as sq>
-                                        <div class="row mt-2">
+                                    <#--Salvo la colonna invece di ripeerla due volte-->
+                                        <#assign colonna>
                                             <div class="col">
                                                 <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=${sq.id}"
-                                                   class="btn btn-block btn-lg text-white"
-                                                   style="background-color: ${sq.colore} !important;">${sq.nome}</a>
+                                                   class="btn btn-block btn-lg text-black"
+                                                   style="background-color: ${sq.colore} !important;">
+                                                    <b>${sq.nome}</b>
+                                                </a>
                                             </div>
-                                        </div>
+                                        </#assign>
+                                    <#--Se il contatore è divisibile per due, allora apro la riga-->
+                                        <#if cont%2 == 0>
+                                            <div class="row mt-2">
+                                            ${colonna}
+                                        <#else>
+                                        <#--Altrimenti so che devo scrivere una seconda colonna e chiudere la riga-->
+                                            ${colonna}
+                                            </div>
+                                        </#if>
+                                    <#--Poi incremento il contatore-->
+                                        <#assign cont++>
                                     </#list>
+                                    <#--Se ho finito con un numero dispari, devo comunque chiudere la riga-->
+                                    <#if cont%2 != 0>
                                 </div>
+                                </#if>
                             </div>
                         </div>
-                    </#list>
+                </div>
+                </#list>
                 </div>
                 <hr/>
                 <div class="text-center">
