@@ -1,22 +1,22 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
-    <div class="container-fluid mt-5 content">
-        <div class="pt-2 pl-3 pr-3 pb-2">
-            <table class="table table-hover table-responsive nowrap" id="t_ter">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col" style="width: 2%">#</th> 
-                        <th scope="col" style="width: 6%">Azioni</th>
-                        <th scope="col">Cognome</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Nascita</th>
-                        <th scope="col">Via</th>
-                        <th scope="col">Localit&agrave;</th>
-                        <th scope="col">Parrocchia</th>
-                        <th scope="col">Sezione</th>
-                        <th scope="col">Scuola</th>
-                        <th scope="col">Squadra</th>
-                        <th scope="col">Laboratorio</th>
+<div class="container-fluid mt-5 content">
+    <div class="pt-2 pl-3 pr-3 pb-2">
+        <table class="table table-hover table-responsive nowrap" id="t_ter">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" style="width: 2%;">#</th>
+                <th scope="col" style="width: 6%;">Azioni</th>
+                <th scope="col">Cognome</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Nascita</th>
+                <th scope="col">Via</th>
+                <th scope="col">Localit&agrave;</th>
+                <th scope="col">Parrocchia</th>
+                <th scope="col">Sezione</th>
+                <th scope="col">Scuola</th>
+                <th scope="col">Squadra</th>
+                <th scope="col">Laboratorio</th>
                         <th scope="col">Nuota</th>
                         <th scope="col">Passaggio</th>
                         <th scope="col">Richieste</th>
@@ -28,7 +28,7 @@
                 <#list terzamedia as ter>
                     <tr>
                         <th class="ordineArrivo"
-                            style="text-align:center"><#if ter[1]??>${ter[1].ordineArrivo}</#if></th>
+                            style="text-align:center;"><#if ter[1]??>${ter[1].ordineArrivo}</#if></th>
                         <td>
                             <a href="javascript:;"
                                onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoter&id=${ter[0].id}', 'Dettagli terzamedia', 'width=600, height=700, status, scrollbars=1, location');"><img

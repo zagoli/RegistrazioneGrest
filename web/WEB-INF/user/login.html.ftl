@@ -8,10 +8,10 @@
                         <h4 align="center">Accedi al portale</h4>
                     </div>
                     <#if ERRATO ??>
-                        <p class="text-warning"> Password errata! Riprova </p>
+                        <p class="text-danger text-center"> Password errata! Riprova </p>
                     </#if>
                     <#if UTENTENONTROVATO ??>
-                        <p class="text-warning"> Utente non trovato! Controlla che l'email sia corretta </p>
+                        <p class="text-danger text-center"> Utente non trovato! Controlla che l'email sia corretta </p>
                     </#if>
                     <form action="/RegistrazioneGrest/App/Login" method="POST" name="formLogin">
                         <input class="form-control mb-2" type="email" name="mail" placeholder="Mail" required>

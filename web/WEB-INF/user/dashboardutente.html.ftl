@@ -11,18 +11,18 @@
                 <#assign count = 0>
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th scope="col" style="width: 2%">#</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cognome</th>
-                            <th scope="col" style="width: 15%">Stampa scheda</th>
-                            <th scope="col" style="width: 2%">Pagato</th>
-                            <th scope="col" style="width: 2%">Modifica</th>
-                            <th scope="col" style="width: 2%">Elimina</th>
-                        </tr>
+                    <tr>
+                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col" style="width: 15%;">Stampa scheda</th>
+                        <th scope="col" style="width: 2%;">Pagato</th>
+                        <th scope="col" style="width: 2%;">Modifica</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <#list ragazzi as rag, pagato>
+                    <#list ragazzi as rag, pagato>
                             <#assign count = count + 1>
                             <tr>
                                 <th scope="row">${count}</th>
@@ -51,17 +51,17 @@
                 <#assign count = 0>
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th scope="col" style="width: 2%">#</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cognome</th>
-                            <th scope="col" style="width: 15%">Stampa scheda</th>
-                            <th scope="col" style="width: 2%">Modifica</th>
-                            <th scope="col" style="width: 2%">Elimina</th>
-                        </tr>
+                    <tr>
+                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col" style="width: 15%;">Stampa scheda</th>
+                        <th scope="col" style="width: 2%;">Modifica</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <#list animatori as ani>
+                    <#list animatori as ani>
                             <#assign count = count + 1>
                             <tr>
                                 <th scope="row">${count}</th>
@@ -83,18 +83,18 @@
                 <#assign count = 0>
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th scope="col" style="width: 2%">#</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cognome</th>
-                            <th scope="col" style="width: 15%">Stampa scheda</th>
-                            <th scope="col" style="width: 2%">Pagato</th>
-                            <th scope="col" style="width: 2%">Modifica</th>
-                            <th scope="col" style="width: 2%">Elimina</th>
-                        </tr>
+                    <tr>
+                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col" style="width: 15%;">Stampa scheda</th>
+                        <th scope="col" style="width: 2%;">Pagato</th>
+                        <th scope="col" style="width: 2%;">Modifica</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <#list terzamedia as ter, pagato>
+                    <#list terzamedia as ter, pagato>
                             <#assign count = count + 1>
                             <tr>
                                 <th scope="row">${count}</th>

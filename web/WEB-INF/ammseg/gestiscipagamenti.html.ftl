@@ -5,16 +5,16 @@
             <#if ragazzi??>
                 <table class="table table-striped" id="t_pagamenti">
                     <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cognome</th>
-                            <th scope="col">Info</th>
-                            <th scope="col">Scheda</th>
-                            <th scope="col" style="width: 70%">Ordine Iscrizione e Pagamento</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col">Info</th>
+                        <th scope="col">Scheda</th>
+                        <th scope="col" style="width: 70%;">Ordine Iscrizione e Pagamento</th>
+                    </tr>
                     </thead>
                     <tbody class="list">
-                        <#list ragazzi as datirag>
+                    <#list ragazzi as datirag>
                             <tr>
                                 <td class="nome">${datirag[0].nome}</td>
                                 <td class="cognome">${datirag[0].cognome}</td>   

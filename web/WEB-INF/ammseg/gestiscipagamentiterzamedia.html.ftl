@@ -5,16 +5,16 @@
             <#if terzamedia??>
                 <table class="table table-striped" id="t_pagamentiter">
                     <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cognome</th>
-                            <th scope="col">Info</th>
-                            <th scope="col">Scheda</th>
-                            <th scope="col" style="width: 70%">Ordine Iscrizione e Pagamento</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col">Info</th>
+                        <th scope="col">Scheda</th>
+                        <th scope="col" style="width: 70%;">Ordine Iscrizione e Pagamento</th>
+                    </tr>
                     </thead>
                     <tbody class="list">
-                        <#list terzamedia as datiter>
+                    <#list terzamedia as datiter>
                             <tr>
                                 <td class="nome">${datiter[0].nome}</td>
                                 <td class="cognome">${datiter[0].cognome}</td>   

@@ -1,21 +1,21 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
-    <div class="container-fluid mt-5 content">
-        <div class="pt-2 pl-3 pr-3 pb-2">
-            <table id="t_anim" class="table table-hover table-responsive nowrap">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col" style="width: 6%">Azioni</th>
-                        <th scope="col">Cognome</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Nascita</th>
-                        <th scope="col">Fiscale</th>
-                        <th scope="col">Indirizzo</th>
-                        <th scope="col">Parrocchia</th>
-                        <th scope="col">Cellulare</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Laboratorio</th>
-                        <th scope="col">Squadra</th>
+<div class="container-fluid mt-5 content">
+    <div class="pt-2 pl-3 pr-3 pb-2">
+        <table id="t_anim" class="table table-hover table-responsive nowrap">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" style="width: 6%;">Azioni</th>
+                <th scope="col">Cognome</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Nascita</th>
+                <th scope="col">Fiscale</th>
+                <th scope="col">Indirizzo</th>
+                <th scope="col">Parrocchia</th>
+                <th scope="col">Cellulare</th>
+                <th scope="col">Email</th>
+                <th scope="col">Laboratorio</th>
+                <th scope="col">Squadra</th>
                         <th scope="col">F. et&agrave;</th>
                     </tr>
                 </thead>

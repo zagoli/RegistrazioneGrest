@@ -7,17 +7,19 @@
             <div class="mr-2 ml-2">
                 <table class="table table-bordered pl-2 pr-2 table-sm">
                     <thead>
+                    <tr>
                         <th>Cognome</th>
                         <th>Nome</th>
-                        <th style="width:5%">Classe</th>
-                        <th>Periodo</th>       
-                        <th style="width:25%">Allergia</th>
+                        <th style="width:5%;">Classe</th>
+                        <th>Periodo</th>
+                        <th style="width:25%;">Allergia</th>
                         <th>Squadra</th>
                         <th>Laboratorio</th>
                         <th>Telefoni urgenze</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <#list dati as rag>
+                    <#list dati as rag>
                             <tr>
                                 <td class="text-capitalize">${rag[0].cognome}</td>
                                 <td class="text-capitalize">${rag[0].nome}</td>

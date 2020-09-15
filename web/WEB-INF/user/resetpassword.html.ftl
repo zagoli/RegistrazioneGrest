@@ -4,10 +4,13 @@
         <div class="row mt-5">
             <div class="container">
                 <#if FATTO ??>
-                <div class="text-center">
-                    <h1 class="text-uppercase font-weight-bold">ti abbiamo inviato una mail con la tua nuova password.</h1> <p>Se non trovi la mail, prova a controllare nello spam. Potrai modificarla nuovamente dopo aver effettuato l'accesso.</p>
-                    <a href="/RegistrazioneGrest/App/Login" class="btn btn-large">Accedi</a>
-                </div>
+                    <div class="text-center">
+                        <h1 class="text-uppercase font-weight-bold">ti abbiamo inviato una mail con la tua nuova
+                            password.</h1>
+                        <p>Se non trovi la mail, prova a controllare nello spam. Potrai modificarla nuovamente dopo aver
+                            effettuato l'accesso.</p>
+                        <a href="/RegistrazioneGrest/App/Login" class="btn btn-large btn-primary">Accedi</a>
+                    </div>
                 <#else>
                     <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white">
                         <div class="title pb-1">

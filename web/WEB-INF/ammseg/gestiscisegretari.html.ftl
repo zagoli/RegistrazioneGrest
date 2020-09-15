@@ -7,16 +7,16 @@
                     <#assign count = 0>
                     <table class="table table-bordered">
                         <thead>
-                            <tr>
-                                <th scope="col" style="width: 2%">#</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Cognome</th>
-                                <th scope="col">Mail</th>
-                                <th scope="col" style="width: 2%">Elimina</th>
-                            </tr>
+                        <tr>
+                            <th scope="col" style="width: 2%;">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Cognome</th>
+                            <th scope="col">Mail</th>
+                            <th scope="col" style="width: 2%;">Elimina</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <#list segretari as seg>
+                        <#list segretari as seg>
                                 <#assign count = count + 1>
                                 <tr>
                                     <th scope="row">${count}</th>

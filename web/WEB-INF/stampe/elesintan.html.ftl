@@ -1,20 +1,22 @@
 <#ftl strip_whitespace = true>
 <#include "../struct/header.html.ftl">
-    <div class="mt-4 content">
-        <h2 class="text-uppercase text-center">elenco sintesi animatori</h2>
-        <div class="container">
-            <table class="table table-bordered table-sm">
-                <thead>
-                    <th style="width:5%">Anno</th>
-                    <th>Cognome</th>
-                    <th>Nome</th>
-                    <th>Laboratorio</th>
-                    <th>Periodo</th>
-                    <th>Squadra</th>
-                    <th>Cellulare</th>
-                </thead>
-                <tbody>
-                    <#list animatori as ani>
+<div class="mt-4 content">
+    <h2 class="text-uppercase text-center">elenco sintesi animatori</h2>
+    <div class="container">
+        <table class="table table-bordered table-sm">
+            <thead>
+            <tr>
+                <th style="width:5%;">Anno</th>
+                <th>Cognome</th>
+                <th>Nome</th>
+                <th>Laboratorio</th>
+                <th>Periodo</th>
+                <th>Squadra</th>
+                <th>Cellulare</th>
+            </tr>
+            </thead>
+            <tbody>
+            <#list animatori as ani>
                         <tr>
                             <td>${ani[0].dataNascita?string.yyyy}</td>
                             <td class="text-capitalize">${ani[0].cognome}</td>

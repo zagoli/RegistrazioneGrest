@@ -22,12 +22,12 @@ public class ControllerStampe implements ControllerInterface {
             switch (request.getParameter("target")) {
                 case "pressetsqu": {
                     int idset = Integer.parseInt(request.getParameter("idset"));
-                    int squadra = Integer.parseInt(request.getParameter("squadra"));
+                    int squadraId = Integer.parseInt(request.getParameter("squadra"));
 
                     List<Ragazzo> allRagazzi = DAOMan.ragazzoDAO.findByCalendarioId(idset);
                     List<Animatore> allAnimatori = DAOMan.animatoreDAO.findByCalendarioId(idset);
                     List<Object[]> ragGiusti = new LinkedList<>();
-                    allRagazzi.stream().filter((rag) -> (rag.getSquadra().getId() != 0 && rag.getSquadra().getId() == squadra)).forEachOrdered((Ragazzo rag) -> {
+                    allRagazzi.stream().filter((rag) -> (rag.getSquadra().getId() != 0 && rag.getSquadra().getId() == squadraId)).forEachOrdered((Ragazzo rag) -> {
                         try {
                             String periodoString = "";
                             List<RelPresenzaRag> periodo = DAOMan.relPresenzaRagDAO.findByRagazzoId(rag.getId());
@@ -41,7 +41,7 @@ public class ControllerStampe implements ControllerInterface {
                         }
                     });
                     List<Object[]> anGiusti = new LinkedList<>();
-                    allAnimatori.stream().filter((an) -> (an.getSquadra().getId() != 0 && an.getSquadra().getId() == squadra)).forEachOrdered((an) -> {
+                    allAnimatori.stream().filter((an) -> (an.getSquadra().getId() != 0 && an.getSquadra().getId() == squadraId)).forEachOrdered((an) -> {
                         try {
                             String periodoString = "";
                             List<RelPresenzaAn> periodo = DAOMan.relPresenzaAnDAO.findByAnimatoreId(an.getId());
@@ -57,7 +57,7 @@ public class ControllerStampe implements ControllerInterface {
                     mv.addObject("TITOLOPAGINA", "Presenze settimanali squadre");
                     mv.setView("stampe/pressetsqu.html");
                     mv.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
-                    mv.addObject("squadra", DAOMan.squadraDAO.findById(squadra).getNome());
+                    mv.addObject("squadra", DAOMan.squadraDAO.findById(squadraId));
                     mv.addObject("ragazzi", ragGiusti);
                     mv.addObject("animatori", anGiusti);
                 }

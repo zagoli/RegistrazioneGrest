@@ -4,18 +4,18 @@
         <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
             <#if attivita??>
                 <#assign count = 0>
-                    <table class="table table-striped nowrap" id="t_collab">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" style="width: 2%">#</th>
-                                <th scope="col">Attivit&agrave;</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Cognome</th>
-                                <th scope="col">Data</th>
-                            </tr>
-                        </thead>
-                        <tbody class="list">
-                            <#list attivita as attarray>
+            <table class="table table-striped nowrap" id="t_collab">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col" style="width: 2%;">#</th>
+                    <th scope="col">Attivit&agrave;</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Cognome</th>
+                    <th scope="col">Data</th>
+                </tr>
+                </thead>
+                <tbody class="list">
+                <#list attivita as attarray>
                                 <#assign count = count + 1>
                                 <tr>
                                     <th scope="row">${count}</th>

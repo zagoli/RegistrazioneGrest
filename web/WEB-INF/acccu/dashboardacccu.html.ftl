@@ -8,16 +8,16 @@
                 <#assign count = 0>
                 <table class="table table-bordered">
                     <thead>
-                        <tr>
-                            <th scope="col" style="width: 2%">#</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cognome</th>
-                            <th scope="col" style="width: 2%">Modifica</th>
-                            <th scope="col" style="width: 2%">Elimina</th>
-                        </tr>
+                    <tr>
+                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col" style="width: 2%;">Modifica</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <#list accompagnatori as acc>
+                    <#list accompagnatori as acc>
                             <#assign count = count + 1>
                             <tr>
                                 <th scope="row">${count}</th>
@@ -39,19 +39,19 @@
                 <#assign count = 0>
                 <table class="table table-bordered">
                     <thead>
-                        <tr>
-                            <th scope="col" style="width: 2%">#</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Cognome</th>
-                            <th scope="col">Cellulare</th>
-                            <th scope="col">Fisso</th>
-                            <th scope="col">Relazione</th>
-                            <th scope="col" style="width: 2%">Modifica</th>
-                            <th scope="col" style="width: 2%">Elimina</th>
-                        </tr>
+                    <tr>
+                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col">Cellulare</th>
+                        <th scope="col">Fisso</th>
+                        <th scope="col">Relazione</th>
+                        <th scope="col" style="width: 2%;">Modifica</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <#list contatti as cu>
+                    <#list contatti as cu>
                             <#assign count = count + 1>
                             <tr>
                                 <th scope="row">${count}</th>

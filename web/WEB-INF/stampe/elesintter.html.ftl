@@ -1,21 +1,23 @@
 <#ftl strip_whitespace = true>
 <#include "../struct/header.html.ftl">
-    <div class="mt-4 content">
-        <h2 class="text-uppercase text-center">Elenco sintesi terzamedia</h2>
-        <div class="container-block">
-            <div class="mr-2 ml-2">
-                <table class="table table-bordered pl-2 pr-2 table-sm">
-                    <thead>
-                        <th>Cognome</th>
-                        <th>Nome</th>
-                        <th>Periodo</th>                    
-                        <th>Squadra</th>
-                        <th>Laboratorio</th>
-                        <th>Cellulare</th>
-                        <th>Telefoni urgenze</th>
-                    </thead>
-                    <tbody>
-                        <#list terzamedia as ter>
+<div class="mt-4 content">
+    <h2 class="text-uppercase text-center">Elenco sintesi terzamedia</h2>
+    <div class="container-block">
+        <div class="mr-2 ml-2">
+            <table class="table table-bordered pl-2 pr-2 table-sm">
+                <thead>
+                <tr>
+                    <th>Cognome</th>
+                    <th>Nome</th>
+                    <th>Periodo</th>
+                    <th>Squadra</th>
+                    <th>Laboratorio</th>
+                    <th>Cellulare</th>
+                    <th>Telefoni urgenze</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list terzamedia as ter>
                             <tr>
                                 <td class="text-capitalize">${ter[0].cognome}</td>
                                 <td class="text-capitalize">${ter[0].nome}</td>

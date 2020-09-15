@@ -7,15 +7,15 @@
                 <#assign count = 0>
                 <table class="table table-bordered">
                     <thead>
-                        <tr>
-                            <th scope="col" style="width: 2%">#</th>
-                            <th scope="col">Attivit&agrave;</th>
-                            <th scope="col">Data</th>
-                            <th scope="col" style="width: 2%">Elimina</th>
-                        </tr>
+                    <tr>
+                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col">Attivit&agrave;</th>
+                        <th scope="col">Data</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <#list attivita as att, dataid>
+                    <#list attivita as att, dataid>
                             <#assign count = count + 1>
                             <tr>
                                 <th scope="row">${count}</th>
