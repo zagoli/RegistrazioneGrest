@@ -17,64 +17,69 @@
                 <th scope="col">Scuola</th>
                 <th scope="col">Squadra</th>
                 <th scope="col">Laboratorio</th>
-                        <th scope="col">Nuota</th>
-                        <th scope="col">Passaggio</th>
-                        <th scope="col">Richieste</th>
-                        <th scope="col">Allergie</th>
-                        <th scope="col">Pagamento</th>
-                    </tr>
-                </thead>
-                <tbody class="list">
-                <#list terzamedia as ter>
-                    <tr>
-                        <th class="ordineArrivo"
-                            style="text-align:center;"><#if ter[1]??>${ter[1].ordineArrivo}</#if></th>
-                        <td>
-                            <a href="javascript:;"
-                               onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoter&id=${ter[0].id}', 'Dettagli terzamedia', 'width=600, height=700, status, scrollbars=1, location');"><img
-                                        src="../risorse/img/octicons/search.svg" alt="dettaglio"></a>
-                            <a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter[0].id}"><img
-                                        src="../risorse/img/octicons/pencil.svg" alt="modifica"></a>
-                            <a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter[0].id}"><img
-                                        src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
-                        </td>
-                        <td>${ter[0].cognome?capitalize}</td>
-                        <td>${ter[0].nome?capitalize}</td>
-                        <td data-sort="${ter[0].dataNascita?string.iso}">${ter[0].dataNascita?string["dd/MM/yyyy"]}</td>
-                        <td>${ter[0].registrato.via?capitalize+" "+ter[0].registrato.civico}</td>
-                        <td>${ter[0].registrato.localita?capitalize}</td>
-                        <td>${ter[0].parrocchia.nome}</td>
-                        <td>${ter[0].sezione}</td>
-                        <td>${ter[0].scuola.descrizione}</td>
-                        <td><#if ter[0].squadra.id!=0>${ter[0].squadra.nome}<#else><img
-                                    src="../risorse/img/octicons/x.svg" alt="assente"></#if></td>
-                        <td>${ter[0].laboratorio.descrizione}</td>
-                        <td><#if ter[0].saNuotare><img src="../risorse/img/octicons/check.svg" alt="si"><#else><img
-                                    src="../risorse/img/octicons/x.svg" alt="no"></#if></td>
-                        <td><#if ter[0].festaPassaggio><img src="../risorse/img/octicons/check.svg" alt="si"><#else><img
-                                    src="../risorse/img/octicons/x.svg" alt="no"></#if></td>
-                        <td><#if ter[0].richieste??><img src="../risorse/img/octicons/check.svg" alt="presenti"><#else>
-                                <img src="../risorse/img/octicons/x.svg" alt="assenti"></#if></td>
-                        <td><#if ter[0].noteAlimentari??><img src="../risorse/img/octicons/check.svg"
-                                                              alt="presenti"><#else><img
-                                    src="../risorse/img/octicons/x.svg" alt="assenti"></#if></td>
-                        <td><#if ter[1]??>${ter[1].quota}&euro;<#else><img src="../risorse/img/octicons/x.svg"
-                                                                           alt="assente"></#if></td>
-                    </tr>
-                </#list>
-                </tbody>
-            </table>
-        </div>
+                <th scope="col">Nuota</th>
+                <th scope="col">Passaggio</th>
+                <th scope="col">Richieste</th>
+                <th scope="col">Allergie</th>
+                <th scope="col">Pagamento</th>
+            </tr>
+            </thead>
+            <tbody class="list">
+            <#list terzamedia as ter>
+                <tr>
+                    <th class="ordineArrivo"
+                        style="text-align:center;"><#if ter[1]??>${ter[1].ordineArrivo}</#if></th>
+                    <td>
+                        <a href="javascript:;"
+                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoter&id=${ter[0].id}', 'Dettagli terzamedia', 'width=600, height=700, status, scrollbars=1, location');"><img
+                                    src="../risorse/img/octicons/search.svg" alt="dettaglio"></a>
+                        <a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter[0].id}"><img
+                                    src="../risorse/img/octicons/pencil.svg" alt="modifica"></a>
+                        <a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter[0].id}"><img
+                                    src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
+                    </td>
+                    <td>${ter[0].cognome?capitalize}</td>
+                    <td>${ter[0].nome?capitalize}</td>
+                    <td data-sort="${ter[0].dataNascita?string.iso}">${ter[0].dataNascita?string["dd/MM/yyyy"]}</td>
+                    <td>${ter[0].registrato.via?capitalize+" "+ter[0].registrato.civico}</td>
+                    <td>${ter[0].registrato.localita?capitalize}</td>
+                    <td>${ter[0].parrocchia.nome}</td>
+                    <td>${ter[0].sezione}</td>
+                    <td>${ter[0].scuola.descrizione}</td>
+                    <td>
+                        <#if ter[0].squadra.id!=0>
+                            <span class="badge"
+                                  style="background-color: ${ter[0].squadra.colore}">&nbsp;</span> ${ter[0].squadra.nome}
+                        </#if>
+                    </td>
+                    <td>${ter[0].laboratorio.descrizione}</td>
+                    <td><#if ter[0].saNuotare><img src="../risorse/img/octicons/check.svg" alt="si"><#else><img
+                                src="../risorse/img/octicons/x.svg" alt="no"></#if></td>
+                    <td><#if ter[0].festaPassaggio><img src="../risorse/img/octicons/check.svg" alt="si"><#else><img
+                                src="../risorse/img/octicons/x.svg" alt="no"></#if></td>
+                    <td><#if ter[0].richieste??><img src="../risorse/img/octicons/check.svg" alt="presenti"><#else>
+                            <img src="../risorse/img/octicons/x.svg" alt="assenti"></#if></td>
+                    <td><#if ter[0].noteAlimentari??><img src="../risorse/img/octicons/check.svg"
+                                                          alt="presenti"><#else><img
+                                src="../risorse/img/octicons/x.svg" alt="assenti"></#if></td>
+                    <td><#if ter[1]??>${ter[1].quota}&euro;<#else><img src="../risorse/img/octicons/x.svg"
+                                                                       alt="assente"></#if></td>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
     </div>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/ellipsis.js"></script>
-    <script>
-        $(document).ready( function () {
-            $('#t_ter').DataTable({
-                paging: false ,
-                columnDefs: [
+</div>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/ellipsis.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#t_ter').DataTable({
+            paging: false,
+            columnDefs: [
                 {
-                    targets: [2,3,4,5,6,7,9,11],
+                    targets: [2, 3, 4, 5, 6, 7, 9, 11],
                     render: $.fn.dataTable.render.ellipsis(15, true)
                 },
                 {
@@ -85,9 +90,9 @@
                     targets: [1, 14, 15, 16],
                     orderable: false
                 }
-                ],
-                info: false
-            });
-        } );
-    </script>
+            ],
+            info: false
+        });
+    });
+</script>
 <#include "../struct/footer.html.ftl">

@@ -14,19 +14,22 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
     private static final String UPDATE_SQUADRA_ANIMATORE = "update Animatore set squadra_id = ?, isResponsabileSquadra = ? where id = ?;";
     private static final String UPDATE_LABORATORIO_ANIMATORE = "update Animatore set Laboratorio_id = ?, isResponsabileLaboratorio = ? where id = ?;";
     private static final String DELETE_ANIMATORE = "delete from Animatore where id = ?;";
-    private static final String GENERIC_ANIMATORE_FIND = "select"
-            + " an.codiceFiscale as ancodiceFiscale, an.id as anid, an.nome as annome, an.cognome as ancognome, an.dataNascita as andataNascita, an.presenza as anpresenza, an.cellularePersonale as ancellulare, an.fasciaEtaRagazzi as anfasciaEtaRagazzi, an.mail as anmail, an.nTessera as annTessera, an.isResponsabileSquadra as anisResponsabileSquadra, an.isResponsabileLaboratorio as anisResponsabileLaboratorio,"
-            + " la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato,"
-            + " pa.id as paid, pa.nome as panome, pa.luogo as paluogo,"
-            + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,"
-            + " ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,"
-            + " sq.id as sqid, sq.nome as sqnome, sq.colore as sqcolore"
-            + " from Animatore an"
-            + " join Parrocchia pa on (an.Parrocchia_id = pa.id)"
-            + " join Circolo ci on (an.Circolo_id = ci.id)"
-            + " join Laboratorio la on (an.Laboratorio_id = la.id)"
-            + " join Registrato re on (an.Registrato_id = re.id)"
-            + " left join Squadra sq on (an.squadra_id = sq.id)";
+    private static final String GENERIC_ANIMATORE_FIND =
+            """
+                    select
+                    an.codiceFiscale as ancodiceFiscale, an.id as anid, an.nome as annome, an.cognome as ancognome, an.dataNascita as andataNascita, an.presenza as anpresenza, an.cellularePersonale as ancellulare, an.fasciaEtaRagazzi as anfasciaEtaRagazzi, an.mail as anmail, an.nTessera as annTessera, an.isResponsabileSquadra as anisResponsabileSquadra, an.isResponsabileLaboratorio as anisResponsabileLaboratorio,
+                    la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato,
+                    pa.id as paid, pa.nome as panome, pa.luogo as paluogo,
+                    re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,
+                    ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,
+                    sq.id as sqid, sq.nome as sqnome, sq.colore as sqcolore
+                    from Animatore an
+                    join Parrocchia pa on (an.Parrocchia_id = pa.id)
+                    join Circolo ci on (an.Circolo_id = ci.id)
+                    join Laboratorio la on (an.Laboratorio_id = la.id)
+                    join Registrato re on (an.Registrato_id = re.id)
+                    left join Squadra sq on (an.squadra_id = sq.id)
+                    """;
     private static final String FIND_ANIMATORE_ID = GENERIC_ANIMATORE_FIND + " where an.id = ?";
     private static final String FIND_ALL_ANIMATORE = GENERIC_ANIMATORE_FIND + " order by an.cognome, an.nome;";
     private static final String COUNT_ANIMATORE = "select count(*) from Animatore;";

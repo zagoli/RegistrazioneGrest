@@ -14,21 +14,24 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     private static final String UPDATE_SQUADRA_TERZAMEDIA = "update Terzamedia set squadra_id = ? where id = ?;";
     private static final String UPDATE_LABORATORIO_TERZAMEDIA = "update Terzamedia set Laboratorio_id = ? where id = ?;";
     private static final String DELETE_TERZAMEDIA = "delete from Terzamedia where id = ?;";
-    private static final String GENERIC_TERZAMEDIA_FIND = "select"
-            + " ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio,"
-            + " la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato,"
-            + " pa.id as paid, pa.nome as panome, pa.luogo as paluogo,"
-            + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,"
-            + " ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,"
-            + " sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione,"
-            + " sq.id as sqid, sq.nome as sqnome, sq.colore as sqcolore"
-            + " from Terzamedia ter"
-            + " join Laboratorio la on (ter.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ter.Parrocchia_id = pa.id)"
-            + " join Registrato re on (ter.Registrato_id = re.id)"
-            + " join Circolo ci on (ter.Circolo_id = ci.id)"
-            + " join Scuola sc on (ter.Scuola_id = sc.id)"
-            + " left join Squadra sq on (ter.squadra_id = sq.id)";
+    private static final String GENERIC_TERZAMEDIA_FIND =
+            """
+                    select
+                    ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio,
+                    la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato,
+                    pa.id as paid, pa.nome as panome, pa.luogo as paluogo,
+                    re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,
+                    ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,
+                    sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione,
+                    sq.id as sqid, sq.nome as sqnome, sq.colore as sqcolore
+                    from Terzamedia ter
+                    join Laboratorio la on (ter.Laboratorio_id = la.id)
+                    join Parrocchia pa on (ter.Parrocchia_id = pa.id)
+                    join Registrato re on (ter.Registrato_id = re.id)
+                    join Circolo ci on (ter.Circolo_id = ci.id)
+                    join Scuola sc on (ter.Scuola_id = sc.id)
+                    left join Squadra sq on (ter.squadra_id = sq.id)
+                    """;
     private static final String FIND_TERZAMEDIA_ID = GENERIC_TERZAMEDIA_FIND + " where ter.id = ?;";
     private static final String FIND_ALL_TERZAMEDIA = GENERIC_TERZAMEDIA_FIND + " order by ter.cognome, ter.nome;";
     private static final String FIND_TERZAMEDIA_LAB_ID = GENERIC_TERZAMEDIA_FIND + " where la.id = ? order by ter.cognome, ter.nome;";
@@ -38,7 +41,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     private static final String FIND_TERZAMEDIA_CAL_ID = GENERIC_TERZAMEDIA_FIND + " join presenzaTer pt on (ter.id = pt.Terzamedia_id) where pt.Calendario_idSettimana = ? order by ter.cognome, ter.nome;";
     private static final String FIND_TERZAMEDIA_REGISTRATO_ID = GENERIC_TERZAMEDIA_FIND + " where re.id = ? order by ter.cognome, ter.nome;";
     private static final String COUNT_TERZAMEDIA = "select count(*) from Terzamedia;";
-    private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Terzamedia r join presenzaTer pr on (r.id = pr.Terzamedia_id) group by pr.Calendario_idSettimana;";
+    private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from presenzaTer pr group by pr.Calendario_idSettimana;";
     // </editor-fold>
 
     @Override

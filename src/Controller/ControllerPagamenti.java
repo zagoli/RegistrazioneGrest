@@ -3,10 +3,12 @@ package Controller;
 import DAOManager.DAOMan;
 import Domain.Pagamento;
 import Domain.Ragazzo;
-import Domain.RelPresenzaRag;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -15,8 +17,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerPagamenti implements ControllerInterface {
 
@@ -65,83 +65,30 @@ public class ControllerPagamenti implements ControllerInterface {
         return mv;
     }
 
+    //cambiare con metodo matematico se possibile
     protected static float calcolaQuota(Ragazzo r) throws SQLException {
-        float quota = 0;
-        List<RelPresenzaRag> lrpr = DAOMan.relPresenzaRagDAO.findByRagazzoId(r.getId());
-        //cambiare con metodo matematico se possibile
-        if (r.getFratelloIscritto()) {
-            if (r.getMensa()) {
-                switch (lrpr.size()) {
-                    case 1:
-                        quota = 75;
-                        break;
-                    case 2:
-                        quota = 120;
-                        break;
-                    case 3:
-                        quota = 165;
-                        break;
-                    case 4:
-                        quota = 210;
-                        break;
+        int supplementoAnticipo = 10;
+        int supplementoFuoriComune = 15;
+        int nSettimane = DAOMan.relPresenzaRagDAO.findByRagazzoId(r.getId()).size();
+        int[][][] quotaBase = {
+                // normale
+                {   //senza mensa   |   con mensa
+                        {50, 75},    // una settimana
+                        {75, 125},   // due settimane
+                        {95, 170},   // tre settimane
+                        {115, 215}    // quattro settimane
+                },
+                // fratello iscritto
+                {   //senza mensa   |   con mensa
+                        {40, 60},    // una settimana
+                        {60, 100},   // due settimane
+                        {76, 136},   // tre settimane
+                        {95, 172}    // quattro settimane
                 }
-            } else {
-                switch (lrpr.size()) {
-                    case 1:
-                        quota = 50;
-                        break;
-                    case 2:
-                        quota = 70;
-                        break;
-                    case 3:
-                        quota = 90;
-                        break;
-                    case 4:
-                        quota = 110;
-                        break;
-                }
-            }
-        } else {
-            if (r.getMensa()) {
-                switch (lrpr.size()) {
-                    case 1:
-                        quota = 90;
-                        break;
-                    case 2:
-                        quota = 145;
-                        break;
-                    case 3:
-                        quota = 195;
-                        break;
-                    case 4:
-                        quota = 240;
-                        break;
-                }
-            } else {
-                switch (lrpr.size()) {
-                    case 1:
-                        quota = 65;
-                        break;
-                    case 2:
-                        quota = 95;
-                        break;
-                    case 3:
-                        quota = 120;
-                        break;
-                    case 4:
-                        quota = 140;
-                        break;
-                }
-            }
-        }
-        if (r.getEntrataAnticipata()) {
-            quota += 10 * lrpr.size();
-        }
-        //se non è di pescantina aggiungi 15 a settimana
-        if (!Checker.checkIsFromPescantina(r)) {
-            quota += 15 * lrpr.size();
-        }
-        return quota;
+        };
+        return quotaBase[r.getFratelloIscritto() ? 1 : 0][nSettimane - 1][r.getMensa() ? 1 : 0] +
+                nSettimane * (r.getEntrataAnticipata() ? supplementoAnticipo : 0) +
+                nSettimane * (Checker.checkIsFromPescantina(r) ? 0 : supplementoFuoriComune);
     }
 
 }

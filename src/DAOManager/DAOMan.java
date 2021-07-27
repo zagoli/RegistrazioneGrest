@@ -27,22 +27,7 @@ public class DAOMan {
     public static final RelPresenzaTerDAO relPresenzaTerDAO = new RelPresenzaTerDAOImpl();
     public static final PagamentoTerzamediaDAO pagamentoTerzamediaDAO = new PagamentoTerzamediaDAOImpl();
     public static final CodiceSbloccoIscrizioneDAO codiceSbloccoIscrizioneDAO = new CodiceSbloccoIscrizioneDAOImpl();
-    public static SquadraDAO squadraDAO = new SquadraDAOImpl();
-    
-    /* connessione per MySql
-    private static Connection initConnMysql() {
-        Connection conn = null;
-        // la stringa di connessione deve essere PERSONALIZZATA
-        String url = "jdbc:mysql://localhost/sakila";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(url, "nomeutente", "password");
-        } catch (NullPointerException | SQLException | ClassNotFoundException ex) {
-        }
-        return conn;
-    
-    }
-    */
+    public static final SquadraDAO squadraDAO = new SquadraDAOImpl();
     
     private static Connection initConnSqlServer() {
         //PRIMA DI DARE AD ENRICO: METTERE QUA URL ENRICO E NEL DISPATCHER COME GESTIONE ERRORI RETHROW_HANDLER
@@ -52,7 +37,7 @@ public class DAOMan {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conn = DriverManager.getConnection(urlAzure);
-        } catch (NullPointerException | ClassNotFoundException | SQLException ex) {
+        } catch (NullPointerException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DAOMan.class.getName()).log(Level.SEVERE, null, ex);
         }
         return conn;

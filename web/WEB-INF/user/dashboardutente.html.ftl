@@ -8,11 +8,10 @@
         </#if>
         <div class="container shadow bg-white pt-2 pl-3 pr-3 pb-2">
             <#if ragazzi??>
-                <#assign count = 0>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col" style="width: 2%;"></th>
                         <th scope="col">Nome</th>
                         <th scope="col">Cognome</th>
                         <th scope="col" style="width: 15%;">Stampa scheda</th>
@@ -23,19 +22,24 @@
                     </thead>
                     <tbody>
                     <#list ragazzi as rag, pagato>
-                            <#assign count = count + 1>
-                            <tr>
-                                <th scope="row">${count}</th>
-                                <td>${rag.nome}</td>
-                                <td>${rag.cognome}</td>
-                                <td align="center"><a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${rag.id}"><img src="../risorse/img/octicons/file.svg"></a></td>
-                                <td align="center">
-                                    <#if pagato>
-                                        <img src="../risorse/img/octicons/check.svg">
-                                    <#else>
-                                        <img src="../risorse/img/octicons/x.svg">
-                                    </#if>
-                                </td>
+                        <tr>
+                            <th scope="row">
+                                <#if rag.squadra.id != 0>
+                                    <span class="badge" style="background-color: ${rag.squadra.colore}">&nbsp;</span>
+                                </#if>
+                            </th>
+                            <td>${rag.nome}</td>
+                            <td>${rag.cognome}</td>
+                            <td align="center"><a
+                                        href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${rag.id}"><img
+                                            src="../risorse/img/octicons/file.svg"></a></td>
+                            <td align="center">
+                                <#if pagato>
+                                    <img src="../risorse/img/octicons/check.svg">
+                                <#else>
+                                    <img src="../risorse/img/octicons/x.svg">
+                                </#if>
+                            </td>
                                 <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag.id}"><img src="../risorse/img/octicons/pencil.svg"></a></#if></td>
                                 <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag.id}"><img src="../risorse/img/octicons/trashcan.svg"></a></#if></td>
                             </tr>
@@ -48,11 +52,10 @@
 
         <div class="container shadow bg-white pt-2 pl-3 pr-3 pb-2 mt-4">
             <#if animatori??>
-                <#assign count = 0>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col" style="width: 2%;"></th>
                         <th scope="col">Nome</th>
                         <th scope="col">Cognome</th>
                         <th scope="col" style="width: 15%;">Stampa scheda</th>
@@ -62,16 +65,25 @@
                     </thead>
                     <tbody>
                     <#list animatori as ani>
-                            <#assign count = count + 1>
-                            <tr>
-                                <th scope="row">${count}</th>
-                                <td>${ani.nome}</td>
-                                <td>${ani.cognome}</td>
-                                <td align="center"><a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedaani&id=${ani.id}"><img src="../risorse/img/octicons/file.svg"></a></td>
-                                <td align="center"><#if ISCRAN><a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id}"><img src="../risorse/img/octicons/pencil.svg"></a></#if></td>
-                                <td align="center"><#if ISCRAN><a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id}"><img src="../risorse/img/octicons/trashcan.svg"></a></#if></td>
-                            </tr>
-                        </#list>
+                        <tr>
+                            <th scope="row">
+                                <#if ani.squadra.id != 0>
+                                    <span class="badge" style="background-color: ${ani.squadra.colore}">&nbsp;</span>
+                                </#if>
+                            </th>
+                            <td>${ani.nome}</td>
+                            <td>${ani.cognome}</td>
+                            <td align="center"><a
+                                        href="/RegistrazioneGrest/App/InfoDettaglio?target=schedaani&id=${ani.id}"><img
+                                            src="../risorse/img/octicons/file.svg"></a></td>
+                            <td align="center"><#if ISCRAN><a
+                                    href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id}"><img
+                                                src="../risorse/img/octicons/pencil.svg"></a></#if></td>
+                            <td align="center"><#if ISCRAN><a
+                                    href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id}"><img
+                                                src="../risorse/img/octicons/trashcan.svg"></a></#if></td>
+                        </tr>
+                    </#list>
                     </tbody>
                 </table>
             </#if>
@@ -80,11 +92,10 @@
         
         <div class="container shadow bg-white pt-2 pl-3 pr-3 pb-2 mt-4">
             <#if terzamedia??>
-                <#assign count = 0>
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col" style="width: 2%;"></th>
                         <th scope="col">Nome</th>
                         <th scope="col">Cognome</th>
                         <th scope="col" style="width: 15%;">Stampa scheda</th>
@@ -95,19 +106,24 @@
                     </thead>
                     <tbody>
                     <#list terzamedia as ter, pagato>
-                            <#assign count = count + 1>
-                            <tr>
-                                <th scope="row">${count}</th>
-                                <td>${ter.nome}</td>
-                                <td>${ter.cognome}</td>
-                                <td align="center"><a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedater&id=${ter.id}"><img src="../risorse/img/octicons/file.svg"></a></td>
-                                <td align="center">
-                                    <#if pagato>
-                                        <img src="../risorse/img/octicons/check.svg">
-                                    <#else>
-                                        <img src="../risorse/img/octicons/x.svg">
-                                    </#if>
-                                </td>
+                        <tr>
+                            <th scope="row">
+                                <#if ter.squadra.id != 0>
+                                    <span class="badge" style="background-color: ${ter.squadra.colore}">&nbsp;</span>
+                                </#if>
+                            </th>
+                            <td>${ter.nome}</td>
+                            <td>${ter.cognome}</td>
+                            <td align="center"><a
+                                        href="/RegistrazioneGrest/App/InfoDettaglio?target=schedater&id=${ter.id}"><img
+                                            src="../risorse/img/octicons/file.svg"></a></td>
+                            <td align="center">
+                                <#if pagato>
+                                    <img src="../risorse/img/octicons/check.svg">
+                                <#else>
+                                    <img src="../risorse/img/octicons/x.svg">
+                                </#if>
+                            </td>
                                 <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter.id}"><img src="../risorse/img/octicons/pencil.svg"></a></#if></td>
                                 <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter.id}"><img src="../risorse/img/octicons/trashcan.svg"></a></#if></td>
                             </tr>

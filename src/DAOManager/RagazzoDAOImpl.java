@@ -14,21 +14,24 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     private static final String UPDATE_SQUADRA_RAGAZZO = "update Ragazzo set squadra_id = ? where id = ?;";
     private static final String UPDATE_LABORATORIO_RAGAZZO = "update Ragazzo set Laboratorio_id = ? where id = ?;";
     private static final String DELETE_RAGAZZO = "delete from Ragazzo where id = ?;";
-    private static final String GENERIC_RAGAZZO_FIND = "select"
-            + " ra.id as raid, ra.nome as ranome, ra.cognome as racognome, ra.dataNascita as radataNascita, ra.presenza as rapresenza,ra.entrataAnticipata as raentrataAnticipata, ra.richieste as rarichieste, ra.noteAlimentari as ranoteAlimentari, ra.mensa as ramensa, ra.saNuotare as rasaNuotare, ra.fratelloIscritto as rafratelloIscritto, ra.sezione as rasezione, ra.classe as raclasse, ra.nTessera as ranTessera,"
-            + " la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato,"
-            + " pa.id as paid, pa.nome as panome, pa.luogo as paluogo,"
-            + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,"
-            + " ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,"
-            + " sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione,"
-            + " sq.id as sqid, sq.nome as sqnome, sq.colore as sqcolore"
-            + " from Ragazzo ra"
-            + " join Laboratorio la on (ra.Laboratorio_id = la.id)"
-            + " join Parrocchia pa on (ra.Parrocchia_id = pa.id)"
-            + " join Registrato re on (ra.Registrato_id = re.id)"
-            + " join Circolo ci on (ra.Circolo_id = ci.id)"
-            + " join Scuola sc on (ra.Scuola_id = sc.id)"
-            + " left join Squadra sq on (ra.squadra_id = sq.id)";
+    private static final String GENERIC_RAGAZZO_FIND =
+            """
+                    select
+                    ra.id as raid, ra.nome as ranome, ra.cognome as racognome, ra.dataNascita as radataNascita, ra.presenza as rapresenza,ra.entrataAnticipata as raentrataAnticipata, ra.richieste as rarichieste, ra.noteAlimentari as ranoteAlimentari, ra.mensa as ramensa, ra.saNuotare as rasaNuotare, ra.fratelloIscritto as rafratelloIscritto, ra.sezione as rasezione, ra.classe as raclasse, ra.nTessera as ranTessera,
+                    la.id as laid, la.descrizione as ladescrizione, la.riservato as lariservato,
+                    pa.id as paid, pa.nome as panome, pa.luogo as paluogo,
+                    re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt,
+                    ci.id as ciid, ci.nome as cinome, ci.luogo as ciluogo,
+                    sc.id as scid, sc.grado as scgrado, sc.descrizione as scdescrizione,
+                    sq.id as sqid, sq.nome as sqnome, sq.colore as sqcolore
+                    from Ragazzo ra
+                    join Laboratorio la on (ra.Laboratorio_id = la.id)
+                    join Parrocchia pa on (ra.Parrocchia_id = pa.id)
+                    join Registrato re on (ra.Registrato_id = re.id)
+                    join Circolo ci on (ra.Circolo_id = ci.id)
+                    join Scuola sc on (ra.Scuola_id = sc.id)
+                    left join Squadra sq on (ra.squadra_id = sq.id)
+                    """;
     private static final String FIND_RAGAZZO_ID = GENERIC_RAGAZZO_FIND + " where ra.id = ?;";
     private static final String FIND_ALL_RAGAZZO = GENERIC_RAGAZZO_FIND + " order by ra.cognome, ra.nome;";
     private static final String FIND_RAGAZZO_NOMINATIVO = GENERIC_RAGAZZO_FIND + " where ra.nome = ? and ra.cognome = ?;";
@@ -43,7 +46,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     private static final String COUNT_MENSA_SETTIMANALE = "select pr.Calendario_IdSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id) where mensa = '1' group by pr.Calendario_idSettimana;";
     private static final String COUNT_ANTICIPATO_TOT = "select count(*) from Ragazzo where entrataAnticipata = 1;";
     private static final String COUNT_ANTICIPATO_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id)  where entrataAnticipata = 1 group by pr.Calendario_idSettimana;";
-    private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id) group by pr.Calendario_idSettimana;";
+    private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from presenzaRag pr group by pr.Calendario_idSettimana;";
     private static final String COUNT_LABORATORIO_PER_CLASSE = "select l.descrizione, r.sezione, r.classe, s.grado, count(*) from Ragazzo r join Scuola s on s.id=r.Scuola_id join Laboratorio l on l.id=r.Laboratorio_id group by l.descrizione, s.grado, r.classe;";
     // </editor-fold>
 

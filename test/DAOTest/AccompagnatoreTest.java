@@ -2,12 +2,14 @@ package DAOTest;
 
 import DAOManager.DAOMan;
 import Domain.Accompagnatore;
+import org.junit.Test;
+
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import static org.junit.Assert.*;
-import org.junit.Test;
 
 public class AccompagnatoreTest {
     
@@ -82,14 +84,15 @@ public class AccompagnatoreTest {
             Logger.getLogger(AccompagnatoreTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    @Test
     public void testAccompagnatore() throws SQLException{
         this.insertAccompagnatoreTest();
         this.updateAccompagnatoreTest();
         this.selectAccompagnatoreIdTest();
         this.selectAllAccompagnatoreTest();
         this.countAccompagnatoreTest();
-        this.deleteAccompagnatoreTest(); 
+        this.deleteAccompagnatoreTest();
     }
     
 }

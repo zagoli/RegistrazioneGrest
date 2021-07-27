@@ -1,18 +1,14 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.Calendario;
-import Domain.Circolo;
-import Domain.Laboratorio;
-import Domain.Parrocchia;
-import Domain.RelPresenzaTer;
-import Domain.Scuola;
-import Domain.Terzamedia;
-import ModelAndView.*;
+import Domain.*;
+import ModelAndView.ModelAndView;
+import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -23,8 +19,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerModificaTerzamedia implements ControllerInterface {
 

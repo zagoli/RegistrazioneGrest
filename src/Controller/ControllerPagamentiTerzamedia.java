@@ -2,10 +2,12 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.PagamentoTerzamedia;
-import Domain.RelPresenzaTer;
 import Domain.Terzamedia;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -14,8 +16,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerPagamentiTerzamedia implements ControllerInterface {
 
@@ -64,25 +64,9 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
     }
 
     protected static float calcolaQuota(Terzamedia t) throws SQLException {
-        float quota = 0;
-        List<RelPresenzaTer> lrpt = DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId());
-        switch (lrpt.size()) {
-            case 0:
-                break;
-            case 1:
-                quota = 40;
-                break;
-            case 2:
-                quota = 70;
-                break;
-            case 3:
-                quota = 95;
-                break;
-            case 4:
-                quota = 120;
-                break;
-        }
-        return quota;
+        int[] quota = {40, 70, 95, 120};
+        int nSettimane = DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size();
+        return quota[nSettimane - 1];
     }
 
 }

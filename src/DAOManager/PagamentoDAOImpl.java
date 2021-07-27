@@ -14,25 +14,37 @@ public class PagamentoDAOImpl implements PagamentoDAO {
     private static final String UPDATE_PAGAMENTO = "update Pagamento set data = ?, quota = ?, Ragazzo_id = ?, Registrato_id = ?, ordineArrivo = ? where id = ?;";
     private static final String DELETE_PAGAMENTO = "delete from Pagamento where id = ?;";
     private static final String DELETE_PAGAMENTO_FROM_RAGAZZO_ID = "delete from Pagamento where Ragazzo_id = ?;";
-    private static final String FIND_PAGAMENTO_ID = "select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Ragazzo_id as pragid,"
-            + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
-            + " from Pagamento p "
-            + " join Registrato re on (p.Registrato_id = re.id) "
-            + " where p.id = ?;";
-    private static final String FIND_ALL_PAGAMENTO = "select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Ragazzo_id as pragid,"
-            + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
-            + " from Pagamento p "
-            + " join Registrato re on (p.Registrato_id = re.id) ";
-    private static final String FIND_PAGAMENTO_REGISTRATO_ID = "select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Ragazzo_id as pragid,"
-            + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
-            + " from Pagamento p "
-            + " join Registrato re on (p.Registrato_id = re.id) "
-            + " where p.Registrato_id = ?;";
-    private static final String FIND_PAGAMENTO_RAGAZZO_ID = "select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Ragazzo_id as pragid,"
-            + " re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt"
-            + " from Pagamento p "
-            + " join Registrato re on (p.Registrato_id = re.id) "
-            + " where p.Ragazzo_id = ?;";
+    private static final String FIND_PAGAMENTO_ID =
+            """
+                    select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Ragazzo_id as pragid,
+                    re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt
+                    from Pagamento p 
+                    join Registrato re on (p.Registrato_id = re.id) 
+                    where p.id = ?;
+                     """;
+    private static final String FIND_ALL_PAGAMENTO =
+            """
+                    select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Ragazzo_id as pragid,
+                    re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt
+                    from Pagamento p 
+                    join Registrato re on (p.Registrato_id = re.id) ;
+                    """;
+    private static final String FIND_PAGAMENTO_REGISTRATO_ID =
+            """
+                    select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Ragazzo_id as pragid,
+                    re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt
+                    from Pagamento p 
+                    join Registrato re on (p.Registrato_id = re.id) 
+                    where p.Registrato_id = ?;
+                    """;
+    private static final String FIND_PAGAMENTO_RAGAZZO_ID =
+            """
+                    select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Ragazzo_id as pragid,
+                    re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt
+                    from Pagamento p 
+                    join Registrato re on (p.Registrato_id = re.id) 
+                    where p.Ragazzo_id = ?;
+                    """;
     private static final String COUNT_PAGAMENTO = "select count(*) from Pagamento;";
     // </editor-fold>
 

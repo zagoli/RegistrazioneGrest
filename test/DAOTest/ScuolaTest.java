@@ -2,12 +2,14 @@ package DAOTest;
 
 import DAOManager.DAOMan;
 import Domain.Scuola;
+import org.junit.Test;
+
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import static org.junit.Assert.*;
-import org.junit.Test;
 
 public class ScuolaTest {
     
@@ -82,13 +84,14 @@ public class ScuolaTest {
             Logger.getLogger(ScuolaTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    @Test
     public void testScuola() throws SQLException{
         this.insertScuolaTest();
         this.updateScuolaTest();
         this.selectScuolaIdTest();
         this.selectAllScuolaTest();
         this.countScuolaTest();
-        this.deleteScuolaTest(); 
+        this.deleteScuolaTest();
     }
 }

@@ -3,6 +3,12 @@
     <output-path>$PROJECT_DIR$/out/artifacts/RegistrazioneGrest_war</output-path>
     <root id="archive" name="RegistrazioneGrest_war.war">
       <element id="artifact" artifact-name="RegistrazioneGrest:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="junit:junit:4.12" />
+          <element id="file-copy" path="$PROJECT_DIR$/libs/mssql-jdbc-9.2.0.jre15.jar" />
+        </element>
+      </element>
     </root>
   </artifact>
 </component>
