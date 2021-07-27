@@ -121,18 +121,22 @@
         <input type="checkbox"/><label class="ml-1 mr-1">servizio di primo soccorso</label>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio multimediale e amplificazione</label>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio di manutenzione</label>
-        
+
         <div class='col-sm'>
-            <input class="form-check-input" type="checkbox" id='priv' checked/><label for='priv' class="form-check-label"> Acconsento al trattamento dei dati personali, alla raccolta e all'utilizzo di materiale fotografico/video in conformit&agrave; a quanto riportato nell'informativa sulla privacy reperibile al link: grest.parrocchiadibalconi.it/RegistrazioneGrest/privacy.html</label>
+            <input class="form-check-input" type="checkbox" id='priv' checked/><label for='priv'
+                                                                                      class="form-check-label">
+                Acconsento al trattamento dei dati personali, alla raccolta e all'utilizzo di materiale
+                fotografico/video in conformit&agrave; a quanto riportato nell'informativa sulla privacy reperibile al
+                link: grest.parrocchiadibalconi.it/RegistrazioneGrest/privacy.html</label>
         </div>
     </div>
-    
+
     <div class="shadow mt-5 pt-2 pl-3 pr-3">
-        <p class="text-center font-weight-light font-italic mt-4 mb-4"> Firme di chi richiede di fare l'animatore </p>
+        <p class="text-center font-weight-light font-italic mt-4 mb-4"> Firma di chi richiede di fare l'animatore </p>
         <hr class="mb-5 border-bottom border-dark"/>
         <p class="text-center font-weight-light font-italic mb-4"> Firme di entrambi i genitori (per i minorenni) </p>
         <hr class="mb-5 border-bottom border-dark"/>
-   </div>
+    </div>
 </div>
 <script>window.print();</script>
 <#include "../struct/footer.html.ftl">
