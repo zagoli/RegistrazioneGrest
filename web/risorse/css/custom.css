@@ -62,9 +62,6 @@ textarea.parsley-error {
   opacity: 0 !important;
 
   transition: all .3s ease-in !important;
-  -o-transition: all .3s ease-in !important;
-  -moz-transition: all .3s ease-in !important;
-  -webkit-transition: all .3s ease-in !important;
 }
 
 .parsley-errors-list.filled {
@@ -75,6 +72,7 @@ textarea.parsley-error {
 .toggle-off {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125) !important;
 }
+
 .toggle.off {
     border-color: rgba(0, 0, 0, .25) !important;
 }
@@ -82,4 +80,15 @@ textarea.parsley-error {
 .toggle-handle {
     background-color: #ffffff;
     border: thin rgba(0, 0, 0, .25) solid !important;
+}
+
+.badge-squadra {
+    width: 1em;
+    height: 1em;
+    border-radius: 25%;
+}
+
+.badge-squadra-support {
+    display: flex;
+    align-items: center;
 }

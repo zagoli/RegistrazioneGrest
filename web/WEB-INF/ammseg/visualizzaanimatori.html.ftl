@@ -40,10 +40,11 @@
                     <td>${ani.cellulare}</td>
                     <td>${ani.mail}</td>
                     <td <#if ani.responsabileLaboratorio>class="mark"</#if>>${ani.laboratorio.descrizione}</td>
-                    <td <#if ani.responsabileSquadra>class="mark"</#if>>
+                    <#-- con freemarker è molto brutto: devo aggiungere la parola mark alla lista delle classi-->
+                    <td class="badge-squadra-support <#if ani.responsabileSquadra>mark</#if>">
                         <#if ani.squadra.id!=0>
-                            <span class="badge"
-                                  style="background-color: ${ani.squadra.colore}">&nbsp;</span> ${ani.squadra.nome}
+                            <div class="badge-squadra"
+                                 style="background-color: ${ani.squadra.colore}; margin-right: 5px;"></div> ${ani.squadra.nome}
                         </#if>
                     </td>
                     <td>

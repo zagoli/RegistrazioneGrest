@@ -46,10 +46,10 @@
                     <td>${ter[0].parrocchia.nome}</td>
                     <td>${ter[0].sezione}</td>
                     <td>${ter[0].scuola.descrizione}</td>
-                    <td>
+                    <td class="badge-squadra-support">
                         <#if ter[0].squadra.id!=0>
-                            <span class="badge"
-                                  style="background-color: ${ter[0].squadra.colore}">&nbsp;</span> ${ter[0].squadra.nome}
+                            <div class="badge-squadra"
+                                 style="background-color: ${ter[0].squadra.colore}; margin-right: 5px;"></div> ${ter[0].squadra.nome}
                         </#if>
                     </td>
                     <td>${ter[0].laboratorio.descrizione}</td>

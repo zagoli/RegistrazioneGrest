@@ -25,7 +25,7 @@
                         <tr>
                             <th scope="row">
                                 <#if rag.squadra.id != 0>
-                                    <span class="badge" style="background-color: ${rag.squadra.colore}">&nbsp;</span>
+                                    <div class="badge-squadra" style="background-color: ${rag.squadra.colore}"></div>
                                 </#if>
                             </th>
                             <td>${rag.nome}</td>
@@ -68,7 +68,7 @@
                         <tr>
                             <th scope="row">
                                 <#if ani.squadra.id != 0>
-                                    <span class="badge" style="background-color: ${ani.squadra.colore}">&nbsp;</span>
+                                    <div class="badge-squadra" style="background-color: ${ani.squadra.colore}"></div>
                                 </#if>
                             </th>
                             <td>${ani.nome}</td>
@@ -109,7 +109,7 @@
                         <tr>
                             <th scope="row">
                                 <#if ter.squadra.id != 0>
-                                    <span class="badge" style="background-color: ${ter.squadra.colore}">&nbsp;</span>
+                                    <div class="badge-squadra" style="background-color: ${ter.squadra.colore}"></div>
                                 </#if>
                             </th>
                             <td>${ter.nome}</td>
@@ -124,8 +124,12 @@
                                     <img src="../risorse/img/octicons/x.svg">
                                 </#if>
                             </td>
-                                <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter.id}"><img src="../risorse/img/octicons/pencil.svg"></a></#if></td>
-                                <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter.id}"><img src="../risorse/img/octicons/trashcan.svg"></a></#if></td>
+                            <td align="center"><#if !pagato><a
+                                    href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter.id}"><img
+                                                src="../risorse/img/octicons/pencil.svg"></a></#if></td>
+                            <td align="center"><#if !pagato><a
+                                    href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter.id}"><img
+                                                src="../risorse/img/octicons/trashcan.svg"></a></#if></td>
                             </tr>
                         </#list>
                     </tbody>

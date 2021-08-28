@@ -49,10 +49,10 @@
                     <td>${rag[0].sezione}</td>
                     <td>${rag[0].scuola.descrizione}</td>
                     <#--Se nel db un intero è null, il resultset lo restituisce come zero-->
-                    <td>
+                    <td class="badge-squadra-support">
                         <#if rag[0].squadra.id!=0>
-                            <span class="badge"
-                                  style="background-color: ${rag[0].squadra.colore}">&nbsp;</span> ${rag[0].squadra.nome}
+                            <div class="badge-squadra"
+                                 style="background-color: ${rag[0].squadra.colore}; margin-right: 5px;"></div> ${rag[0].squadra.nome}
                         </#if>
                     </td>
                     <td>${rag[0].laboratorio.descrizione}</td>
