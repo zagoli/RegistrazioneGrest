@@ -41,13 +41,14 @@
                             </select>
                         </div>
                         <div class="col-md-5">
-                            <input type="text" class="form-control" name="data" placeholder="data o periodo preferito (opzionale)"/>
+                            <input type="text" class="form-control" name="data"
+                                   placeholder="data o periodo preferito (opzionale)"/>
                         </div>
                         <div class="col">
-                            <button type="submit" class="btn btn-primary mb-2" required>Invia</button>
+                            <button type="submit" class="btn btn-primary mb-2">Invia</button>
                         </div>
                     </div>
                 </form>
-        </div>  
+        </div>
     </div>
 <#include "../struct/footer.html.ftl">

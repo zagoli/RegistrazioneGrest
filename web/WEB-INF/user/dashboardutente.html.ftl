@@ -25,7 +25,7 @@
                         <tr>
                             <th scope="row">
                                 <#if rag.squadra.id != 0>
-                                    <div class="badge-squadra" style="background-color: ${rag.squadra.colore}"></div>
+                                    <div class="badge-squadra" style="background-color:${rag.squadra.colore}; "></div>
                                 </#if>
                             </th>
                             <td>${rag.nome}</td>
@@ -68,7 +68,7 @@
                         <tr>
                             <th scope="row">
                                 <#if ani.squadra.id != 0>
-                                    <div class="badge-squadra" style="background-color: ${ani.squadra.colore}"></div>
+                                    <div class="badge-squadra" style="background-color:${ani.squadra.colore}; "></div>
                                 </#if>
                             </th>
                             <td>${ani.nome}</td>
@@ -109,7 +109,7 @@
                         <tr>
                             <th scope="row">
                                 <#if ter.squadra.id != 0>
-                                    <div class="badge-squadra" style="background-color: ${ter.squadra.colore}"></div>
+                                    <div class="badge-squadra" style="background-color:${ter.squadra.colore}; "></div>
                                 </#if>
                             </th>
                             <td>${ter.nome}</td>

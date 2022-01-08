@@ -23,7 +23,7 @@ body {
 }
 
 .footer a {
-    color: rgb(255, 255, 255);
+    color: #ffffff;
 }
 
 .vertical-center {
@@ -40,17 +40,17 @@ body {
 input.parsley-success,
 select.parsley-success,
 textarea.parsley-success {
-    color: rgb(70, 136, 71) !important;
-    background-color: rgb(223, 240, 216) !important;
-    border: 1px solid rgb(214, 233, 198) !important;
+    color: #468847 !important;
+    background-color: #dff0d8 !important;
+    border: 1px solid #d6e9c6 !important;
 }
 
 input.parsley-error,
 select.parsley-error,
 textarea.parsley-error {
-    color: rgb(185, 74, 72) !important;
-    background-color: rgb(242, 222, 222) !important;
-    border: 1px solid rgb(238, 211, 215) !important;
+    color: #b94a48 !important;
+    background-color: #f2dede !important;
+    border: 1px solid #eed3d7 !important;
 }
 
 .parsley-errors-list {
@@ -78,7 +78,7 @@ textarea.parsley-error {
 }
 
 .toggle-handle {
-    background-color: #ffffff;
+    background-color: rgb(255, 255, 255);
     border: thin rgba(0, 0, 0, .25) solid !important;
 }
 

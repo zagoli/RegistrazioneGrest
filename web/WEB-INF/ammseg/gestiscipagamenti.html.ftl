@@ -36,12 +36,13 @@
                                                         </p>
                                                     </div>
                                                     <div class="col" align="center">
-                                                        <button type="submit" class="btn btn-danger" required>Elimina Pagamento</button>
+                                                        <button type="submit" class="btn btn-danger">Elimina Pagamento
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
-                                    </td>   
+                                    </td>
                                 <#else>
                                     <!--non ha già pagato-->
                                     <td>
@@ -53,10 +54,13 @@
                                                         <input type="number" class="form-control mr-2" name="ordineArrivo" placeholder="Ordine iscrizione" required>
                                                     </div>
                                                     <div class="col">
-                                                        <input type="number" class="form-control mr-2" name="quota"  value="${datirag[2]}" required>
+                                                        <input type="number" class="form-control mr-2" name="quota" value="${datirag[2]}"
+                                                               required>
                                                     </div>
                                                     <div class="col">
-                                                        <button type="submit" class="btn btn-success" required> Aggiungi Pagamento</button>
+                                                        <button type="submit" class="btn btn-success"> Aggiungi
+                                                            Pagamento
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -70,7 +74,6 @@
             </#if>               
         </div>  
     </div>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready( function () {
             $('#t_pagamenti').DataTable({
