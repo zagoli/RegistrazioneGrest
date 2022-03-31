@@ -9,8 +9,9 @@
                 <h3 class="font-weight-bold text-warning" align="center">Un utente ha gi&agrave; utilizzato questa mail in fase di registrazione!</h3>    
             </div>
         <#elseif eccezione??>
-        <p>Se il seguente errore persiste, riportarlo all'amministratore del sito.</p>
-        <div class="border border-danger rounded pt-2 pl-3 pr-3 pb-2 bg-white">
+            <p>Se il seguente errore persiste, contattare l'<a href="mailto:assistenzatecnica@parrocchiadibalconi.it">amministratore
+                    del sito</a>.</p>
+            <div class="border border-danger rounded pt-2 pl-3 pr-3 pb-2 bg-white">
                 <code>${eccezione.toString()}</code>   
         </div>
         <#else>

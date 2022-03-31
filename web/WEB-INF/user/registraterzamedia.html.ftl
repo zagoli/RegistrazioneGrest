@@ -1,12 +1,12 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
-        <div class="container mt-4 content">
-            <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
-                <div class="container">
-                    <div class="title text-center">
-                        <h5>Registrazione ragazzo di terza media</h5>
-                    </div>
-                    <#if INVALIDMAIL??>
+<div class="container mt-4 content">
+    <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
+        <div class="container">
+            <div class="title text-center">
+                <h5>Iscrizione al Grest di Balconi come aiuto animatore</h5>
+            </div>
+            <#if INVALIDMAIL??>
                         <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
                             <p class="text-danger text-center font-weight-bold">La mail non esiste, non &egrave; scritta correttamente o &egrave; una e-mail temporanea! Inserisci una mail valida</p>
                         </div>
@@ -163,19 +163,26 @@
                         
                         <div class="pt-3 form-group" id="codiceForm">
                             <#if !ISCRTER>
-                            <!--modulo inserimento codice sblocco iscrizione-->
-                            <label for="codicesblocco" class="text-danger">Le iscrizioni sono chiuse. Inserire il codice per sbloccare l'iscrizione. Il codice pu&ograve; essere eventualmente richiesto a <a href="mailto:parrocchiadibalconi@gmail.com">Don Lorenzo</a></label>
-                            <div class="input-group">    
-                                <input id="codicesblocco" type="text" class="form-control" placeholder="inserisci il codice usa e getta per sbloccare l'iscrizione" required data-parsley-errors-messages-disabled/>
-                                <div class="input-group-append">
-                                    <button id="btnsblocco" type="button" class="btn btn-outline-primary">Verifica il codice e completa la registrazione</button>
+                                <!--modulo inserimento codice sblocco iscrizione-->
+                                <label for="codicesblocco" class="text-danger">Le iscrizioni sono chiuse. Inserire il
+                                    codice per sbloccare l'iscrizione. Il codice pu&ograve; essere eventualmente
+                                    richiesto a <a href="mailto:parrocchiadibalconi@gmail.com">Don Lorenzo</a></label>
+                                <div class="input-group">
+                                    <input id="codicesblocco" type="text" class="form-control"
+                                           placeholder="inserisci il codice usa e getta per sbloccare l'iscrizione"
+                                           required data-parsley-errors-messages-disabled/>
+                                    <div class="input-group-append">
+                                        <button id="btnsblocco" type="button" class="btn btn-outline-primary">Verifica
+                                            il codice e invia l'iscrizione
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <!--fine-->
+                                <!--fine-->
                             <#else>
-                            <div id="divbtnreg" class="row">
-                                <input id="btnreg" class="form-control btn btn-primary" type="submit" value="Registra" <#if !ISCRTER> disabled </#if>/>
-                            </div>
+                                <div id="divbtnreg" class="row">
+                                    <input id="btnreg" class="form-control btn btn-primary" type="submit"
+                                           value="Invia l'iscrizione"/>
+                                </div>
                             </#if>
                         </div>                        
                     </form>

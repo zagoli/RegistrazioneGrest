@@ -9,8 +9,8 @@ import java.util.List;
 public class AnimatoreDAOImpl implements AnimatoreDAO {
 
     // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private static final String INSERT_ANIMATORE = "insert into Animatore(nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,cellularePersonale,fasciaEtaRagazzi,mail,nTessera,squadra_id,codiceFiscale,isResponsabileSquadra,isResponsabileLaboratorio) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    private static final String UPDATE_ANIMATORE = "update Animatore set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, cellularePersonale = ?, fasciaEtaRagazzi = ?, mail = ?, nTessera = ?, squadra_id = ?, codiceFiscale = ?, isResponsabileSquadra = ?, isResponsabileLaboratorio = ? where id = ?;";
+    private static final String INSERT_ANIMATORE = "insert into Animatore(nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,cellularePersonale,fasciaEtaRagazzi,mail,nTessera,codiceFiscale,isResponsabileSquadra,isResponsabileLaboratorio) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_ANIMATORE = "update Animatore set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, cellularePersonale = ?, fasciaEtaRagazzi = ?, mail = ?, nTessera = ?, codiceFiscale = ?, isResponsabileSquadra = ?, isResponsabileLaboratorio = ? where id = ?;";
     private static final String UPDATE_SQUADRA_ANIMATORE = "update Animatore set squadra_id = ?, isResponsabileSquadra = ? where id = ?;";
     private static final String UPDATE_LABORATORIO_ANIMATORE = "update Animatore set Laboratorio_id = ?, isResponsabileLaboratorio = ? where id = ?;";
     private static final String DELETE_ANIMATORE = "delete from Animatore where id = ?;";
@@ -57,10 +57,9 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         pst.setString(10, a.getFasciaEtaRagazzi());
         pst.setString(11, a.getMail());
         pst.setString(12, a.getnTessera());
-        pst.setInt(13, a.getSquadra().getId());
-        pst.setString(14, a.getCodiceFiscale());
-        pst.setBoolean(15, a.isResponsabileSquadra());
-        pst.setBoolean(16, a.isResponsabileLaboratorio());
+        pst.setString(13, a.getCodiceFiscale());
+        pst.setBoolean(14, a.isResponsabileSquadra());
+        pst.setBoolean(15, a.isResponsabileLaboratorio());
         pst.executeUpdate();
         ResultSet rs = pst.getGeneratedKeys();
         if (rs.next()) {
@@ -84,11 +83,10 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         pst.setString(10, a.getFasciaEtaRagazzi());
         pst.setString(11, a.getMail());
         pst.setString(12, a.getnTessera());
-        pst.setInt(13, a.getSquadra().getId());
-        pst.setString(14, a.getCodiceFiscale());
-        pst.setBoolean(15, a.isResponsabileSquadra());
-        pst.setBoolean(16, a.isResponsabileLaboratorio());
-        pst.setInt(17, a.getId());
+        pst.setString(13, a.getCodiceFiscale());
+        pst.setBoolean(14, a.isResponsabileSquadra());
+        pst.setBoolean(15, a.isResponsabileLaboratorio());
+        pst.setInt(16, a.getId());
         pst.executeUpdate();
     }
 

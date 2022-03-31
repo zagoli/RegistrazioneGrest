@@ -36,7 +36,7 @@ public class DAOMan {
         final String urlAzure = "jdbc:sqlserver://serverdbgrest.database.windows.net:1433;database=GrestDb;user=AppGrest@serverdbgrest;password={afuio(573ehop89*°#,cfe9x)(/G()};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(urlAzure);
+            conn = DriverManager.getConnection(urlEnrico);
         } catch (NullPointerException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DAOMan.class.getName()).log(Level.SEVERE, null, ex);
         }

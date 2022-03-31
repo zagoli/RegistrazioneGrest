@@ -182,48 +182,16 @@
         </#list>
     </div>
     <div class="mt-3 shadow pt-2 pl-3 pr-3">
-        <h4 class="text-center font-weight-bold"> Dichiarazioni dei genitori </h4>
-        <p class="font-weight-normal">I sottoscritti genitori dichiarano:</p>
-        <ul>
-            <li><input type="checkbox"/> di autorizzare il/la figlio/a a tornare a casa al termine del Grest da solo;
-            </li>
-            <li><input type="checkbox"/> di <u>NON</u> autorizzare il/la figlio/a a tornare a casa dal Grest negli orari
-                stabiliti da solo; deve aspettare una delle seguenti persone da noi incaricate, indicate nella sezione
-                "Accompagnatori e Contatti telefonici Urgenze" della piattaforma
-            </li>
-        </ul>
-        <ul class="small">
-            <li>che il/la proprio/a figlio/a gode di buona salute e che pertanto pu&ograve; affrontare le attivit&agrave;
-                ludico-sportive previste; in caso contrario, si impegnano a chiederne l'esonero al momento
-                dell'iscrizione (sezione richieste o proposte nella scheda di iscrizione terzamedia);
-            </li>
-            <li>di essere consapevoli che la responsabilit&agrave; della Parrocchia nei confronti dei ragazzi e la
-                relativa copertura assicurativa inizia e termina negli orari indicati; non c'&egrave; copertura per gli
-                spostamenti da e verso l'abitazione;
-            </li>
-            <li>di autorizzare i responsabili del Grest e i loro collaboratori ad assumere le iniziative che riterranno
-                necessarie per garantire la sicurezza dei partecipanti e la buona riuscita delle attivit&agrave; del
-                Grest;
-            </li>
-            <li>di non ritenere gli organizzatori del Grest responsabili per eventuali furti di biciclette o di oggetti
-                di qualsiasi valore; i proprietari dovranno pertanto provvedere ad eventuali sistemi di protezione o di
-                custodia;
-            </li>
-            <li>di essere informati, ai sensi e per gli effetti di cui all'art. 13 del D.Lgs 196/2003, che i dati
-                personali raccolti saranno trattati, anche con strumenti informatici, esclusivamente nell'ambito
-                dell'attivit&agrave; del Grest di Balconi e concedono la liberatoria alle riprese video/fotografiche
-                esclusivamente nell'ambito dell'attivit&agrave; del Grest di Balconi.
-            </li>
-        </ul>
-        <div class='col-sm'>
-            <input class="form-check-input" type="checkbox" id='priv' checked/><label for='priv'
-                                                                                      class="form-check-label">
-                Acconsento al trattamento dei dati personali, alla raccolta e all'utilizzo di materiale
-                fotografico/video in conformit&agrave; a quanto riportato nell'informativa sulla privacy reperibile al
-                link: grest.parrocchiadibalconi.it/RegistrazioneGrest/privacy.html</label>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id='priv'/>
+            <label for='priv' class="form-check-label">
+                I sottoscritti genitori acconsentono alle dichiarazioni presentate in fase di
+                registrazione, e dichiarano altres&igrave; che le informazioni inserite in fase di registrazione sono
+                veritiere.
+            </label>
         </div>
         <p class="text-center font-weight-light font-italic mb-4"> Firme di entrambi i genitori </p>
-        <hr class="mb-5 border-bottom border-dark"/>
+        <hr class="pb-2 border-dark"/>
     </div>
 </div>
 <script>window.print();</script>

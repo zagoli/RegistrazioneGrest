@@ -1,16 +1,14 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.Animatore;
-import Domain.Calendario;
-import Domain.Circolo;
-import Domain.Laboratorio;
-import Domain.Parrocchia;
-import Domain.Registrato;
-import Domain.RelPresenzaAn;
-import ModelAndView.*;
+import Domain.*;
+import ModelAndView.ModelAndView;
+import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import com.mashape.unirest.http.exceptions.UnirestException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,8 +20,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerRegistraAnimatore implements ControllerInterface {
 
@@ -31,7 +27,6 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         mv.addObject("TITOLOPAGINA", "Registra Animatore");
-        mv.setView("user/registraanimatore.html");
         try {
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Animatore animatore = new Animatore();
@@ -62,6 +57,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                 }
                 response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
             } else {
+                mv.setView("user/registraanimatore.html");
                 //preparo i dati necessari per l'iscrizione
                 List<Laboratorio> listLab = DAOMan.laboratorioDAO.findAll();
                 mv.addObject("laboratori", listLab);

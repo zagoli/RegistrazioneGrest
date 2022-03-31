@@ -6,21 +6,23 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import java.io.IOException;
-import java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
 
 
 public class VariTest {
-    
+
     public VariTest() {
     }
-    
+
     @Test
-    public void testLocalita(){
+    public void testLocalita() {
         Ragazzo r = new Ragazzo();
         Registrato re = new Registrato();
         re.setLocalita("bussolengo");
@@ -61,7 +63,7 @@ public class VariTest {
     private boolean checkMail(String mail) throws IOException, UnirestException {
         String dominio = mail.split("@")[1];
         boolean flag = false;
-        HttpResponse<JsonNode> response = Unirest.get("http://apilayer.net/api/check").queryString("access_key", "bc92b98f15fbd6039d7d9437dea21d4c").queryString("email", mail).asJson();
+        HttpResponse<JsonNode> response = Unirest.get("https://apilayer.net/api/check").queryString("access_key", "bc92b98f15fbd6039d7d9437dea21d4c").queryString("email", mail).asJson();
         if (response.getStatus() == 200) {
             JSONArray array = response.getBody().getArray();
             JSONObject responsedata = array.getJSONObject(0);

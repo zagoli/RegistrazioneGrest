@@ -1,24 +1,26 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
-        <div class="container mt-4 content">
-            <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
-                <div class="container">
-                    <div class="title text-center">
-                        <h5>Modifica ragazzo</h5>
-                    </div>
-                    <form action="/RegistrazioneGrest/App/ModificaRagazzo" method="POST" data-parsley-validate="">
-                        
-                        <input type="hidden" value="${ragazzo.id}" name="id"></input>
+<div class="container mt-4 content">
+    <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
+        <div class="container">
+            <div class="title text-center">
+                <h5>Modifica l'iscrizione</h5>
+            </div>
+            <form action="/RegistrazioneGrest/App/ModificaRagazzo" method="POST" data-parsley-validate="">
 
-                        <div class="form-group">
-                            <label for="nome"> Nome </label>
-                                <input class="form-control" type="text" id ="nome" required name="nome" placeholder="Nome" autofocus data-parsley-length="[2, 50]" value="${ragazzo.nome}"> 
-                        </div>
+                <input type="hidden" value="${ragazzo.id}" name="id">
 
-                        <div class="form-group">
-                            <label for="cognome"> Cognome </label> 
-                                <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 50]" value="${ragazzo.cognome}"> 
-                        </div>
+                <div class="form-group">
+                    <label for="nome"> Nome </label>
+                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
+                           data-parsley-length="[2, 50]" value="${ragazzo.nome}">
+                </div>
+
+                <div class="form-group">
+                    <label for="cognome"> Cognome </label>
+                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome"
+                           data-parsley-length="[2, 50]" value="${ragazzo.cognome}">
+                </div>
 
                         <div class="form-group">
                             <label for="dataNascita"> Data di nascita </label>
@@ -90,29 +92,31 @@
                             <label for="scuola"> Scuola </label>
                             <select id="scuola" class="form-control" name="scuola">
                                 <#list scuole as scu>
-                                    <option value="${scu.id}" <#if scu.id = ragazzo.scuola.id>selected</#if>>Scuola ${scu.grado} di ${scu.descrizione}</option>
+                                    <option value="${scu.id}" <#if scu.id = ragazzo.scuola.id>selected</#if>>
+                                        Scuola ${scu.grado} di ${scu.descrizione}</option>
                                 </#list>
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="classe"> Classe </label>
-                            <select id="classe" class="form-control" name="classe">
-                                <option  value="1"<#if ragazzo.classe = "1">selected</#if>>1</option>
-                                <option value="2"<#if ragazzo.classe = "2">selected</#if>>2</option>
-                                <option value="3"<#if ragazzo.classe = "3">selected</#if>>3</option>
-                                <option value="4"<#if ragazzo.classe = "4">selected</#if>>4</option>
-                                <option value="5"<#if ragazzo.classe = "5">selected</#if>>5</option>
-                            </select>
-                        </div>
+                <div class="form-group">
+                    <label for="classe"> Classe </label>
+                    <select id="classe" class="form-control" name="classe">
+                        <option value="1" <#if ragazzo.classe = "1">selected</#if>>1</option>
+                        <option value="2" <#if ragazzo.classe = "2">selected</#if>>2</option>
+                        <option value="3" <#if ragazzo.classe = "3">selected</#if>>3</option>
+                        <option value="4" <#if ragazzo.classe = "4">selected</#if>>4</option>
+                        <option value="5" <#if ragazzo.classe = "5">selected</#if>>5</option>
+                    </select>
+                </div>
 
-                        <div class="form-group">
-                            <label for="sezione"> Sezione </label>
-                                <input class="form-control" type="text" required id="sezione" name="sezione" data-parsley-length="[1, 5]" placeholder="Classe" value="${ragazzo.sezione}">
-                        </div>
+                <div class="form-group">
+                    <label for="sezione"> Sezione </label>
+                    <input class="form-control" type="text" required id="sezione" name="sezione"
+                           data-parsley-length="[1, 5]" placeholder="Classe" value="${ragazzo.sezione}">
+                </div>
 
-                        <div class="form-group">
-                            <label for="richieste">Eventuali richieste o proposte:</label>
+                <div class="form-group">
+                    <label for="richieste">Eventuali richieste o proposte:</label>
                             <textarea class="form-control" rows="5" id="richieste" name="richieste" placeholder="Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta."><#if ragazzo.richieste??>${ragazzo.richieste}</#if></textarea>
                         </div>
 
@@ -138,16 +142,18 @@
 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="fratelloIscritto" name="fratelloIscritto" <#if ragazzo.fratelloIscritto>checked</#if>>
-                            <label class="form-check-label" for="fratelloIscritto"> Ha gi&agrave; un fratello/sorella iscritto/a al grest? <b class="text-danger">Da selezionare solo dall'iscrizione del secondo ragazzo in poi!</b></label>
+                            <label class="form-check-label" for="fratelloIscritto"> Ha gi&agrave; un fratello/sorella
+                                iscritto/a al grest? <b class="text-danger">Da selezionare solo dall'iscrizione del
+                                    secondo ragazzo in poi!</b></label>
                         </div>
 
-                        <br/>
+                <br/>
 
-                        <div class="pt-3 form-group">
-                            <input class="form-control btn btn-primary" type="submit" value="Modifica">
-                        </div>
-                    </form>
+                <div class="pt-3 form-group">
+                    <input class="form-control btn btn-primary" type="submit" value="Modifica l'iscrizione">
                 </div>
-            </div>
+            </form>
         </div>
+    </div>
+</div>
 <#include "../struct/footer.html.ftl">

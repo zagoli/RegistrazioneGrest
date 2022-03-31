@@ -9,8 +9,8 @@ import java.util.List;
 public class RagazzoDAOImpl implements RagazzoDAO {
 
     // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private static final String INSERT_RAGAZZO = "insert into Ragazzo (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,entrataAnticipata,richieste,noteAlimentari,mensa,saNuotare,fratelloIscritto,Scuola_id,sezione,classe,nTessera,squadra_id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    private static final String UPDATE_RAGAZZO = "update Ragazzo set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, entrataAnticipata = ?, richieste = ?, noteAlimentari = ?, mensa = ?, saNuotare = ?, fratelloIscritto = ?, Scuola_id = ?, sezione = ?, classe = ?, nTessera = ?, squadra_id = ? where id = ?;";
+    private static final String INSERT_RAGAZZO = "insert into Ragazzo (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,entrataAnticipata,richieste,noteAlimentari,mensa,saNuotare,fratelloIscritto,Scuola_id,sezione,classe,nTessera) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_RAGAZZO = "update Ragazzo set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, entrataAnticipata = ?, richieste = ?, noteAlimentari = ?, mensa = ?, saNuotare = ?, fratelloIscritto = ?, Scuola_id = ?, sezione = ?, classe = ?, nTessera = ? where id = ?;";
     private static final String UPDATE_SQUADRA_RAGAZZO = "update Ragazzo set squadra_id = ? where id = ?;";
     private static final String UPDATE_LABORATORIO_RAGAZZO = "update Ragazzo set Laboratorio_id = ? where id = ?;";
     private static final String DELETE_RAGAZZO = "delete from Ragazzo where id = ?;";
@@ -72,7 +72,6 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         pst.setString(16, r.getSezione());
         pst.setString(17, r.getClasse());
         pst.setString(18, r.getnTessera());
-        pst.setInt(19, r.getSquadra().getId());
         pst.executeUpdate();
         ResultSet rs = pst.getGeneratedKeys();
         if (rs.next()) {
@@ -102,8 +101,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         pst.setString(16, r.getSezione());
         pst.setString(17, r.getClasse());
         pst.setString(18, r.getnTessera());
-        pst.setInt(19, r.getSquadra().getId());
-        pst.setInt(20, r.getId());
+        pst.setInt(19, r.getId());
         pst.executeUpdate();
     }
 

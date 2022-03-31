@@ -5,7 +5,6 @@ import Domain.Pagamento;
 import Domain.Ragazzo;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
-import Utility.Checker;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +25,7 @@ public class ControllerPagamenti implements ControllerInterface {
         mv.addObject("TITOLOPAGINA", "Gestisci pagamenti ragazzi");
         try {
             if (request.getParameterMap().isEmpty()) {
-                //forse più veloce?
+                // pagamento contiene solo l'id del ragazzo, quindi sono stupido e non si può migliorare
                 List<Ragazzo> listRagazzo = DAOMan.ragazzoDAO.findAll();
                 List<Pagamento> pagamenti = DAOMan.pagamentoDAO.findAll();
                 Set<Object[]> datiRagazzi = new HashSet<>();
@@ -86,9 +85,11 @@ public class ControllerPagamenti implements ControllerInterface {
                         {95, 172}    // quattro settimane
                 }
         };
+        return 0;
+        /*
         return quotaBase[r.getFratelloIscritto() ? 1 : 0][nSettimane - 1][r.getMensa() ? 1 : 0] +
                 nSettimane * (r.getEntrataAnticipata() ? supplementoAnticipo : 0) +
-                nSettimane * (Checker.checkIsFromPescantina(r) ? 0 : supplementoFuoriComune);
+                nSettimane * (Checker.checkIsFromPescantina(r) ? 0 : supplementoFuoriComune);*/
     }
 
 }

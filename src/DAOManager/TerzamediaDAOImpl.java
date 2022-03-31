@@ -9,8 +9,8 @@ import java.util.List;
 public class TerzamediaDAOImpl implements TerzamediaDAO {
 
     // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private static final String INSERT_TERZAMEDIA = "insert into Terzamedia (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,richieste,noteAlimentari,saNuotare,Scuola_id,sezione,nTessera,squadra_id,cellulare,festaPassaggio,mail) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    private static final String UPDATE_TERZAMEDIA = "update Terzamedia set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?,  richieste = ?, noteAlimentari = ?,  saNuotare = ?,  Scuola_id = ?, sezione = ?,  nTessera = ?, squadra_id = ?, cellulare = ?, festaPassaggio = ?, mail = ? where id = ?;";
+    private static final String INSERT_TERZAMEDIA = "insert into Terzamedia (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,richieste,noteAlimentari,saNuotare,Scuola_id,sezione,nTessera,cellulare,festaPassaggio,mail) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_TERZAMEDIA = "update Terzamedia set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?,  richieste = ?, noteAlimentari = ?,  saNuotare = ?,  Scuola_id = ?, sezione = ?,  nTessera = ?, cellulare = ?, festaPassaggio = ?, mail = ? where id = ?;";
     private static final String UPDATE_SQUADRA_TERZAMEDIA = "update Terzamedia set squadra_id = ? where id = ?;";
     private static final String UPDATE_LABORATORIO_TERZAMEDIA = "update Terzamedia set Laboratorio_id = ? where id = ?;";
     private static final String DELETE_TERZAMEDIA = "delete from Terzamedia where id = ?;";
@@ -62,10 +62,9 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         pst.setInt(12, t.getScuola().getId());
         pst.setString(13, t.getSezione());
         pst.setString(14, t.getnTessera());
-        pst.setInt(15, t.getSquadra().getId());
-        pst.setString(16, t.getCellulare());
-        pst.setBoolean(17, t.getFestaPassaggio());
-        pst.setString(18, t.getMail());
+        pst.setString(15, t.getCellulare());
+        pst.setBoolean(16, t.getFestaPassaggio());
+        pst.setString(17, t.getMail());
         pst.executeUpdate();
         ResultSet rs = pst.getGeneratedKeys();
         if (rs.next()) {
@@ -91,11 +90,10 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         pst.setInt(12, t.getScuola().getId());
         pst.setString(13, t.getSezione());
         pst.setString(14, t.getnTessera());
-        pst.setInt(15, t.getSquadra().getId());
-        pst.setString(16, t.getCellulare());
-        pst.setBoolean(17, t.getFestaPassaggio());
-        pst.setString(18, t.getMail());
-        pst.setInt(19, t.getId());
+        pst.setString(15, t.getCellulare());
+        pst.setBoolean(16, t.getFestaPassaggio());
+        pst.setString(17, t.getMail());
+        pst.setInt(18, t.getId());
         pst.executeUpdate();
     }
 

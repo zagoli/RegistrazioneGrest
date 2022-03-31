@@ -14,11 +14,12 @@
                 </div>
                 <div class="form-group">
                     <label for="cognome"> Cognome </label> 
-                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 40]" value="${contatto.cognome}"> 
+                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 40]" value="${contatto.cognome}">
                 </div>
                 <div class="form-group">
-                    <label for="relazione"> Relazione con il contatto (nonno, pap&agrave;, zio...) </label> 
-                    <input class="form-control" type="text" required id="relazione" name="relazione" placeholder="Relazione" data-parsley-length="[2, 40]" value="${contatto.relazione}"> 
+                    <label for="relazione"> Relazione con l'iscritto (nonno, pap&agrave;, zio...) </label>
+                    <input class="form-control" type="text" required id="relazione" name="relazione"
+                           placeholder="Relazione" data-parsley-length="[2, 40]" value="${contatto.relazione}">
                 </div>
                 <div class="form-group">
                     <label for="cellulare"> Telefono cellulare </label> 

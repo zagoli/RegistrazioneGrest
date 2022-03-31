@@ -42,7 +42,7 @@ public class Dispatcher extends HttpServlet {
                     throw new IOException("non sono riuscito a creare la cartella di configurazione per il file di proprietà");
                 }
                 try (FileWriter writer = new FileWriter(conf)) {
-                    writer.write("#" + new Date().toString() + System.getProperty("line.separator") + "ISCRRAG=true" + System.getProperty("line.separator") + "ISCRAN=true" + System.getProperty("line.separator") + "ISCRTER=true");
+                    writer.write("#" + new Date() + System.getProperty("line.separator") + "ISCRRAG=true" + System.getProperty("line.separator") + "ISCRAN=true" + System.getProperty("line.separator") + "ISCRTER=true");
                 }
             }
         } catch (NullPointerException | IOException ex) {

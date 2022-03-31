@@ -1,15 +1,12 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.Calendario;
-import Domain.Circolo;
-import Domain.Laboratorio;
-import Domain.Parrocchia;
-import Domain.Ragazzo;
-import Domain.RelPresenzaRag;
-import Domain.Scuola;
+import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,8 +18,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerRegistraRagazzo implements ControllerInterface {
 
@@ -30,9 +25,9 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         mv.addObject("TITOLOPAGINA", "Registrazione Ragazzo");
-        mv.setView("user/registraragazzo.html");
         if (!request.getParameterMap().containsKey("nome")) {
             try {
+                mv.setView("user/registraragazzo.html");
                 //Recupera dati per la registrazione
                 List<Laboratorio> listLabGiusti = DAOMan.laboratorioDAO.findNonRiservato();
                 mv.addObject("laboratori", listLabGiusti);

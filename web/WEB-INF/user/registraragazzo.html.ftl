@@ -1,21 +1,22 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
-    <div class="container mt-4 content">
-        <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
-            <div class="container">
-                <div class="title text-center">
-                    <h5>Registrazione nuovo ragazzo</h5>
+<div class="container mt-4 content">
+    <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
+        <div class="container">
+            <div class="title text-center">
+                <h5>Iscrizione al Grest di Balconi</h5>
+            </div>
+            <form action="/RegistrazioneGrest/App/RegistraRagazzo" method="POST" data-parsley-validate="" id="mainForm">
+
+                <h3 class="text-center font-weight-bold text-uppercase"> 1 - dati anagrafici </h3>
+
+                <div class="form-group">
+                    <label for="nome"> Nome </label>
+                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
+                           data-parsley-length="[2, 50]">
                 </div>
-                <form action="/RegistrazioneGrest/App/RegistraRagazzo" method="POST" data-parsley-validate="" id="mainForm">
 
-                    <h3 class="text-center font-weight-bold text-uppercase"> 1 - dati anagrafici </h3>
-
-                    <div class="form-group">
-                        <label for="nome"> Nome </label>
-                            <input class="form-control" type="text" id ="nome" required name="nome" placeholder="Nome" autofocus data-parsley-length="[2, 50]"> 
-                    </div>
-
-                    <div class="form-group">
+                <div class="form-group">
                         <label for="cognome"> Cognome </label> 
                             <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 50]"> 
                     </div>
@@ -172,19 +173,26 @@
                     
                     <div class="pt-3 form-group" id="codiceForm">
                         <#if !ISCRRAG>
-                        <!--modulo inserimento codice sblocco iscrizione-->
-                        <label for="codicesblocco" class="text-danger">Le iscrizioni sono chiuse. Inserire il codice per sbloccare l'iscrizione. Il codice pu&ograve; essere eventualmente richiesto a <a href="mailto:parrocchiadibalconi@gmail.com">Don Lorenzo</a></label>
-                        <div class="input-group">    
-                            <input id="codicesblocco" type="text" class="form-control" placeholder="inserisci il codice usa e getta per sbloccare l'iscrizione" required data-parsley-errors-messages-disabled/>
-                            <div class="input-group-append">
-                                <button id="btnsblocco" type="button" class="btn btn-outline-primary">Verifica il codice e completa la registrazione</button>
+                            <!--modulo inserimento codice sblocco iscrizione-->
+                            <label for="codicesblocco" class="text-danger">Le iscrizioni sono chiuse. Inserire il codice
+                                per sbloccare l'iscrizione. Il codice pu&ograve; essere eventualmente richiesto a <a
+                                        href="mailto:parrocchiadibalconi@gmail.com">Don Lorenzo</a></label>
+                            <div class="input-group">
+                                <input id="codicesblocco" type="text" class="form-control"
+                                       placeholder="inserisci il codice usa e getta per sbloccare l'iscrizione" required
+                                       data-parsley-errors-messages-disabled/>
+                                <div class="input-group-append">
+                                    <button id="btnsblocco" type="button" class="btn btn-outline-primary">Verifica il
+                                        codice e invia l'iscrizione
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <!--fine-->
+                            <!--fine-->
                         <#else>
-                        <div id="divbtnreg" class="row">
-                            <input id="btnreg" class="form-control btn btn-primary" type="submit" value="Registra"/>
-                        </div>
+                            <div id="divbtnreg" class="row">
+                                <input id="btnreg" class="form-control btn btn-primary" type="submit"
+                                       value="Invia l'iscrizione"/>
+                            </div>
                         </#if>
                     </div>
                     

@@ -19,27 +19,31 @@
                         </div>
                         <div class="form-group">
                             <label for="cognome"> Cognome </label> 
-                                <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 50]"> 
+                                <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 50]">
                         </div>
                         <div class="form-group">
-                            <label for="email"> E-Mail </label> 
-                                <input class="form-control" type="email" required id="email" name="mail" placeholder="E-Mail"> 
+                            <label for="email"> E-Mail </label>
+                            <input class="form-control" type="email" required id="email" name="mail"
+                                   placeholder="E-Mail">
                         </div>
                         <div class="form-group">
-                            <label for="telefono"> Numero di telefono </label> 
-                                <input class="form-control" data-parsley-type="digits" data-parsley-length="[10, 10]" required id="telefono" name="telefono" placeholder="Cellulare personale"> 
+                            <label for="telefono"> Numero di telefono </label>
+                            <input class="form-control" data-parsley-type="digits" data-parsley-length="[10, 10]"
+                                   required id="telefono" name="telefono" placeholder="Cellulare personale">
                         </div>
                         <div class="form-group">
-                            <label for="localita"> Localita </label> 
-                                <input class="form-control" type="text" required id="localita" name="localita" placeholder="Localit&agrave"> 
+                            <label for="localita"> Localit&agrave; </label>
+                            <input class="form-control" type="text" required id="localita" name="localita"
+                                   placeholder="Localit&agrave">
                         </div>
                         <div class="form-group">
-                            <label for="via"> Via </label> 
-                                <input class="form-control" type="text" required id="via" name="via" placeholder="Via"> 
+                            <label for="via"> Via </label>
+                            <input class="form-control" type="text" required id="via" name="via" placeholder="Via">
                         </div>
                         <div class="form-group">
-                            <label for="civico"> Numero civico </label> 
-                                <input class="form-control" type="text" required id="civico" name="civico" placeholder="Numero Civico"> 
+                            <label for="civico"> Numero civico </label>
+                            <input class="form-control" type="text" required id="civico" name="civico"
+                                   placeholder="Numero Civico">
                         </div>
                         <div class="form-group">
                             <label for="pswd"> Password </label> 

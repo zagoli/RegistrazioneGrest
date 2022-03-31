@@ -30,16 +30,24 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <strong>Presenza giornaliera</strong>
+                <strong>Codice fiscale</strong>
+            </div>
+            <div class="col-sm">
+                <p>${animatore.codiceFiscale}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Presenza giornaliera al Grest</strong>
             </div>
             <div class="col-sm">
                 <p>
-                    <#if animatore.presenza = "M"> 
-                    Mattina
-                    <#elseif animatore.presenza = "P"> 
-                    Pomeriggio
-                    <#elseif animatore.presenza = "C"> 
-                    Completo
+                    <#if animatore.presenza = "M">
+                        Mattina
+                    <#elseif animatore.presenza = "P">
+                        Pomeriggio
+                    <#elseif animatore.presenza = "C">
+                        Completo
                     </#if>
                 </p>
             </div>
@@ -54,10 +62,20 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <strong>Preferenza ragazzi</strong>
+                <strong>Preferenza fascia d'et&agrave; ragazzi</strong>
             </div>
             <div class="col-sm">
-                <p><#if animatore.fasciaEtaRagazzi == "G52">Grandi<#elseif animatore.fasciaEtaRagazzi == "P14">Piccoli<#else> Terza media</#if></p>
+                <p>
+                    <#if animatore.fasciaEtaRagazzi = "PP1">
+                        Piccoli
+                    <#elseif animatore.fasciaEtaRagazzi = "M24">
+                        Medi
+                    <#elseif animatore.fasciaEtaRagazzi = "G52">
+                        Grandi
+                    <#elseif animatore.fasciaEtaRagazzi = "AA3">
+                        3 Media
+                    </#if>
+                </p>
             </div>
         </div>
         <div class="row">
@@ -118,24 +136,26 @@
                 </div>
             </div>
         <strong> Sono inoltre disponibile a:</strong>
-        <input type="checkbox"/><label class="ml-1 mr-1">servizio di primo soccorso</label>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio multimediale e amplificazione</label>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio di manutenzione</label>
 
         <div class='col-sm'>
-            <input class="form-check-input" type="checkbox" id='priv' checked/><label for='priv'
-                                                                                      class="form-check-label">
-                Acconsento al trattamento dei dati personali, alla raccolta e all'utilizzo di materiale
-                fotografico/video in conformit&agrave; a quanto riportato nell'informativa sulla privacy reperibile al
-                link: grest.parrocchiadibalconi.it/RegistrazioneGrest/privacy.html</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id='priv'/>
+                <label for='priv' class="form-check-label">
+                    L'animatore maggiorenne dichiara / I genitori dell'animatore minorenne dichiarano di acconsentire
+                    alle dichiarazioni presentate in fase di
+                    registrazione, e che le informazioni inserite in fase di registrazione sono veritiere.
+                </label>
+            </div>
         </div>
     </div>
 
     <div class="shadow mt-5 pt-2 pl-3 pr-3">
         <p class="text-center font-weight-light font-italic mt-4 mb-4"> Firma di chi richiede di fare l'animatore </p>
-        <hr class="mb-5 border-bottom border-dark"/>
+        <hr class="pb-2 border-dark"/>
         <p class="text-center font-weight-light font-italic mb-4"> Firme di entrambi i genitori (per i minorenni) </p>
-        <hr class="mb-5 border-bottom border-dark"/>
+        <hr class="pb-2 border-dark"/>
     </div>
 </div>
 <script>window.print();</script>

@@ -18,31 +18,31 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
             """
                     select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,
                     re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt
-                    from PagamentoTerzamedia p 
-                    join Registrato re on (p.Registrato_id = re.id) 
+                    from PagamentoTerzamedia p
+                    join Registrato re on (p.Registrato_id = re.id)
                     where p.id = ?;
                     """;
     private static final String FIND_ALL_PAGAMENTO =
             """
                     select p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,
                     re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt
-                    from PagamentoTerzamedia p 
+                    from PagamentoTerzamedia p
                     join Registrato re on (p.Registrato_id = re.id);
                     """;
     private static final String FIND_PAGAMENTO_REGISTRATO_ID =
             """
                     select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,
                     re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt
-                    from PagamentoTerzamedia p 
-                    join Registrato re on (p.Registrato_id = re.id) 
+                    from PagamentoTerzamedia p
+                    join Registrato re on (p.Registrato_id = re.id)
                     where p.Registrato_id = ?;
                     """;
     private static final String FIND_PAGAMENTO_TERZAMEDIA_ID =
             """
                     select p.ordineArrivo as pordineArrivo, p.id as pid, p.data as pdata, p.quota as pquota, p.Terzamedia_id as pterid,
                     re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt
-                    from PagamentoTerzamedia p 
-                    join Registrato re on (p.Registrato_id = re.id) 
+                    from PagamentoTerzamedia p
+                    join Registrato re on (p.Registrato_id = re.id)
                     where p.Terzamedia_id = ?;
                     """;
     private static final String COUNT_PAGAMENTO = "select count(*) from PagamentoTerzamedia;";

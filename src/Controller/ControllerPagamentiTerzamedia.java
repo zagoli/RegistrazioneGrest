@@ -66,7 +66,8 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
     protected static float calcolaQuota(Terzamedia t) throws SQLException {
         int[] quota = {40, 70, 95, 120};
         int nSettimane = DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size();
-        return quota[nSettimane - 1];
+        /*return quota[nSettimane - 1];*/
+        return 0;
     }
 
 }

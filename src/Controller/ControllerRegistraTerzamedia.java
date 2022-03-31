@@ -1,17 +1,14 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.Calendario;
-import Domain.Circolo;
-import Domain.Laboratorio;
-import Domain.Parrocchia;
-import Domain.RelPresenzaTer;
-import Domain.Scuola;
-import Domain.Terzamedia;
+import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import com.mashape.unirest.http.exceptions.UnirestException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,8 +20,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerRegistraTerzamedia implements ControllerInterface {
 
@@ -32,7 +27,6 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         mv.addObject("TITOLOPAGINA", "Registrazione ragazzo di Terzamedia");
-        mv.setView("user/registraterzamedia.html");
         try {
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
@@ -93,6 +87,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
 
                 response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
             } else {
+                mv.setView("user/registraterzamedia.html");
                 //Recupera dati per la registrazione
                 List<Laboratorio> listLabGiusti = DAOMan.laboratorioDAO.findAll();
                 mv.addObject("laboratori", listLabGiusti);

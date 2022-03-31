@@ -48,11 +48,13 @@
                         </#if>
                     </td>
                     <td>
-                        <#if ani.fasciaEtaRagazzi = "P14">
+                        <#if animatore.fasciaEtaRagazzi = "PP1">
                             Piccoli
-                        <#elseif ani.fasciaEtaRagazzi = "G52">
+                        <#elseif animatore.fasciaEtaRagazzi = "M24">
+                            Medi
+                        <#elseif animatore.fasciaEtaRagazzi = "G52">
                             Grandi
-                        <#elseif ani.fasciaEtaRagazzi = "AA3">
+                        <#elseif animatore.fasciaEtaRagazzi = "AA3">
                             3 Media
                         </#if>
                     </td>

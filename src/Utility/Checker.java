@@ -19,7 +19,10 @@ public class Checker {
 
     public static boolean checkMail(String mail) throws UnirestException {
         String key = "at_JPVfAVsj8pjxVB7eimYVscbFK22Or";
-        HttpResponse<JsonNode> response = Unirest.get("https://emailverification.whoisxmlapi.com/api/v1").queryString("apiKey", key).queryString("emailAddress", mail).asJson();
+        HttpResponse<JsonNode> response = Unirest.get("https://emailverification.whoisxmlapi.com/api/v2")
+                .queryString("apiKey", key)
+                .queryString("emailAddress", mail)
+                .asJson();
         //controllo se la richiesta è andata a buon fine
         if (response.getStatus() == 200) {
             JSONObject responsedata = response.getBody().getObject();

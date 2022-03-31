@@ -71,12 +71,14 @@
             </div>
             <div class="col-sm">
                 <p>
-                    <#if animatore.fasciaEtaRagazzi = "P14"> 
-                    Piccoli
-                    <#elseif animatore.fasciaEtaRagazzi = "G52"> 
-                    Grandi
-                    <#elseif animatore.fasciaEtaRagazzi = "AA3"> 
-                    3 Media
+                    <#if animatore.fasciaEtaRagazzi = "PP1">
+                        Piccoli
+                    <#elseif animatore.fasciaEtaRagazzi = "M24">
+                        Medi
+                    <#elseif animatore.fasciaEtaRagazzi = "G52">
+                        Grandi
+                    <#elseif animatore.fasciaEtaRagazzi = "AA3">
+                        3 Media
                     </#if>
                 </p>
             </div>
