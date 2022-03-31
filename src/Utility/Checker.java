@@ -29,8 +29,8 @@ public class Checker {
             //prima controllo se la mail è in formato valido, altrimenti se splitto e non è valido magari da NullPointer
             if (responsedata.getBoolean("formatCheck")
                     && responsedata.getString("emailAddress").equals(mail)
-                    && responsedata.getBoolean("smtpCheck")
                     && responsedata.getBoolean("dnsCheck")
+                    && responsedata.getBoolean("smtpCheck")
                     && !responsedata.getBoolean("disposableCheck")) {
                 return true;
             }
