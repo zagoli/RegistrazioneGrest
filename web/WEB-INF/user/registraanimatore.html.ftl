@@ -113,22 +113,22 @@
                     <label> Fascia et&agrave; ragazzi preferita </label> <br/>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PP1" value="PP1"
-                               <#if animatore.fasciaEtaRagazzi = "PP1">checked</#if>>
+                               <#if animatore.fasciaEtaRagazzi == "PP1">checked</#if>>
                         <label class="form-check-label" for="PP1">Piccoli (1° della scuola primaria)</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="M24" value="M24"
-                               <#if animatore.fasciaEtaRagazzi = "M24">checked</#if>>
+                               <#if animatore.fasciaEtaRagazzi == "M24">checked</#if>>
                         <label class="form-check-label" for="M24">Medi (2°,3°,4° della scuola primaria)</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="G52" value="G52"
-                               <#if animatore.fasciaEtaRagazzi = "G52">checked</#if>>
+                               <#if animatore.fasciaEtaRagazzi == "G52">checked</#if>>
                         <label class="form-check-label" for="G52">Grandi (5° primaria, 1°,2° media)</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="AA3" value="AA3"
-                               <#if animatore.fasciaEtaRagazzi = "AA3">checked</#if>>
+                               <#if animatore.fasciaEtaRagazzi == "AA3">checked</#if>>
                         <label class="form-check-label" for="AA3">Aiuto animatori (3° media)</label>
                     </div>
                 </div>

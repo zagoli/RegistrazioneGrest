@@ -27,7 +27,7 @@
                                             <option <#if ani.squadra.id==0>selected</#if>></option>
                                             <#list squadre as sq>
                                                 <option value="${sq.id}"
-                                                        <#if ani.squadra.id! = sq.id>selected</#if>>${sq.nome}</option>
+                                                        <#if ani.squadra.id! == sq.id>selected</#if>>${sq.nome}</option>
                                             </#list>
                                         </select>
                                     </td>

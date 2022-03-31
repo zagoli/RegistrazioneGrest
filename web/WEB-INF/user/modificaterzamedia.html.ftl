@@ -22,26 +22,30 @@
 
                         <div class="form-group">
                             <label for="cognome"> Cognome </label> 
-                                <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 50]" value="${terzamedia.cognome}"> 
+                                <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 50]" value="${terzamedia.cognome}">
                         </div>
 
                         <div class="form-group">
                             <label for="dataNascita"> Data di nascita </label>
-                                <input class="form-control" type="date" required id="dataNascita" name="dataNascita" value="${dataNascita}">
+                            <input class="form-control" type="date" required id="dataNascita" name="dataNascita"
+                                   value="${dataNascita}">
                         </div>
 
                         <div class="form-group">
                             <label> Presenza giornaliera </label> <br/>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="presenza" id="completo" value="C" <#if terzamedia.presenza = "C">checked</#if>>
+                                <input class="form-check-input" type="radio" name="presenza" id="completo" value="C"
+                                       <#if terzamedia.presenza == "C">checked</#if>>
                                 <label class="form-check-label" for="completo">Completo</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M" <#if terzamedia.presenza = "M">checked</#if>>
+                                <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M"
+                                       <#if terzamedia.presenza == "M">checked</#if>>
                                 <label class="form-check-label" for="mattina">Mattina</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P" <#if terzamedia.presenza = "P">checked</#if>>
+                                <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P"
+                                       <#if terzamedia.presenza == "P">checked</#if>>
                                 <label class="form-check-label" for="pomeriggio">Pomeriggio</label>
                             </div>
                         </div>
@@ -50,8 +54,10 @@
                             <label> Partecipazione </label> <br/>
                             <#list calendari as cal, partecipa>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana}" id="cal${cal.idSettimana}" name="cal" <#if partecipa>checked</#if>>
-                                    <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando} al ${cal.aQuando} </label>
+                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana}"
+                                           id="cal${cal.idSettimana}" name="cal" <#if partecipa>checked</#if>>
+                                    <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana
+                                        dal ${cal.daQuando} al ${cal.aQuando} </label>
                                 </div>
                             </#list>
                         </div>
@@ -60,7 +66,8 @@
                             <label for="laboratorio"> Laboratorio </label>
                             <select id="laboratorio" class="form-control" name="laboratorio">
                                 <#list laboratori as lab>
-                                    <option value="${lab.id}" <#if lab.id = terzamedia.laboratorio.id>selected</#if>>${lab.descrizione}</option>
+                                    <option value="${lab.id}"
+                                            <#if lab.id == terzamedia.laboratorio.id>selected</#if>>${lab.descrizione}</option>
                                 </#list>
                             </select>
                         </div>
@@ -69,7 +76,8 @@
                             <label for="parrocchia"> Parrocchia </label>
                             <select id="parrocchia" class="form-control" name="parrocchia">
                                 <#list parrocchie as par>
-                                    <option value="${par.id}" <#if par.id = terzamedia.parrocchia.id>selected</#if>>Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
+                                    <option value="${par.id}" <#if par.id == terzamedia.parrocchia.id>selected</#if>>
+                                        Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
                                 </#list>
                             </select>
                         </div>
@@ -78,7 +86,10 @@
                             <label for="circolo"> Circolo </label>
                             <select id="circolo" class="form-control" name="circolo">
                                 <#list circoli as cir>
-                                    <option value="${cir.id}" <#if cir.id = terzamedia.circolo.id>selected</#if>>${cir.nome} (${cir.luogo})</option>
+                                    <option value="${cir.id}"
+                                            <#if cir.id == terzamedia.circolo.id>selected</#if>>${cir.nome}
+                                        (${cir.luogo})
+                                    </option>
                                 </#list>
                             </select>
                         </div>
@@ -95,7 +106,8 @@
                             <label for="scuola"> Scuola </label>
                             <select id="scuola" class="form-control" name="scuola">
                                 <#list scuole as scu>
-                                    <option value="${scu.id}" <#if scu.id = terzamedia.scuola.id>selected</#if>>Scuola ${scu.grado} di ${scu.descrizione}</option>
+                                    <option value="${scu.id}" <#if scu.id == terzamedia.scuola.id>selected</#if>>
+                                        Scuola ${scu.grado} di ${scu.descrizione}</option>
                                 </#list>
                             </select>
                         </div>

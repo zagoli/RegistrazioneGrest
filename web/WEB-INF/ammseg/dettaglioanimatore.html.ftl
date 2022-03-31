@@ -47,12 +47,12 @@
             </div>
             <div class="col-sm">
                 <p>
-                    <#if animatore.presenza = "M"> 
-                    Mattina
-                    <#elseif animatore.presenza = "P"> 
-                    Pomeriggio
-                    <#elseif animatore.presenza = "C"> 
-                    Completo
+                    <#if animatore.presenza == "M">
+                        Mattina
+                    <#elseif animatore.presenza == "P">
+                        Pomeriggio
+                    <#elseif animatore.presenza == "C">
+                        Completo
                     </#if>
                 </p>
             </div>
@@ -71,13 +71,13 @@
             </div>
             <div class="col-sm">
                 <p>
-                    <#if animatore.fasciaEtaRagazzi = "PP1">
+                    <#if animatore.fasciaEtaRagazzi == "PP1">
                         Piccoli
-                    <#elseif animatore.fasciaEtaRagazzi = "M24">
+                    <#elseif animatore.fasciaEtaRagazzi == "M24">
                         Medi
-                    <#elseif animatore.fasciaEtaRagazzi = "G52">
+                    <#elseif animatore.fasciaEtaRagazzi == "G52">
                         Grandi
-                    <#elseif animatore.fasciaEtaRagazzi = "AA3">
+                    <#elseif animatore.fasciaEtaRagazzi == "AA3">
                         3 Media
                     </#if>
                 </p>

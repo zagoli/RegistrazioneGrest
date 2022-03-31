@@ -39,12 +39,12 @@
             </div>
             <div class="col-sm">
                 <p>
-                    <#if terzamedia.presenza = "M"> 
-                    Mattina
-                    <#elseif terzamedia.presenza = "P"> 
-                    Pomeriggio
-                    <#elseif terzamedia.presenza = "C"> 
-                    Completo
+                    <#if terzamedia.presenza == "M">
+                        Mattina
+                    <#elseif terzamedia.presenza == "P">
+                        Pomeriggio
+                    <#elseif terzamedia.presenza == "C">
+                        Completo
                     </#if>
                 </p>
             </div>

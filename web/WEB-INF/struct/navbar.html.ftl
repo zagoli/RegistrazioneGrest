@@ -4,17 +4,20 @@
             <li class="nav-item pr-4">
               <a href="/RegistrazioneGrest/App/Dashboard" class="btn btn-block btn-secondary">Home</a>
             </li>
-            <#if tipoUt = 3>
-            <li class="nav-item pr-4">
-              <a href="/RegistrazioneGrest/App/AccompagnatoriContatti" class="btn btn-block btn-secondary">Accompagnatori e Contatti telefonici Urgenze</a>
-            </li>
-            <li class="nav-item pr-4">
-              <a href="/RegistrazioneGrest/App/DashboardAttGen" class="btn btn-block btn-secondary">Collaborazione genitori</a>
-            </li>
+            <#if tipoUt == 3>
+                <li class="nav-item pr-4">
+                    <a href="/RegistrazioneGrest/App/AccompagnatoriContatti" class="btn btn-block btn-secondary">Accompagnatori
+                        e Contatti telefonici Urgenze</a>
+                </li>
+                <li class="nav-item pr-4">
+                    <a href="/RegistrazioneGrest/App/DashboardAttGen" class="btn btn-block btn-secondary">Collaborazione
+                        genitori</a>
+                </li>
             <#elseif tipoUt <= 2>
-            <li class="nav-item pr-4">
-              <button class="btn btn-block btn-secondary" onclick="$(this).html('Grazie mille');">Cliccami</button>
-            </li>
+                <li class="nav-item pr-4">
+                    <button class="btn btn-block btn-secondary" onclick="$(this).html('Grazie mille');">Cliccami
+                    </button>
+                </li>
             </#if>
             <li class="nav-item pr-4">
               <a href="/RegistrazioneGrest/App/ModificaUtente" class="btn btn-block btn-secondary"> Modifica Profilo </a>

@@ -40,17 +40,17 @@
                             <label> Presenza giornaliera al Grest</label> <br/>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="presenza" id="completo" value="C"
-                                       <#if animatore.presenza = "C">checked</#if>>
+                                       <#if animatore.presenza == "C">checked</#if>>
                                 <label class="form-check-label" for="completo">Completo</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M"
-                                       <#if animatore.presenza = "M">checked</#if>>
+                                       <#if animatore.presenza == "M">checked</#if>>
                                 <label class="form-check-label" for="mattina">Solo mattina</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P"
-                                       <#if animatore.presenza = "P">checked</#if>>
+                                       <#if animatore.presenza == "P">checked</#if>>
                                 <label class="form-check-label" for="pomeriggio">Solo pomeriggio</label>
                             </div>
                         </div>
@@ -71,7 +71,8 @@
                             <label for="laboratorio"> Laboratorio </label>
                             <select id="laboratorio" class="form-control" name="laboratorio">
                                 <#list laboratori as lab>
-                                    <option value="${lab.id}" <#if lab.id = animatore.laboratorio.id>selected</#if>>${lab.descrizione}</option>
+                                    <option value="${lab.id}"
+                                            <#if lab.id == animatore.laboratorio.id>selected</#if>>${lab.descrizione}</option>
                                 </#list>
                             </select>
                         </div>
@@ -80,7 +81,8 @@
                             <label for="parrocchia"> Parrocchia di appartenenza </label>
                             <select id="parrocchia" class="form-control" name="parrocchia">
                                 <#list parrocchie as par>
-                                    <option value="${par.id}" <#if par.id = animatore.parrocchia.id>selected</#if>>Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
+                                    <option value="${par.id}" <#if par.id == animatore.parrocchia.id>selected</#if>>
+                                        Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
                                 </#list>
                             </select>
                         </div>
@@ -93,7 +95,8 @@
                             <select id="circolo" class="form-control" name="circolo">
                                 <#list circoli as cir>
                                     <option value="${cir.id}"
-                                            <#if cir.id = animatore.circolo.id>selected</#if>>${cir.nome} (${cir.luogo})
+                                            <#if cir.id == animatore.circolo.id>selected</#if>>${cir.nome} (${cir.luogo}
+                                        )
                                     </option>
                                 </#list>
                             </select>
@@ -121,22 +124,22 @@
                             <label> Fascia et&agrave; ragazzi preferita </label> <br/>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PP1"
-                                       value="PP1" <#if animatore.fasciaEtaRagazzi = "PP1">checked</#if>>
+                                       value="PP1" <#if animatore.fasciaEtaRagazzi == "PP1">checked</#if>>
                                 <label class="form-check-label" for="PP1">Piccoli (1° della scuola primaria)</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="M24"
-                                       value="M24" <#if animatore.fasciaEtaRagazzi = "M24">checked</#if>>
+                                       value="M24" <#if animatore.fasciaEtaRagazzi == "M24">checked</#if>>
                                 <label class="form-check-label" for="M24">Medi (2°,3°,4° della scuola primaria)</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="G52"
-                                       value="G52" <#if animatore.fasciaEtaRagazzi = "G52">checked</#if>>
+                                       value="G52" <#if animatore.fasciaEtaRagazzi == "G52">checked</#if>>
                                 <label class="form-check-label" for="G52">Grandi (5° primaria, 1°,2° media)</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="AA3"
-                                       value="AA3" <#if animatore.fasciaEtaRagazzi = "AA3">checked</#if>>
+                                       value="AA3" <#if animatore.fasciaEtaRagazzi == "AA3">checked</#if>>
                                 <label class="form-check-label" for="AA3">Aiuto animatori (3° media)</label>
                             </div>
                         </div>

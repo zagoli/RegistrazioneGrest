@@ -22,33 +22,39 @@
                            data-parsley-length="[2, 50]" value="${ragazzo.cognome}">
                 </div>
 
-                        <div class="form-group">
-                            <label for="dataNascita"> Data di nascita </label>
-                                <input class="form-control" type="date" required id="dataNascita" name="dataNascita" value="${dataNascita}">
-                        </div>
+                <div class="form-group">
+                    <label for="dataNascita"> Data di nascita </label>
+                    <input class="form-control" type="date" required id="dataNascita" name="dataNascita"
+                           value="${dataNascita}">
+                </div>
 
-                        <div class="form-group">
-                            <label> Presenza giornaliera </label> <br/>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="presenza" id="completo" value="C" <#if ragazzo.presenza = "C">checked</#if>>
-                                <label class="form-check-label" for="completo">Completo</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M" <#if ragazzo.presenza = "M">checked</#if>>
-                                <label class="form-check-label" for="mattina">Mattina</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P" <#if ragazzo.presenza = "P">checked</#if>>
-                                <label class="form-check-label" for="pomeriggio">Pomeriggio</label>
-                            </div>
-                        </div>
+                <div class="form-group">
+                    <label> Presenza giornaliera </label> <br/>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="presenza" id="completo" value="C"
+                               <#if ragazzo.presenza == "C">checked</#if>>
+                        <label class="form-check-label" for="completo">Completo</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M"
+                               <#if ragazzo.presenza == "M">checked</#if>>
+                        <label class="form-check-label" for="mattina">Mattina</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P"
+                               <#if ragazzo.presenza == "P">checked</#if>>
+                        <label class="form-check-label" for="pomeriggio">Pomeriggio</label>
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <label> Partecipazione </label> <br/>
-                            <#list calendari as cal, partecipa>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana}" id="cal${cal.idSettimana}" name="cal" <#if partecipa>checked</#if>>
-                                    <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando} al ${cal.aQuando} </label>
+                <div class="form-group">
+                    <label> Partecipazione </label> <br/>
+                    <#list calendari as cal, partecipa>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="${cal.idSettimana}"
+                                   id="cal${cal.idSettimana}" name="cal" <#if partecipa>checked</#if>>
+                            <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando}
+                                al ${cal.aQuando} </label>
                                 </div>
                             </#list>
                         </div>
@@ -57,7 +63,8 @@
                             <label for="laboratorio"> Laboratorio </label>
                             <select id="laboratorio" class="form-control" name="laboratorio">
                                 <#list laboratori as lab>
-                                    <option value="${lab.id}" <#if lab.id = ragazzo.laboratorio.id>selected</#if>>${lab.descrizione}</option>
+                                    <option value="${lab.id}"
+                                            <#if lab.id == ragazzo.laboratorio.id>selected</#if>>${lab.descrizione}</option>
                                 </#list>
                             </select>
                         </div>
@@ -66,7 +73,8 @@
                             <label for="parrocchia"> Parrocchia </label>
                             <select id="parrocchia" class="form-control" name="parrocchia">
                                 <#list parrocchie as par>
-                                    <option value="${par.id}" <#if par.id = ragazzo.parrocchia.id>selected</#if>>Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
+                                    <option value="${par.id}" <#if par.id == ragazzo.parrocchia.id>selected</#if>>
+                                        Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
                                 </#list>
                             </select>
                         </div>
@@ -75,7 +83,9 @@
                             <label for="circolo"> Circolo </label>
                             <select id="circolo" class="form-control" name="circolo">
                                 <#list circoli as cir>
-                                    <option value="${cir.id}" <#if cir.id = ragazzo.circolo.id>selected</#if>>${cir.nome} (${cir.luogo})</option>
+                                    <option value="${cir.id}"
+                                            <#if cir.id == ragazzo.circolo.id>selected</#if>>${cir.nome} (${cir.luogo})
+                                    </option>
                                 </#list>
                             </select>
                         </div>
@@ -92,7 +102,7 @@
                             <label for="scuola"> Scuola </label>
                             <select id="scuola" class="form-control" name="scuola">
                                 <#list scuole as scu>
-                                    <option value="${scu.id}" <#if scu.id = ragazzo.scuola.id>selected</#if>>
+                                    <option value="${scu.id}" <#if scu.id == ragazzo.scuola.id>selected</#if>>
                                         Scuola ${scu.grado} di ${scu.descrizione}</option>
                                 </#list>
                             </select>
@@ -101,11 +111,11 @@
                 <div class="form-group">
                     <label for="classe"> Classe </label>
                     <select id="classe" class="form-control" name="classe">
-                        <option value="1" <#if ragazzo.classe = "1">selected</#if>>1</option>
-                        <option value="2" <#if ragazzo.classe = "2">selected</#if>>2</option>
-                        <option value="3" <#if ragazzo.classe = "3">selected</#if>>3</option>
-                        <option value="4" <#if ragazzo.classe = "4">selected</#if>>4</option>
-                        <option value="5" <#if ragazzo.classe = "5">selected</#if>>5</option>
+                        <option value="1" <#if ragazzo.classe == "1">selected</#if>>1</option>
+                        <option value="2" <#if ragazzo.classe == "2">selected</#if>>2</option>
+                        <option value="3" <#if ragazzo.classe == "3">selected</#if>>3</option>
+                        <option value="4" <#if ragazzo.classe == "4">selected</#if>>4</option>
+                        <option value="5" <#if ragazzo.classe == "5">selected</#if>>5</option>
                     </select>
                 </div>
 
