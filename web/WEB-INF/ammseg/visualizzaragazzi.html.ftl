@@ -44,7 +44,7 @@
                     <td data-sort="${rag[0].dataNascita?string.iso}">${rag[0].dataNascita?string["dd/MM/yyyy"]}</td>
                     <td>${rag[0].registrato.via?capitalize+" "+rag[0].registrato.civico}</td>
                     <td>${rag[0].registrato.localita?capitalize}</td>
-                    <td>${rag[0].parrocchia.nome}</td>
+                    <td title="${rag[0].parrocchia.nome}">${rag[0].parrocchia.luogo}</td>
                     <td>${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
                     <td>${rag[0].sezione}</td>
                     <td>${rag[0].scuola.descrizione}</td>

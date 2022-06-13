@@ -43,7 +43,7 @@
                     <td data-sort="${ter[0].dataNascita?string.iso}">${ter[0].dataNascita?string["dd/MM/yyyy"]}</td>
                     <td>${ter[0].registrato.via?capitalize+" "+ter[0].registrato.civico}</td>
                     <td>${ter[0].registrato.localita?capitalize}</td>
-                    <td>${ter[0].parrocchia.nome}</td>
+                    <td title="${ter[0].parrocchia.nome}">${ter[0].parrocchia.luogo}</td>
                     <td>${ter[0].sezione}</td>
                     <td>${ter[0].scuola.descrizione}</td>
                     <td class="badge-squadra-support">

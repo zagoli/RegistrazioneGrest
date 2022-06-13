@@ -114,17 +114,21 @@
 
                         <div class="form-group">
                             <label for="sezione"> Sezione </label>
-                                <input class="form-control" type="text" required id="sezione" name="sezione" data-parsley-length="[1, 5]" placeholder="Classe" value="${terzamedia.sezione}">
+                            <input class="form-control" type="text" required id="sezione" name="sezione"
+                                   data-parsley-length="[1, 1]" placeholder="A" value="${terzamedia.sezione}">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="cellulare"> Eventuale numero di cellulare </label>
-                                <input class="form-control" type="text" id="cellulare" name="cellulare" data-parsley-length="[10, 10]" placeholder="cellulare" <#if terzamedia.cellulare??>value="${terzamedia.cellulare}"</#if>>
+                            <input class="form-control" type="text" id="cellulare" name="cellulare"
+                                   data-parsley-length="[10, 10]" placeholder="cellulare"
+                                   <#if terzamedia.cellulare??>value="${terzamedia.cellulare}"</#if>>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="mail"> Indirizzo E-Mail del ragazzo o della famiglia </label> 
-                                <input class="form-control" type="email" required id="mail" name="mail" placeholder="E-Mail" value="${terzamedia.mail}"> 
+                            <label for="mail"> Indirizzo E-Mail del ragazzo o della famiglia </label>
+                            <input class="form-control" type="email" required id="mail" name="mail" placeholder="E-Mail"
+                                   value="${terzamedia.mail}">
                         </div>
 
                         <div class="form-group">

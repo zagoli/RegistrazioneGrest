@@ -5,6 +5,7 @@ import Domain.Pagamento;
 import Domain.Ragazzo;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Checker;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +48,7 @@ public class ControllerPagamenti implements ControllerInterface {
                 float quota = Float.parseFloat(request.getParameter("quota").replace(',', '.'));
                 int idRagazzo = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
-                DAOMan.pagamentoDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")),quota, idRagazzo, idUt);
+                DAOMan.pagamentoDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")), quota, idRagazzo, idUt);
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamenti");
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));
@@ -64,32 +65,29 @@ public class ControllerPagamenti implements ControllerInterface {
         return mv;
     }
 
-    //cambiare con metodo matematico se possibile
     protected static float calcolaQuota(Ragazzo r) throws SQLException {
-        int supplementoAnticipo = 10;
-        int supplementoFuoriComune = 15;
-        int nSettimane = DAOMan.relPresenzaRagDAO.findByRagazzoId(r.getId()).size();
-        int[][][] quotaBase = {
+        final int supplementoAnticipo = 10;
+        final int supplementoFuoriComune = 15;
+        final int nSettimane = DAOMan.relPresenzaRagDAO.findByRagazzoId(r.getId()).size();
+        final int[][][] quotaBase = {
                 // normale
                 {   //senza mensa   |   con mensa
-                        {50, 75},    // una settimana
-                        {75, 125},   // due settimane
-                        {95, 170},   // tre settimane
-                        {115, 215}    // quattro settimane
+                        {85, 110},    // una settimana
+                        {115, 160},   // due settimane
+                        {140, 220},   // tre settimane
+                        {165, 270}    // quattro settimane
                 },
                 // fratello iscritto
                 {   //senza mensa   |   con mensa
-                        {40, 60},    // una settimana
-                        {60, 100},   // due settimane
-                        {76, 136},   // tre settimane
-                        {95, 172}    // quattro settimane
+                        {65, 90},    // una settimana
+                        {90, 125},   // due settimane
+                        {110, 175},   // tre settimane
+                        {130, 215}    // quattro settimane
                 }
         };
-        return 0;
-        /*
         return quotaBase[r.getFratelloIscritto() ? 1 : 0][nSettimane - 1][r.getMensa() ? 1 : 0] +
                 nSettimane * (r.getEntrataAnticipata() ? supplementoAnticipo : 0) +
-                nSettimane * (Checker.checkIsFromPescantina(r) ? 0 : supplementoFuoriComune);*/
+                nSettimane * (Checker.checkIsFromPescantina(r.getRegistrato().getLocalita()) ? 0 : supplementoFuoriComune);
     }
 
 }

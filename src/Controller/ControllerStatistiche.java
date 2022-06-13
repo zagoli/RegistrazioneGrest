@@ -5,6 +5,9 @@ import Domain.Animatore;
 import Domain.Ragazzo;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -12,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerStatistiche implements ControllerInterface{
 
@@ -23,11 +24,6 @@ public class ControllerStatistiche implements ControllerInterface{
         mv.addObject("TITOLOPAGINA", "Statistiche");
         mv.setView("ammseg/statistiche.html");
         try {
-            mv.addObject("nsett", DAOMan.calendarioDAO.count());
-            mv.addObject("nparr", DAOMan.parrocchiaDAO.count());
-            mv.addObject("ncirc", DAOMan.circoloDAO.count());
-            mv.addObject("nlab", DAOMan.laboratorioDAO.count());
-            mv.addObject("nscuo", DAOMan.scuolaDAO.count());
             mv.addObject("nrag", DAOMan.ragazzoDAO.count());
             mv.addObject("nani", DAOMan.animatoreDAO.count());
             mv.addObject("nter", DAOMan.terzamediaDAO.count());
@@ -36,6 +32,7 @@ public class ControllerStatistiche implements ControllerInterface{
             mv.addObject("nmensatot", DAOMan.ragazzoDAO.countMensaTotale());
             mv.addObject("eanttot", DAOMan.ragazzoDAO.countAnticipatoTotale());
             mv.addObject("ragsett", DAOMan.ragazzoDAO.countSettimanale());
+            mv.addObject("anisett", DAOMan.animatoreDAO.countSettimanale());
             mv.addObject("mensasett", DAOMan.ragazzoDAO.countMensaSettimanale());
             mv.addObject("eansett", DAOMan.ragazzoDAO.countAnticipatoSettimanale());
             

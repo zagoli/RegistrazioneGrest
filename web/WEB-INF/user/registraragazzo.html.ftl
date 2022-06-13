@@ -118,56 +118,93 @@
                         </select>
                     </div>
 
-                    <h3 class="text-center font-weight-bold text-uppercase"> 4 - Allergie o intolleranze alimentari o terapie in corso </h3>
+                <h3 class="text-center font-weight-bold text-uppercase"> 4 - Allergie o intolleranze alimentari o
+                    terapie in corso </h3>
 
-                    <div class="form-group">
-                        <label for="noteAlimentari" class="sr-only">Allergie o intolleranze alimentari o terapie in corso</label>
-                        <textarea class="form-control" rows="5" id="noteAlimentari" name="noteAlimentari" placeholder="specificare SOLO se presenti"></textarea>
-                    </div>
+                <div class="form-group">
+                    <label for="noteAlimentari" class="sr-only">Allergie o intolleranze alimentari o terapie in
+                        corso</label>
+                    <textarea class="form-control" rows="5" id="noteAlimentari" name="noteAlimentari"
+                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono)"></textarea>
+                </div>
 
-                    <h3 class="text-center font-weight-bold text-uppercase"> 5 - Eventuali richieste o proposte </h3>
+                <h3 class="text-center font-weight-bold text-uppercase"> 5 - Eventuali richieste o proposte </h3>
 
-                    <div class="form-group">
-                        <label for="richieste" class="sr-only">Eventuali richieste o proposte</label>
-                        <textarea class="form-control" rows="5" id="richieste" name="richieste" placeholder="specificare SOLO se presenti. Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta."></textarea>
-                    </div>                       
+                <div class="form-group">
+                    <label for="richieste" class="sr-only">Eventuali richieste o proposte</label>
+                    <textarea class="form-control" rows="5" id="richieste" name="richieste"
+                              placeholder="specificare SOLO se presenti. Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta."></textarea>
+                </div>
 
-                    <h3 class="text-center font-weight-bold text-uppercase"> 6 - richieste e dichiarazioni dei genitori  </h3>
+                <h3 class="text-center font-weight-bold text-uppercase"> 6 - Richieste e dichiarazioni dei
+                    genitori </h3>
 
-                    <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="entrataAnticipata" name="entrataAnticipata">
-                            <label class="form-check-label" for="entrataAnticipata">Si richiede, per gravi motivi, di anticipare l'entrata alle ore 8.30 e si versa  la quota di &euro; 10,00 a settimana. </label>
-                        </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="mensa" name="mensa">
-                        <label class="form-check-label" for="mensa"> Si richiede, per necessit&agrave; particolari, in caso entrambi i genitori lavorino, di usufruire del servizio mensa, versando la quota di iscrizione prevista. </label>
-                    </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="entrataAnticipata" name="entrataAnticipata">
+                    <label class="form-check-label" for="entrataAnticipata">Si richiede, per gravi motivi, di anticipare
+                        l'entrata alle ore 8.30 e si versa la quota di &euro; 10,00 a settimana. </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="mensa" name="mensa">
+                    <label class="form-check-label" for="mensa"> Si richiede, per necessit&agrave; particolari, in caso
+                        entrambi i genitori lavorino, di usufruire del servizio mensa, versando la quota di iscrizione
+                        prevista. </label>
+                </div>
 
-                    <br/>
+                <br/>
                     <p class="font-weight-normal">I sottoscritti genitori dichiarano:</p>
                     <ul>
                         <li><div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare">
-                            <label class="form-check-label" for="saNuotare"> Che il/la proprio/a figlio/a sa nuotare.</label>
-                        </div></li>
+                                <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare">
+                                <label class="form-check-label" for="saNuotare"> Che il/la proprio/a figlio/a sa
+                                    nuotare.</label>
+                            </div>
+                        </li>
 
-                        <li><div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="fratelloIscritto" name="fratelloIscritto">
-                            <label class="form-check-label" for="fratelloIscritto"> Che il/la proprio/a figlio/a <b class="text-danger">ha gi&agrave; <i>uno o pi&ugrave;</i></b> fratelli/sorelle iscritti al grest.</label>
-                        </div></li>
-                        <li> <input type="checkbox"/> di autorizzare il/la figlio/a a tornare a casa al termine del Grest da solo;</li>
-                        <li> <input type="checkbox"/> di <u>NON</u> autorizzare il/la figlio/a a tornare a casa dal Grest negli orari stabiliti da solo; deve aspettare una delle seguenti persone da noi incaricate, indicate nella sezione "Accompagnatori e Contatti telefonici Urgenze" della piattaforma </li> 
-                        <li>che il/la proprio/a figlio/a gode di buona salute e che pertanto pu&ograve; affrontare le attivit&agrave; ludico-sportive previste; in caso contrario, si impegnano a chiederne l'esonero al momento dell'iscrizione (sezione richieste o proposte nella scheda di iscrizione ragazzo);</li>
-                        <li>di essere consapevoli che la responsabilit&agrave; della Parrocchia nei confronti dei ragazzi e la relativa copertura 	assicurativa inizia e termina negli orari indicati; non c'&egrave; copertura per gli spostamenti da e verso l'abitazione;</li>
-                        <li>di autorizzare i responsabili del Grest e i loro collaboratori ad assumere le iniziative che riterranno necessarie per garantire la sicurezza dei partecipanti e la buona riuscita delle attivit&agrave; del Grest;</li>
-                        <li>di non ritenere gli organizzatori del Grest responsabili per eventuali furti di biciclette o di oggetti di qualsiasi valore; i proprietari dovranno pertanto provvedere ad eventuali sistemi di protezione o di custodia;</li>
-                        <li>di essere informati, ai sensi e per gli effetti di cui all'art. 13 del D.Lgs 196/2003, che i dati personali raccolti saranno trattati, anche con strumenti informatici, esclusivamente nell'ambito dell'attivit&agrave; del Grest di Balconi e concedono la liberatoria alle riprese video/fotografiche esclusivamente nell'ambito dell'attivit&agrave; del Grest di Balconi.</li>
+                        <li>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="fratelloIscritto"
+                                       name="fratelloIscritto">
+                                <label class="form-check-label" for="fratelloIscritto"> Che il/la proprio/a figlio/a <b
+                                            class="text-danger">ha gi&agrave; <i>uno o pi&ugrave;</i></b>
+                                    fratelli/sorelle iscritti al grest.</label>
+                            </div>
+                        </li>
+                        <li><input type="checkbox"/> di autorizzare il/la figlio/a a tornare a casa al termine del Grest
+                            da solo;
+                        </li>
+                        <li><input type="checkbox"/> di <u>NON</u> autorizzare il/la figlio/a a tornare a casa dal Grest
+                            negli orari stabiliti da solo; deve aspettare una delle seguenti persone da noi incaricate,
+                            indicate nella sezione "Accompagnatori e Contatti telefonici Urgenze" della piattaforma
+                        </li>
+                        <li>che il/la proprio/a figlio/a gode di buona salute e che pertanto pu&ograve; affrontare le
+                            attivit&agrave; ludico-sportive previste; in caso contrario, si impegnano a chiederne
+                            l'esonero al momento della conferma dell'iscrizione;
+                        </li>
+                        <li>di essere consapevoli che la responsabilit&agrave; della Parrocchia nei confronti dei
+                            ragazzi e la relativa copertura assicurativa inizia e termina negli orari indicati; non c'&egrave;
+                            copertura per gli spostamenti da e verso l'abitazione;
+                        </li>
+                        <li>di autorizzare i responsabili del Grest e i loro collaboratori ad assumere le iniziative che
+                            riterranno necessarie per garantire la sicurezza dei partecipanti e la buona riuscita delle
+                            attivit&agrave; del Grest;
+                        </li>
+                        <li>di non ritenere gli organizzatori del Grest responsabili per eventuali furti di biciclette o
+                            di oggetti di qualsiasi valore; i proprietari dovranno pertanto provvedere ad eventuali
+                            sistemi di protezione o di custodia;
+                        </li>
+                        <li>di essere informati, ai sensi e per gli effetti di cui all'art. 13 del D.Lgs 196/2003, che i
+                            dati personali raccolti saranno trattati, anche con strumenti informatici, esclusivamente
+                            nell'ambito dell'attivit&agrave; del Grest di Balconi e concedono la liberatoria alle
+                            riprese video/fotografiche esclusivamente nell'ambito dell'attivit&agrave; del Grest di
+                            Balconi.
+                        </li>
                     </ul>
 
-                    <br/>
+                <br/>
 
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="checkprivacy" required/>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="checkprivacy" required/>
                         <label class="form-check-label" for="checkprivacy"> acconsento al trattamento dei dati personali, alla raccolta e all'utilizzo di materiale fotografico/video in conformit&agrave; a quanto riportato nell'informativa sulla privacy reperibile al link <a href="../privacy.html">informativa sulla privacy</a></label>
                     </div>
                     

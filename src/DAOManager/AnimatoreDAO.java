@@ -25,4 +25,6 @@ public interface AnimatoreDAO {
     List<Animatore> findByCircoloId(int id) throws SQLException;
     List<Animatore> findByCalendarioId(int id) throws SQLException;
     List<Animatore> findByRegistratoId(int id) throws SQLException;
+
+    List<Integer[]> countSettimanale() throws SQLException;
 }

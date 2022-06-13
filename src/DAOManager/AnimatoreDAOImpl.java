@@ -39,6 +39,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
     private static final String FIND_ANIMATORE_CIRCOLO_ID = GENERIC_ANIMATORE_FIND + " where ci.id = ? order by an.cognome, an.nome;";
     private static final String FIND_ANIMATORE_CALENDARIO_ID = GENERIC_ANIMATORE_FIND + "  join presenzaAn pra on (an.id = pra.Animatore_id) where pra.Calendario_idSettimana = ? order by an.cognome, an.nome;";
     private static final String FIND_ANIMATORE_REGISTRATO_ID = GENERIC_ANIMATORE_FIND + " where re.id = ? order by an.cognome, an.nome;";
+    private static final String COUNT_SETTIMANALE = "select pa.Calendario_idSettimana, count(*) from presenzaAn pa group by pa.Calendario_idSettimana;";
     // </editor-fold>
 
     @Override
@@ -221,21 +222,34 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Animatore> la = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             la.add(this.mapRowToAnimatore(rs));
         }
         return la;
     }
-    
-    public Animatore mapRowToAnimatore (ResultSet rs) throws SQLException{
+
+    @Override
+    public List<Integer[]> countSettimanale() throws SQLException {
+        Connection con = DAOMan.getConnection();
+        PreparedStatement pst = con.prepareStatement(COUNT_SETTIMANALE);
+        ResultSet rs = pst.executeQuery();
+        LinkedList<Integer[]> count = new LinkedList<>();
+        while (rs.next()) {
+            Integer[] i = {rs.getInt(1), rs.getInt(2)};
+            count.add(i);
+        }
+        return count;
+    }
+
+    public Animatore mapRowToAnimatore(ResultSet rs) throws SQLException {
         return new Animatore(
-                rs.getInt("anid"), 
+                rs.getInt("anid"),
                 rs.getString("annome"),
                 rs.getString("ancognome"),
                 rs.getDate("andataNascita"),
                 rs.getString("anpresenza"),
                 new Laboratorio(
-                    rs.getInt("laid"), 
+                        rs.getInt("laid"),
                     rs.getString("ladescrizione"),
                     rs.getBoolean("lariservato")
                 ),

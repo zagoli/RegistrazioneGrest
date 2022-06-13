@@ -5,6 +5,7 @@ import Domain.PagamentoTerzamedia;
 import Domain.Terzamedia;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Checker;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +47,7 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
                 float quota = Float.parseFloat(request.getParameter("quota").replace(',', '.'));
                 int idTerzamedia = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
-                DAOMan.pagamentoTerzamediaDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")),quota,idTerzamedia,idUt);
+                DAOMan.pagamentoTerzamediaDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")), quota, idTerzamedia, idUt);
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));
@@ -64,10 +65,11 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
     }
 
     protected static float calcolaQuota(Terzamedia t) throws SQLException {
-        int[] quota = {40, 70, 95, 120};
-        int nSettimane = DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size();
-        /*return quota[nSettimane - 1];*/
-        return 0;
+        final int[] quota = {60, 90, 120, 140};
+        final int supplementoFuoriComune = 15;
+        final int nSettimane = DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size();
+        return quota[nSettimane - 1] +
+                nSettimane * (Checker.checkIsFromPescantina(t.getRegistrato().getLocalita()) ? 0 : supplementoFuoriComune);
     }
 
 }

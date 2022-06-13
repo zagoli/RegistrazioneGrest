@@ -36,7 +36,7 @@
                     <td data-sort="${ani.dataNascita?string.iso}">${ani.dataNascita?string["dd/MM/yyyy"]}</td>
                     <td>${ani.codiceFiscale}</td>
                     <td>${ani.registrato.via?capitalize+" "+ani.registrato.civico+" "+ani.registrato.localita?capitalize}</td>
-                    <td>${ani.parrocchia.nome+" - "+ani.parrocchia.luogo}</td>
+                    <td title="${ani.parrocchia.nome}">${ani.parrocchia.luogo}</td>
                     <td>${ani.cellulare}</td>
                     <td>${ani.mail}</td>
                     <td <#if ani.responsabileLaboratorio>class="mark"</#if>>${ani.laboratorio.descrizione}</td>

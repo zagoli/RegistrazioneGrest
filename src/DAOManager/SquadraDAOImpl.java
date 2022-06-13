@@ -16,7 +16,7 @@ public class SquadraDAOImpl implements SquadraDAO {
 
     private static final String FIND_BY_ID = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s where s.id = ?;";
     private static final String FIND_BY_NOME = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s where s.nome = ?";
-    private static final String FIND_ALL = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s";
+    private static final String FIND_ALL = "select s.id as sid, s.nome as snome, s.colore as scolore from Squadra s order by s.nome";
 
     @Override
     public Squadra findById(int id) throws SQLException {

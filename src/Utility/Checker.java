@@ -30,7 +30,7 @@ public class Checker {
             if (responsedata.getBoolean("formatCheck")
                     && responsedata.getString("emailAddress").equals(mail)
                     && responsedata.getBoolean("dnsCheck")
-                    && responsedata.getBoolean("smtpCheck")
+                    // && responsedata.getBoolean("smtpCheck")
                     && !responsedata.getBoolean("disposableCheck")) {
                 return true;
             }
@@ -130,13 +130,10 @@ public class Checker {
         return flag;
     }
 
-    public static boolean checkIsFromPescantina(Ragazzo r) {
-        boolean flag;
-        String loc = r.getRegistrato().getLocalita();
+    public static boolean checkIsFromPescantina(String localita) {
         String[] dintorni = {"pescantina", "settimo", "balconi", "ospedaletto", "arce", "arcè", "arcé", "santa lucia"};
-        loc = loc.trim().toLowerCase();
-        flag = Arrays.stream(dintorni).parallel().anyMatch(loc::contains);
-        return flag;
+        localita = localita.trim().toLowerCase();
+        return Arrays.stream(dintorni).parallel().anyMatch(localita::contains);
     }
 
 }
