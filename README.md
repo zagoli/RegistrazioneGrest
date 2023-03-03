@@ -1,4 +1,3 @@
 # RegistrazioneGrest
-piattaforma registrazione e gestione grest
+Management software for summer groups
 Tesina maturità 2018
-usato da parrocchia balconi
