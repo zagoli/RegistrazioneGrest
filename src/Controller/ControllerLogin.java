@@ -25,6 +25,12 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class ControllerLogin implements ControllerInterface {
 
+    public static final String MITTENTE = "assistenzatecnica@parrocchiadibalconi.it";
+    public static final String PASSWORD_MAIL = "H29qWV6pDf7#uv";
+    public static final String INDIRIZZO_MAIL_SERVER = "ssl0.ovh.net";
+    public static final String PORTA_MAIL_SERVER = "465";
+    public static final String CONNECTION_TIMEOUT_MAIL_SERVER = "2000";
+
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
@@ -93,24 +99,23 @@ public class ControllerLogin implements ControllerInterface {
 
 
     private static void sendResetPasswordEmail(String destinatario, String newpswd) throws MessagingException {
-        String mittente = "assistenzatecnica@parrocchiadibalconi.it";
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", "ssl0.ovh.net");
-        properties.put("mail.smtp.socketFactory.port", "465");
+        properties.put("mail.smtp.host", INDIRIZZO_MAIL_SERVER);
+        properties.put("mail.smtp.socketFactory.port", PORTA_MAIL_SERVER);
         properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.connectiontimeout", "2000");
-        properties.put("mail.smtp.timeout", "2000");
+        properties.put("mail.smtp.port", PORTA_MAIL_SERVER);
+        properties.put("mail.smtp.connectiontimeout", CONNECTION_TIMEOUT_MAIL_SERVER);
+        properties.put("mail.smtp.timeout", CONNECTION_TIMEOUT_MAIL_SERVER);
         Session session = Session.getDefaultInstance(properties,
                 new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(mittente, "grest2018");
+                return new PasswordAuthentication(MITTENTE, PASSWORD_MAIL);
             }
         });
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(mittente));
+        message.setFrom(new InternetAddress(MITTENTE));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
         message.setSubject("Reset password Grest di Balconi");
         message.setContent(
