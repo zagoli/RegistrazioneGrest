@@ -37,6 +37,9 @@ public class DAOMan {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conn = DriverManager.getConnection(urlEnrico);
+            if (conn == null) {
+                throw new RuntimeException("La connessione con il database non è riuscita.");
+            }
         } catch (NullPointerException | SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DAOMan.class.getName()).log(Level.SEVERE, null, ex);
         }
