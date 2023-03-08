@@ -7,11 +7,11 @@
           <element id="module-output" name="RegistrazioneGrest" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="javax.mail" />
           <element id="library" level="project" name="apache.commons.lang3" />
           <element id="library" level="project" name="mashape.unirest.java" />
           <element id="library" level="project" name="freemarker" />
           <element id="library" level="project" name="microsoft.sqlserver.mssql.jdbc" />
+          <element id="library" level="project" name="sun.mail.javax" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="RegistrazioneGrest/web/Web" />

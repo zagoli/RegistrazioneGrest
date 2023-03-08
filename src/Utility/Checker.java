@@ -1,6 +1,6 @@
 package Utility;
 
-import Controller.ControllerLogin;
+import Controller.ControllerLoginEPasswordReset;
 import DAOManager.DAOMan;
 import Domain.*;
 import com.mashape.unirest.http.HttpResponse;
@@ -49,7 +49,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
         }
         return flag;
     }
@@ -65,7 +65,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
         }
         return flag;
     }
@@ -85,7 +85,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
         }
         return flag;
     }
@@ -105,7 +105,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
         }
         return flag;
     }
@@ -125,7 +125,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
         }
         return flag;
     }

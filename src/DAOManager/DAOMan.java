@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DAOMan {
-    
+
     public static final AccompagnatoreDAO accompagnatoreDAO = new AccompagnatoreDAOImpl();
     public static final AnimatoreDAO animatoreDAO = new AnimatoreDAOImpl();
     public static final AttivitaGenDAO attivitaGenDAO = new AttivitaGenDAOImpl();
@@ -28,26 +28,21 @@ public class DAOMan {
     public static final PagamentoTerzamediaDAO pagamentoTerzamediaDAO = new PagamentoTerzamediaDAOImpl();
     public static final CodiceSbloccoIscrizioneDAO codiceSbloccoIscrizioneDAO = new CodiceSbloccoIscrizioneDAOImpl();
     public static final SquadraDAO squadraDAO = new SquadraDAOImpl();
-    
-    private static Connection initConnSqlServer() {
-        //PRIMA DI DARE AD ENRICO: METTERE QUA URL ENRICO E NEL DISPATCHER COME GESTIONE ERRORI RETHROW_HANDLER
-        Connection conn = null;
-        final String urlEnrico =  "jdbc:sqlserver://localhost:1433;database=GrestDb;user=AppGrest;password=pf2hjdcYiX5F+5LZ9Q1wlIKTSKCbYxhtrJ/LREPXp7A=;loginTimeout=30;";
-        final String urlAzure = "jdbc:sqlserver://serverdbgrest.database.windows.net:1433;database=GrestDb;user=AppGrest@serverdbgrest;password={afuio(573ehop89*°#,cfe9x)(/G()};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(urlEnrico);
-            if (conn == null) {
-                throw new RuntimeException("La connessione con il database non è riuscita.");
-            }
-        } catch (NullPointerException | SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(DAOMan.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return conn;
-    }
+    public static final String URL_ENRICO = "jdbc:sqlserver://172.16.0.10:1433;database=GrestDb;user=AppGrest;password=pf2hjdcYiX5F+5LZ9Q1wlIKTSKCbYxhtrJ/LREPXp7A=;loginTimeout=30;encrypt=false";
+    public static final String URL_AZURE = "jdbc:sqlserver://serverdbgrest.database.windows.net:1433;database=GrestDb;user=AppGrest@serverdbgrest;password={afuio(573ehop89*°#,cfe9x)(/G()};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
 
     public static Connection getConnection() {
-        return initConnSqlServer();
+        Connection connection = null;
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            connection = DriverManager.getConnection(URL_ENRICO);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            Logger.getLogger(DAOMan.class.getName()).log(Level.SEVERE, null, e);
+            throw new RuntimeException("Connessione al database non riuscita");
+        }
+        return connection;
     }
 
 }

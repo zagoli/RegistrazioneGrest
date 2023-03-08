@@ -63,7 +63,7 @@ public class Dispatcher extends HttpServlet {
         switch (servizio) {
             case "/Login":
             case "/":
-                c = new ControllerLogin();
+                c = new ControllerLoginEPasswordReset();
                 break;
             case "/RegistraUtente":
                 c = new ControllerRegistraUtente();
@@ -72,28 +72,28 @@ public class Dispatcher extends HttpServlet {
                 if (request.getSession().getAttribute("idUtente") != null) {
                     c = new ControllerRegistraRagazzo();
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/RegistraAnimatore":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     c = new ControllerRegistraAnimatore();
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/RegistraTerzamedia":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     c = new ControllerRegistraTerzamedia();
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/Dashboard":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     c = new ControllerDashboard();
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/AccompagnatoriContatti":
@@ -104,7 +104,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/EliminaRagazzo":
@@ -115,7 +115,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/EliminaTerzamedia":
@@ -126,7 +126,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/ModificaRagazzo":
@@ -137,7 +137,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/ModificaTerzamedia":
@@ -148,7 +148,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/EliminaAnimatore":
@@ -159,7 +159,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/ModificaAnimatore":
@@ -170,21 +170,21 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/ModificaPassword":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     c = new ControllerModificaPassword();
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/ModificaUtente":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     c = new ControllerModificaUtente();
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/InserisciAccompagnatore":
@@ -195,7 +195,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/ModificaAccompagnatore":
@@ -206,7 +206,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/EliminaAccompagnatore":
@@ -217,7 +217,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/InserisciCU":
@@ -228,7 +228,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/EliminaCU":
@@ -239,7 +239,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/ModificaCU":
@@ -250,7 +250,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/DashboardAttGen":
@@ -261,7 +261,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/RegistraAttGen":
@@ -272,7 +272,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/EliminaPrenotazioneAttGen":
@@ -283,7 +283,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/GestisciPagamenti":
@@ -294,7 +294,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/GestisciPagamentiTerzamedia":
@@ -305,7 +305,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/Squadre":
@@ -316,7 +316,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/Laboratori":
@@ -327,14 +327,14 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/InfoDettaglio":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     c = new ControllerInfoDettaglio();
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/VisualizzaIscritti":
@@ -345,7 +345,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/VisualizzaAttGen":
@@ -356,7 +356,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/GestisciSegretari":
@@ -367,7 +367,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/Statistiche":
@@ -378,7 +378,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/Stampa":
@@ -389,7 +389,7 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/StatoIscrizioni":
@@ -400,14 +400,14 @@ public class Dispatcher extends HttpServlet {
                         c = new Controller403();
                     }
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             case "/SbloccaIscrizioni":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     c = new ControllerCodice();
                 } else {
-                    c = new ControllerLogin();
+                    c = new ControllerLoginEPasswordReset();
                 }
                 break;
             default:

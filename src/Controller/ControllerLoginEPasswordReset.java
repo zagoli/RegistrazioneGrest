@@ -23,13 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 
-public class ControllerLogin implements ControllerInterface {
+public class ControllerLoginEPasswordReset implements ControllerInterface {
 
     public static final String MITTENTE = "assistenzatecnica@parrocchiadibalconi.it";
     public static final String PASSWORD_MAIL = "H29qWV6pDf7#uv";
     public static final String INDIRIZZO_MAIL_SERVER = "ssl0.ovh.net";
     public static final String PORTA_MAIL_SERVER = "465";
-    public static final String CONNECTION_TIMEOUT_MAIL_SERVER = "2000";
+    public static final String CONNECTION_TIMEOUT_MAIL_SERVER = "10000";
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -58,7 +58,7 @@ public class ControllerLogin implements ControllerInterface {
                     } catch (NullPointerException | SQLException | MessagingException ex) {
                         mv.setView("err/errore.html");
                         mv.addObject("eccezione", ex);
-                        Logger.getLogger(ControllerLogin.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -84,7 +84,7 @@ public class ControllerLogin implements ControllerInterface {
             } catch (NullPointerException | IOException | SQLException ex) {
                 mv.setView("err/errore.html");
                 mv.addObject("eccezione", ex);
-                Logger.getLogger(ControllerLogin.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return mv;
@@ -101,22 +101,15 @@ public class ControllerLogin implements ControllerInterface {
     private static void sendResetPasswordEmail(String destinatario, String newpswd) throws MessagingException {
         Properties properties = new Properties();
         properties.put("mail.smtp.host", INDIRIZZO_MAIL_SERVER);
-        properties.put("mail.smtp.socketFactory.port", PORTA_MAIL_SERVER);
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        properties.put("mail.smtp.ssl.enable", true);
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.port", PORTA_MAIL_SERVER);
         properties.put("mail.smtp.connectiontimeout", CONNECTION_TIMEOUT_MAIL_SERVER);
         properties.put("mail.smtp.timeout", CONNECTION_TIMEOUT_MAIL_SERVER);
-        Session session = Session.getDefaultInstance(properties,
-                new javax.mail.Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(MITTENTE, PASSWORD_MAIL);
-            }
-        });
+        Session session = Session.getInstance(properties);
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(MITTENTE));
-        message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+        message.setRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
         message.setSubject("Reset password Grest di Balconi");
         message.setContent(
                 // <editor-fold defaultstate="collapsed">
@@ -391,7 +384,7 @@ public class ControllerLogin implements ControllerInterface {
                 + "                    <div class=\"\">"
                 + "	<!--[if mso]><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td style=\"padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 25px;\"><![endif]-->"
                 + "	<div style=\"color:#71777D;line-height:120%;font-family:'Lato', Tahoma, Verdana, Segoe, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 25px;\">	"
-                + "		<div style=\"line-height:14px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;font-size:12px;color:#71777D;text-align:left;\"><p style=\"margin: 0;text-align: center;line-height: 17px;font-size: 14px\">La tua nuova password è:<b>" + newpswd + "</b></p></div>	"
+                + "		<div style=\"line-height:14px;font-family:Lato,Tahoma,Verdana,Segoe,sans-serif;font-size:12px;color:#71777D;text-align:left;\"><p style=\"margin: 0;text-align: center;line-height: 17px;font-size: 14px\">La tua nuova password è: <b>" + newpswd + "</b></p></div>	"
                 + "	</div>"
                 + "	<!--[if mso]></td></tr></table><![endif]-->"
                 + "</div>"
@@ -431,9 +424,8 @@ public class ControllerLogin implements ControllerInterface {
                 + "  </table>"
                 + "  <!--[if (mso)|(IE)]></div><![endif]-->"
                 + "</body></html>" // </editor-fold>
-                ,
-                 "text/html"
+                ,"text/html; charset=utf-8"
         );
-        Transport.send(message);
+        Transport.send(message, MITTENTE, PASSWORD_MAIL);
     }
 }
