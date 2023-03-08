@@ -17,7 +17,6 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -44,12 +43,10 @@ public class ControllerLogin implements ControllerInterface {
                         if (r == null) {
                             mv.addObject("UTENTENONTROVATO", true);
                         } else {
-                            char[] possibleCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$&*?").toCharArray();
-                            int lengthpasswd = ThreadLocalRandom.current().nextInt(12, 18 + 1);
-                            String newpswd = RandomStringUtils.random(lengthpasswd, 0, possibleCharacters.length - 1, false, false, possibleCharacters, new SecureRandom());
+                            String newpswd = getNewPswd();
                             r.setPassword(newpswd);
                             DAOMan.registratoDAO.updatePassword(r);
-                            this.sendResetPasswordEmail(r, newpswd);
+                            sendResetPasswordEmail(r.getMail(), newpswd);
                             mv.addObject("FATTO", true);
                         }
                     } catch (NullPointerException | SQLException | MessagingException ex) {
@@ -87,9 +84,15 @@ public class ControllerLogin implements ControllerInterface {
         return mv;
     }
 
+    private static String getNewPswd() {
+        char[] possibleCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$&*?").toCharArray();
+        int lengthpasswd = ThreadLocalRandom.current().nextInt(12, 18 + 1);
+        String newpswd = RandomStringUtils.random(lengthpasswd, 0, possibleCharacters.length - 1, false, false, possibleCharacters, new SecureRandom());
+        return newpswd;
+    }
 
-    private void sendResetPasswordEmail(Registrato r, String newpswd) throws MessagingException {
-        String destinatario = r.getMail();
+
+    private static void sendResetPasswordEmail(String destinatario, String newpswd) throws MessagingException {
         String mittente = "assistenzatecnica@parrocchiadibalconi.it";
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "ssl0.ovh.net");
