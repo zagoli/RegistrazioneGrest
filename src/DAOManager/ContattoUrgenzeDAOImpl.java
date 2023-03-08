@@ -15,9 +15,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
     private static final String UPDATE_CU = "update Contatto_Urgenze set fisso = ?, cellulare = ?, nome = ?, cognome = ?, relazione = ?, idRegistrato = ? where id = ?;";
     private static final String DELETE_CU = "delete from Contatto_Urgenze where id = ?;";
     private static final String FIND_CU_ID = "select cu.id as cuid, cu.fisso as cufisso, cu.cellulare as cucellulare, cu.nome as cunome, cu.cognome as cucognome, cu.relazione as curelazione, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Contatto_Urgenze cu join Registrato re on (cu.idRegistrato=re.id) where cu.id = ?;";
-    private static final String FIND_ALL_CU = "select cu.id as cuid, cu.fisso as cufisso, cu.cellulare as cucellulare, cu.nome as cunome, cu.cognome as cucognome, cu.relazione as curelazione, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Contatto_Urgenze cu join Registrato re on (cu.idRegistrato=re.id);";
     private static final String FIND_CU_REGISTRATO_ID = "select cu.id as cuid, cu.fisso as cufisso, cu.cellulare as cucellulare, cu.nome as cunome, cu.cognome as cucognome, cu.relazione as curelazione, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Contatto_Urgenze cu join Registrato re on (cu.idRegistrato=re.id) where re.id = ?;";
-    private static final String COUNT_CU = "select count(*) from Contatto_Urgenze;";
 
     @Override
     public void insert(ContattoUrgenze cu) throws SQLException {
@@ -31,6 +29,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
         pst.setString(5, cu.getRelazione());
         pst.setInt(6, cu.getRegistrato().getId());
         pst.executeUpdate();
+        conn.close();
     }
 
     @Override
@@ -46,6 +45,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
         pst.setInt(6, cu.getRegistrato().getId());
         pst.setInt(7, cu.getId());
         pst.executeUpdate();
+        conn.close();
     }
 
     @Override
@@ -55,6 +55,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
         PreparedStatement pst = conn.prepareStatement(DELETE_CU);
         pst.setInt(1, idCu);
         pst.executeUpdate();
+        conn.close();
     }
 
     @Override
@@ -64,20 +65,9 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
         PreparedStatement pst = conn.prepareStatement(FIND_CU_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        return rs.next() ? this.mapRowToContattoUrgenze(rs) : null;
-    }
-
-    @Override
-    public List<ContattoUrgenze> findAll() throws SQLException {
-        Connection conn;
-        conn = DAOMan.getConnection();
-        PreparedStatement pst = conn.prepareStatement(FIND_ALL_CU);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<ContattoUrgenze> lcu = new LinkedList<>();
-        while (rs.next()){
-            lcu.add(this.mapRowToContattoUrgenze(rs));
-        }
-        return lcu;
+        ContattoUrgenze res = rs.next() ? this.mapRowToContattoUrgenze(rs) : null;
+        conn.close();
+        return res;
     }
 
     @Override
@@ -91,19 +81,10 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
         while (rs.next()){
             lcu.add(this.mapRowToContattoUrgenze(rs));
         }
+        conn.close();
         return lcu;
     }
 
-    @Override
-    public int count() throws SQLException {
-        Connection conn;
-        conn = DAOMan.getConnection();
-        PreparedStatement pst = conn.prepareStatement(COUNT_CU);
-        ResultSet rs = pst.executeQuery();
-        rs.next();
-        return rs.getInt(1);
-    }
-    
     public ContattoUrgenze mapRowToContattoUrgenze(ResultSet rs) throws SQLException{
         return new ContattoUrgenze(
                 rs.getInt("cuid"),

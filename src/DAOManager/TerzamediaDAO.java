@@ -19,11 +19,6 @@ public interface TerzamediaDAO {
     //SELECT
     List<Terzamedia> findAll() throws SQLException;
     int count() throws SQLException;
-    List<Integer[]> countSettimanale() throws SQLException;
-    List<Terzamedia> findByLabId(int id) throws SQLException;
-    List<Terzamedia> findByScuolaId(int id) throws SQLException;
-    List<Terzamedia> findByParrocchiaId(int id) throws SQLException;
-    List<Terzamedia> findByCircoloId(int id) throws SQLException;
-    List<Terzamedia> findByCalendarioId(int id) throws SQLException;
+
     List<Terzamedia> findByRegistratoId(int id) throws SQLException;
 }

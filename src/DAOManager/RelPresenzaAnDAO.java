@@ -9,5 +9,4 @@ public interface RelPresenzaAnDAO {
     void insert(RelPresenzaAn rpa) throws SQLException;
     void delete(RelPresenzaAn rpa) throws SQLException;
     List<RelPresenzaAn> findByAnimatoreId(int id) throws SQLException;
-    List<RelPresenzaAn> findByCalendarioId(int id) throws SQLException;
 }

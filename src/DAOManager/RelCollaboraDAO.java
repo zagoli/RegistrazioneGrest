@@ -10,6 +10,6 @@ public interface RelCollaboraDAO {
     void delete(RelCollabora rc) throws SQLException;
     RelCollabora findById(int id) throws SQLException;
     List<RelCollabora> findByRegistratoId(int id) throws SQLException;
-    List<RelCollabora> findByAttGenId(int id) throws SQLException;
+
     List<RelCollabora> findAll() throws SQLException;
 }

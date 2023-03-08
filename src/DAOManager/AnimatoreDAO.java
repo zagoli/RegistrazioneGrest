@@ -19,10 +19,7 @@ public interface AnimatoreDAO {
     //SELECT
     List<Animatore> findAll() throws SQLException;
     int count() throws SQLException;
-    Animatore findByNominativo(String nome, String cognome) throws SQLException;
-    List<Animatore> findByLab(int id) throws SQLException;
-    List<Animatore> findByParrocchiaId(int id) throws SQLException;
-    List<Animatore> findByCircoloId(int id) throws SQLException;
+
     List<Animatore> findByCalendarioId(int id) throws SQLException;
     List<Animatore> findByRegistratoId(int id) throws SQLException;
 

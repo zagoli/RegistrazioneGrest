@@ -10,8 +10,6 @@ public interface ContattoUrgenzeDAO {
     void update(ContattoUrgenze cu) throws SQLException;
     void delete(Integer idCu) throws SQLException;
     ContattoUrgenze findById(int id) throws SQLException;
-    //SELECT
-    List<ContattoUrgenze> findAll() throws SQLException;
+
     List<ContattoUrgenze> findByRegistratoId(int id) throws SQLException;
-    int count() throws SQLException;
 }

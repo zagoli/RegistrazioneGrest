@@ -13,7 +13,6 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
     private static final String INSERT_RELCOLLABORA = "insert into collabora (Registrato_id,Attivita_gen_id,data) values (?,?,?);";
     private static final String DELETE_RELCOLLABORA = "delete from collabora where id = ?;";
     private static final String FIND_RELCOLLABORA_REGISTRATO_ID = "select * from collabora where Registrato_id = ?;";
-    private static final String FIND_RELCOLLABORA_ATTGEN_ID = "select * from collabora where Attivita_Gen_id = ?;";
     private static final String FIND_RELCOLLABORA_ID = "select * from collabora where id = ?;";
     private static final String FIND_ALL_RELCOLLABORA = "select * from collabora order by Attivita_Gen_id;";
 
@@ -25,6 +24,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
         pst.setInt(2, rc.getAttivitaGenId());
         pst.setString(3, rc.getData());
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -33,6 +33,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
         PreparedStatement pst = con.prepareStatement(DELETE_RELCOLLABORA);
         pst.setInt(1, rc.getId());
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -45,29 +46,19 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
         while (rs.next()) {
             lrc.add(this.mapRowToRelCollabora(rs));
         }
+        con.close();
         return lrc;
     }
 
-    @Override
-    public List<RelCollabora> findByAttGenId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_ATTGEN_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<RelCollabora> lrc = new LinkedList<>();
-        while (rs.next()) {
-            lrc.add(this.mapRowToRelCollabora(rs));
-        }
-        return lrc;
-    }
-    
     @Override
     public RelCollabora findById(int id) throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        return rs.next()? this.mapRowToRelCollabora(rs) : null;
+        RelCollabora res = rs.next()? this.mapRowToRelCollabora(rs) : null;
+        con.close();
+        return res;
     }
     
     @Override
@@ -79,6 +70,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
         while (rs.next()) {
             lrc.add(this.mapRowToRelCollabora(rs));
         }
+        con.close();
         return lrc;
     }
     

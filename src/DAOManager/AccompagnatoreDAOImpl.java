@@ -13,9 +13,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
     private static final String UPDATE_ACCOMPAGNATORE = "update Accompagnatore set nome = ?, cognome = ?, idRegistrato = ? where id = ?;";
     private static final String DELETE_ACCOMPAGNATORE = "delete from Accompagnatore where id = ?;";
     private static final String FIND_ACCOMPAGNATORE_ID = "select a.id as aid, a.nome as anome, a.cognome as acognome, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Accompagnatore a join Registrato re on (a.idRegistrato=re.id) where a.id = ?;";
-    private static final String FIND_ALL_ACCOMPAGNATORE = "select a.id as aid, a.nome as anome, a.cognome as acognome, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Accompagnatore a join Registrato re on (a.idRegistrato=re.id);";
     private static final String FIND_ACCOMPAGNATORE_REGISTRATO_ID = "select a.id as aid, a.nome as anome, a.cognome as acognome, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Accompagnatore a join Registrato re on (a.idRegistrato=re.id) where re.id = ?";
-    private static final String COUNT_ACCOMPAGNATORE = "select count(*) from Accompagnatore;";
 
     @Override
     public void insert(Accompagnatore a) throws SQLException {
@@ -29,6 +27,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
         if (rs.next()) {
             a.setId(rs.getInt(1));
         }
+        con.close();
     }
 
     @Override
@@ -40,6 +39,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
         pst.setInt(3, a.getRegistrato().getId());
         pst.setInt(4, a.getId());
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -48,6 +48,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
         PreparedStatement pst = con.prepareStatement(DELETE_ACCOMPAGNATORE);
         pst.setInt(1, idAccompagnatore);
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -56,19 +57,9 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        return rs.next() ? this.mapRowToAccompagnatore(rs) : null;
-    }
-
-    @Override
-    public List<Accompagnatore> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_ACCOMPAGNATORE);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Accompagnatore> la = new LinkedList<>();
-        while (rs.next()) {
-            la.add(this.mapRowToAccompagnatore(rs));
-        }
-        return la;
+        Accompagnatore res = rs.next() ? this.mapRowToAccompagnatore(rs) : null;
+        con.close();
+        return res;
     }
 
     @Override
@@ -81,16 +72,8 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
         while (rs.next()) {
             la.add(this.mapRowToAccompagnatore(rs));
         }
+        con.close();
         return la;
-    }
-
-    @Override
-    public int count() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(COUNT_ACCOMPAGNATORE);
-        ResultSet rs = pst.executeQuery();
-        rs.next();
-        return rs.getInt(1);
     }
 
     public Accompagnatore mapRowToAccompagnatore(ResultSet rs) throws SQLException {

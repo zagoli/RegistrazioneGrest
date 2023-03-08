@@ -16,14 +16,9 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     private static final String DELETE_REGISTRATO = "delete from Registrato where id = ?;";
     private static final String FIND_REGISTRATO_ID = "select * from Registrato where id = ?;";
     private static final String FIND_ALL_REGISTRATO = "select * from Registrato;";
-    private static final String COUNT_REGISTRATO = "select count(*) from Registrato;";
     private static final String COUNT_USERS = "select count(*) from Registrato where tipoUt = 3;";
     private static final String FIND_REGISTRATO_MAIL = "select * from Registrato where mail = ?;";
     private static final String FIND_REGISTRATO_NOMINATIVO = "select * from Registrato where nome = ? and cognome = ?;";
-    private static final String FIND_ALL_USERS = "select * from Registrato where tipoUt = 3;";
-    private static final String FIND_REGISTRATO_ACCOMPAGNATORE_ID = "select * from Registrato r join acc_ut ac on (r.id = ac.Registrato_id) where ac.Accompagnatore_id = ?;";
-    private static final String FIND_REGISTRATO_CU_ID = "select * from Registrato r join urg_ut ur on (r.id = ur.Registrato_id) where ur.Contatto_Urgenze_id = ?;";
-    private static final String FIND_REGISTRATO_ATTGEN_ID = "select * from Registrato r join collabora co on (r.id = co.Registrato_id) where co.Attivita_Gen_id = ?;";
 
     @Override
     public void insert(Registrato r) throws SQLException {
@@ -39,6 +34,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         pst.setString(8, r.getCivico());
         pst.setInt(9, r.getTipoUt());
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -55,6 +51,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         pst.setInt(8, r.getTipoUt());
         pst.setInt(9, r.getId());
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -63,6 +60,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         PreparedStatement pst = con.prepareStatement(DELETE_REGISTRATO);
         pst.setInt(1, idRegistrato);
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -71,7 +69,9 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        return rs.next() ? this.mapRowToRegistrato(rs) : null;
+        Registrato res = rs.next() ? this.mapRowToRegistrato(rs) : null;
+        con.close();
+        return res;
     }
 
     @Override
@@ -83,25 +83,19 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         while (rs.next()){
             lr.add(this.mapRowToRegistrato(rs));
         }
+        con.close();
         return lr;
     }
 
-    @Override
-    public int count() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(COUNT_REGISTRATO);
-        ResultSet rs = pst.executeQuery();
-        rs.next();
-        return rs.getInt(1);
-    }
-    
     @Override
     public int countUsers() throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_USERS);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        return rs.getInt(1);
+        int res = rs.getInt(1);
+        con.close();
+        return res;
     }
 
     @Override
@@ -110,7 +104,9 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_MAIL);
         pst.setString(1, mail);
         ResultSet rs = pst.executeQuery();
-        return rs.next() ? this.mapRowToRegistrato(rs) : null;
+        Registrato res = rs.next() ? this.mapRowToRegistrato(rs) : null;
+        con.close();
+        return res;
     }
 
     @Override
@@ -120,60 +116,11 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         pst.setString(1, nome);
         pst.setString(2, cognome);
         ResultSet rs = pst.executeQuery();
-        return rs.next() ? this.mapRowToRegistrato(rs) : null;
+        Registrato res = rs.next() ? this.mapRowToRegistrato(rs) : null;
+        con.close();
+        return res;
     }
 
-    @Override
-    public List<Registrato> findAllUsers() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_USERS);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Registrato> lr = new LinkedList<>();
-        while (rs.next()){
-            lr.add(this.mapRowToRegistrato(rs));
-        }
-        return lr;
-    }
-
-    @Override
-    public List<Registrato> findUsersByAccompagnatoreId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_ACCOMPAGNATORE_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Registrato> lr = new LinkedList<>();
-        while (rs.next()) {
-            lr.add(this.mapRowToRegistrato(rs));
-        }
-        return lr;
-    }
-
-    @Override
-    public List<Registrato> findUsersByContattoUrgenzeId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_CU_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Registrato> lr = new LinkedList<>();
-        while (rs.next()) {
-            lr.add(this.mapRowToRegistrato(rs));
-        }
-        return lr;
-    }
-
-    @Override
-    public List<Registrato> findUsersByAttGenId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_ATTGEN_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Registrato> lr = new LinkedList<>();
-        while (rs.next()) {
-            lr.add(this.mapRowToRegistrato(rs));
-        }
-        return lr;
-    }
-    
     @Override
     public void updatePassword(Registrato r) throws SQLException {
         Connection con = DAOMan.getConnection();
@@ -181,6 +128,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         pst.setString(1, r.getPassword());
         pst.setInt(2, r.getId());
         pst.executeUpdate();
+        con.close();
     }
     
     public Registrato mapRowToRegistrato (ResultSet rs) throws SQLException{

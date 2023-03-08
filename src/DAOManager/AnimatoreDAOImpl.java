@@ -33,10 +33,6 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
     private static final String FIND_ANIMATORE_ID = GENERIC_ANIMATORE_FIND + " where an.id = ?";
     private static final String FIND_ALL_ANIMATORE = GENERIC_ANIMATORE_FIND + " order by an.cognome, an.nome;";
     private static final String COUNT_ANIMATORE = "select count(*) from Animatore;";
-    private static final String FIND_ANIMATORE_NOMINATIVO = GENERIC_ANIMATORE_FIND + " where an.nome = ? and an.cognome = ? order by an.cognome, an.nome;";
-    private static final String FIND_ANIMATORE_LAB_ID = GENERIC_ANIMATORE_FIND + " where la.id = ? order by an.dataNascita, an.cognome, an.nome;";
-    private static final String FIND_ANIMATORE_PARROCCHIA_ID = GENERIC_ANIMATORE_FIND + " where pa.id = ? order by an.cognome, an.nome;";
-    private static final String FIND_ANIMATORE_CIRCOLO_ID = GENERIC_ANIMATORE_FIND + " where ci.id = ? order by an.cognome, an.nome;";
     private static final String FIND_ANIMATORE_CALENDARIO_ID = GENERIC_ANIMATORE_FIND + "  join presenzaAn pra on (an.id = pra.Animatore_id) where pra.Calendario_idSettimana = ? order by an.cognome, an.nome;";
     private static final String FIND_ANIMATORE_REGISTRATO_ID = GENERIC_ANIMATORE_FIND + " where re.id = ? order by an.cognome, an.nome;";
     private static final String COUNT_SETTIMANALE = "select pa.Calendario_idSettimana, count(*) from presenzaAn pa group by pa.Calendario_idSettimana;";
@@ -66,6 +62,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         if (rs.next()) {
             a.setId(rs.getInt(1));
         }
+        con.close();
     }
 
     @Override
@@ -89,6 +86,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         pst.setBoolean(15, a.isResponsabileLaboratorio());
         pst.setInt(16, a.getId());
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -103,6 +101,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         pst.setBoolean(2, responsabile);
         pst.setInt(3, id);
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -113,6 +112,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         pst.setBoolean(2, responsabile);
         pst.setInt(3, id);
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -121,6 +121,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         PreparedStatement pst = con.prepareStatement(DELETE_ANIMATORE);
         pst.setInt(1, idAnimatore);
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -129,7 +130,9 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        return rs.next() ? this.mapRowToAnimatore(rs) : null;
+        Animatore res = rs.next() ? this.mapRowToAnimatore(rs) : null;
+        con.close();
+        return res;
     }
 
     @Override
@@ -141,6 +144,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         while (rs.next()){
             la.add(this.mapRowToAnimatore(rs));
         }
+        con.close();
         return la;
     }
 
@@ -150,56 +154,9 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         PreparedStatement pst = con.prepareStatement(COUNT_ANIMATORE);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        return rs.getInt(1);
-    }
-
-    @Override
-    public Animatore findByNominativo(String nome, String cognome) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_NOMINATIVO);
-        pst.setString(1, nome);
-        pst.setString(2, cognome);
-        ResultSet rs = pst.executeQuery();
-        return rs.next() ? this.mapRowToAnimatore(rs) : null;
-    }
-
-    @Override
-    public List<Animatore> findByLab(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_LAB_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Animatore> la = new LinkedList<>();
-        while (rs.next()){
-            la.add(this.mapRowToAnimatore(rs));
-        }
-        return la;
-    }
-
-    @Override
-    public List<Animatore> findByParrocchiaId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_PARROCCHIA_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Animatore> la = new LinkedList<>();
-        while (rs.next()){
-            la.add(this.mapRowToAnimatore(rs));
-        }
-        return la;
-    }
-
-    @Override
-    public List<Animatore> findByCircoloId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_CIRCOLO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Animatore> la = new LinkedList<>();
-        while (rs.next()){
-            la.add(this.mapRowToAnimatore(rs));
-        }
-        return la;
+        int res = rs.getInt(1);
+        con.close();
+        return res;
     }
 
     @Override
@@ -212,6 +169,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         while (rs.next()){
             la.add(this.mapRowToAnimatore(rs));
         }
+        con.close();
         return la;
     }
     
@@ -225,6 +183,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         while (rs.next()) {
             la.add(this.mapRowToAnimatore(rs));
         }
+        con.close();
         return la;
     }
 
@@ -238,6 +197,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
             Integer[] i = {rs.getInt(1), rs.getInt(2)};
             count.add(i);
         }
+        con.close();
         return count;
     }
 

@@ -25,6 +25,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         pst.setString(1, p.getNome());
         pst.setString(2, p.getLuogo());
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -35,6 +36,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         pst.setString(2, p.getLuogo());
         pst.setInt(3, p.getId());
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -43,6 +45,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         PreparedStatement pst = con.prepareStatement(DELETE_PARROCCHIA);
         pst.setInt(1, idParrocchia);
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -51,7 +54,9 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        return rs.next() ? this.mapRowToParrocchia(rs) : null;
+        Parrocchia res = rs.next() ? this.mapRowToParrocchia(rs) : null;
+        con.close();
+        return res;
     }
 
     @Override
@@ -63,6 +68,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         while(rs.next()){
             lp.add(this.mapRowToParrocchia(rs));
         }
+        con.close();
         return lp;
     }
 
@@ -85,7 +91,9 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         PreparedStatement pst = con.prepareStatement(COUNT_PARROCCHIA);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        return rs.getInt(1);
+        int res = rs.getInt(1);
+        con.close();
+        return res;
     }
     
     public Parrocchia mapRowToParrocchia(ResultSet rs) throws SQLException {

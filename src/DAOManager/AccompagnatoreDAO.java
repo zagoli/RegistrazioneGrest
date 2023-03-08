@@ -10,8 +10,6 @@ public interface AccompagnatoreDAO {
     void update(Accompagnatore a) throws SQLException;
     void delete(Integer idAccompagnatore) throws SQLException;
     Accompagnatore findById(int id) throws SQLException;
-    //SELECT
-    List<Accompagnatore> findAll() throws SQLException;
+
     List<Accompagnatore> findByRegistratoId(int id) throws SQLException;
-    int count() throws SQLException;
 }

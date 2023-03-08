@@ -34,14 +34,8 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
                     """;
     private static final String FIND_TERZAMEDIA_ID = GENERIC_TERZAMEDIA_FIND + " where ter.id = ?;";
     private static final String FIND_ALL_TERZAMEDIA = GENERIC_TERZAMEDIA_FIND + " order by ter.cognome, ter.nome;";
-    private static final String FIND_TERZAMEDIA_LAB_ID = GENERIC_TERZAMEDIA_FIND + " where la.id = ? order by ter.cognome, ter.nome;";
-    private static final String FIND_TERZAMEDIA_SCUOLA_ID = GENERIC_TERZAMEDIA_FIND + " where sc.id = ? order by ter.cognome, ter.nome;";
-    private static final String FIND_TERZAMEDIA_PARROCCHIA_ID = GENERIC_TERZAMEDIA_FIND + " where pa.id = ? order by ter.cognome, ter.nome;";
-    private static final String FIND_TERZAMEDIA_CIRCOLO_ID = GENERIC_TERZAMEDIA_FIND + " where ci.id = ? order by ter.cognome, ter.nome;";
-    private static final String FIND_TERZAMEDIA_CAL_ID = GENERIC_TERZAMEDIA_FIND + " join presenzaTer pt on (ter.id = pt.Terzamedia_id) where pt.Calendario_idSettimana = ? order by ter.cognome, ter.nome;";
     private static final String FIND_TERZAMEDIA_REGISTRATO_ID = GENERIC_TERZAMEDIA_FIND + " where re.id = ? order by ter.cognome, ter.nome;";
     private static final String COUNT_TERZAMEDIA = "select count(*) from Terzamedia;";
-    private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from presenzaTer pr group by pr.Calendario_idSettimana;";
     // </editor-fold>
 
     @Override
@@ -95,6 +89,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         pst.setString(17, t.getMail());
         pst.setInt(18, t.getId());
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -108,6 +103,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         }
         pst.setInt(2, id);
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -117,6 +113,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         pst.setInt(1, idLaboratorio);
         pst.setInt(2, id);
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -125,6 +122,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(DELETE_TERZAMEDIA);
         pst.setInt(1, idTerzamedia);
         pst.executeUpdate();
+        con.close();
     }
 
     @Override
@@ -133,7 +131,9 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        return rs.next() ? this.mapRowToTerzamedia(rs) : null;
+        Terzamedia res =  rs.next() ? this.mapRowToTerzamedia(rs) : null;
+        con.close();
+        return res;
     }
 
     @Override
@@ -145,6 +145,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         while (rs.next()) {
             lt.add(this.mapRowToTerzamedia(rs));
         }
+        con.close();
         return lt;
     }
 
@@ -154,72 +155,9 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(COUNT_TERZAMEDIA);
         ResultSet rs = pst.executeQuery();
         rs.next();
-        return rs.getInt(1);
-    }
-
-    @Override
-    public List<Terzamedia> findByLabId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_LAB_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lt = new LinkedList<>();
-        while (rs.next()) {
-            lt.add(this.mapRowToTerzamedia(rs));
-        }
-        return lt;
-    }
-
-    @Override
-    public List<Terzamedia> findByScuolaId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_SCUOLA_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lt = new LinkedList<>();
-        while (rs.next()) {
-            lt.add(this.mapRowToTerzamedia(rs));
-        }
-        return lt;
-    }
-
-    @Override
-    public List<Terzamedia> findByParrocchiaId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_PARROCCHIA_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lt = new LinkedList<>();
-        while (rs.next()) {
-            lt.add(this.mapRowToTerzamedia(rs));
-        }
-        return lt;
-    }
-
-    @Override
-    public List<Terzamedia> findByCircoloId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_CIRCOLO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lt = new LinkedList<>();
-        while (rs.next()) {
-            lt.add(this.mapRowToTerzamedia(rs));
-        }
-        return lt;
-    }
-
-    @Override
-    public List<Terzamedia> findByCalendarioId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_CAL_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lt = new LinkedList<>();
-        while (rs.next()) {
-            lt.add(this.mapRowToTerzamedia(rs));
-        }
-        return lt;
+        int res = rs.getInt(1);
+        con.close();
+        return res;
     }
 
     @Override
@@ -232,20 +170,8 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         while (rs.next()) {
             lt.add(this.mapRowToTerzamedia(rs));
         }
+        con.close();
         return lt;
-    }
-
-    @Override
-    public List<Integer[]> countSettimanale() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(COUNT_SETTIMANALE);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Integer[]> count = new LinkedList<>();
-        while (rs.next()) {
-            Integer[] i = {rs.getInt(1), rs.getInt(2)};
-            count.add(i);
-        }
-        return count;
     }
 
     public Terzamedia mapRowToTerzamedia(ResultSet rs) throws SQLException {

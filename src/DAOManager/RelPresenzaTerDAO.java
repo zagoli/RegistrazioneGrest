@@ -9,5 +9,4 @@ public interface RelPresenzaTerDAO {
     void insert(RelPresenzaTer rpr) throws SQLException;
     void delete(RelPresenzaTer rpr) throws SQLException;
     List<RelPresenzaTer> findByTerzamediaId(int id) throws SQLException;
-    List<RelPresenzaTer> findByCalendarioId(int id) throws SQLException;
 }
