@@ -29,23 +29,25 @@ public class ControllerDashboard implements ControllerInterface {
                 mv.setView("user/dashboardutente.html");
                 try {
                     int idUtente = (int) request.getSession().getAttribute("idUtente");
+
                     List<Ragazzo> listRagazzo = DAOMan.ragazzoDAO.findByRegistratoId(idUtente);
-                    Map<Ragazzo, Boolean> mapRagazzoPagato = new HashMap<>();
                     if (!listRagazzo.isEmpty()) {
+                        Map<Ragazzo, Boolean> mapRagazzoPagato = new HashMap<>();
                         for (Ragazzo ragazzo : listRagazzo) {
                             Pagamento p = DAOMan.pagamentoDAO.findByRagazzoId(ragazzo.getId());
                             mapRagazzoPagato.put(ragazzo, p != null);
                         }
                         mv.addObject("ragazzi", mapRagazzoPagato);
                     }
+
                     List<Animatore> listAnimatore = DAOMan.animatoreDAO.findByRegistratoId(idUtente);
                     if (!listAnimatore.isEmpty()) {
                         mv.addObject("animatori", listAnimatore);
                     }
                     
                     List<Terzamedia> listTerzamedia = DAOMan.terzamediaDAO.findByRegistratoId(idUtente);
-                    Map<Terzamedia, Boolean> mapTerzamediaPagato = new HashMap<>();
                     if (!listTerzamedia.isEmpty()) {
+                        Map<Terzamedia, Boolean> mapTerzamediaPagato = new HashMap<>();
                         for (Terzamedia ter : listTerzamedia) {
                             PagamentoTerzamedia p = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(ter.getId());
                             mapTerzamediaPagato.put(ter, p != null);

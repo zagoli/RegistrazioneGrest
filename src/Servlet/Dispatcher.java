@@ -29,7 +29,7 @@ public class Dispatcher extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         ApplicationContext.getContext().put("DAO", new DAOMan());
-        Configuration cfg = new freemarker.template.Configuration();
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
         cfg.setServletContextForTemplateLoading(getServletContext(), "WEB-INF");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setEncoding(Locale.ITALY, "utf-8");
