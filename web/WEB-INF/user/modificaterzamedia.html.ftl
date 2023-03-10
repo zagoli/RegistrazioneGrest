@@ -8,7 +8,7 @@
                     </div>
                     <#if INVALIDMAIL??>
                         <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non &egrave; scritta correttamente o &egrave; una e-mail temporanea! Inserisci una mail valida</p>
+                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
                         </div>
                     </#if>
                     <form action="/RegistrazioneGrest/App/ModificaTerzamedia" method="POST" data-parsley-validate="">
@@ -98,7 +98,7 @@
                             <label for="nTessera"> Numero tessera Circolo Noi <b><script type="text/javascript">var theDate=new Date();document.write(theDate.getFullYear());</script></b></label>
                             <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control" data-parsley-length="[11, 11]" aria-describedby="helpNTessera" <#if terzamedia.nTessera??>value="${terzamedia.nTessera}"</#if>/>
                             <small id="helpNTessera" class="form-text text-muted">
-                                Inserire il numero di tessera del Circolo Noi se non si &egrave; iscritti al Circolo Noi di Balconi.
+                                Inserire il numero di tessera del Circolo Noi se non si è iscritti al Circolo Noi di Balconi.
                             </small>
                         </div>
 

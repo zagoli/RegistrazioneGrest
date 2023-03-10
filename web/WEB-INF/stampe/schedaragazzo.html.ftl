@@ -134,7 +134,7 @@
                 <strong>Entrata anticipata</strong>
             </div>
             <div class="col-sm">
-                <p><#if ragazzo.entrataAnticipata>S&igrave;<#else>No</#if></p>
+                <p><#if ragazzo.entrataAnticipata>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -142,7 +142,7 @@
                 <strong>Usufruisce della mensa</strong>
             </div>
             <div class="col-sm">
-                <p><#if ragazzo.mensa>S&igrave;<#else>No</#if></p>
+                <p><#if ragazzo.mensa>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -150,7 +150,7 @@
                 <strong>Sa nuotare</strong>
             </div>
             <div class="col-sm">
-                <p><#if ragazzo.saNuotare>S&igrave;<#else>No</#if></p>
+                <p><#if ragazzo.saNuotare>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -158,7 +158,7 @@
                 <strong>Ha un'altro fratello/sorella iscritto/a</strong>
             </div>
             <div class="col-sm">
-                <p><#if ragazzo.fratelloIscritto>S&igrave;<#else>No</#if></p>
+                <p><#if ragazzo.fratelloIscritto>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -170,7 +170,7 @@
             </div>
         </div>
         <hr>
-        <strong> Attivit&agrave; genitore </strong>
+        <strong> Attività genitore </strong>
         <#list attgen as attgen>
         <div class="row">
             <div class="col-sm">
@@ -184,7 +184,7 @@
             <input class="form-check-input" type="checkbox" id='priv'/>
             <label for='priv' class="form-check-label">
                 I sottoscritti genitori acconsentono alle dichiarazioni presentate in fase di
-                registrazione, e dichiarano altres&igrave; che le informazioni inserite in fase di registrazione sono
+                registrazione, e dichiarano altresì che le informazioni inserite in fase di registrazione sono
                 veritiere.
             </label>
         </div>

@@ -149,7 +149,7 @@
                 <strong>Entrata anticipata</strong>
             </div>
             <div class="col-sm">
-                <p><#if ragazzo.entrataAnticipata>S&igrave;<#else>No</#if></p>
+                <p><#if ragazzo.entrataAnticipata>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -157,7 +157,7 @@
                 <strong>Usufruisce della mensa</strong>
             </div>
             <div class="col-sm">
-                <p><#if ragazzo.mensa>S&igrave;<#else>No</#if></p>
+                <p><#if ragazzo.mensa>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -165,7 +165,7 @@
                 <strong>Sa nuotare</strong>
             </div>
             <div class="col-sm">
-                <p><#if ragazzo.saNuotare>S&igrave;<#else>No</#if></p>
+                <p><#if ragazzo.saNuotare>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -173,7 +173,7 @@
                 <strong>Ha un'altro fratello/sorella iscritto/a</strong>
             </div>
             <div class="col-sm">
-                <p><#if ragazzo.fratelloIscritto>S&igrave;<#else>No</#if></p>
+                <p><#if ragazzo.fratelloIscritto>Sì<#else>No</#if></p>
             </div>
         </div>
         <#if pagamento??>
@@ -326,7 +326,7 @@
                 </div>
             </div>
             <hr>
-            <strong> Attivit&agrave; genitore </strong>
+            <strong> Attività genitore </strong>
             <#list attgen as attgen>
             <div class="row">
                 <div class="col-sm">

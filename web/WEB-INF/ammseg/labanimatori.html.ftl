@@ -32,7 +32,7 @@
                                     <td align="center">
                                         <div class="checkbox">
                                             <label class="sr-only" for="${an.id}responsabileLaboratorio">Responsabile laboratorio</label>
-                                            <input id="${an.id}responsabileLaboratorio" name="${an.id}" type="checkbox" data-toggle="toggle" data-off="No" data-on="S&igrave;" <#if an.responsabileLaboratorio>checked</#if>>
+                                            <input id="${an.id}responsabileLaboratorio" name="${an.id}" type="checkbox" data-toggle="toggle" data-off="No" data-on="Sì" <#if an.responsabileLaboratorio>checked</#if>>
                                         </div>
                                     </td>
                                 </tr>

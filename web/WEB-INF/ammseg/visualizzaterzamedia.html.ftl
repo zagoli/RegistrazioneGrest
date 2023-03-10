@@ -11,7 +11,7 @@
                 <th scope="col">Nome</th>
                 <th scope="col">Nascita</th>
                 <th scope="col">Via</th>
-                <th scope="col">Localit&agrave;</th>
+                <th scope="col">Località</th>
                 <th scope="col">Parrocchia</th>
                 <th scope="col">Sezione</th>
                 <th scope="col">Scuola</th>

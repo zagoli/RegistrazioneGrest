@@ -93,7 +93,7 @@
                             <label for="nTessera"> Numero tessera Circolo Noi <b><script type="text/javascript">var theDate=new Date();document.write(theDate.getFullYear());</script></b></label>
                             <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control" data-parsley-length="[11, 11]" aria-describedby="helpNTessera" <#if ragazzo.nTessera??>value="${ragazzo.nTessera}"</#if>/>
                             <small id="helpNTessera" class="form-text text-muted">
-                                Inserire il numero di tessera del Circolo Noi se non si &egrave; iscritti al Circolo Noi di Balconi.
+                                Inserire il numero di tessera del Circolo Noi se non si è iscritti al Circolo Noi di Balconi.
                             </small>
                         </div>
 
@@ -152,7 +152,7 @@
 
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="fratelloIscritto" name="fratelloIscritto" <#if ragazzo.fratelloIscritto>checked</#if>>
-                            <label class="form-check-label" for="fratelloIscritto"> Ha gi&agrave; un fratello/sorella
+                            <label class="form-check-label" for="fratelloIscritto"> Ha già un fratello/sorella
                                 iscritto/a al grest? <b class="text-danger">Da selezionare solo dall'iscrizione del
                                     secondo ragazzo in poi!</b></label>
                         </div>

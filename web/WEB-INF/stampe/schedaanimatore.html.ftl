@@ -62,17 +62,15 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <strong>Preferenza fascia d'et&agrave; ragazzi</strong>
+                <strong>Preferenza fascia d'età ragazzi</strong>
             </div>
             <div class="col-sm">
                 <p>
-                    <#if animatore.fasciaEtaRagazzi == "PP1">
+                    <#if animatore.fasciaEtaRagazzi == "PIC">
                         Piccoli
-                    <#elseif animatore.fasciaEtaRagazzi == "M24">
-                        Medi
-                    <#elseif animatore.fasciaEtaRagazzi == "G52">
+                    <#elseif animatore.fasciaEtaRagazzi == "GRA">
                         Grandi
-                    <#elseif animatore.fasciaEtaRagazzi == "AA3">
+                    <#elseif animatore.fasciaEtaRagazzi == "TER">
                         3 Media
                     </#if>
                 </p>

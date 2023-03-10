@@ -19,7 +19,7 @@ public class ControllerDashboardAttGen implements ControllerInterface {
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Attivit&agrave; genitori");
+        mv.addObject("TITOLOPAGINA", "Attività genitori");
         mv.setView("user/dashboardattgen.html");
         try {
             int idUt = (int) request.getSession().getAttribute("idUtente");

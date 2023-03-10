@@ -18,7 +18,7 @@
                            data-parsley-length="[2, 40]">
                 </div>
                 <div class="form-group">
-                    <label for="relazione"> Relazione con l'iscritto (nonno, pap&agrave;, zio...) </label>
+                    <label for="relazione"> Relazione con l'iscritto (nonno, papà, zio...) </label>
                     <input class="form-control" type="text" required id="relazione" name="relazione"
                            placeholder="Relazione" data-parsley-length="[2, 40]">
                 </div>

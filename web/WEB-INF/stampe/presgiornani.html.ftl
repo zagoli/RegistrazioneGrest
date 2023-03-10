@@ -10,11 +10,11 @@
                 <th>Cognome</th>
                 <th>Nome</th>
                 <th>Periodo</th>
-                <th colspan="2">Luned&igrave;</th>
-                <th colspan="2">Marted&igrave;</th>
-                <th colspan="2">Mercoled&igrave;</th>
-                <th colspan="2">Gioved&igrave;</th>
-                <th colspan="2">Venerd&igrave;</th>
+                <th colspan="2">Lunedì</th>
+                <th colspan="2">Martedì</th>
+                <th colspan="2">Mercoledì</th>
+                <th colspan="2">Giovedì</th>
+                <th colspan="2">Venerdì</th>
             </tr>
             </thead>
             <tbody>

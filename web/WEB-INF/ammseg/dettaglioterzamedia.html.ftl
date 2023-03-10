@@ -167,7 +167,7 @@
                 <strong>Sa nuotare</strong>
             </div>
             <div class="col-sm">
-                <p><#if terzamedia.saNuotare>S&igrave;<#else>No</#if></p>
+                <p><#if terzamedia.saNuotare>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -175,7 +175,7 @@
                 <strong>Ha partecipato alla festa del passaggio a Balconi</strong>
             </div>
             <div class="col-sm">
-                <p><#if terzamedia.festaPassaggio>S&igrave;<#else>No</#if></p>
+                <p><#if terzamedia.festaPassaggio>Sì<#else>No</#if></p>
             </div>
         </div>
         <#if pagamento??>
@@ -328,7 +328,7 @@
                 </div>
             </div>
             <hr>
-            <strong> Attivit&agrave; genitore </strong>
+            <strong> Attività genitore </strong>
             <#list attgen as attgen>
             <div class="row">
                 <div class="col-sm">

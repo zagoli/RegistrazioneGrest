@@ -152,7 +152,7 @@
                 <strong>Sa nuotare</strong>
             </div>
             <div class="col-sm">
-                <p><#if terzamedia.saNuotare>S&igrave;<#else>No</#if></p>
+                <p><#if terzamedia.saNuotare>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -160,7 +160,7 @@
                 <strong>Ha partecipato alla festa del passaggio a Balconi</strong>
             </div>
             <div class="col-sm">
-                <p><#if terzamedia.festaPassaggio>S&igrave;<#else>No</#if></p>
+                <p><#if terzamedia.festaPassaggio>Sì<#else>No</#if></p>
             </div>
         </div>
         <div class="row">
@@ -172,7 +172,7 @@
             </div>
         </div>
         <hr>
-        <strong> Attivit&agrave; genitore </strong>
+        <strong> Attività genitore </strong>
         <#list attgen as attgen>
         <div class="row">
             <div class="col-sm">
@@ -186,7 +186,7 @@
             <input class="form-check-input" type="checkbox" id='priv'/>
             <label for='priv' class="form-check-label">
                 I sottoscritti genitori acconsentono alle dichiarazioni presentate in fase di
-                registrazione, e dichiarano altres&igrave; che le informazioni inserite in fase di registrazione sono
+                registrazione, e dichiarano altresì che le informazioni inserite in fase di registrazione sono
                 veritiere.
             </label>
         </div>

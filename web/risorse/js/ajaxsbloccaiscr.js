@@ -1,6 +1,6 @@
 var htmlfail = "<div class='row' id='sbloccotext'>\n\
                     <div class='col-sm rounded bg-danger'>\n\
-                        <p class='text-white text-uppercase font-weight-bold text-center pt-2'>Codice non esistente o gi&agrave; utilizzato!</p>\n\
+                        <p class='text-white text-uppercase font-weight-bold text-center pt-2'>Codice non esistente o già utilizzato!</p>\n\
                     </div>\n\
                 </div>";
 

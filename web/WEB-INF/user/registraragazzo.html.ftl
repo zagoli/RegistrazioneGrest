@@ -48,7 +48,7 @@
                         <label for="nTessera"> Numero tessera Circolo Noi <b><script type="text/javascript">var theDate=new Date();document.write(theDate.getFullYear());</script></b></label>
                         <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control" data-parsley-length="[11, 11]" aria-describedby="helpNTessera">
                         <small id="helpNTessera" class="form-text text-muted">
-                            Inserire il numero di tessera del Circolo Noi se non si &egrave; tesserati al Circolo Noi di Balconi.
+                            Inserire il numero di tessera del Circolo Noi se non si è tesserati al Circolo Noi di Balconi.
                         </small>
                     </div>
 
@@ -106,8 +106,8 @@
                         <a class="btn btn-secondary btn-sm mt-1" href="javascript:;" onClick="window.open('/RegistrazioneGrest/quote.html', 'Quote di iscrizione', 'width=1000, height=600, status, scrollbars=1, location');">clicca qui per consultare le quote d'iscrizione</a>
                     </div>
 
-                    <h3 class="text-center font-weight-bold text-uppercase"> 3 - scelta dell'attivit&agrave; per i ragazzi iscritti al grest </h3>
-                    <p>Durante il Grest scelgo di svolgere la seguente  attivit&agrave;</p>
+                    <h3 class="text-center font-weight-bold text-uppercase"> 3 - scelta dell'attività per i ragazzi iscritti al grest </h3>
+                    <p>Durante il Grest scelgo di svolgere la seguente  attività</p>
 
                     <div class="form-group">
                         <label for="laboratorio" class="sr-only"> Laboratorio </label>
@@ -146,7 +146,7 @@
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="mensa" name="mensa">
-                    <label class="form-check-label" for="mensa"> Si richiede, per necessit&agrave; particolari, in caso
+                    <label class="form-check-label" for="mensa"> Si richiede, per necessità particolari, in caso
                         entrambi i genitori lavorino, di usufruire del servizio mensa, versando la quota di iscrizione
                         prevista. </label>
                 </div>
@@ -166,7 +166,7 @@
                                 <input class="form-check-input" type="checkbox" id="fratelloIscritto"
                                        name="fratelloIscritto">
                                 <label class="form-check-label" for="fratelloIscritto"> Che il/la proprio/a figlio/a <b
-                                            class="text-danger">ha gi&agrave; <i>uno o pi&ugrave;</i></b>
+                                            class="text-danger">ha già <i>uno o più</i></b>
                                     fratelli/sorelle iscritti al grest.</label>
                             </div>
                         </li>
@@ -177,17 +177,17 @@
                             negli orari stabiliti da solo; deve aspettare una delle seguenti persone da noi incaricate,
                             indicate nella sezione "Accompagnatori e Contatti telefonici Urgenze" della piattaforma
                         </li>
-                        <li>che il/la proprio/a figlio/a gode di buona salute e che pertanto pu&ograve; affrontare le
-                            attivit&agrave; ludico-sportive previste; in caso contrario, si impegnano a chiederne
+                        <li>che il/la proprio/a figlio/a gode di buona salute e che pertanto può affrontare le
+                            attività ludico-sportive previste; in caso contrario, si impegnano a chiederne
                             l'esonero al momento della conferma dell'iscrizione;
                         </li>
-                        <li>di essere consapevoli che la responsabilit&agrave; della Parrocchia nei confronti dei
-                            ragazzi e la relativa copertura assicurativa inizia e termina negli orari indicati; non c'&egrave;
+                        <li>di essere consapevoli che la responsabilità della Parrocchia nei confronti dei
+                            ragazzi e la relativa copertura assicurativa inizia e termina negli orari indicati; non c'è
                             copertura per gli spostamenti da e verso l'abitazione;
                         </li>
                         <li>di autorizzare i responsabili del Grest e i loro collaboratori ad assumere le iniziative che
                             riterranno necessarie per garantire la sicurezza dei partecipanti e la buona riuscita delle
-                            attivit&agrave; del Grest;
+                            attività del Grest;
                         </li>
                         <li>di non ritenere gli organizzatori del Grest responsabili per eventuali furti di biciclette o
                             di oggetti di qualsiasi valore; i proprietari dovranno pertanto provvedere ad eventuali
@@ -195,8 +195,8 @@
                         </li>
                         <li>di essere informati, ai sensi e per gli effetti di cui all'art. 13 del D.Lgs 196/2003, che i
                             dati personali raccolti saranno trattati, anche con strumenti informatici, esclusivamente
-                            nell'ambito dell'attivit&agrave; del Grest di Balconi e concedono la liberatoria alle
-                            riprese video/fotografiche esclusivamente nell'ambito dell'attivit&agrave; del Grest di
+                            nell'ambito dell'attività del Grest di Balconi e concedono la liberatoria alle
+                            riprese video/fotografiche esclusivamente nell'ambito dell'attività del Grest di
                             Balconi.
                         </li>
                     </ul>
@@ -205,26 +205,12 @@
 
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="checkprivacy" required/>
-                        <label class="form-check-label" for="checkprivacy"> acconsento al trattamento dei dati personali, alla raccolta e all'utilizzo di materiale fotografico/video in conformit&agrave; a quanto riportato nell'informativa sulla privacy reperibile al link <a href="../privacy.html">informativa sulla privacy</a></label>
+                        <label class="form-check-label" for="checkprivacy"> acconsento al trattamento dei dati personali, alla raccolta e all'utilizzo di materiale fotografico/video in conformità a quanto riportato nell'informativa sulla privacy reperibile al link <a href="../privacy.html">informativa sulla privacy</a></label>
                     </div>
                     
                     <div class="pt-3 form-group" id="codiceForm">
                         <#if !ISCRRAG>
-                            <!--modulo inserimento codice sblocco iscrizione-->
-                            <label for="codicesblocco" class="text-danger">Le iscrizioni sono chiuse. Inserire il codice
-                                per sbloccare l'iscrizione. Il codice pu&ograve; essere eventualmente richiesto a <a
-                                        href="mailto:parrocchiadibalconi@gmail.com">Don Lorenzo</a></label>
-                            <div class="input-group">
-                                <input id="codicesblocco" type="text" class="form-control"
-                                       placeholder="inserisci il codice usa e getta per sbloccare l'iscrizione" required
-                                       data-parsley-errors-messages-disabled/>
-                                <div class="input-group-append">
-                                    <button id="btnsblocco" type="button" class="btn btn-outline-primary">Verifica il
-                                        codice e invia l'iscrizione
-                                    </button>
-                                </div>
-                            </div>
-                            <!--fine-->
+                            <#include "sbloccoiscrizione.html.ftl">
                         <#else>
                             <div id="divbtnreg" class="row">
                                 <input id="btnreg" class="form-control btn btn-primary" type="submit"

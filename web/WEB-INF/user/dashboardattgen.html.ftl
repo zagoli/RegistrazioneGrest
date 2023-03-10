@@ -9,7 +9,7 @@
                     <thead>
                     <tr>
                         <th scope="col" style="width: 2%;">#</th>
-                        <th scope="col">Attivit&agrave;</th>
+                        <th scope="col">Attività</th>
                         <th scope="col">Data</th>
                         <th scope="col" style="width: 2%;">Elimina</th>
                     </tr>
@@ -26,9 +26,9 @@
                         </#list>
                     </tbody>
                 </table>
-                <p class="text-center mt-4">&Egrave; possibile collaborare in pi&ugrave; di una attivit&agrave;! Ripetere il procedimento precedente per dare la propria disponibilit&agrave; in altri ambiti.</p>
+                <p class="text-center mt-4">è possibile collaborare in più di una attività! Ripetere il procedimento precedente per dare la propria disponibilità in altri ambiti.</p>
             <#else>
-                <p class="text-center">Per dare la tua disponibilit&agrave; a collaborare, scegli innanzitutto dalla lista il tipo di attivit&agrave; che ti interessa, poi scrivi opzionalmente un periodo in cui sei disponibile, quindi clicca invia.</p>
+                <p class="text-center">Per dare la tua disponibilità a collaborare, scegli innanzitutto dalla lista il tipo di attività che ti interessa, poi scrivi opzionalmente un periodo in cui sei disponibile, quindi clicca invia.</p>
                 <hr/>
             </#if>
                 <form action="/RegistrazioneGrest/App/RegistraAttGen" method="POST" data-parsley-validate>

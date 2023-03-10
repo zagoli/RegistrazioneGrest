@@ -36,7 +36,7 @@
                                             <label class="sr-only" for="${ani.id}responsabileSquadra">Responsabile
                                                 squadra</label>
                                             <input id="${ani.id}responsabileSquadra" name="${ani.id}" type="checkbox"
-                                                   data-toggle="toggle" data-off="No" data-on="S&igrave;"
+                                                   data-toggle="toggle" data-off="No" data-on="Sì"
                                                    <#if ani.responsabileSquadra>checked</#if>>
                                         </div>
                                     </td>

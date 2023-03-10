@@ -16,7 +16,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">Laboratorio</th>
                 <th scope="col">Squadra</th>
-                <th scope="col">F. et&agrave;</th>
+                <th scope="col">F. età</th>
             </tr>
             </thead>
             <tbody class="list">
@@ -48,13 +48,11 @@
                         </#if>
                     </td>
                     <td>
-                        <#if ani.fasciaEtaRagazzi == "PP1">
+                        <#if ani.fasciaEtaRagazzi == "PIC">
                             Piccoli
-                        <#elseif ani.fasciaEtaRagazzi == "M24">
-                            Medi
-                        <#elseif ani.fasciaEtaRagazzi == "G52">
+                        <#elseif ani.fasciaEtaRagazzi == "GRA">
                             Grandi
-                        <#elseif ani.fasciaEtaRagazzi == "AA3">
+                        <#elseif ani.fasciaEtaRagazzi == "TER">
                             3 Media
                         </#if>
                     </td>

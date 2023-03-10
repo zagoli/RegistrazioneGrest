@@ -9,7 +9,7 @@
                     </div>
                     <#if INVALIDMAIL??>
                         <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non &egrave; scritta correttamente o &egrave; una e-mail temporanea! Inserisci una mail valida</p>
+                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
                         </div>
                     </#if>
                     <form action="/RegistrazioneGrest/App/RegistraUtente" method="POST" data-parsley-validate>
@@ -32,7 +32,7 @@
                                    required id="telefono" name="telefono" placeholder="Cellulare personale">
                         </div>
                         <div class="form-group">
-                            <label for="localita"> Localit&agrave; </label>
+                            <label for="localita"> Località </label>
                             <input class="form-control" type="text" required id="localita" name="localita"
                                    placeholder="Localit&agrave">
                         </div>

@@ -14,11 +14,11 @@
                 <th> Laboratorio</th>
                 <th> Periodo</th>
                 <th style="width:5%;">Mensa</th>
-                <th colspan="2">Luned&igrave;</th>
-                <th colspan="2">Marted&igrave;</th>
-                <th colspan="2">Mercoled&igrave;</th>
-                <th colspan="2">Gioved&igrave;</th>
-                <th colspan="2">Venerd&igrave;</th>
+                <th colspan="2">Lunedì</th>
+                <th colspan="2">Martedì</th>
+                <th colspan="2">Mercoledì</th>
+                <th colspan="2">Giovedì</th>
+                <th colspan="2">Venerdì</th>
             </tr>
             </thead>
             <tbody>
@@ -48,11 +48,11 @@
                 <th></th>
                 <th> Periodo</th>
                 <th style="width:5%;">Cellulare</th>
-                <th colspan="2">Luned&igrave;</th>
-                <th colspan="2">Marted&igrave;</th>
-                <th colspan="2">Mercoled&igrave;</th>
-                <th colspan="2">Gioved&igrave;</th>
-                <th colspan="2">Venerd&igrave;</th>
+                <th colspan="2">Lunedì</th>
+                <th colspan="2">Martedì</th>
+                <th colspan="2">Mercoledì</th>
+                <th colspan="2">Giovedì</th>
+                <th colspan="2">Venerdì</th>
             </tr>
             <#list animatori as an>
                         <tr>

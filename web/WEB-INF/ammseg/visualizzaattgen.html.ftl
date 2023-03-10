@@ -8,7 +8,7 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col" style="width: 2%;">#</th>
-                    <th scope="col">Attivit&agrave;</th>
+                    <th scope="col">Attività</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Cognome</th>
                     <th scope="col">Data</th>

@@ -8,21 +8,21 @@
             </div>
             <#if INVALIDMAIL??>
                         <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non &egrave; scritta correttamente o &egrave; una e-mail temporanea! Inserisci una mail valida</p>
+                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
                         </div>
             </#if>
             <form action="/RegistrazioneGrest/App/RegistraAnimatore" method="POST" data-parsley-validate id="mainForm">
 
                 <div class="form-group">
-                    <label for="nome"> Nome </label>
-                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
-                           data-parsley-length="[2, 50]" value="${registrato.nome}">
-                </div>
-
-                <div class="form-group">
                     <label for="cognome"> Cognome </label>
                     <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome"
                            data-parsley-length="[2, 50]" value="${registrato.cognome}">
+                </div>
+
+                <div class="form-group">
+                    <label for="nome"> Nome </label>
+                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
+                           data-parsley-length="[2, 50]" value="${registrato.nome}">
                 </div>
 
                 <div class="form-group">
@@ -81,10 +81,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="circolo"> Circolo NOI di iscrizione <b>
+                    <label for="circolo"> Tesseramento Circolo NOI
+                        <b>
                             <script type="text/javascript">var theDate = new Date();
                                 document.write(theDate.getFullYear());</script>
-                        </b></label>
+                        </b>
+                    </label>
                     <select id="circolo" class="form-control" name="circolo">
                         <#list circoli as cir>
                                     <option value="${cir.id}">${cir.nome} (${cir.luogo})</option>
@@ -97,7 +99,7 @@
                     <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control"
                            data-parsley-length="[11, 11]" aria-describedby="helpNTessera">
                     <small id="helpNTessera" class="form-text text-muted">
-                        Inserire il numero di tessera del Circolo NOI se non si &egrave; iscritti al Circolo NOI di
+                        Inserire il numero di tessera del Circolo NOI se non si è iscritti al Circolo NOI di
                         Balconi.
                     </small>
                 </div>
@@ -110,22 +112,18 @@
                 </div>
 
                 <div class="form-group">
-                    <label> Fascia et&agrave; ragazzi preferita </label> <br/>
+                    <label> Fascia età ragazzi con cui vorrei compiere il servizio come animatore </label> <br/>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PP1" value="PP1">
-                        <label class="form-check-label" for="PP1">Piccoli (1° della scuola primaria)</label>
+                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PIC" value="PIC">
+                        <label class="form-check-label" for="PIC">Piccoli (1°,2°,3°,4° della scuola primaria)</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="M24" value="M24">
-                        <label class="form-check-label" for="M24">Medi (2°,3°,4° della scuola primaria)</label>
+                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="GRA" value="GRA">
+                        <label class="form-check-label" for="GRA">Grandi (5° primaria, 1°,2° media)</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="G52" value="G52">
-                        <label class="form-check-label" for="G52">Grandi (5° primaria, 1°,2° media)</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="AA3" value="AA3">
-                        <label class="form-check-label" for="AA3">Aiuto animatori (3° media)</label>
+                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="TER" value="TER">
+                        <label class="form-check-label" for="TER">Animatori gruppo 3° media</label>
                     </div>
                 </div>
 
@@ -139,7 +137,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="checkprivacy" required/>
                     <label class="form-check-label" for="checkprivacy"> di acconsentire al trattamento dei dati
-                        personali, alla raccolta e all'utilizzo di materiale fotografico/video in conformit&agrave; a
+                        personali, alla raccolta e all'utilizzo di materiale fotografico/video in conformità a
                         quanto riportato nell'informativa sulla privacy reperibile al link <a href="../privacy.html">informativa
                             sulla privacy</a></label>
                 </div>
@@ -147,12 +145,12 @@
                     <input class="form-check-input" type="checkbox" id="c1" required/>
                     <label class="form-check-label" for="c1"> che l'animatore gode di buona salute e che pertanto può
                         affrontare le attività ludico-sportive previste; in caso contrario, se ne chiede l'esonero al
-                        momento dell'iscrizione </label>
+                        momento dell'iscrizione; e che non soffre di allergie o intolleranze alimentari</label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="c2" required/>
                     <label class="form-check-label" for="c2"> di essere consapevole/i che la responsabilità della
-                        Parrocchia nei confronti degli animatori e la relativa copertura assicurativa inizia e termina
+                        Parrocchia e del circolo Noi nei confronti degli animatori e la relativa copertura assicurativa inizia e termina
                         negli orari indicati; non c’è copertura per gli spostamenti da e verso l'abitazione</label>
                 </div>
                 <div class="form-check">
@@ -170,21 +168,7 @@
 
                 <div class="pt-3 form-group" id="codiceForm">
                     <#if !ISCRAN>
-                        <!--modulo inserimento codice sblocco iscrizione-->
-                        <label for="codicesblocco" class="text-danger">Le iscrizioni sono chiuse. Inserire il codice per
-                            sbloccare l'iscrizione. Il codice pu&ograve; essere eventualmente richiesto a <a
-                                    href="mailto:parrocchiadibalconi@gmail.com">Don Lorenzo</a></label>
-                        <div class="input-group">
-                            <input id="codicesblocco" type="text" class="form-control"
-                                   placeholder="inserisci il codice usa e getta per sbloccare l'iscrizione" required
-                                   data-parsley-errors-messages-disabled/>
-                            <div class="input-group-append">
-                                <button id="btnsblocco" type="button" class="btn btn-outline-primary">Verifica il codice
-                                    e invia l'iscrizione
-                                </button>
-                            </div>
-                        </div>
-                        <!--fine-->
+                        <#include "sbloccoiscrizione.html.ftl">
                     <#else>
                         <div id="divbtnreg" class="row">
                             <input id="btnreg" class="form-control btn btn-primary" type="submit"

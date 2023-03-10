@@ -8,7 +8,7 @@
             </div>
             <#if INVALIDMAIL??>
                         <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non &egrave; scritta correttamente o &egrave; una e-mail temporanea! Inserisci una mail valida</p>
+                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
                         </div>
                     </#if>
                     <form action="/RegistrazioneGrest/App/RegistraTerzamedia" method="POST" data-parsley-validate="" id="mainForm">
@@ -52,7 +52,7 @@
                             <label for="nTessera"> Numero tessera Circolo Noi <b><script type="text/javascript">var theDate=new Date();document.write(theDate.getFullYear());</script></b></label>
                             <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control" data-parsley-length="[11, 11]" aria-describedby="helpNTessera">
                             <small id="helpNTessera" class="form-text text-muted">
-                                Inserire il numero di tessera del Circolo Noi se non si &egrave; tesserati al Circolo Noi di Balconi.
+                                Inserire il numero di tessera del Circolo Noi se non si è tesserati al Circolo Noi di Balconi.
                             </small>
                         </div>
 
@@ -113,7 +113,7 @@
                         </div>
                         
                         <h3 class="text-center font-weight-bold text-uppercase"> 3 - scelta del laboratorio</h3>
-                        <p>Durante il Grest scelgo di svolgere la seguente  attivit&agrave;</p>
+                        <p>Durante il Grest scelgo di svolgere la seguente  attività</p>
 
                         <div class="form-group">
                             <label for="laboratorio" class="sr-only"> Laboratorio </label>
@@ -170,17 +170,17 @@
                                 incaricate, indicate nella sezione "Accompagnatori e Contatti telefonici Urgenze" della
                                 piattaforma
                             </li>
-                            <li>che il/la proprio/a figlio/a gode di buona salute e che pertanto pu&ograve; affrontare
-                                le attivit&agrave; ludico-sportive previste; in caso contrario, si impegnano a chiederne
+                            <li>che il/la proprio/a figlio/a gode di buona salute e che pertanto può affrontare
+                                le attività ludico-sportive previste; in caso contrario, si impegnano a chiederne
                                 l'esonero al momento della conferma dell'iscrizione;
                             </li>
-                            <li>di essere consapevoli che la responsabilit&agrave; della Parrocchia nei confronti dei
+                            <li>di essere consapevoli che la responsabilità della Parrocchia nei confronti dei
                                 ragazzi e la relativa copertura assicurativa inizia e termina negli orari indicati; non
-                                c'&egrave; copertura per gli spostamenti da e verso l'abitazione;
+                                c'è copertura per gli spostamenti da e verso l'abitazione;
                             </li>
                             <li>di autorizzare i responsabili del Grest e i loro collaboratori ad assumere le iniziative
                                 che riterranno necessarie per garantire la sicurezza dei partecipanti e la buona
-                                riuscita delle attivit&agrave; del Grest;
+                                riuscita delle attività del Grest;
                             </li>
                             <li>di non ritenere gli organizzatori del Grest responsabili per eventuali furti di
                                 biciclette o di oggetti di qualsiasi valore; i proprietari dovranno pertanto provvedere
@@ -188,8 +188,8 @@
                             </li>
                             <li>di essere informati, ai sensi e per gli effetti di cui all'art. 13 del D.Lgs 196/2003,
                                 che i dati personali raccolti saranno trattati, anche con strumenti informatici,
-                                esclusivamente nell'ambito dell'attivit&agrave; del Grest di Balconi e concedono la
-                                liberatoria alle riprese video/fotografiche esclusivamente nell'ambito dell'attivit&agrave;
+                                esclusivamente nell'ambito dell'attività del Grest di Balconi e concedono la
+                                liberatoria alle riprese video/fotografiche esclusivamente nell'ambito dell'attività
                                 del Grest di Balconi.
                             </li>
                         </ul>
@@ -205,21 +205,7 @@
                         
                         <div class="pt-3 form-group" id="codiceForm">
                             <#if !ISCRTER>
-                                <!--modulo inserimento codice sblocco iscrizione-->
-                                <label for="codicesblocco" class="text-danger">Le iscrizioni sono chiuse. Inserire il
-                                    codice per sbloccare l'iscrizione. Il codice pu&ograve; essere eventualmente
-                                    richiesto a <a href="mailto:parrocchiadibalconi@gmail.com">Don Lorenzo</a></label>
-                                <div class="input-group">
-                                    <input id="codicesblocco" type="text" class="form-control"
-                                           placeholder="inserisci il codice usa e getta per sbloccare l'iscrizione"
-                                           required data-parsley-errors-messages-disabled/>
-                                    <div class="input-group-append">
-                                        <button id="btnsblocco" type="button" class="btn btn-outline-primary">Verifica
-                                            il codice e invia l'iscrizione
-                                        </button>
-                                    </div>
-                                </div>
-                                <!--fine-->
+                                <#include "sbloccoiscrizione.html.ftl">
                             <#else>
                                 <div id="divbtnreg" class="row">
                                     <input id="btnreg" class="form-control btn btn-primary" type="submit"

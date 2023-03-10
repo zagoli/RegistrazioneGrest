@@ -11,7 +11,7 @@
                 <th scope="col">Nome</th>
                 <th scope="col">Nascita</th>
                 <th scope="col">Via</th>
-                <th scope="col">Localit&agrave;</th>
+                <th scope="col">Località</th>
                 <th scope="col">Parrocchia</th>
                 <th scope="col">Classe</th>
                 <th scope="col">Sezione</th>
@@ -56,9 +56,9 @@
                         </#if>
                     </td>
                     <td>${rag[0].laboratorio.descrizione}</td>
-                    <td><#if rag[0].mensa>S&igrave;<#else>No</#if></td>
-                    <td><#if rag[0].saNuotare>S&igrave;<#else>No</#if></td>
-                    <td><#if rag[0].entrataAnticipata>S&igrave;<#else>No</#if></td>
+                    <td><#if rag[0].mensa>Sì<#else>No</#if></td>
+                    <td><#if rag[0].saNuotare>Sì<#else>No</#if></td>
+                    <td><#if rag[0].entrataAnticipata>Sì<#else>No</#if></td>
                     <td><#if rag[0].richieste??><img src="../risorse/img/octicons/check.svg" alt="presenti"><#else>
                             <img src="../risorse/img/octicons/x.svg" alt="assenti"></#if></td>
                     <td><#if rag[0].noteAlimentari??><img src="../risorse/img/octicons/check.svg"

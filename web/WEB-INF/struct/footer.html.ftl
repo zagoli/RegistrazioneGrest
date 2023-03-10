@@ -7,7 +7,7 @@
             </script>
             . Tutti i diritti riservati all'autore.&nbsp;
             Piattaforma sviluppata per la <a href="https://www.parrocchiadibalconi.it">Parrocchia di Balconi</a>. &nbsp;&nbsp;Per
-            difficolt&agrave; tecniche: <a href="mailto:assistenzatecnica@parrocchiadibalconi.it">assistenzatecnica@parrocchiadibalconi.it</a>
+            difficoltà tecniche: <a href="mailto:assistenzatecnica@parrocchiadibalconi.it">assistenzatecnica@parrocchiadibalconi.it</a>
             - Altre info: <a
                     href="mailto:segreteriagrest@parrocchiadibalconi.it">segreteriagrest@parrocchiadibalconi.it</a>
         </small>

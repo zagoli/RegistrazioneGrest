@@ -8,7 +8,7 @@
             </div>
             <#if INVALIDMAIL??>
                         <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non &egrave; scritta correttamente o &egrave; una e-mail temporanea! Inserisci una mail valida</p>
+                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
                         </div>
                     </#if>
                     <form action="/RegistrazioneGrest/App/ModificaAnimatore" method="POST" data-parsley-validate>
@@ -108,7 +108,7 @@
                                    class="form-control" data-parsley-length="[11, 11]" aria-describedby="helpNTessera"
                                    <#if animatore.nTessera??>value="${animatore.nTessera}"</#if>>
                             <small id="helpNTessera" class="form-text text-muted">
-                                Inserire il numero di tessera del Circolo NOI se non si &egrave; iscritti al Circolo NOI
+                                Inserire il numero di tessera del Circolo NOI se non si è iscritti al Circolo NOI
                                 di Balconi.
                             </small>
                         </div>
@@ -121,26 +121,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label> Fascia et&agrave; ragazzi preferita </label> <br/>
+                            <label> Fascia età ragazzi con cui vorrei compiere il servizio come animatore </label> <br/>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PP1"
-                                       value="PP1" <#if animatore.fasciaEtaRagazzi == "PP1">checked</#if>>
-                                <label class="form-check-label" for="PP1">Piccoli (1° della scuola primaria)</label>
+                                <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PIC"
+                                       value="PIC" <#if animatore.fasciaEtaRagazzi == "PIC">checked</#if>>
+                                <label class="form-check-label" for="PIC">Piccoli (1°,2°,3°,4° della scuola primaria)</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="M24"
-                                       value="M24" <#if animatore.fasciaEtaRagazzi == "M24">checked</#if>>
-                                <label class="form-check-label" for="M24">Medi (2°,3°,4° della scuola primaria)</label>
+                                <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="GRA"
+                                       value="GRA" <#if animatore.fasciaEtaRagazzi == "GRA">checked</#if>>
+                                <label class="form-check-label" for="GRA">Grandi (5° primaria, 1°,2° media)</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="G52"
-                                       value="G52" <#if animatore.fasciaEtaRagazzi == "G52">checked</#if>>
-                                <label class="form-check-label" for="G52">Grandi (5° primaria, 1°,2° media)</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="AA3"
-                                       value="AA3" <#if animatore.fasciaEtaRagazzi == "AA3">checked</#if>>
-                                <label class="form-check-label" for="AA3">Aiuto animatori (3° media)</label>
+                                <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="TER"
+                                       value="TER" <#if animatore.fasciaEtaRagazzi == "TER">checked</#if>>
+                                <label class="form-check-label" for="TER">Animatori gruppo 3° media</label>
                             </div>
                         </div>
 
