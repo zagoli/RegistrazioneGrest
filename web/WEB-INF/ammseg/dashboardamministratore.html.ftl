@@ -16,28 +16,27 @@
             <div class="mt-4 row">
                 <div class="col">
                     <div class="form-check form-check-inline">
-                        <div class="checkbox">
-                            <input class="form-check-input" id="ISCRRAG" type="checkbox" data-toggle="toggle"
-                                   data-offstyle="danger" <#if ISCRRAG??>checked</#if>>
-                            <label class="form-check-label" id="labelISCRRAG">Attiva iscrizioni ragazzi</label>
+                        <div class="custom-control custom-switch">
+                            <input class="custom-control-input" id="ISCRRAG" type="checkbox"
+                                   <#if ISCRRAG??>checked</#if>>
+                            <label class="custom-control-label" for="ISCRRAG">Attiva iscrizioni ragazzi</label>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-check form-check-inline">
-                        <div class="checkbox">
-                            <input class="form-check-input" id="ISCRAN" type="checkbox" data-toggle="toggle"
-                                   data-offstyle="danger" <#if ISCRAN??>checked</#if>>
-                            <label class="form-check-label" id="labelISCRAN">Attiva iscrizioni animatori</label>
+                        <div class="custom-control custom-switch">
+                            <input class="custom-control-input" id="ISCRAN" type="checkbox" <#if ISCRAN??>checked</#if>>
+                            <label class="custom-control-label" for="ISCRAN">Attiva iscrizioni animatori</label>
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-check form-check-inline">
-                        <div class="checkbox">
-                            <input class="form-check-input" id="ISCRTER" type="checkbox" data-toggle="toggle"
-                                   data-offstyle="danger" <#if ISCRTER??>checked</#if>>
-                            <label class="form-check-label" id="labelISCRTER">Attiva iscrizioni terza media</label>
+                        <div class="custom-control custom-switch">
+                            <input class="custom-control-input" id="ISCRTER" type="checkbox"
+                                   <#if ISCRTER??>checked</#if>>
+                            <label class="custom-control-label" for="ISCRTER">Attiva iscrizioni terza media</label>
                         </div>
                     </div>
                 </div>

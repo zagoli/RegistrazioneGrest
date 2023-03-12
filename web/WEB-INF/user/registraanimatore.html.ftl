@@ -7,9 +7,10 @@
                 <h5>Iscrizione come animatore del Grest di Balconi</h5>
             </div>
             <#if INVALIDMAIL??>
-                        <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
-                        </div>
+                <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
+                    <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente
+                        o è una e-mail temporanea! Inserisci una mail valida</p>
+                </div>
             </#if>
             <form action="/RegistrazioneGrest/App/RegistraAnimatore" method="POST" data-parsley-validate id="mainForm">
 
@@ -39,15 +40,15 @@
                 <div class="form-group">
                     <label> Presenza giornaliera al Grest</label> <br/>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="presenza" id="completo" value="C" checked>
+                        <input class="form-check-input" type="radio" name="presenza" id="completo" value="C" checked/>
                         <label class="form-check-label" for="completo">Completo</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M">
+                        <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M"/>
                         <label class="form-check-label" for="mattina">Solo mattina</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P">
+                        <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P"/>
                         <label class="form-check-label" for="pomeriggio">Solo pomeriggio</label>
                     </div>
                 </div>
@@ -55,19 +56,21 @@
                 <div class="form-group">
                     <label> Periodo di partecipazione </label> <br/>
                     <#list calendari as cal>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana}" id="cal${cal.idSettimana}" name="cal" checked>
-                                    <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando} al ${cal.aQuando} </label>
-                                </div>
-                            </#list>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="${cal.idSettimana}"
+                                   id="cal${cal.idSettimana}" name="cal" checked>
+                            <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando}
+                                al ${cal.aQuando} </label>
+                        </div>
+                    </#list>
                 </div>
 
                 <div class="form-group">
                     <label for="laboratorio"> Selezionare un laboratorio </label>
                     <select id="laboratorio" class="form-control" name="laboratorio">
                         <#list laboratori as lab>
-                                    <option value="${lab.id}">${lab.descrizione}</option>
-                                </#list>
+                            <option value="${lab.id}">${lab.descrizione}</option>
+                        </#list>
                     </select>
                 </div>
 
@@ -75,8 +78,8 @@
                     <label for="parrocchia"> Parrocchia di appartenenza </label>
                     <select id="parrocchia" class="form-control" name="parrocchia">
                         <#list parrocchie as par>
-                                    <option value="${par.id}">Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
-                                </#list>
+                            <option value="${par.id}">Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
+                        </#list>
                     </select>
                 </div>
 
@@ -89,8 +92,8 @@
                     </label>
                     <select id="circolo" class="form-control" name="circolo">
                         <#list circoli as cir>
-                                    <option value="${cir.id}">${cir.nome} (${cir.luogo})</option>
-                                </#list>
+                            <option value="${cir.id}">${cir.nome} (${cir.luogo})</option>
+                        </#list>
                     </select>
                 </div>
 
@@ -114,15 +117,16 @@
                 <div class="form-group">
                     <label> Fascia età ragazzi con cui vorrei compiere il servizio come animatore </label> <br/>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PIC" value="PIC">
+                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PIC"
+                               value="PIC" checked/>
                         <label class="form-check-label" for="PIC">Piccoli (1°,2°,3°,4° della scuola primaria)</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="GRA" value="GRA">
+                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="GRA" value="GRA"/>
                         <label class="form-check-label" for="GRA">Grandi (5° primaria, 1°,2° media)</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="TER" value="TER">
+                        <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="TER" value="TER"/>
                         <label class="form-check-label" for="TER">Animatori gruppo 3° media</label>
                     </div>
                 </div>
@@ -150,7 +154,8 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="c2" required/>
                     <label class="form-check-label" for="c2"> di essere consapevole/i che la responsabilità della
-                        Parrocchia e del circolo Noi nei confronti degli animatori e la relativa copertura assicurativa inizia e termina
+                        Parrocchia e del circolo Noi nei confronti degli animatori e la relativa copertura assicurativa
+                        inizia e termina
                         negli orari indicati; non c’è copertura per gli spostamenti da e verso l'abitazione</label>
                 </div>
                 <div class="form-check">
@@ -175,11 +180,11 @@
                                    value="Invia l'iscrizione"/>
                         </div>
                     </#if>
-                        </div>
-                        
-                    </form>
                 </div>
-            </div>
+
+            </form>
         </div>
+    </div>
+</div>
 <script src="../risorse/js/ajaxsbloccaiscr.min.js"></script>
 <#include "../struct/footer.html.ftl">

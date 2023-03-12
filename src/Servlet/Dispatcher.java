@@ -50,6 +50,11 @@ public class Dispatcher extends HttpServlet {
         }
     }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+    }
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("utf-8");
         ControllerInterface c = this.getHandler(request);
