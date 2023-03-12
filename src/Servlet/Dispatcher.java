@@ -24,9 +24,9 @@ public class Dispatcher extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        ApplicationContext.getContext().put("Properties", new ConfigProperties()); // Chiamare per primo!
         ApplicationContext.getContext().put("DAO", new DAOMan());
         ApplicationContext.getContext().put("CfgTemplate", getConfiguration());
-        ApplicationContext.getContext().put("Properties", new ConfigProperties());
     }
 
     private Configuration getConfiguration() {

@@ -1,5 +1,6 @@
 package Utility;
 
+import ApplicationContext.ApplicationContext;
 import Controller.ControllerLoginEPasswordReset;
 import DAOManager.DAOMan;
 import Domain.*;
@@ -17,10 +18,12 @@ import java.util.logging.Logger;
 
 public class Checker {
 
+    private static final ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
+    private static final String EMAIL_API_KEY = properties.getProperty("XMLAPI_MAIL_CHECK_API_KEY");
+
     public static boolean checkMail(String mail) throws UnirestException {
-        String key = "at_JPVfAVsj8pjxVB7eimYVscbFK22Or";
         HttpResponse<JsonNode> response = Unirest.get("https://emailverification.whoisxmlapi.com/api/v2")
-                .queryString("apiKey", key)
+                .queryString("apiKey", EMAIL_API_KEY)
                 .queryString("emailAddress", mail)
                 .asJson();
         //controllo se la richiesta è andata a buon fine

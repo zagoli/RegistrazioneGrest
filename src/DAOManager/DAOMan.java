@@ -1,9 +1,10 @@
 package DAOManager;
 
+import ApplicationContext.ApplicationContext;
+import Utility.ConfigProperties;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +31,9 @@ public class DAOMan {
     public static final PagamentoTerzamediaDAO pagamentoTerzamediaDAO = new PagamentoTerzamediaDAOImpl();
     public static final CodiceSbloccoIscrizioneDAO codiceSbloccoIscrizioneDAO = new CodiceSbloccoIscrizioneDAOImpl();
     public static final SquadraDAO squadraDAO = new SquadraDAOImpl();
-    public static final String URL_ENRICO = "jdbc:sqlserver://localhost:1433;database=GrestDb;user=AppGrest;password=pf2hjdcYiX5F+5LZ9Q1wlIKTSKCbYxhtrJ/LREPXp7A=;loginTimeout=30;encrypt=false";
-    public static final String URL_AZURE = "jdbc:sqlserver://serverdbgrest.database.windows.net:1433;database=GrestDb;user=AppGrest@serverdbgrest;password={afuio(573ehop89*°#,cfe9x)(/G()};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+    private static final ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
+    private static final String URL_ENRICO = properties.getProperty("JDBC_URL_PRODUCTION_DATABASE");
+    private static final String URL_AZURE = properties.getProperty("JDBC_URL_TEST_DATABASE");
 
     public static Connection getConnection() {
         Connection connection;

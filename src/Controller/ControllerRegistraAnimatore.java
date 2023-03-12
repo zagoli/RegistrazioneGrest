@@ -27,7 +27,8 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
         ModelAndView mv = new ModelAndViewStandard();
         mv.addObject("TITOLOPAGINA", "Registra Animatore");
         try {
-            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
+            boolean isMailValid = Checker.checkMail(request.getParameter("mail"));
+            if (request.getParameterMap().containsKey("nome") && isMailValid) {
                 Animatore animatore = new Animatore();
                 animatore.setNome(request.getParameter("nome"));
                 animatore.setCognome(request.getParameter("cognome"));
@@ -68,7 +69,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                 mv.addObject("calendari", listaCalendario);
                 Registrato reg = DAOMan.registratoDAO.findById((int) request.getSession().getAttribute("idUtente"));
                 mv.addObject("registrato", reg);
-                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
+                if (request.getParameterMap().containsKey("mail") && !isMailValid) {
                     mv.addObject("INVALIDMAIL", true);
                 }
                 //iscrizioni aperte o chiuse

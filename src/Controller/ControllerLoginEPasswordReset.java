@@ -1,10 +1,22 @@
 package Controller;
 
+import ApplicationContext.ApplicationContext;
 import DAOManager.DAOMan;
 import Domain.Registrato;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.BCrypt;
+import Utility.ConfigProperties;
+import org.apache.commons.lang3.RandomStringUtils;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.sql.SQLException;
@@ -12,24 +24,14 @@ import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.RandomStringUtils;
 
 public class ControllerLoginEPasswordReset implements ControllerInterface {
-
-    public static final String MITTENTE = "assistenzatecnica@parrocchiadibalconi.it";
-    public static final String PASSWORD_MAIL = "H29qWV6pDf7#uv";
-    public static final String INDIRIZZO_MAIL_SERVER = "ssl0.ovh.net";
-    public static final String PORTA_MAIL_SERVER = "465";
-    public static final String CONNECTION_TIMEOUT_MAIL_SERVER = "10000";
+    private static final ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
+    public static final String MITTENTE = properties.getProperty("INDIRIZZO_EMAIL_ASSISTENZA");
+    public static final String PASSWORD_MAIL = properties.getProperty("PASSWORD_EMAIL_ASSISTENZA");
+    public static final String MAIL_SERVER = properties.getProperty("INDIRIZZO_SERVER_MAIL_ASSISTENZA");
+    public static final String PORTA = properties.getProperty("PORTA_SERVER_MAIL_ASSISTENZA");
+    public static final String CONNECTION_TIMEOUT = properties.getProperty("CONNECTION_TIMEOUT_SERVER_MAIL_ASSISTENZA");
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -100,12 +102,12 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
 
     private static void sendResetPasswordEmail(String destinatario, String newpswd) throws MessagingException {
         Properties properties = new Properties();
-        properties.put("mail.smtp.host", INDIRIZZO_MAIL_SERVER);
+        properties.put("mail.smtp.host", MAIL_SERVER);
         properties.put("mail.smtp.ssl.enable", true);
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.port", PORTA_MAIL_SERVER);
-        properties.put("mail.smtp.connectiontimeout", CONNECTION_TIMEOUT_MAIL_SERVER);
-        properties.put("mail.smtp.timeout", CONNECTION_TIMEOUT_MAIL_SERVER);
+        properties.put("mail.smtp.auth", true);
+        properties.put("mail.smtp.port", PORTA);
+        properties.put("mail.smtp.connectiontimeout", CONNECTION_TIMEOUT);
+        properties.put("mail.smtp.timeout", CONNECTION_TIMEOUT);
         Session session = Session.getInstance(properties);
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(MITTENTE));
@@ -114,8 +116,8 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
         message.setContent(
                 // <editor-fold defaultstate="collapsed">
                 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional //EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><head>"
-                + "    <!--[if gte mso 9]><xml>"
-                + "     <o:OfficeDocumentSettings>"
+                        + "    <!--[if gte mso 9]><xml>"
+                        + "     <o:OfficeDocumentSettings>"
                 + "      <o:AllowPNG/>"
                 + "      <o:PixelsPerInch>96</o:PixelsPerInch>"
                 + "     </o:OfficeDocumentSettings>"
