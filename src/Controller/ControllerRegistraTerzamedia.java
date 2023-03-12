@@ -1,23 +1,22 @@
 package Controller;
 
+import ApplicationContext.ApplicationContext;
 import DAOManager.DAOMan;
 import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+import Utility.ConfigProperties;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -103,11 +102,8 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
                     mv.addObject("INVALIDMAIL", true);
                 }
                 //iscrizioni aperte o chiuse
-                Properties properties = new Properties();
-                InputStream in = new FileInputStream("C:/conf/RegistrazioneGrest/config.properties");
-                properties.load(in);
+                ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
                 mv.addObject("ISCRTER", properties.getProperty("ISCRTER").equals("true"));
-                in.close();
             }
         } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException | UnirestException ex) {
             mv.setView("err/errore.html");

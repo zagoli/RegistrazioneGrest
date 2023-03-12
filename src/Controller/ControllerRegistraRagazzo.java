@@ -1,21 +1,20 @@
 package Controller;
 
+import ApplicationContext.ApplicationContext;
 import DAOManager.DAOMan;
 import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.ConfigProperties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,12 +39,9 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
                 mv.addObject("calendari", listaCalendario);
                 //iscrizioni aperte o chiuse
-                Properties properties = new Properties();
-                InputStream in = new FileInputStream("C:/conf/RegistrazioneGrest/config.properties");
-                properties.load(in);
+                ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
                 mv.addObject("ISCRRAG", properties.getProperty("ISCRRAG").equals("true"));
-                in.close();
-            } catch (IOException | NullPointerException | SQLException ex) {
+            } catch (NullPointerException | SQLException ex) {
                 mv.setView("err/errore.html");
                 mv.addObject("eccezione", ex);
                 Logger.getLogger(ControllerRegistraRagazzo.class.getName()).log(Level.SEVERE, null, ex);

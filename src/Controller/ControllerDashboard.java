@@ -1,9 +1,11 @@
 package Controller;
 
+import ApplicationContext.ApplicationContext;
 import DAOManager.DAOMan;
 import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.ConfigProperties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,20 +56,17 @@ public class ControllerDashboard implements ControllerInterface {
                         }
                         mv.addObject("terzamedia", mapTerzamediaPagato);
                     }
-                    
+
                     int nContattiUrgenze = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idUtente).size();
                     if (nContattiUrgenze == 0) {
                         mv.addObject("NOCU", "true");
                     }
-                    
+
                     //iscrizioni per animatori aperte o chiuse (per togliere bottoni modifica/elimina)
-                    Properties properties = new Properties();
-                    InputStream in = new FileInputStream("C:/conf/RegistrazioneGrest/config.properties");
-                    properties.load(in);
+                    ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
                     mv.addObject("ISCRAN", properties.getProperty("ISCRAN").equals("true"));
-                    in.close();
-                    
-                } catch (IOException | NullPointerException | SQLException ex) {
+
+                } catch (NullPointerException | SQLException ex) {
                     mv.setView("err/errore.html");
                     mv.addObject("eccezione", ex);
                     Logger.getLogger(ControllerDashboard.class.getName()).log(Level.SEVERE, null, ex);

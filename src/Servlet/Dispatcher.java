@@ -5,6 +5,7 @@ import Controller.*;
 import DAOManager.DAOMan;
 import ModelAndView.ModelAndView;
 import Utility.Checker;
+import Utility.ConfigProperties;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -14,14 +15,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Dispatcher extends HttpServlet {
 
@@ -29,25 +25,16 @@ public class Dispatcher extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         ApplicationContext.getContext().put("DAO", new DAOMan());
+        ApplicationContext.getContext().put("CfgTemplate", getConfiguration());
+        ApplicationContext.getContext().put("Properties", new ConfigProperties());
+    }
+
+    private Configuration getConfiguration() {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
         cfg.setServletContextForTemplateLoading(getServletContext(), "WEB-INF");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setEncoding(Locale.ITALY, "utf-8");
-        ApplicationContext.getContext().put("CfgTemplate", cfg);
-        //verifica se esiste file registrazioni aperte o chiuse
-        File conf = new File("C:/conf/RegistrazioneGrest/config.properties");
-        try {
-            if (!conf.exists()) {
-                if (!new File("C:/conf/RegistrazioneGrest").mkdirs()) {
-                    throw new IOException("non sono riuscito a creare la cartella di configurazione per il file di proprietà");
-                }
-                try (FileWriter writer = new FileWriter(conf)) {
-                    writer.write("#" + new Date() + System.getProperty("line.separator") + "ISCRRAG=true" + System.getProperty("line.separator") + "ISCRAN=true" + System.getProperty("line.separator") + "ISCRTER=true");
-                }
-            }
-        } catch (NullPointerException | IOException ex) {
-            Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, "init", ex);
-        }
+        return cfg;
     }
 
     @Override
