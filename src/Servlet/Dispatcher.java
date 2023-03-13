@@ -1,8 +1,6 @@
 package Servlet;
 
-import ApplicationContext.ApplicationContext;
 import Controller.*;
-import DAOManager.DAOMan;
 import ModelAndView.ModelAndView;
 import Utility.Checker;
 import freemarker.template.Configuration;
@@ -20,11 +18,16 @@ import java.util.Locale;
 
 public class Dispatcher extends HttpServlet {
 
+    private final Configuration configurationTemplate = getConfiguration();
+
     @Override
     public void init() throws ServletException {
         super.init();
-        ApplicationContext.getContext().put("DAO", new DAOMan());
-        ApplicationContext.getContext().put("CfgTemplate", getConfiguration());
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
     }
 
     private Configuration getConfiguration() {
@@ -33,11 +36,6 @@ public class Dispatcher extends HttpServlet {
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setEncoding(Locale.ITALY, "utf-8");
         return cfg;
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -415,10 +413,8 @@ public class Dispatcher extends HttpServlet {
         response.setContentType(contentType);
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            freemarker.template.Configuration cfg;
-            cfg = (freemarker.template.Configuration) ApplicationContext.getContext().get("CfgTemplate");
             String pathTemplate = view + ".ftl";
-            Template template = cfg.getTemplate(pathTemplate);
+            Template template = configurationTemplate.getTemplate(pathTemplate);
             template.process(mv.getMap(), out);
         } catch (NullPointerException | TemplateException | IOException ignored) {}
     }
