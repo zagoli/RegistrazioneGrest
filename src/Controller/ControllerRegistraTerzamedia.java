@@ -1,6 +1,5 @@
 package Controller;
 
-import ApplicationContext.ApplicationContext;
 import DAOManager.DAOMan;
 import Domain.*;
 import ModelAndView.ModelAndView;
@@ -103,8 +102,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
                     mv.addObject("INVALIDMAIL", true);
                 }
                 //iscrizioni aperte o chiuse
-                ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
-                mv.addObject("ISCRTER", properties.getProperty("ISCRTER").equals("true"));
+                mv.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
             }
         } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException | UnirestException ex) {
             mv.setView("err/errore.html");

@@ -1,6 +1,5 @@
 package Controller;
 
-import ApplicationContext.ApplicationContext;
 import DAOManager.DAOMan;
 import Domain.*;
 import ModelAndView.ModelAndView;
@@ -73,8 +72,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                     mv.addObject("INVALIDMAIL", true);
                 }
                 //iscrizioni aperte o chiuse
-                ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
-                mv.addObject("ISCRAN", properties.getProperty("ISCRAN").equals("true"));
+                mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
             }
         } catch (UnirestException | NullPointerException | IOException | NumberFormatException | SQLException | ParseException ex) {
             mv.setView("err/errore.html");

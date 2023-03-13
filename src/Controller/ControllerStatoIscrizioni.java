@@ -1,6 +1,5 @@
 package Controller;
 
-import ApplicationContext.ApplicationContext;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.ConfigProperties;
@@ -15,16 +14,15 @@ public class ControllerStatoIscrizioni implements ControllerInterface {
         ModelAndView mv = new ModelAndViewStandard();
         mv.addObject("TITOLOPAGINA", "NULL");
         String state = request.getParameter("state");
-        ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
         switch (request.getParameter("target")) {
             case "ISCRRAG":
-                properties.setProperty("ISCRRAG", state);
+                ConfigProperties.setProperty("ISCRRAG", state);
                 break;
             case "ISCRAN":
-                properties.setProperty("ISCRAN", state);
+                ConfigProperties.setProperty("ISCRAN", state);
                 break;
             case "ISCRTER":
-                properties.setProperty("ISCRTER", state);
+                ConfigProperties.setProperty("ISCRTER", state);
                 break;
         }
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");

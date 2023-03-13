@@ -5,7 +5,6 @@ import Controller.*;
 import DAOManager.DAOMan;
 import ModelAndView.ModelAndView;
 import Utility.Checker;
-import Utility.ConfigProperties;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -24,7 +23,6 @@ public class Dispatcher extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        ApplicationContext.getContext().put("Properties", new ConfigProperties()); // Chiamare per primo!
         ApplicationContext.getContext().put("DAO", new DAOMan());
         ApplicationContext.getContext().put("CfgTemplate", getConfiguration());
     }

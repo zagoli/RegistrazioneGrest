@@ -1,6 +1,5 @@
 package Controller;
 
-import ApplicationContext.ApplicationContext;
 import DAOManager.DAOMan;
 import Domain.*;
 import ModelAndView.ModelAndView;
@@ -63,8 +62,7 @@ public class ControllerDashboard implements ControllerInterface {
                     }
 
                     //iscrizioni per animatori aperte o chiuse (per togliere bottoni modifica/elimina)
-                    ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
-                    mv.addObject("ISCRAN", properties.getProperty("ISCRAN").equals("true"));
+                    mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
 
                 } catch (NullPointerException | SQLException ex) {
                     mv.setView("err/errore.html");

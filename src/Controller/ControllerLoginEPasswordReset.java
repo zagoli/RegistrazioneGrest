@@ -1,6 +1,5 @@
 package Controller;
 
-import ApplicationContext.ApplicationContext;
 import DAOManager.DAOMan;
 import Domain.Registrato;
 import ModelAndView.ModelAndView;
@@ -26,12 +25,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ControllerLoginEPasswordReset implements ControllerInterface {
-    private static final ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
-    public static final String MITTENTE = properties.getProperty("INDIRIZZO_EMAIL_ASSISTENZA");
-    public static final String PASSWORD_MAIL = properties.getProperty("PASSWORD_EMAIL_ASSISTENZA");
-    public static final String MAIL_SERVER = properties.getProperty("INDIRIZZO_SERVER_MAIL_ASSISTENZA");
-    public static final String PORTA = properties.getProperty("PORTA_SERVER_MAIL_ASSISTENZA");
-    public static final String CONNECTION_TIMEOUT = properties.getProperty("CONNECTION_TIMEOUT_SERVER_MAIL_ASSISTENZA");
+    private static final String MITTENTE = ConfigProperties.getProperty("INDIRIZZO_EMAIL_ASSISTENZA");
+    private static final String PASSWORD_MAIL = ConfigProperties.getProperty("PASSWORD_EMAIL_ASSISTENZA");
+    private static final String MAIL_SERVER = ConfigProperties.getProperty("INDIRIZZO_SERVER_MAIL_ASSISTENZA");
+    private static final String PORTA = ConfigProperties.getProperty("PORTA_SERVER_MAIL_ASSISTENZA");
+    private static final String CONNECTION_TIMEOUT = ConfigProperties.getProperty("CONNECTION_TIMEOUT_SERVER_MAIL_ASSISTENZA");
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {

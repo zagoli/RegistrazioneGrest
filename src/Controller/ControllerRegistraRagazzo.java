@@ -1,6 +1,5 @@
 package Controller;
 
-import ApplicationContext.ApplicationContext;
 import DAOManager.DAOMan;
 import Domain.*;
 import ModelAndView.ModelAndView;
@@ -39,8 +38,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
                 mv.addObject("calendari", listaCalendario);
                 //iscrizioni aperte o chiuse
-                ConfigProperties properties = (ConfigProperties) ApplicationContext.getContext().get("Properties");
-                mv.addObject("ISCRRAG", properties.getProperty("ISCRRAG").equals("true"));
+                mv.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
             } catch (NullPointerException | SQLException ex) {
                 mv.setView("err/errore.html");
                 mv.addObject("eccezione", ex);
