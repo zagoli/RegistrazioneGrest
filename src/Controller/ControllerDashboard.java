@@ -65,7 +65,7 @@ public class ControllerDashboard implements ControllerInterface {
                     mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
 
                 } catch (NullPointerException | SQLException ex) {
-                    mv.setView("err/errore.html");
+
                     mv.addObject("eccezione", ex);
                     Logger.getLogger(ControllerDashboard.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -94,7 +94,7 @@ public class ControllerDashboard implements ControllerInterface {
                     } 
                     in.close();
                 } catch (NullPointerException | SQLException | IOException ex) {
-                    mv.setView("err/errore.html");
+
                     mv.addObject("eccezione", ex);
                     Logger.getLogger(ControllerDashboard.class.getName()).log(Level.SEVERE, null, ex);
                 }

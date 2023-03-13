@@ -5,13 +5,14 @@ import Domain.Registrato;
 import Domain.RelCollabora;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerVisualizzaAttGen implements ControllerInterface{
 
@@ -34,7 +35,7 @@ public class ControllerVisualizzaAttGen implements ControllerInterface{
             }
             mv.addObject("attivita", parametri);
         } catch (NullPointerException | SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerVisualizzaAttGen.class.getName()).log(Level.SEVERE, null, ex);
         }

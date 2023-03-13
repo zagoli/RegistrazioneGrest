@@ -99,7 +99,7 @@ public class ControllerSquadre implements ControllerInterface {
                     break;
             }
         } catch (SQLException | IOException | IllegalArgumentException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerSquadre.class.getName()).log(Level.SEVERE, null, ex);
         }

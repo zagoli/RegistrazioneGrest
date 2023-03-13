@@ -4,14 +4,15 @@ import DAOManager.DAOMan;
 import Domain.Registrato;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerSegretari implements ControllerInterface {
 
@@ -41,7 +42,7 @@ public class ControllerSegretari implements ControllerInterface {
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciSegretari");
             }
         } catch (IOException | NumberFormatException | SQLException | NullPointerException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerSegretari.class.getName()).log(Level.SEVERE, null, ex);
         }

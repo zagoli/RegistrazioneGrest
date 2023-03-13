@@ -4,12 +4,13 @@ import DAOManager.DAOMan;
 import Domain.CodiceSbloccoIscrizione;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerCodice implements ControllerInterface {
 
@@ -33,7 +34,7 @@ public class ControllerCodice implements ControllerInterface {
                 }
             } catch (SQLException ex) {
                 mv.addObject("TITOLOPAGINA", "errore");
-                mv.setView("err/errore.html");
+
                 mv.addObject("eccezione", ex);
                 Logger.getLogger(ControllerCodice.class.getName()).log(Level.SEVERE, null, ex);
             }

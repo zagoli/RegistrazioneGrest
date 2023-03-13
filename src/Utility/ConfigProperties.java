@@ -21,7 +21,7 @@ public class ConfigProperties {
     }
 
     public static void setProperty(String propertyName, String value) {
-        isPropertyModifyiable(value);
+        isPropertyModifyiable(propertyName);
         Properties properties = new Properties();
         try (InputStream inFile = new FileInputStream(propertiesFilePath)) {
             properties.load(inFile);

@@ -15,14 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Dispatcher extends HttpServlet {
 
-    private final Configuration configurationTemplate = getConfiguration();
+    private Configuration configurationTemplate;
 
     @Override
     public void init() throws ServletException {
         super.init();
+        configurationTemplate = getConfiguration();
     }
 
     @Override
@@ -31,6 +34,7 @@ public class Dispatcher extends HttpServlet {
     }
 
     private Configuration getConfiguration() {
+        // Chiamare questo metodo solo dentro init()
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
         cfg.setServletContextForTemplateLoading(getServletContext(), "WEB-INF");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
@@ -42,15 +46,15 @@ public class Dispatcher extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         ControllerInterface c = this.getHandler(request);
         ModelAndView mv = c.handleRequest(request, response);
-        this.rendering(mv.getView(), mv, response);
+        this.rendering(mv, response);
     }
 
     protected ControllerInterface getHandler(HttpServletRequest request) {
         ControllerInterface c;
         String servizio = request.getPathInfo();
         switch (servizio) {
-            case "/Login":
             case "/":
+            case "/Login":
                 c = new ControllerLoginEPasswordReset();
                 break;
             case "/RegistraUtente":
@@ -412,7 +416,8 @@ public class Dispatcher extends HttpServlet {
         return c;
     }
 
-    private void rendering(String view, ModelAndView mv, HttpServletResponse response) {
+    private void rendering(ModelAndView mv, HttpServletResponse response) {
+        String view = mv.getView();
         String contentType = "text/html; charset=UTF-8";
         if (view.endsWith("json")) {
             contentType = "text/json; charset=UTF-8";
@@ -423,7 +428,9 @@ public class Dispatcher extends HttpServlet {
             String pathTemplate = view + ".ftl";
             Template template = configurationTemplate.getTemplate(pathTemplate);
             template.process(mv.getMap(), out);
-        } catch (NullPointerException | TemplateException | IOException ignored) {}
+        } catch (NullPointerException | TemplateException | IOException e) {
+            Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

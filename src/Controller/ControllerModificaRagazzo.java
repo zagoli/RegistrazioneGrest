@@ -1,14 +1,12 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.Calendario;
-import Domain.Circolo;
-import Domain.Laboratorio;
-import Domain.Parrocchia;
-import Domain.Ragazzo;
-import Domain.RelPresenzaRag;
-import Domain.Scuola;
-import ModelAndView.*;
+import Domain.*;
+import ModelAndView.ModelAndView;
+import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -19,8 +17,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerModificaRagazzo implements ControllerInterface {
 
@@ -132,7 +128,7 @@ public class ControllerModificaRagazzo implements ControllerInterface {
 
             }
         } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerModificaRagazzo.class.getName()).log(Level.SEVERE, null, ex);
         }

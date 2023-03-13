@@ -58,7 +58,7 @@
                         </div>
                     </#list>
                     <a class="btn btn-secondary btn-sm mt-1" href="javascript:;"
-                       onClick="window.open('/RegistrazioneGrest/VisualizzaQuote?ragazzi', 'width=1000, height=600, status, scrollbars=1, location');">clicca
+                       onClick="window.open('/RegistrazioneGrest/App/VisualizzaQuote?ragazzi', '_blank', 'width=1000, height=600, status=yes, scrollbars=no, location=yes');">clicca
                         qui per consultare le quote d'iscrizione</a>
                 </div>
 

@@ -75,7 +75,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                 mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
             }
         } catch (UnirestException | NullPointerException | IOException | NumberFormatException | SQLException | ParseException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerRegistraAnimatore.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -5,12 +5,13 @@ import Domain.Accompagnatore;
 import Domain.ContattoUrgenze;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerDashboardAccCu implements ControllerInterface{
 
@@ -30,7 +31,7 @@ public class ControllerDashboardAccCu implements ControllerInterface{
                 mv.addObject("contatti", listContattoUrgenze);
             }
         } catch (NullPointerException | SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }

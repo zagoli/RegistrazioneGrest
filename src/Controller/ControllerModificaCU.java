@@ -36,7 +36,7 @@ public class ControllerModificaCU implements ControllerInterface {
                 response.sendRedirect("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }
         } catch (NullPointerException | IOException | SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerInserisciAccompagnatore.class.getName()).log(Level.SEVERE, null, ex);
         }

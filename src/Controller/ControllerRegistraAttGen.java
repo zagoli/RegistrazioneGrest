@@ -4,12 +4,13 @@ import DAOManager.DAOMan;
 import Domain.RelCollabora;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerRegistraAttGen implements ControllerInterface {
 
@@ -31,7 +32,7 @@ public class ControllerRegistraAttGen implements ControllerInterface {
             DAOMan.relCollaboraDAO.insert(rc);
             response.sendRedirect("/RegistrazioneGrest/App/DashboardAttGen");
         } catch (NullPointerException | SQLException | IOException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerRegistraAttGen.class.getName()).log(Level.SEVERE, null, ex);
         }

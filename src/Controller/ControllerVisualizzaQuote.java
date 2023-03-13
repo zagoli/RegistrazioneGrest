@@ -44,9 +44,9 @@ public class ControllerVisualizzaQuote implements ControllerInterface {
             mv.setView("user/quoteterzamedia.html");
         } else {
             Exception ex = new IllegalArgumentException("Le quote sono disponibili solo per i ragazzi e i ragazzi di terza media.");
-            mv.setView("err/errore.hmtl");
             mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerModificaCU.class.getName()).log(Level.SEVERE, null, ex);
+            mv.addObject("TITOLOPAGINA", "Errore");
+            Logger.getLogger(ControllerVisualizzaQuote.class.getName()).log(Level.SEVERE, null, ex);
         }
         return mv;
     }

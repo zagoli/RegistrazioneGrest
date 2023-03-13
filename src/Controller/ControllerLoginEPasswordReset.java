@@ -56,7 +56,7 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
                             mv.addObject("FATTO", true);
                         }
                     } catch (NullPointerException | SQLException | MessagingException ex) {
-                        mv.setView("err/errore.html");
+
                         mv.addObject("eccezione", ex);
                         Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -82,7 +82,7 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
                     }
                 }
             } catch (NullPointerException | IOException | SQLException ex) {
-                mv.setView("err/errore.html");
+
                 mv.addObject("eccezione", ex);
                 Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
             }

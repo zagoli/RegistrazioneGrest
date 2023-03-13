@@ -163,7 +163,7 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                 }
             }
         } catch (NullPointerException | SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerInfoDettaglio.class.getName()).log(Level.SEVERE, null, ex);
         }

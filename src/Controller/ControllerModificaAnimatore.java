@@ -1,15 +1,14 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.Animatore;
-import Domain.Calendario;
-import Domain.Circolo;
-import Domain.Laboratorio;
-import Domain.Parrocchia;
-import Domain.RelPresenzaAn;
-import ModelAndView.*;
+import Domain.*;
+import ModelAndView.ModelAndView;
+import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import com.mashape.unirest.http.exceptions.UnirestException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -20,8 +19,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerModificaAnimatore implements ControllerInterface {
 
@@ -94,7 +91,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 mv.setView("user/modificaanimatore.html");
             }
         } catch (UnirestException | NullPointerException | IOException | NumberFormatException | SQLException | ParseException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerModificaAnimatore.class.getName()).log(Level.SEVERE, null, ex);
         }

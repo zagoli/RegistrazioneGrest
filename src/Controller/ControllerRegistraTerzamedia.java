@@ -105,7 +105,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
                 mv.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
             }
         } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException | UnirestException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerRegistraTerzamedia.class.getName()).log(Level.SEVERE, null, ex);
         }

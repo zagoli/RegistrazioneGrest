@@ -40,7 +40,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 //iscrizioni aperte o chiuse
                 mv.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
             } catch (NullPointerException | SQLException ex) {
-                mv.setView("err/errore.html");
+
                 mv.addObject("eccezione", ex);
                 Logger.getLogger(ControllerRegistraRagazzo.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -112,7 +112,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
 
             } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException ex) {
-                mv.setView("err/errore.html");
+
                 mv.addObject("eccezione", ex);
                 Logger.getLogger(ControllerRegistraRagazzo.class.getName()).log(Level.SEVERE, null, ex);
             }

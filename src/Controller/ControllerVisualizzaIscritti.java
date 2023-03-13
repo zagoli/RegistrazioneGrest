@@ -7,13 +7,14 @@ import Domain.Ragazzo;
 import Domain.Terzamedia;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerVisualizzaIscritti implements ControllerInterface {
 
@@ -53,7 +54,7 @@ public class ControllerVisualizzaIscritti implements ControllerInterface {
                     break;
             }
         } catch (SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezioni", ex);
             Logger.getLogger(ControllerVisualizzaIscritti.class.getName()).log(Level.SEVERE, null, ex);
         }

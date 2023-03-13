@@ -3,14 +3,15 @@ package Controller;
 import DAOManager.DAOMan;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerLaboratori implements ControllerInterface {
 
@@ -85,7 +86,7 @@ public class ControllerLaboratori implements ControllerInterface {
                 }
             }
         } catch (NullPointerException | SQLException | IOException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerLaboratori.class.getName()).log(Level.SEVERE, null, ex);
         }

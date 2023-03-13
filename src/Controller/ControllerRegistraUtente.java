@@ -60,7 +60,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                 mv.addObject("DONE", false);
             }
         } catch (NullPointerException | SQLException | UnirestException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             mv.addObject("TITOLOPAGINA", "Errore");
             Logger.getLogger(ControllerRegistraUtente.class.getName()).log(Level.SEVERE, null, ex);

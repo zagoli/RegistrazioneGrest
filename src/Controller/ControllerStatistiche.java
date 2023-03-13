@@ -76,7 +76,7 @@ public class ControllerStatistiche implements ControllerInterface{
             mv.addObject("mapanilab", mapanilab);
             
         } catch (NullPointerException | SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerStatistiche.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -83,7 +83,7 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamenti");
             }
         } catch (NullPointerException | IOException | SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerPagamentiRagazzi.class.getName()).log(Level.SEVERE, null, ex);
         }

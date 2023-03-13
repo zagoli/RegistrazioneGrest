@@ -3,12 +3,13 @@ package Controller;
 import DAOManager.DAOMan;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerEliminaRagazzo implements ControllerInterface{
 
@@ -25,7 +26,7 @@ public class ControllerEliminaRagazzo implements ControllerInterface{
                     response.sendRedirect("/RegistrazioneGrest/App/VisualizzaIscritti?target=rag");
                 }
         } catch (NullPointerException | IOException | NumberFormatException | SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerEliminaRagazzo.class.getName()).log(Level.SEVERE, null, ex);
         }

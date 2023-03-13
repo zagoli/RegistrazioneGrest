@@ -6,12 +6,13 @@ import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import com.mashape.unirest.http.exceptions.UnirestException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerModificaUtente implements ControllerInterface {
 
@@ -42,7 +43,7 @@ public class ControllerModificaUtente implements ControllerInterface {
                 mv.setView("user/modificautente.html");
             }
         } catch (UnirestException | IOException | NullPointerException | SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerModificaUtente.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -35,7 +35,7 @@ public class ControllerStampe implements ControllerInterface {
                             Object[] o = {rag, periodoString};
                             ragGiusti.add(o);
                         } catch (SQLException ex) {
-                            mv.setView("err/errore.html");
+
                             mv.addObject("eccezione", ex);
                             Logger.getLogger(ControllerStampe.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -49,7 +49,7 @@ public class ControllerStampe implements ControllerInterface {
                             Object[] o = {an, periodoString};
                             anGiusti.add(o);
                         } catch (SQLException ex) {
-                            mv.setView("err/errore.html");
+
                             mv.addObject("eccezione", ex);
                             Logger.getLogger(ControllerStampe.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -199,7 +199,7 @@ public class ControllerStampe implements ControllerInterface {
                 break;
             }
         } catch (NullPointerException | SQLException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerStampe.class.getName()).log(Level.SEVERE, null, ex);
         }

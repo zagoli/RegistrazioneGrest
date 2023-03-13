@@ -123,7 +123,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 mv.setView("user/modificaterzamedia.html");
             }
         } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException | UnirestException ex) {
-            mv.setView("err/errore.html");
+
             mv.addObject("eccezione", ex);
             Logger.getLogger(ControllerModificaTerzamedia.class.getName()).log(Level.SEVERE, null, ex);
         }
