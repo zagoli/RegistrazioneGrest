@@ -103,16 +103,19 @@
                                 <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando} al ${cal.aQuando} </label>
                             </div>
                         </#list>
-                        <a class="btn btn-secondary btn-sm mt-1" href="javascript:;" onClick="window.open('/RegistrazioneGrest/quote.html', 'Quote di iscrizione', 'width=1000, height=600, status, scrollbars=1, location');">clicca qui per consultare le quote d'iscrizione</a>
+                        <a class="btn btn-secondary btn-sm mt-1" href="javascript:;"
+                           onClick="window.open('/RegistrazioneGrest/VisualizzaQuote?ragazzi', 'width=1000, height=600, status, scrollbars=1, location');">clicca
+                            qui per consultare le quote d'iscrizione</a>
                     </div>
 
-                    <h3 class="text-center font-weight-bold text-uppercase"> 3 - scelta dell'attività per i ragazzi iscritti al grest </h3>
-                    <p>Durante il Grest scelgo di svolgere la seguente  attività</p>
+                <h3 class="text-center font-weight-bold text-uppercase"> 3 - scelta dell'attività per i ragazzi iscritti
+                    al grest </h3>
+                <p>Durante il Grest scelgo di svolgere la seguente attività</p>
 
-                    <div class="form-group">
-                        <label for="laboratorio" class="sr-only"> Laboratorio </label>
-                        <select id="laboratorio" class="form-control" name="laboratorio" aria-describedby="helpLaboratorio">
-                            <#list laboratori as lab>
+                <div class="form-group">
+                    <label for="laboratorio" class="sr-only"> Laboratorio </label>
+                    <select id="laboratorio" class="form-control" name="laboratorio" aria-describedby="helpLaboratorio">
+                        <#list laboratori as lab>
                                 <option value="${lab.id}">${lab.descrizione}</option>
                             </#list>
                         </select>

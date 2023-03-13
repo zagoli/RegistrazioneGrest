@@ -55,58 +55,66 @@
                                    id="cal${cal.idSettimana}" name="cal" <#if partecipa>checked</#if>>
                             <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando}
                                 al ${cal.aQuando} </label>
-                                </div>
-                            </#list>
                         </div>
+                    </#list>
+                    <a class="btn btn-secondary btn-sm mt-1" href="javascript:;"
+                       onClick="window.open('/RegistrazioneGrest/VisualizzaQuote?ragazzi', 'width=1000, height=600, status, scrollbars=1, location');">clicca
+                        qui per consultare le quote d'iscrizione</a>
+                </div>
 
-                        <div class="form-group">
-                            <label for="laboratorio"> Laboratorio </label>
-                            <select id="laboratorio" class="form-control" name="laboratorio">
-                                <#list laboratori as lab>
-                                    <option value="${lab.id}"
-                                            <#if lab.id == ragazzo.laboratorio.id>selected</#if>>${lab.descrizione}</option>
-                                </#list>
-                            </select>
-                        </div>
+                <div class="form-group">
+                    <label for="laboratorio"> Laboratorio </label>
+                    <select id="laboratorio" class="form-control" name="laboratorio">
+                        <#list laboratori as lab>
+                            <option value="${lab.id}"
+                                    <#if lab.id == ragazzo.laboratorio.id>selected</#if>>${lab.descrizione}</option>
+                        </#list>
+                    </select>
+                </div>
 
-                        <div class="form-group">
-                            <label for="parrocchia"> Parrocchia </label>
-                            <select id="parrocchia" class="form-control" name="parrocchia">
-                                <#list parrocchie as par>
-                                    <option value="${par.id}" <#if par.id == ragazzo.parrocchia.id>selected</#if>>
-                                        Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
-                                </#list>
-                            </select>
-                        </div>
+                <div class="form-group">
+                    <label for="parrocchia"> Parrocchia </label>
+                    <select id="parrocchia" class="form-control" name="parrocchia">
+                        <#list parrocchie as par>
+                            <option value="${par.id}" <#if par.id == ragazzo.parrocchia.id>selected</#if>>
+                                Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
+                        </#list>
+                    </select>
+                </div>
 
-                        <div class="form-group">
-                            <label for="circolo"> Circolo </label>
-                            <select id="circolo" class="form-control" name="circolo">
-                                <#list circoli as cir>
-                                    <option value="${cir.id}"
-                                            <#if cir.id == ragazzo.circolo.id>selected</#if>>${cir.nome} (${cir.luogo})
-                                    </option>
-                                </#list>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="nTessera"> Numero tessera Circolo Noi <b><script type="text/javascript">var theDate=new Date();document.write(theDate.getFullYear());</script></b></label>
-                            <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control" data-parsley-length="[11, 11]" aria-describedby="helpNTessera" <#if ragazzo.nTessera??>value="${ragazzo.nTessera}"</#if>/>
-                            <small id="helpNTessera" class="form-text text-muted">
-                                Inserire il numero di tessera del Circolo Noi se non si è iscritti al Circolo Noi di Balconi.
-                            </small>
-                        </div>
+                <div class="form-group">
+                    <label for="circolo"> Circolo </label>
+                    <select id="circolo" class="form-control" name="circolo">
+                        <#list circoli as cir>
+                            <option value="${cir.id}"
+                                    <#if cir.id == ragazzo.circolo.id>selected</#if>>${cir.nome} (${cir.luogo})
+                            </option>
+                        </#list>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nTessera"> Numero tessera Circolo Noi <b>
+                            <script type="text/javascript">var theDate = new Date();
+                                document.write(theDate.getFullYear());</script>
+                        </b></label>
+                    <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control"
+                           data-parsley-length="[11, 11]" aria-describedby="helpNTessera"
+                           <#if ragazzo.nTessera??>value="${ragazzo.nTessera}"</#if>/>
+                    <small id="helpNTessera" class="form-text text-muted">
+                        Inserire il numero di tessera del Circolo Noi se non si è iscritti al Circolo Noi di Balconi.
+                    </small>
+                </div>
 
 
-                        <div class="form-group">
-                            <label for="scuola"> Scuola </label>
-                            <select id="scuola" class="form-control" name="scuola">
-                                <#list scuole as scu>
-                                    <option value="${scu.id}" <#if scu.id == ragazzo.scuola.id>selected</#if>>
-                                        Scuola ${scu.grado} di ${scu.descrizione}</option>
-                                </#list>
-                            </select>
-                        </div>
+                <div class="form-group">
+                    <label for="scuola"> Scuola </label>
+                    <select id="scuola" class="form-control" name="scuola">
+                        <#list scuole as scu>
+                            <option value="${scu.id}" <#if scu.id == ragazzo.scuola.id>selected</#if>>
+                                Scuola ${scu.grado} di ${scu.descrizione}</option>
+                        </#list>
+                    </select>
+                </div>
 
                 <div class="form-group">
                     <label for="classe"> Classe </label>
@@ -127,35 +135,42 @@
 
                 <div class="form-group">
                     <label for="richieste">Eventuali richieste o proposte:</label>
-                            <textarea class="form-control" rows="5" id="richieste" name="richieste" placeholder="Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta."><#if ragazzo.richieste??>${ragazzo.richieste}</#if></textarea>
-                        </div>
+                    <textarea class="form-control" rows="5" id="richieste" name="richieste"
+                              placeholder="Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta."><#if ragazzo.richieste??>${ragazzo.richieste}</#if></textarea>
+                </div>
 
-                        <div class="form-group">
-                            <label for="noteAlimentari">Allergie o intolleranze alimentari o terapie in corso:</label>
-                            <textarea class="form-control" rows="5" id="noteAlimentari" name="noteAlimentari"><#if ragazzo.noteAlimentari??>${ragazzo.noteAlimentari}</#if></textarea>
-                        </div>
+                <div class="form-group">
+                    <label for="noteAlimentari">Allergie o intolleranze alimentari o terapie in corso:</label>
+                    <textarea class="form-control" rows="5" id="noteAlimentari"
+                              name="noteAlimentari"><#if ragazzo.noteAlimentari??>${ragazzo.noteAlimentari}</#if></textarea>
+                </div>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="entrataAnticipata" name="entrataAnticipata" <#if ragazzo.entrataAnticipata>checked</#if>>
-                            <label class="form-check-label" for="entrataAnticipata"> Usufruisce dell'entrata anticipata? </label>
-                        </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="entrataAnticipata" name="entrataAnticipata"
+                           <#if ragazzo.entrataAnticipata>checked</#if>>
+                    <label class="form-check-label" for="entrataAnticipata"> Usufruisce dell'entrata
+                        anticipata? </label>
+                </div>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="mensa" name="mensa" <#if ragazzo.mensa>checked</#if>>
-                            <label class="form-check-label" for="mensa"> Usufruisce della mensa? </label>
-                        </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="mensa" name="mensa"
+                           <#if ragazzo.mensa>checked</#if>>
+                    <label class="form-check-label" for="mensa"> Usufruisce della mensa? </label>
+                </div>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare" <#if ragazzo.saNuotare>checked</#if>>
-                            <label class="form-check-label" for="saNuotare"> Sa nuotare? </label>
-                        </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare"
+                           <#if ragazzo.saNuotare>checked</#if>>
+                    <label class="form-check-label" for="saNuotare"> Sa nuotare? </label>
+                </div>
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="fratelloIscritto" name="fratelloIscritto" <#if ragazzo.fratelloIscritto>checked</#if>>
-                            <label class="form-check-label" for="fratelloIscritto"> Ha già un fratello/sorella
-                                iscritto/a al grest? <b class="text-danger">Da selezionare solo dall'iscrizione del
-                                    secondo ragazzo in poi!</b></label>
-                        </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="fratelloIscritto" name="fratelloIscritto"
+                           <#if ragazzo.fratelloIscritto>checked</#if>>
+                    <label class="form-check-label" for="fratelloIscritto"> Ha già un fratello/sorella
+                        iscritto/a al grest? <b class="text-danger">Da selezionare solo dall'iscrizione del
+                            secondo ragazzo in poi!</b></label>
+                </div>
 
                 <br/>
 

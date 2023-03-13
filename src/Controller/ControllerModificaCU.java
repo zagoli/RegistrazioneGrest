@@ -20,18 +20,12 @@ public class ControllerModificaCU implements ControllerInterface {
         mv.addObject("TITOLOPAGINA", "Modifica contatto telefonico urgenze");
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idCU = Integer.parseInt(request.getParameter("id"));
-        if (!request.getParameterMap().containsKey("nome")) {
-            try {
+        try {
+            if (!request.getParameterMap().containsKey("nome")) {
                 mv.setView("acccu/modificacu.html");
                 ContattoUrgenze cu = DAOMan.contattoUrgenzeDAO.findById(idCU);
                 mv.addObject("contatto", cu);
-            } catch (NullPointerException | SQLException ex) {
-                mv.setView("errore.hmtl");
-                mv.addObject("eccezione", ex);
-                Logger.getLogger(ControllerModificaCU.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
+            } else {
                 ContattoUrgenze cu = DAOMan.contattoUrgenzeDAO.findById(idCU);
                 cu.setNome(request.getParameter("nome"));
                 cu.setCognome(request.getParameter("cognome"));
@@ -40,11 +34,11 @@ public class ControllerModificaCU implements ControllerInterface {
                 cu.setRelazione(request.getParameter("relazione"));
                 DAOMan.contattoUrgenzeDAO.update(cu);
                 response.sendRedirect("/RegistrazioneGrest/App/AccompagnatoriContatti");
-            } catch (NullPointerException | IOException | SQLException ex) {
-                mv.setView("err/errore.html");
-                mv.addObject("eccezione", ex);
-                Logger.getLogger(ControllerInserisciAccompagnatore.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (NullPointerException | IOException | SQLException ex) {
+            mv.setView("err/errore.html");
+            mv.addObject("eccezione", ex);
+            Logger.getLogger(ControllerInserisciAccompagnatore.class.getName()).log(Level.SEVERE, null, ex);
         }
         mv.addObject("tipoUt", tipoUt);
         return mv;

@@ -25,7 +25,7 @@
 </head>
 <body class="bg-light">
 <header class="p-3 mb-0 text-white text-center container-fluid bg-primary">
-        <div class="container-fluid">
-            <h1 class="title">GREST DI BALCONI</h1>
-        </div>
-    </header>
+    <div class="container-fluid">
+        <h1 class="title">GREST DI BALCONI</h1>
+    </div>
+</header>

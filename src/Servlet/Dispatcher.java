@@ -398,6 +398,13 @@ public class Dispatcher extends HttpServlet {
                     c = new ControllerLoginEPasswordReset();
                 }
                 break;
+            case "/VisualizzaQuote":
+                if (request.getSession().getAttribute("idUtente") != null) {
+                    c = new ControllerVisualizzaQuote();
+                } else {
+                    c = new ControllerLoginEPasswordReset();
+                }
+                break;
             default:
                 c = new Controller404();
                 break;
