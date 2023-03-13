@@ -277,7 +277,7 @@ public class Dispatcher extends HttpServlet {
             case "/GestisciPagamenti":
                 if (request.getSession().getAttribute("idUtente") != null) {
                     if ((Integer) request.getSession().getAttribute("tipoUtente") <= 1) {
-                        c = new ControllerPagamenti();
+                        c = new ControllerPagamentiRagazzi();
                     } else {
                         c = new Controller403();
                     }

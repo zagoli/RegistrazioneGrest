@@ -6,6 +6,7 @@ import Domain.Terzamedia;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+import Utility.ConfigProperties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ControllerPagamentiTerzamedia implements ControllerInterface {
+
+    private static final int SUPPLEMENTO_FUORI_COMUNE = Integer.parseInt(ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_TERZAMEDIA"));
+    private static final int[] QUOTA = new int[]{
+            Integer.parseInt(ConfigProperties.getProperty("PREZZO_1_TERZAMEDIA")),
+            Integer.parseInt(ConfigProperties.getProperty("PREZZO_2_TERZAMEDIA")),
+            Integer.parseInt(ConfigProperties.getProperty("PREZZO_3_TERZAMEDIA")),
+            Integer.parseInt(ConfigProperties.getProperty("PREZZO_4_TERZAMEDIA"))
+    };
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -65,11 +74,9 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
     }
 
     protected static float calcolaQuota(Terzamedia t) throws SQLException {
-        final int[] quota = {60, 90, 120, 140};
-        final int supplementoFuoriComune = 15;
         final int nSettimane = DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size();
-        return quota[nSettimane - 1] +
-                nSettimane * (Checker.checkIsFromPescantina(t.getRegistrato().getLocalita()) ? 0 : supplementoFuoriComune);
+        return QUOTA[nSettimane - 1] +
+                nSettimane * (Checker.checkIsFromPescantina(t.getRegistrato().getLocalita()) ? 0 : SUPPLEMENTO_FUORI_COMUNE);
     }
 
 }

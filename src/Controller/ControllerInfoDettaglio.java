@@ -1,28 +1,18 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.Accompagnatore;
-import Domain.Animatore;
-import Domain.AttivitaGen;
-import Domain.Calendario;
-import Domain.ContattoUrgenze;
-import Domain.Pagamento;
-import Domain.PagamentoTerzamedia;
-import Domain.Ragazzo;
-import Domain.RelPresenzaAn;
-import Domain.RelPresenzaRag;
-import Domain.RelPresenzaTer;
-import Domain.Terzamedia;
+import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class ControllerInfoDettaglio implements ControllerInterface {
 
@@ -105,7 +95,7 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     List<AttivitaGen> listAttivitaGen = listAttivitaGenComp.stream().distinct().collect(Collectors.toList());
                     mv.addObject("attgen", listAttivitaGen);
                     mv.addObject("calendari", listCalendario);
-                    mv.addObject("quotaIscrizione", ControllerPagamenti.calcolaQuota(r));
+                    mv.addObject("quotaIscrizione", ControllerPagamentiRagazzi.calcolaQuota(r));
                     mv.setView("stampe/schedaragazzo.html");
                     break;
                 }
