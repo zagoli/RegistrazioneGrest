@@ -31,7 +31,6 @@ public class DAOMan {
     public static final CodiceSbloccoIscrizioneDAO codiceSbloccoIscrizioneDAO = new CodiceSbloccoIscrizioneDAOImpl();
     public static final SquadraDAO squadraDAO = new SquadraDAOImpl();
     private static final String URL_ENRICO = ConfigProperties.getProperty("JDBC_URL_PRODUCTION_DATABASE");
-    private static final String URL_AZURE = ConfigProperties.getProperty("JDBC_URL_TEST_DATABASE");
 
     public static Connection getConnection() {
         Connection connection;
