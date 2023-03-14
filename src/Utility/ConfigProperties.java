@@ -19,12 +19,15 @@ public class ConfigProperties {
             Properties properties = new Properties();
             properties.load(inFile);
             String propertyValue = properties.getProperty(propertyName);
+            if (propertyValue == null) {
+                throw new RuntimeException("Impossibile trovare la proprietà di configurazione richiesta.");
+            }
             if (isPropertyImmutable(propertyName)) {
                 cache.put(propertyName, propertyValue);
             }
             return propertyValue;
         } catch (FileNotFoundException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -46,7 +49,7 @@ public class ConfigProperties {
         try (OutputStream outFile = new FileOutputStream(propertiesFilePath)) {
             properties.store(outFile, null);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
