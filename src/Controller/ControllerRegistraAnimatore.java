@@ -6,6 +6,8 @@ import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigProperties;
+import Utility.ConfigPropertyException;
+import Utility.Utils;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,16 +18,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerRegistraAnimatore implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Registra Animatore");
         try {
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("TITOLOPAGINA", "Registra Animatore");
             boolean isMailValid = Checker.checkMail(request.getParameter("mail"));
             if (request.getParameterMap().containsKey("nome") && isMailValid) {
                 Animatore animatore = new Animatore();
@@ -74,13 +75,10 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                 //iscrizioni aperte o chiuse
                 mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
             }
-        } catch (UnirestException | NullPointerException | IOException | NumberFormatException | SQLException | ParseException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerRegistraAnimatore.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | SQLException | IOException | ConfigPropertyException | ParseException |
+                       UnirestException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraAnimatore.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 

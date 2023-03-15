@@ -5,6 +5,8 @@ import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+import Utility.ConfigPropertyException;
+import Utility.Utils;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,18 +19,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerModificaTerzamedia implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Modifica terza media");
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        int idTerzamedia = Integer.parseInt(request.getParameter("id"));
         try {
+            mv.addObject("TITOLOPAGINA", "Modifica terza media");
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            int idTerzamedia = Integer.parseInt(request.getParameter("id"));
             Terzamedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO IL TERZAMEDIA E FACCIO UNA REDIRECT
@@ -45,58 +45,47 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 t.setScuola(DAOMan.scuolaDAO.findById(Integer.parseInt(request.getParameter("scuola"))));
                 t.setSezione(request.getParameter("sezione"));
                 t.setMail(request.getParameter("mail"));
-
                 if (request.getParameterMap().containsKey("saNuotare")) {
                     t.setSaNuotare(Boolean.TRUE);
                 } else {
                     t.setSaNuotare(Boolean.FALSE);
                 }
-
                 String cellulare = request.getParameter("cellulare");
                 if (!cellulare.isEmpty()) {
                     t.setCellulare(cellulare);
                 }
-
                 if (request.getParameterMap().containsKey("festaPassaggio")) {
                     t.setFestaPassaggio(Boolean.TRUE);
                 } else {
                     t.setFestaPassaggio(Boolean.FALSE);
                 }
-
                 String richieste = request.getParameter("richieste");
                 if (!richieste.isEmpty()) {
                     t.setRichieste(richieste);
                 }
-
                 String noteAlimentari = request.getParameter("noteAlimentari");
                 if (!noteAlimentari.isEmpty()) {
                     t.setNoteAlimentari(noteAlimentari);
                 }
-
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
                     t.setnTessera(nTessera);
                 }
-
                 DAOMan.terzamediaDAO.update(t);
-
                 List<RelPresenzaTer> calToDelete = DAOMan.relPresenzaTerDAO.findByTerzamediaId(idTerzamedia);
                 for (RelPresenzaTer relPresenzaTer : calToDelete) {
                     DAOMan.relPresenzaTerDAO.delete(relPresenzaTer);
                 }
-
                 String[] cal = request.getParameterValues("cal");
                 for (String calId : cal) {
                     RelPresenzaTer rpt = new RelPresenzaTer(Integer.parseInt(calId), idTerzamedia);
                     DAOMan.relPresenzaTerDAO.insert(rpt);
                 }
-
                 if (request.getSession().getAttribute("tipoUtente").equals(3)) {
                     response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
                 } else {
                     response.sendRedirect("/RegistrazioneGrest/App/VisualizzaIscritti?target=ter");
                 }
-
             } else {
                 //PREPARO I DATI PER LA PAGINA
                 List<Laboratorio> listLabGiusti = DAOMan.laboratorioDAO.findAll();
@@ -122,12 +111,10 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 }
                 mv.setView("user/modificaterzamedia.html");
             }
-        } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException | UnirestException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerModificaTerzamedia.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | UnirestException | SQLException | IOException | ParseException |
+                       ConfigPropertyException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerModificaTerzamedia.class.getName());
         }
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 

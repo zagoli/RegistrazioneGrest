@@ -4,14 +4,13 @@ import DAOManager.DAOMan;
 import Domain.Registrato;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class ControllerSegretari implements ControllerInterface {
@@ -19,8 +18,9 @@ public class ControllerSegretari implements ControllerInterface {
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Gestisci segretari");
         try {
+            mv.addObject("TITOLOPAGINA", "Gestisci segretari");
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().isEmpty()) {
                 List<Registrato> lallut = DAOMan.registratoDAO.findAll();
                 List<Registrato> lseg;
@@ -41,13 +41,9 @@ public class ControllerSegretari implements ControllerInterface {
                 DAOMan.registratoDAO.update(r);
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciSegretari");
             }
-        } catch (IOException | NumberFormatException | SQLException | NullPointerException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerSegretari.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | IOException | SQLException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerSegretari.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 

@@ -4,14 +4,15 @@ import DAOManager.DAOMan;
 import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.ConfigPropertyException;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class ControllerInfoDettaglio implements ControllerInterface {
@@ -19,11 +20,12 @@ public class ControllerInfoDettaglio implements ControllerInterface {
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("TITOLOPAGINA", "Info dettagliate");
-        String target = request.getParameter("target");
-        int id = Integer.parseInt(request.getParameter("id"));
         try {
+            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
+            mv.addObject("tipoUt", tipoUt);
+            mv.addObject("TITOLOPAGINA", "Info dettagliate");
+            String target = request.getParameter("target");
+            int id = Integer.parseInt(request.getParameter("id"));
             switch (target) {
                 case "infoani": {
                     Animatore a = DAOMan.animatoreDAO.findById(id);
@@ -162,12 +164,9 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     break;
                 }
             }
-        } catch (NullPointerException | SQLException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerInfoDettaglio.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | SQLException | ConfigPropertyException | IOException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerInfoDettaglio.class.getName());
         }
-        mv.addObject("tipoUt", tipoUt);
         return mv;
 
     }

@@ -3,6 +3,7 @@ package Controller;
 import DAOManager.DAOMan;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,17 +11,16 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerLaboratori implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        //devo fare controlli aggiuntivi, e mettere l'hidden input submitted, visto che in questo caso passo sempre nei parametri anche target, a differenza delle squadre dove ci sono 3 controller separati perchè sono pigro
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Assegnazione Laboratori");
         try {
+            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
+            mv.addObject("tipoUt", tipoUt);
+            mv.addObject("TITOLOPAGINA", "Assegnazione Laboratori");
             //preparo gli oggetti per la pagina
             if (!request.getParameterMap().containsKey("submitted")) {
                 switch (request.getParameter("target")) {
@@ -49,7 +49,7 @@ public class ControllerLaboratori implements ControllerInterface {
                             for (String value : listLabParam) {
                                 String[] ragLabArray = value.split(",");
                                 int idRagazzo = Integer.parseInt(ragLabArray[0]), idLaboratorio = Integer.parseInt(ragLabArray[1]);
-                                DAOMan.ragazzoDAO.updateLaboratorio(idRagazzo,idLaboratorio);
+                                DAOMan.ragazzoDAO.updateLaboratorio(idRagazzo, idLaboratorio);
                             }
                         }
                         response.sendRedirect("/RegistrazioneGrest/App/Laboratori?target=rag");
@@ -63,9 +63,9 @@ public class ControllerLaboratori implements ControllerInterface {
                             // in alternativa, potrei copiare il set non modificabile in un nuovo set modificabile, ed eliminare le entry che non interessano, ma fa anche stesso
                             if (key.matches("\\d+")) {
                                 String[] value = entry.getValue();
-                                //il secondo elemento è presente solo se è a true, come nei checkbox
-                                //qua sotto: il primo parametro è l'id che sarebbe la chiave della entry, il secondo è il laboratorio cioè il primo elemento di value e il secondo è sapere se c'è il valore "responsabile"
-                                DAOMan.animatoreDAO.updateLaboratorio(Integer.parseInt(key),Integer.parseInt(value[0]),value.length == 2); //scrittura fighetta ispirata da Netbeans
+                                // il secondo elemento è presente solo se è a true, come nei checkbox
+                                // qua sotto: il primo parametro è l'id che sarebbe la chiave della entry, il secondo è il laboratorio cioè il primo elemento di value e il secondo è sapere se c'è il valore "responsabile"
+                                DAOMan.animatoreDAO.updateLaboratorio(Integer.parseInt(key), Integer.parseInt(value[0]), value.length == 2); //scrittura fighetta ispirata da Netbeans
                             }
                         }
                         response.sendRedirect("/RegistrazioneGrest/App/Laboratori?target=an");
@@ -85,13 +85,9 @@ public class ControllerLaboratori implements ControllerInterface {
                     }
                 }
             }
-        } catch (NullPointerException | SQLException | IOException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerLaboratori.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | IOException | SQLException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerLaboratori.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 }

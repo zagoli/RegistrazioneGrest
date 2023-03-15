@@ -1,12 +1,12 @@
 package DAOManager;
 
 import Utility.ConfigProperties;
+import Utility.ConfigPropertyException;
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DAOMan {
 
@@ -30,16 +30,14 @@ public class DAOMan {
     public static final PagamentoTerzamediaDAO pagamentoTerzamediaDAO = new PagamentoTerzamediaDAOImpl();
     public static final CodiceSbloccoIscrizioneDAO codiceSbloccoIscrizioneDAO = new CodiceSbloccoIscrizioneDAOImpl();
     public static final SquadraDAO squadraDAO = new SquadraDAOImpl();
-    private static final String URL_ENRICO = ConfigProperties.getProperty("JDBC_URL_PRODUCTION_DATABASE");
 
     public static Connection getConnection() {
         Connection connection;
         try {
             SQLServerDataSource ds = new SQLServerDataSource();
-            ds.setURL(URL_ENRICO);
+            ds.setURL(ConfigProperties.getProperty("JDBC_URL_PRODUCTION_DATABASE"));
             connection = ds.getConnection();
-        } catch (SQLException e) {
-            Logger.getLogger(DAOMan.class.getName()).log(Level.SEVERE, null, e);
+        } catch (SQLException | IOException | ConfigPropertyException e) {
             throw new RuntimeException("Connessione al database non riuscita");
         }
         return connection;

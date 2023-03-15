@@ -10,6 +10,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -17,11 +18,9 @@ import java.util.logging.Logger;
 
 public class Checker {
 
-    private static final String EMAIL_API_KEY = ConfigProperties.getProperty("XMLAPI_MAIL_CHECK_API_KEY");
-
-    public static boolean checkMail(String mail) throws UnirestException {
+    public static boolean checkMail(String mail) throws UnirestException, ConfigPropertyException, IOException {
         HttpResponse<JsonNode> response = Unirest.get("https://emailverification.whoisxmlapi.com/api/v2")
-                .queryString("apiKey", EMAIL_API_KEY)
+                .queryString("apiKey", ConfigProperties.getProperty("XMLAPI_MAIL_CHECK_API_KEY"))
                 .queryString("emailAddress", mail)
                 .asJson();
         //controllo se la richiesta è andata a buon fine

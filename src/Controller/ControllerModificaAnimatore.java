@@ -5,6 +5,8 @@ import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+import Utility.ConfigPropertyException;
+import Utility.Utils;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,18 +19,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerModificaAnimatore implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Modifica animatore");
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        int idAnimatore = Integer.parseInt(request.getParameter("id"));
         try {
+            int idAnimatore = Integer.parseInt(request.getParameter("id"));
+            mv.addObject("TITOLOPAGINA", "Modifica animatore");
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO ANIMATORE E FACCIO UNA REDIRECT
@@ -50,14 +50,11 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 if (!nTessera.isEmpty()) {
                     a.setnTessera(nTessera);
                 }
-
                 DAOMan.animatoreDAO.update(a);
-                
                 List<RelPresenzaAn> calToDelete = DAOMan.relPresenzaAnDAO.findByAnimatoreId(Integer.parseInt(request.getParameter("id")));
                 for (RelPresenzaAn relPresenzaAn : calToDelete) {
                     DAOMan.relPresenzaAnDAO.delete(relPresenzaAn);
                 }
-
                 String[] cal = request.getParameterValues("cal");
                 for (String calId : cal) {
                     RelPresenzaAn rpa = new RelPresenzaAn(a.getId(),Integer.parseInt(calId));
@@ -90,12 +87,10 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 }
                 mv.setView("user/modificaanimatore.html");
             }
-        } catch (UnirestException | NullPointerException | IOException | NumberFormatException | SQLException | ParseException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerModificaAnimatore.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | UnirestException | SQLException | IOException | ParseException |
+                       ConfigPropertyException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerModificaAnimatore.class.getName());
         }
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 

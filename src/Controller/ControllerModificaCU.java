@@ -4,23 +4,22 @@ import DAOManager.DAOMan;
 import Domain.ContattoUrgenze;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerModificaCU implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Modifica contatto telefonico urgenze");
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        int idCU = Integer.parseInt(request.getParameter("id"));
         try {
+            mv.addObject("TITOLOPAGINA", "Modifica contatto telefonico urgenze");
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            int idCU = Integer.parseInt(request.getParameter("id"));
             if (!request.getParameterMap().containsKey("nome")) {
                 mv.setView("acccu/modificacu.html");
                 ContattoUrgenze cu = DAOMan.contattoUrgenzeDAO.findById(idCU);
@@ -35,12 +34,9 @@ public class ControllerModificaCU implements ControllerInterface {
                 DAOMan.contattoUrgenzeDAO.update(cu);
                 response.sendRedirect("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }
-        } catch (NullPointerException | IOException | SQLException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerInserisciAccompagnatore.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | IOException | SQLException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerModificaCU.class.getName());
         }
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 

@@ -3,13 +3,12 @@ package Controller;
 import DAOManager.DAOMan;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerEliminaCU implements ControllerInterface{
 
@@ -20,10 +19,8 @@ public class ControllerEliminaCU implements ControllerInterface{
             int id = Integer.parseInt(request.getParameter("id"));
             DAOMan.contattoUrgenzeDAO.delete(id);
             response.sendRedirect("/RegistrazioneGrest/App/AccompagnatoriContatti");
-        } catch (NullPointerException | IOException | NumberFormatException | SQLException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerEliminaRagazzo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | IOException | SQLException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerEliminaCU.class.getName());
         }
         return mv;
     }
