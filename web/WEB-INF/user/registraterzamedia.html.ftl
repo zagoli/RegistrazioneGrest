@@ -215,10 +215,10 @@
                                            value="Invia l'iscrizione"/>
                                 </div>
                             </#if>
-                        </div>                        
+                        </div>
                     </form>
-                </div>
-            </div>
         </div>
-<script src="../risorse/js/ajaxsbloccaiscr.min.js"></script>
+    </div>
+</div>
+<script src="../risorse/js/ajaxsbloccaiscr.js"></script>
 <#include "../struct/footer.html.ftl">

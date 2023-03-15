@@ -15,11 +15,10 @@ public class ControllerCodice implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
-        boolean result = false;
+        ModelAndView mv = new ModelAndViewStandard("user/rispostacodice.json");
+        boolean success = false;
         try {
-            if ("verifica".equals(request.getParameter("scope"))) {
-                mv.setView("user/rispostacodice.json");
+            if (request.getParameter("scope").equals("verifica")) {
                 String codiceString = request.getParameter("codice");
                 CodiceSbloccoIscrizione c = DAOMan.codiceSbloccoIscrizioneDAO.findByCodice(codiceString);
                 if (c != null && c.getUtilizzato() == 0) {
@@ -28,13 +27,13 @@ public class ControllerCodice implements ControllerInterface {
                     c.setUtilizzato(id);
                     c.setDataUtilizzo(new Timestamp(System.currentTimeMillis()));
                     DAOMan.codiceSbloccoIscrizioneDAO.update(c);
-                    result = true;
+                    success = true;
                 }
             }
         } catch (final RuntimeException | SQLException e) {
             Utils.logException(e, ControllerCodice.class.getName());
         } finally {
-            mv.addObject("result", result);
+            mv.addObject("result", success);
         }
         return mv;
     }

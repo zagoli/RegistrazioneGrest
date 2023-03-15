@@ -221,10 +221,10 @@
                             </div>
                         </#if>
                     </div>
-                    
-                </form>
-            </div>
+
+            </form>
         </div>
     </div>
-<script src="../risorse/js/ajaxsbloccaiscr.min.js"></script>
+</div>
+<script src="../risorse/js/ajaxsbloccaiscr.js"></script>
 <#include "../struct/footer.html.ftl">

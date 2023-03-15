@@ -38,15 +38,15 @@
             </#if>               
         </div>  
     </div>
-    <script>
-        $(document).ready( function () {
-            $('#t_labrag').DataTable({
-                paging: false,
-                columnDefs: [{targets:[3],orderable:false}],
-                info: false
-            });
-        } );
-    </script>
-    <!-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutto quello che è rimasto uguale-->
-    <script src="../risorse/js/salvasolomodificatoragter.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#t_labrag').DataTable({
+            paging: false,
+            columnDefs: [{targets: [3], orderable: false}],
+            info: false
+        });
+    });
+</script>
+<!-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutto quello che è rimasto uguale-->
+<script src="../risorse/js/salvasolomodificatoragter.js"></script>
 <#include "../struct/footer.html.ftl">

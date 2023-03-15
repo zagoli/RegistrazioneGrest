@@ -69,7 +69,7 @@
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-<script src="../risorse/js/palette.min.js"></script>
+<script src="../risorse/js/palette.js"></script>
 <script>
     var elGrafRagClassi = $('#graficoRagClassi');
     var grafRagClassi = new Chart(elGrafRagClassi, {

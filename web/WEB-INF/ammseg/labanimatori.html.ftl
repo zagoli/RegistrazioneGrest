@@ -48,14 +48,14 @@
             $('#t_labani').DataTable({
                 paging: false,
                 columnDefs: [
-                    {orderable:false,targets:[2,3]},
-                    {searchable:false,targets:3},
-                    {width:"10%",targets:3}
+                    {orderable: false, targets: [2, 3]},
+                    {searchable: false, targets: 3},
+                    {width: "10%", targets: 3}
                 ],
                 info: false
             });
-        } );
+        });
     </script>
-    <!-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutti gli animatori compresi quelli che sono rimasti uguali-->
-    <script src="../risorse/js/salvasolomodificatoanimatori.min.js"></script>
+<!-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutti gli animatori compresi quelli che sono rimasti uguali-->
+<script src="../risorse/js/salvasolomodificatoanimatori.js"></script>
 <#include "../struct/footer.html.ftl">
