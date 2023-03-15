@@ -3,24 +3,22 @@ package Controller;
 import DAOManager.DAOMan;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerSquadre implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        //devo fare controlli aggiuntivi, e mettere l'hidden input submitted, visto che in questo caso passo sempre nei parametri anche target, a differenza delle squadre dove ci sono 3 controller separati perchè sono pigro
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Assegnazione Squadre");
-        //un solo switch e più if invece di un if e due switch (oggi mi piaceva così)
         try {
+            mv.addObject("TITOLOPAGINA", "Assegnazione Squadre");
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
             switch (request.getParameter("target")) {
                 case "rag":
                     if (!request.getParameterMap().containsKey("submitted")) {
@@ -57,7 +55,6 @@ public class ControllerSquadre implements ControllerInterface {
                             if (entry.getKey().matches("\\d+")) { //vedi controller laboratori per spiegazione
                                 Integer squadra;
                                 String[] value = entry.getValue();
-                                //TODO: cercare di sistemare meglio questi if
                                 //imposto la squadra, se non c'è metto null
                                 if (value[0].length() == 0) {
                                     if (value.length == 2) {
@@ -98,13 +95,9 @@ public class ControllerSquadre implements ControllerInterface {
                     }
                     break;
             }
-        } catch (SQLException | IOException | IllegalArgumentException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerSquadre.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | IOException | SQLException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerSquadre.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 }

@@ -7,6 +7,8 @@ import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigProperties;
+import Utility.ConfigPropertyException;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,24 +18,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerPagamentiTerzamedia implements ControllerInterface {
 
-    private static final int SUPPLEMENTO_FUORI_COMUNE = Integer.parseInt(ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_TERZAMEDIA"));
-    private static final int[] QUOTA = new int[]{
-            Integer.parseInt(ConfigProperties.getProperty("PREZZO_1_TERZAMEDIA")),
-            Integer.parseInt(ConfigProperties.getProperty("PREZZO_2_TERZAMEDIA")),
-            Integer.parseInt(ConfigProperties.getProperty("PREZZO_3_TERZAMEDIA")),
-            Integer.parseInt(ConfigProperties.getProperty("PREZZO_4_TERZAMEDIA"))
-    };
+
+    protected static float calcolaQuota(Terzamedia t) throws SQLException, ConfigPropertyException, IOException {
+        int supplementoFuoriComune = Integer.parseInt(ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_TERZAMEDIA"));
+        int[] tabellaQuotaBase = new int[]{
+                Integer.parseInt(ConfigProperties.getProperty("PREZZO_1_TERZAMEDIA")),
+                Integer.parseInt(ConfigProperties.getProperty("PREZZO_2_TERZAMEDIA")),
+                Integer.parseInt(ConfigProperties.getProperty("PREZZO_3_TERZAMEDIA")),
+                Integer.parseInt(ConfigProperties.getProperty("PREZZO_4_TERZAMEDIA"))
+        };
+        int nSettimane = DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size();
+        return tabellaQuotaBase[nSettimane - 1] +
+                nSettimane * (Checker.checkIsFromPescantina(t.getRegistrato().getLocalita()) ? 0 : supplementoFuoriComune);
+    }
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Gestisci pagamenti terzamedia");
         try {
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("TITOLOPAGINA", "Gestisci pagamenti terzamedia");
             if (request.getParameterMap().isEmpty()) {
                 List<Terzamedia> listTerzamedia = DAOMan.terzamediaDAO.findAll();
                 List<PagamentoTerzamedia> pagamenti = DAOMan.pagamentoTerzamediaDAO.findAll();
@@ -63,20 +70,10 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
                 DAOMan.pagamentoTerzamediaDAO.delete(id);
                 response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
             }
-        } catch (NullPointerException | IOException | SQLException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerPagamentiTerzamedia.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | IOException | SQLException | ConfigPropertyException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerPagamentiTerzamedia.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
-    }
-
-    protected static float calcolaQuota(Terzamedia t) throws SQLException {
-        final int nSettimane = DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size();
-        return QUOTA[nSettimane - 1] +
-                nSettimane * (Checker.checkIsFromPescantina(t.getRegistrato().getLocalita()) ? 0 : SUPPLEMENTO_FUORI_COMUNE);
     }
 
 }

@@ -5,24 +5,23 @@ import Domain.Registrato;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+import Utility.Utils;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerModificaUtente implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Modifica account");
-        int idUt = (int) request.getSession().getAttribute("idUtente");
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         try {
+            mv.addObject("TITOLOPAGINA", "Modifica account");
+            int idUt = (int) request.getSession().getAttribute("idUtente");
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
                 r.setMail(request.getParameter("mail"));
@@ -42,12 +41,9 @@ public class ControllerModificaUtente implements ControllerInterface {
                 mv.addObject("registrato", r);
                 mv.setView("user/modificautente.html");
             }
-        } catch (UnirestException | IOException | NullPointerException | SQLException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerModificaUtente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | SQLException | IOException | UnirestException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerModificaUtente.class.getName());
         }
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 }

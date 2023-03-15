@@ -5,26 +5,25 @@ import Domain.Registrato;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+import Utility.Utils;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerRegistraUtente implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        if (request.getSession().getAttribute("tipoUtente") != null && request.getSession().getAttribute("tipoUtente").equals(0)) {
-            mv.setView("ammseg/registrasegretario.html");
-        } else {
-            mv.setView("user/registrautente.html");
-        }
-        //richiesta di registrazione proveniente dal form, quindi contiene almeno un parametro, in questo caso il nome
         try {
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            if (request.getSession().getAttribute("tipoUtente") != null && request.getSession().getAttribute("tipoUtente").equals(0)) {
+                mv.setView("ammseg/registrasegretario.html");
+            } else {
+                mv.setView("user/registrautente.html");
+            }
             if (request.getParameterMap().containsKey("nome")) {
                 if (Checker.checkMail(request.getParameter("mail"))) {
                     Registrato r = new Registrato();
@@ -44,7 +43,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                             r.setTipoUt(2);
                         }
                     } else {
-                        r.setTipoUt(3);                        
+                        r.setTipoUt(3);
                     }
                     DAOMan.registratoDAO.insert(r);
                     mv.addObject("TITOLOPAGINA", "Utente Registrato");
@@ -54,19 +53,13 @@ public class ControllerRegistraUtente implements ControllerInterface {
                     mv.addObject("TITOLOPAGINA", "Registrazione Utente");
                     mv.addObject("DONE", false);
                 }
-            } //se non ci sono parametri si rimanda al form
-            else {
+            } else {
                 mv.addObject("TITOLOPAGINA", "Registrazione Utente");
                 mv.addObject("DONE", false);
             }
-        } catch (NullPointerException | SQLException | UnirestException ex) {
-
-            mv.addObject("eccezione", ex);
-            mv.addObject("TITOLOPAGINA", "Errore");
-            Logger.getLogger(ControllerRegistraUtente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | UnirestException | SQLException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraUtente.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 

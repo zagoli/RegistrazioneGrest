@@ -5,7 +5,6 @@ import java.util.HashMap;
 public class ModelAndViewStandard implements ModelAndView {
 
     final HashMap<String, Object> map = new HashMap<>();
-    protected boolean redirect = false;
     protected String view = "/err/errore.html";
 
     public ModelAndViewStandard() {

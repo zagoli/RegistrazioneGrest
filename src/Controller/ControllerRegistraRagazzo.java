@@ -5,6 +5,8 @@ import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.ConfigProperties;
+import Utility.ConfigPropertyException;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,17 +16,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerRegistraRagazzo implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Registrazione Ragazzo");
-        if (!request.getParameterMap().containsKey("nome")) {
-            try {
+        try {
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("TITOLOPAGINA", "Registrazione Ragazzo");
+            if (!request.getParameterMap().containsKey("nome")) {
                 mv.setView("user/registraragazzo.html");
                 //Recupera dati per la registrazione
                 List<Laboratorio> listLabGiusti = DAOMan.laboratorioDAO.findNonRiservato();
@@ -39,13 +40,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 mv.addObject("calendari", listaCalendario);
                 //iscrizioni aperte o chiuse
                 mv.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
-            } catch (NullPointerException | SQLException ex) {
-
-                mv.addObject("eccezione", ex);
-                Logger.getLogger(ControllerRegistraRagazzo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            try {
+            } else {
                 Ragazzo ragazzo = new Ragazzo();
                 ragazzo.setNome(request.getParameter("nome"));
                 ragazzo.setCognome(request.getParameter("cognome"));
@@ -110,15 +105,10 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 }
 
                 response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
-
-            } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException ex) {
-
-                mv.addObject("eccezione", ex);
-                Logger.getLogger(ControllerRegistraRagazzo.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (final RuntimeException | IOException | SQLException | ParseException | ConfigPropertyException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraRagazzo.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 }

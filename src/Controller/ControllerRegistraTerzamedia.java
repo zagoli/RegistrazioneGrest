@@ -6,6 +6,8 @@ import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigProperties;
+import Utility.ConfigPropertyException;
+import Utility.Utils;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,16 +18,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerRegistraTerzamedia implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Registrazione ragazzo di Terzamedia");
         try {
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("TITOLOPAGINA", "Registrazione ragazzo di Terzamedia");
             boolean isMailValid = Checker.checkMail(request.getParameter("mail"));
             if (request.getParameterMap().containsKey("nome") && isMailValid) {
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
@@ -104,13 +105,10 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
                 //iscrizioni aperte o chiuse
                 mv.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
             }
-        } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException | UnirestException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerRegistraTerzamedia.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | IOException | ConfigPropertyException | SQLException | ParseException |
+                       UnirestException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraTerzamedia.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 }

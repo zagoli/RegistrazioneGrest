@@ -5,6 +5,7 @@ import Domain.Animatore;
 import Domain.Ragazzo;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,17 +14,16 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class ControllerStatistiche implements ControllerInterface{
+public class ControllerStatistiche implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Statistiche");
-        mv.setView("ammseg/statistiche.html");
         try {
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("TITOLOPAGINA", "Statistiche");
+            mv.setView("ammseg/statistiche.html");
             mv.addObject("nrag", DAOMan.ragazzoDAO.count());
             mv.addObject("nani", DAOMan.animatoreDAO.count());
             mv.addObject("nter", DAOMan.terzamediaDAO.count());
@@ -35,14 +35,14 @@ public class ControllerStatistiche implements ControllerInterface{
             mv.addObject("anisett", DAOMan.animatoreDAO.countSettimanale());
             mv.addObject("mensasett", DAOMan.ragazzoDAO.countMensaSettimanale());
             mv.addObject("eansett", DAOMan.ragazzoDAO.countAnticipatoSettimanale());
-            
-            Map<String,Integer> mapragclassi = new HashMap<>();
-            Map<String,Integer> mapraglab = new HashMap<>();
+
+            Map<String, Integer> mapragclassi = new HashMap<>();
+            Map<String, Integer> mapraglab = new HashMap<>();
             List<Ragazzo> lrag = DAOMan.ragazzoDAO.findAll();
             lrag.forEach((Ragazzo rag) -> {
-                Integer nragazzi = mapragclassi.putIfAbsent(rag.getClasse()+rag.getScuola().getGrado().substring(0, 1).toUpperCase(), 1);
+                Integer nragazzi = mapragclassi.putIfAbsent(rag.getClasse() + rag.getScuola().getGrado().substring(0, 1).toUpperCase(), 1);
                 if (nragazzi != null) {
-                    mapragclassi.put(rag.getClasse()+rag.getScuola().getGrado().substring(0, 1).toUpperCase(), nragazzi + 1);
+                    mapragclassi.put(rag.getClasse() + rag.getScuola().getGrado().substring(0, 1).toUpperCase(), nragazzi + 1);
                 }
                 Integer nragazzilab = mapraglab.putIfAbsent(rag.getLaboratorio().getDescrizione(), 1);
                 if (nragazzilab != null) {
@@ -51,10 +51,10 @@ public class ControllerStatistiche implements ControllerInterface{
             });
             mv.addObject("mapragclassi", mapragclassi);
             mv.addObject("mapraglab", mapraglab);
-            
-            
-            Map<Integer,Integer> mapanieta = new HashMap<>();
-            Map<String,Integer> mapanilab = new HashMap<>();
+
+
+            Map<Integer, Integer> mapanieta = new HashMap<>();
+            Map<String, Integer> mapanilab = new HashMap<>();
             List<Animatore> lani = DAOMan.animatoreDAO.findAll();
             lani.stream().map((ani) -> {
                 Calendar cal = Calendar.getInstance();
@@ -74,15 +74,10 @@ public class ControllerStatistiche implements ControllerInterface{
             });
             mv.addObject("mapanieta", mapanieta);
             mv.addObject("mapanilab", mapanilab);
-            
-        } catch (NullPointerException | SQLException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerStatistiche.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | SQLException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerStatistiche.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
-    
+
 }

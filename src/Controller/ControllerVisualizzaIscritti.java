@@ -7,14 +7,13 @@ import Domain.Ragazzo;
 import Domain.Terzamedia;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerVisualizzaIscritti implements ControllerInterface {
 
@@ -22,6 +21,7 @@ public class ControllerVisualizzaIscritti implements ControllerInterface {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
             switch (request.getParameter("target")) {
                 case "rag":
                     mv.setView("ammseg/visualizzaragazzi.html");
@@ -53,13 +53,9 @@ public class ControllerVisualizzaIscritti implements ControllerInterface {
                     mv.addObject("terzamedia", terzamedia);
                     break;
             }
-        } catch (SQLException ex) {
-
-            mv.addObject("eccezioni", ex);
-            Logger.getLogger(ControllerVisualizzaIscritti.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | SQLException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerVisualizzaIscritti.class.getName());
         }
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 

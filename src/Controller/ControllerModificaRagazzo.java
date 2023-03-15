@@ -4,6 +4,7 @@ import DAOManager.DAOMan;
 import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,18 +16,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerModificaRagazzo implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "Modifica ragazzo");
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-        int idRagazzo = Integer.parseInt(request.getParameter("id"));
         try {
+            mv.addObject("TITOLOPAGINA", "Modifica ragazzo");
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            int idRagazzo = Integer.parseInt(request.getParameter("id"));
             Ragazzo r = DAOMan.ragazzoDAO.findById(idRagazzo);
             if (!request.getParameterMap().containsKey("nome")) {
                 //PREPARO I DATI PER LA PAGINA
@@ -119,20 +118,17 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                     RelPresenzaRag rpr = new RelPresenzaRag(Integer.parseInt(calId), r.getId());
                     DAOMan.relPresenzaRagDAO.insert(rpr);
                 }
-                
-                if (request.getSession().getAttribute("tipoUtente").equals(3)){
+
+                if (request.getSession().getAttribute("tipoUtente").equals(3)) {
                     response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
                 } else {
                     response.sendRedirect("/RegistrazioneGrest/App/VisualizzaIscritti?target=rag");
                 }
 
             }
-        } catch (NullPointerException | IOException | NumberFormatException | SQLException | ParseException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerModificaRagazzo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | IOException | SQLException | ParseException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerModificaRagazzo.class.getName());
         }
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 

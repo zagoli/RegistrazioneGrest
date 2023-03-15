@@ -4,22 +4,21 @@ import DAOManager.DAOMan;
 import Domain.RelCollabora;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerRegistraAttGen implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
-        mv.addObject("TITOLOPAGINA", "errore");
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         try {
+            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("TITOLOPAGINA", "errore");
             RelCollabora rc = new RelCollabora();
             int idUt = (int) request.getSession().getAttribute("idUtente");
             int idAttivita = Integer.parseInt(request.getParameter("attivita"));
@@ -31,12 +30,9 @@ public class ControllerRegistraAttGen implements ControllerInterface {
             rc.setAttivitaGenId(idAttivita);
             DAOMan.relCollaboraDAO.insert(rc);
             response.sendRedirect("/RegistrazioneGrest/App/DashboardAttGen");
-        } catch (NullPointerException | SQLException | IOException ex) {
-
-            mv.addObject("eccezione", ex);
-            Logger.getLogger(ControllerRegistraAttGen.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (final RuntimeException | IOException | SQLException e) {
+            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraAttGen.class.getName());
         }
-        mv.addObject("tipoUt", tipoUt);
         return mv;
     }
 }
