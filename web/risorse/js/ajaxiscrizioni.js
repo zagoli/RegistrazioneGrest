@@ -1,56 +1,47 @@
+var currentSelector = '';
+var url = '/RegistrazioneGrest/App/StatoIscrizioni';
 //cambia stato iscrizioni ragazzi
 $(function toggleiscrrag() {
-    var url = '/RegistrazioneGrest/App/StatoIscrizioni';
     $('#ISCRRAG').change(function () {
-        $.getJSON(
-            url,
-            {
-                target: "ISCRRAG",
-                state: $(this).prop('checked')
-            },
-            //quando sono arrivati i dati
-            showRequestResult
-        );
+        currentSelector = '#ISCRRAG';
+        makeRequest.call(this);
     });
 });
 //cambia stato iscrizioni animatori
 $(function toggleiscran() {
-    var url = '/RegistrazioneGrest/App/StatoIscrizioni';
     $('#ISCRAN').change(function () {
-        $.getJSON(
-            url,
-            {
-                target: "ISCRAN",
-                state: $(this).prop('checked')
-            },
-            //quando sono arrivati i dati
-            showRequestResult
-        );
+        currentSelector = '#ISCRAN';
+        makeRequest.call(this);
     });
 });
+
 //cambia stato iscrizioni terza media
 $(function toggleiscrter() {
-    var url = '/RegistrazioneGrest/App/StatoIscrizioni';
     $('#ISCRTER').change(function () {
-        $.getJSON(
-            url,
-            {
-                target: "ISCRTER",
-                state: $(this).prop('checked')
-            },
-            //quando sono arrivati i dati
-            showRequestResult
-        );
+        currentSelector = '#ISCRTER';
+        makeRequest.call(this);
     });
 });
+
+function makeRequest() {
+    $.getJSON(url, {
+        target: currentSelector.substring(1), state: $(this).prop('checked')
+    }).done(showRequestResult)
+        .fail(setSwitchOff);
+}
+
+function setSwitchOff() {
+    alert("Errore!");
+    $(currentSelector).prop("checked", false);
+}
 
 function showRequestResult(data) {
     var resultString = data.result;
     var result = toBoolean(resultString);
     if (result) {
-        alert("Salvato con successo.")
+        alert("Salvato con successo.");
     } else {
-        alert("Errore!")
+        setSwitchOff();
     }
 }
 
