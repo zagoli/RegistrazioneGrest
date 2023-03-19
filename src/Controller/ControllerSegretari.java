@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ControllerSegretari implements ControllerInterface {
 
@@ -22,9 +21,7 @@ public class ControllerSegretari implements ControllerInterface {
             mv.addObject("TITOLOPAGINA", "Gestisci segretari");
             mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().isEmpty()) {
-                List<Registrato> lallut = DAOMan.registratoDAO.findAll();
-                List<Registrato> lseg;
-                lseg = lallut.stream().filter(reg -> (reg.getTipoUt() < 3 && reg.getTipoUt() > 0)).collect(Collectors.toList());
+                List<Registrato> lseg = DAOMan.registratoDAO.findSegretari();
                 if (!lseg.isEmpty()) {
                     mv.addObject("segretari", lseg);
                 }

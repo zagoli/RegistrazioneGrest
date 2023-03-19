@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Registrato;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,6 +14,8 @@ public interface RegistratoDAO {
     Registrato findById(int id) throws SQLException;
     //SELECT
     List<Registrato> findAll() throws SQLException;
+
+    List<Registrato> findSegretari() throws SQLException;
 
     int countUsers() throws SQLException;
     Registrato findByMail(String mail) throws SQLException;
