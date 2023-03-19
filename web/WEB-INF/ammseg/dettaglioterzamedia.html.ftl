@@ -6,7 +6,7 @@
                 <strong>Id Terza media</strong>
             </div>
             <div class="col-sm">
-                <p>${terzamedia.id}</p>
+                <p>${terzamedia.id?c}</p>
             </div>
         </div>
         <div class="row">

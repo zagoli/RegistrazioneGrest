@@ -8,21 +8,24 @@
                     </div>
                     <#if INVALIDMAIL??>
                         <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
+                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta
+                                correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
                         </div>
                     </#if>
                     <form action="/RegistrazioneGrest/App/ModificaTerzamedia" method="POST" data-parsley-validate="">
-                        
-                        <input type="hidden" value="${terzamedia.id}" name="id"></input>
+
+                        <input type="hidden" value="${terzamedia.id?c}" name="id"></input>
 
                         <div class="form-group">
                             <label for="nome"> Nome </label>
-                                <input class="form-control" type="text" id ="nome" required name="nome" placeholder="Nome" autofocus data-parsley-length="[2, 50]" value="${terzamedia.nome}"> 
+                            <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome"
+                                   autofocus data-parsley-length="[2, 50]" value="${terzamedia.nome}">
                         </div>
 
                         <div class="form-group">
-                            <label for="cognome"> Cognome </label> 
-                                <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 50]" value="${terzamedia.cognome}">
+                            <label for="cognome"> Cognome </label>
+                            <input class="form-control" type="text" required id="cognome" name="cognome"
+                                   placeholder="Cognome" data-parsley-length="[2, 50]" value="${terzamedia.cognome}">
                         </div>
 
                         <div class="form-group">
@@ -54,9 +57,9 @@
                             <label> Partecipazione </label> <br/>
                             <#list calendari as cal, partecipa>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana}"
-                                           id="cal${cal.idSettimana}" name="cal" <#if partecipa>checked</#if>>
-                                    <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana
+                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
+                                           id="cal${cal.idSettimana?c}" name="cal" <#if partecipa>checked</#if>>
+                                    <label class="form-check-label" for="cal${cal.idSettimana?c}"> Settimana
                                         dal ${cal.daQuando} al ${cal.aQuando} </label>
                                 </div>
                             </#list>
@@ -69,7 +72,7 @@
                             <label for="laboratorio"> Laboratorio </label>
                             <select id="laboratorio" class="form-control" name="laboratorio">
                                 <#list laboratori as lab>
-                                    <option value="${lab.id}"
+                                    <option value="${lab.id?c}"
                                             <#if lab.id == terzamedia.laboratorio.id>selected</#if>>${lab.descrizione}</option>
                                 </#list>
                             </select>
@@ -79,7 +82,7 @@
                             <label for="parrocchia"> Parrocchia </label>
                             <select id="parrocchia" class="form-control" name="parrocchia">
                                 <#list parrocchie as par>
-                                    <option value="${par.id}" <#if par.id == terzamedia.parrocchia.id>selected</#if>>
+                                    <option value="${par.id?c}" <#if par.id == terzamedia.parrocchia.id>selected</#if>>
                                         Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
                                 </#list>
                             </select>
@@ -89,7 +92,7 @@
                             <label for="circolo"> Circolo </label>
                             <select id="circolo" class="form-control" name="circolo">
                                 <#list circoli as cir>
-                                    <option value="${cir.id}"
+                                    <option value="${cir.id?c}"
                                             <#if cir.id == terzamedia.circolo.id>selected</#if>>${cir.nome}
                                         (${cir.luogo})
                                     </option>
@@ -109,7 +112,7 @@
                             <label for="scuola"> Scuola </label>
                             <select id="scuola" class="form-control" name="scuola">
                                 <#list scuole as scu>
-                                    <option value="${scu.id}" <#if scu.id == terzamedia.scuola.id>selected</#if>>
+                                    <option value="${scu.id?c}" <#if scu.id == terzamedia.scuola.id>selected</#if>>
                                         Scuola ${scu.grado} di ${scu.descrizione}</option>
                                 </#list>
                             </select>

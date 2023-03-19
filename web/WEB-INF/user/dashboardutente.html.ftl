@@ -52,7 +52,7 @@
                         <td>${rag.nome}</td>
                         <td>${rag.cognome}</td>
                         <td align="center">
-                            <a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${rag.id}">
+                            <a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${rag.id?c}">
                                 <img src="../risorse/img/octicons/file.svg">
                             </a>
                         </td>
@@ -63,9 +63,10 @@
                                 <img src="../risorse/img/octicons/x.svg">
                             </#if>
                         </td>
-                        <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag.id}">
+                        <td align="center"><#if !pagato><a
+                                href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag.id?c}">
                                     <img src="../risorse/img/octicons/pencil.svg"></a></#if></td>
-                        <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag.id}">
+                        <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag.id?c}">
                                     <img src="../risorse/img/octicons/trashcan.svg"></a></#if></td>
                     </tr>
                 </#list>
@@ -98,13 +99,13 @@
                         <td>${ani.nome}</td>
                         <td>${ani.cognome}</td>
                         <td align="center"><a
-                                    href="/RegistrazioneGrest/App/InfoDettaglio?target=schedaani&id=${ani.id}"><img
+                                    href="/RegistrazioneGrest/App/InfoDettaglio?target=schedaani&id=${ani.id?c}"><img
                                         src="../risorse/img/octicons/file.svg"></a></td>
                         <td align="center"><#if ISCRAN><a
-                                href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id}"><img
+                                href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id?c}"><img
                                             src="../risorse/img/octicons/pencil.svg"></a></#if></td>
                         <td align="center"><#if ISCRAN><a
-                                href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id}"><img
+                                href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id?c}"><img
                                             src="../risorse/img/octicons/trashcan.svg"></a></#if></td>
                     </tr>
                 </#list>
@@ -138,7 +139,7 @@
                         <td>${ter.nome}</td>
                         <td>${ter.cognome}</td>
                         <td align="center"><a
-                                    href="/RegistrazioneGrest/App/InfoDettaglio?target=schedater&id=${ter.id}"><img
+                                    href="/RegistrazioneGrest/App/InfoDettaglio?target=schedater&id=${ter.id?c}"><img
                                         src="../risorse/img/octicons/file.svg"></a></td>
                         <td align="center">
                             <#if pagato>
@@ -148,10 +149,10 @@
                             </#if>
                         </td>
                         <td align="center"><#if !pagato><a
-                                href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter.id}"><img
+                                href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter.id?c}"><img
                                             src="../risorse/img/octicons/pencil.svg"></a></#if></td>
                         <td align="center"><#if !pagato><a
-                                href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter.id}"><img
+                                href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter.id?c}"><img
                                             src="../risorse/img/octicons/trashcan.svg"></a></#if></td>
                     </tr>
                 </#list>

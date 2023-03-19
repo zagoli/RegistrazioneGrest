@@ -95,8 +95,8 @@
                     <div class="text-center">
                         <div class="btn-group btn-group-lg" role="group">
                             <#list settimane as set>
-                                <a href="/RegistrazioneGrest/App/Stampa?target=presgiornani&idSet=${set.idSettimana}"
-                                   class="btn btn-info"> ${set.idSettimana} SETTIMANA </a>
+                                <a href="/RegistrazioneGrest/App/Stampa?target=presgiornani&idSet=${set.idSettimana?c}"
+                                   class="btn btn-info"> ${set.idSettimana?c} SETTIMANA </a>
                             </#list>
                         </div>
                     </div>
@@ -110,8 +110,8 @@
                     <div class="text-center">
                         <div class="btn-group btn-group-lg" role="group">
                             <#list settimane as set>
-                                <a href="/RegistrazioneGrest/App/Stampa?target=mensa&idSet=${set.idSettimana}"
-                                   class="btn btn-info"> ${set.idSettimana} SETTIMANA </a>
+                                <a href="/RegistrazioneGrest/App/Stampa?target=mensa&idSet=${set.idSettimana?c}"
+                                   class="btn btn-info"> ${set.idSettimana?c} SETTIMANA </a>
                             </#list>
                         </div>
                     </div>
@@ -125,17 +125,17 @@
             <div id="accordionPressetsqu">
                 <#list settimane as set>
                 <div class="card">
-                    <div class="card-header" id="headingpressetsqu${set.idSettimana}">
+                    <div class="card-header" id="headingpressetsqu${set.idSettimana?c}">
                         <h5 class="mb-0 text-center">
                             <button class="btn btn-link" data-toggle="collapse"
-                                    data-target="#pressetsqu${set.idSettimana}" aria-expanded="false"
-                                    aria-controls="pressetsqu${set.idSettimana}">
+                                    data-target="#pressetsqu${set.idSettimana?c}" aria-expanded="false"
+                                    aria-controls="pressetsqu${set.idSettimana?c}">
                                 Settimana dal ${set.daQuando} al ${set.aQuando}
                             </button>
                         </h5>
                     </div>
-                    <div id="pressetsqu${set.idSettimana}" class="collapse"
-                         aria-labelledby="headingpressetsqu${set.idSettimana}"
+                    <div id="pressetsqu${set.idSettimana?c}" class="collapse"
+                         aria-labelledby="headingpressetsqu${set.idSettimana?c}"
                          data-parent="#accordionPressetsqu">
                         <div class="card-body">
                             <#--Devo dividere le squadre in due colonne: per prima cosa creo una variabile contatore-->
@@ -144,7 +144,7 @@
                             <#--Salvo la colonna invece di ripeterla due volte-->
                                 <#assign colonna>
                                     <div class="col">
-                                        <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=${sq.id}"
+                                        <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=${sq.id?c}"
                                            class="btn btn-block btn-lg text-black"
                                            style="background-color: ${sq.colore} !important;">
                                             <b>${sq.nome}</b>
@@ -179,22 +179,22 @@
         <div id="accordionPressetlab">
             <#list settimane as set>
                 <div class="card">
-                    <div class="card-header" id="headingpressetlab${set.idSettimana}">
+                    <div class="card-header" id="headingpressetlab${set.idSettimana?c}">
                         <h5 class="mb-0 text-center">
                             <button class="btn btn-link" data-toggle="collapse"
-                                    data-target="#pressetlab${set.idSettimana}" aria-expanded="false"
-                                    aria-controls="spressetlab${set.idSettimana}">
+                                    data-target="#pressetlab${set.idSettimana?c}" aria-expanded="false"
+                                    aria-controls="spressetlab${set.idSettimana?c}">
                                 Settimana dal ${set.daQuando} al ${set.aQuando}
                             </button>
                         </h5>
                     </div>
-                    <div id="pressetlab${set.idSettimana}" class="collapse"
-                         aria-labelledby="headingpressetlab${set.idSettimana}" data-parent="#accordionPressetlab">
+                    <div id="pressetlab${set.idSettimana?c}" class="collapse"
+                         aria-labelledby="headingpressetlab${set.idSettimana?c}" data-parent="#accordionPressetlab">
                         <div class="card-body">
                             <#list laboratori as lab>
                                 <div class="row mt-2">
                                     <div class="col">
-                                        <a href="/RegistrazioneGrest/App/Stampa?target=pressetlab&idset=${set.idSettimana}&lab=${lab.id}"
+                                        <a href="/RegistrazioneGrest/App/Stampa?target=pressetlab&idset=${set.idSettimana}&lab=${lab.id?c}"
                                            class="btn btn-block btn-lg btn-primary"> ${lab.descrizione} </a>
                                     </div>
                                 </div>

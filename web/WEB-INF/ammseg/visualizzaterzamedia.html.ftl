@@ -31,11 +31,11 @@
                         style="text-align:center;"><#if ter[1]??>${ter[1].ordineArrivo}</#if></th>
                     <td>
                         <a href="javascript:;"
-                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoter&id=${ter[0].id}', 'Dettagli terzamedia', 'width=600, height=700, status, scrollbars=1, location');"><img
+                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoter&id=${ter[0].id?c}', 'Dettagli terzamedia', 'width=600, height=700, status, scrollbars=1, location');"><img
                                     src="../risorse/img/octicons/search.svg" alt="dettaglio"></a>
-                        <a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter[0].id}"><img
+                        <a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter[0].id?c}"><img
                                     src="../risorse/img/octicons/pencil.svg" alt="modifica"></a>
-                        <a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter[0].id}"><img
+                        <a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter[0].id?c}"><img
                                     src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
                     </td>
                     <td>${ter[0].cognome?capitalize}</td>

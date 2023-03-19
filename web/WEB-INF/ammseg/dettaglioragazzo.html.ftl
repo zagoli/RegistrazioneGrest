@@ -6,7 +6,7 @@
                 <strong>Id Ragazzo</strong>
             </div>
             <div class="col-sm">
-                <p>${ragazzo.id}</p>
+                <p>${ragazzo.id?c}</p>
             </div>
         </div>
         <div class="row">

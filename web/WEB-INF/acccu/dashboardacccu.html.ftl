@@ -18,15 +18,17 @@
                     </thead>
                     <tbody>
                     <#list accompagnatori as acc>
-                            <#assign count = count + 1>
-                            <tr>
-                                <th scope="row">${count}</th>
-                                <td>${acc.nome}</td>
-                                <td>${acc.cognome}</td>
-                                <td><a href="/RegistrazioneGrest/App/ModificaAccompagnatore?id=${acc.id}"><img src="../risorse/img/octicons/pencil.svg"></a></td>
-                                <td><a href="/RegistrazioneGrest/App/EliminaAccompagnatore?id=${acc.id}"><img src="../risorse/img/octicons/trashcan.svg"></a></td>
-                            </tr>
-                        </#list>
+                        <#assign count = count + 1>
+                        <tr>
+                            <th scope="row">${count}</th>
+                            <td>${acc.nome}</td>
+                            <td>${acc.cognome}</td>
+                            <td><a href="/RegistrazioneGrest/App/ModificaAccompagnatore?id=${acc.id?c}"><img
+                                            src="../risorse/img/octicons/pencil.svg"></a></td>
+                            <td><a href="/RegistrazioneGrest/App/EliminaAccompagnatore?id=${acc.id?c}"><img
+                                            src="../risorse/img/octicons/trashcan.svg"></a></td>
+                        </tr>
+                    </#list>
                     </tbody>
                 </table>
             </#if>
@@ -52,18 +54,20 @@
                     </thead>
                     <tbody>
                     <#list contatti as cu>
-                            <#assign count = count + 1>
-                            <tr>
-                                <th scope="row">${count}</th>
-                                <td>${cu.nome}</td>
-                                <td>${cu.cognome}</td>
-                                <td>${cu.cellulare}</td>
-                                <td>${cu.fisso}</td>
-                                <td>${cu.relazione}</td>
-                                <td><a href="/RegistrazioneGrest/App/ModificaCU?id=${cu.id}"><img src="../risorse/img/octicons/pencil.svg"></a></td>
-                                <td><a href="/RegistrazioneGrest/App/EliminaCU?id=${cu.id}"><img src="../risorse/img/octicons/trashcan.svg"></a></td>
-                            </tr>
-                        </#list>
+                        <#assign count = count + 1>
+                        <tr>
+                            <th scope="row">${count}</th>
+                            <td>${cu.nome}</td>
+                            <td>${cu.cognome}</td>
+                            <td>${cu.cellulare}</td>
+                            <td>${cu.fisso}</td>
+                            <td>${cu.relazione}</td>
+                            <td><a href="/RegistrazioneGrest/App/ModificaCU?id=${cu.id?c}"><img
+                                            src="../risorse/img/octicons/pencil.svg"></a></td>
+                            <td><a href="/RegistrazioneGrest/App/EliminaCU?id=${cu.id?c}"><img
+                                            src="../risorse/img/octicons/trashcan.svg"></a></td>
+                        </tr>
+                    </#list>
                     </tbody>
                 </table>
             </#if>

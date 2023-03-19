@@ -24,11 +24,11 @@
                 <tr>
                     <td>
                         <a href="javascript:"
-                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoani&id=${ani.id}', 'Dettagli animatore', 'width=600, height=700, status, scrollbars=1, location');"><img
+                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoani&id=${ani.id?c}', 'Dettagli animatore', 'width=600, height=700, status, scrollbars=1, location');"><img
                                     src="../risorse/img/octicons/search.svg" alt="dettagli"></a>
-                        <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id}"><img
+                        <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id?c}"><img
                                     src="../risorse/img/octicons/pencil.svg" alt="modifica"></a>
-                        <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id}"><img
+                        <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id?c}"><img
                                     src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
                     </td>
                     <td>${ani.cognome?capitalize}</td>

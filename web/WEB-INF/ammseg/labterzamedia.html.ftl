@@ -24,7 +24,8 @@
                                         <label class="sr-only" for="laboratorio">Laboratorio</label>
                                         <select class="custom-select mr-sm-2" id="laboratorio" name="laboratorio">
                                             <#list laboratori as lab>
-                                                <option value="${ter.id},${lab.id}" <#if ter.laboratorio.id==lab.id>selected</#if>>${lab.descrizione}</option>
+                                                <option value="${ter.id},${lab.id}"
+                                                        <#if ter.laboratorio.id==lab.id>selected</#if>>${lab.descrizione?c}</option>
                                             </#list>
                                         </select>
                                     </td>

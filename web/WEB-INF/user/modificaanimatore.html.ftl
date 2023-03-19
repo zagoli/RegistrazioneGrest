@@ -7,23 +7,26 @@
                 <h5>Modifica l'iscrizione come animatore</h5>
             </div>
             <#if INVALIDMAIL??>
-                        <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                            <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
-                        </div>
-                    </#if>
-                    <form action="/RegistrazioneGrest/App/ModificaAnimatore" method="POST" data-parsley-validate>
-                        
-                        <input type="hidden" value="${animatore.id}" name="id"></input>
-                        
-                        <div class="form-group">
-                            <label for="nome"> Nome </label>
-                                <input class="form-control" type="text" id ="nome" required name="nome" placeholder="Nome" autofocus data-parsley-length="[2, 50]" value="${animatore.nome}"> 
-                        </div>
+                <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
+                    <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente
+                        o è una e-mail temporanea! Inserisci una mail valida</p>
+                </div>
+            </#if>
+            <form action="/RegistrazioneGrest/App/ModificaAnimatore" method="POST" data-parsley-validate>
 
-                        <div class="form-group">
-                            <label for="cognome"> Cognome </label> 
-                                <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 50]" value="${animatore.cognome}"> 
-                        </div>
+                <input type="hidden" value="${animatore.id?c}" name="id"></input>
+
+                <div class="form-group">
+                    <label for="nome"> Nome </label>
+                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
+                           data-parsley-length="[2, 50]" value="${animatore.nome}">
+                </div>
+
+                <div class="form-group">
+                    <label for="cognome"> Cognome </label>
+                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome"
+                           data-parsley-length="[2, 50]" value="${animatore.cognome}">
+                </div>
                         
                         <div class="form-group">
                             <label for="dataNascita"> Data di nascita </label>
@@ -59,9 +62,9 @@
                             <label> Periodo di partecipazione </label> <br/>
                             <#list calendari as cal, partecipa>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana}"
-                                           id="cal${cal.idSettimana}" name="cal" <#if partecipa>checked</#if>>
-                                    <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana
+                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
+                                           id="cal${cal.idSettimana?c}" name="cal" <#if partecipa>checked</#if>>
+                                    <label class="form-check-label" for="cal${cal.idSettimana?c}"> Settimana
                                         dal ${cal.daQuando} al ${cal.aQuando} </label>
                                 </div>
                             </#list>
@@ -71,7 +74,7 @@
                             <label for="laboratorio"> Laboratorio </label>
                             <select id="laboratorio" class="form-control" name="laboratorio">
                                 <#list laboratori as lab>
-                                    <option value="${lab.id}"
+                                    <option value="${lab.id?c}"
                                             <#if lab.id == animatore.laboratorio.id>selected</#if>>${lab.descrizione}</option>
                                 </#list>
                             </select>
@@ -81,7 +84,7 @@
                             <label for="parrocchia"> Parrocchia di appartenenza </label>
                             <select id="parrocchia" class="form-control" name="parrocchia">
                                 <#list parrocchie as par>
-                                    <option value="${par.id}" <#if par.id == animatore.parrocchia.id>selected</#if>>
+                                    <option value="${par.id?c}" <#if par.id == animatore.parrocchia.id>selected</#if>>
                                         Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
                                 </#list>
                             </select>
@@ -94,7 +97,7 @@
                                 </b> </label>
                             <select id="circolo" class="form-control" name="circolo">
                                 <#list circoli as cir>
-                                    <option value="${cir.id}"
+                                    <option value="${cir.id?c}"
                                             <#if cir.id == animatore.circolo.id>selected</#if>>${cir.nome} (${cir.luogo}
                                         )
                                     </option>

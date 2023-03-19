@@ -34,7 +34,8 @@
                             <label for="parrocchia"> Parrocchia </label>
                             <select id="parrocchia" class="form-control" name="parrocchia">
                                 <#list parrocchie as par>
-                                    <option value="${par.id}">Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
+                                    <option value="${par.id}">Parrocchia di ${par.luogo?upper_case}
+                                        - ${par.nome?c} </option>
                                 </#list>
                             </select>
                         </div>
@@ -43,7 +44,7 @@
                             <label for="circolo"> Circolo </label>
                             <select id="circolo" class="form-control" name="circolo">
                                 <#list circoli as cir>
-                                    <option value="${cir.id}">${cir.nome} (${cir.luogo})</option>
+                                    <option value="${cir.id}">${cir.nome} (${cir.luogo?c})</option>
                                 </#list>
                             </select>
                         </div>
@@ -60,7 +61,7 @@
                             <label for="scuola"> Scuola </label>
                             <select id="scuola" class="form-control" name="scuola">
                                 <#list scuole as scu>
-                                    <option value="${scu.id}">Scuola ${scu.grado} di ${scu.descrizione}</option>
+                                    <option value="${scu.id}">Scuola ${scu.grado} di ${scu.descrizione?c}</option>
                                 </#list>
                             </select>
                         </div>
@@ -105,8 +106,10 @@
                             <label> Partecipazione </label>
                             <#list calendari as cal>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana}" id="cal${cal.idSettimana}" name="cal" checked>
-                                    <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando} al ${cal.aQuando} </label>
+                                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana}"
+                                           id="cal${cal.idSettimana?c}" name="cal" checked>
+                                    <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana
+                                        dal ${cal.daQuando} al ${cal.aQuando?c} </label>
                                 </div>
                             </#list>
                             <a class="btn btn-secondary btn-sm mt-1" href="javascript:;"
@@ -122,7 +125,7 @@
                             <select id="laboratorio" class="form-control" name="laboratorio"
                                     aria-describedby="helpLaboratorio">
                                 <#list laboratori as lab>
-                                    <option value="${lab.id}">${lab.descrizione}</option>
+                                    <option value="${lab.id}">${lab.descrizione?c}</option>
                                 </#list>
                             </select>
                         </div>

@@ -25,7 +25,9 @@ public class ControllerSegretari implements ControllerInterface {
                 List<Registrato> lallut = DAOMan.registratoDAO.findAll();
                 List<Registrato> lseg;
                 lseg = lallut.stream().filter(reg -> (reg.getTipoUt() < 3 && reg.getTipoUt() > 0)).collect(Collectors.toList());
-                mv.addObject("segretari", lseg);
+                if (!lseg.isEmpty()) {
+                    mv.addObject("segretari", lseg);
+                }
                 mv.setView("ammseg/gestiscisegretari.html");
 
             } else if (request.getParameterMap().containsKey("del")) {

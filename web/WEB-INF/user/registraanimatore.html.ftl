@@ -57,9 +57,9 @@
                     <label> Periodo di partecipazione </label> <br/>
                     <#list calendari as cal>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="${cal.idSettimana}"
-                                   id="cal${cal.idSettimana}" name="cal" checked>
-                            <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando}
+                            <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
+                                   id="cal${cal.idSettimana?c}" name="cal" checked>
+                            <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando?c}
                                 al ${cal.aQuando} </label>
                         </div>
                     </#list>
@@ -69,7 +69,7 @@
                     <label for="laboratorio"> Selezionare un laboratorio </label>
                     <select id="laboratorio" class="form-control" name="laboratorio">
                         <#list laboratori as lab>
-                            <option value="${lab.id}">${lab.descrizione}</option>
+                            <option value="${lab.id}">${lab.descrizione?c}</option>
                         </#list>
                     </select>
                 </div>
@@ -78,7 +78,7 @@
                     <label for="parrocchia"> Parrocchia di appartenenza </label>
                     <select id="parrocchia" class="form-control" name="parrocchia">
                         <#list parrocchie as par>
-                            <option value="${par.id}">Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
+                            <option value="${par.id}">Parrocchia di ${par.luogo?upper_case} - ${par.nome?c} </option>
                         </#list>
                     </select>
                 </div>
@@ -92,7 +92,7 @@
                     </label>
                     <select id="circolo" class="form-control" name="circolo">
                         <#list circoli as cir>
-                            <option value="${cir.id}">${cir.nome} (${cir.luogo})</option>
+                            <option value="${cir.id}">${cir.nome} (${cir.luogo?c})</option>
                         </#list>
                     </select>
                 </div>

@@ -16,14 +16,16 @@
                     </thead>
                     <tbody>
                     <#list attivita as att, dataid>
-                            <#assign count = count + 1>
-                            <tr>
-                                <th scope="row">${count}</th>
-                                <td>${att.descrizione}</td>
-                                <td><#if dataid[0]??>${dataid[0]}</#if></td>
-                                <td align="center"><a href="/RegistrazioneGrest/App/EliminaPrenotazioneAttGen?id=${dataid[1]}"><img src="../risorse/img/octicons/trashcan.svg"></a></td>
-                            </tr>
-                        </#list>
+                        <#assign count = count + 1>
+                        <tr>
+                            <th scope="row">${count}</th>
+                            <td>${att.descrizione}</td>
+                            <td><#if dataid[0]??>${dataid[0]?c}</#if></td>
+                            <td align="center"><a
+                                        href="/RegistrazioneGrest/App/EliminaPrenotazioneAttGen?id=${dataid[1]?c}"><img
+                                            src="../risorse/img/octicons/trashcan.svg"></a></td>
+                        </tr>
+                    </#list>
                     </tbody>
                 </table>
                 <p class="text-center mt-4">è possibile collaborare in più di una attività! Ripetere il procedimento precedente per dare la propria disponibilità in altri ambiti.</p>
@@ -36,7 +38,7 @@
                         <div class="col-md-6">
                             <select class="form-control" name="attivita">
                                 <#list allattivita as att>
-                                    <option value="${att.id}">${att.descrizione}</option>
+                                    <option value="${att.id}">${att.descrizione?c}</option>
                                 </#list>
                             </select>
                         </div>

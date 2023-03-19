@@ -1,17 +1,17 @@
 <#ftl strip_whitespace = true>
 <#include "../struct/header.html.ftl">
-    <div class="mt-4 content">
-        <h2 class="text-uppercase text-center">Elenco mensa ${set.idSettimana} settimana</h2>
-        <h5 class="text-uppercase text-center">Settimana dal ${set.daQuando} al ${set.aQuando} </h5>
-        <div class="container-block">
-            <div class="mr-2 ml-2">
-                <table class="table table-bordered pl-2 pr-2 table-sm">
-                    <thead>
-                    <tr>
-                        <th>Cognome</th>
-                        <th>Nome</th>
-                        <th style="width:5%;">Classe</th>
-                        <th>Periodo</th>
+<div class="mt-4 content">
+    <h2 class="text-uppercase text-center">Elenco mensa ${set.idSettimana?c} settimana</h2>
+    <h5 class="text-uppercase text-center">Settimana dal ${set.daQuando} al ${set.aQuando} </h5>
+    <div class="container-block">
+        <div class="mr-2 ml-2">
+            <table class="table table-bordered pl-2 pr-2 table-sm">
+                <thead>
+                <tr>
+                    <th>Cognome</th>
+                    <th>Nome</th>
+                    <th style="width:5%;">Classe</th>
+                    <th>Periodo</th>
                         <th style="width:25%;">Allergia</th>
                         <th>Squadra</th>
                         <th>Laboratorio</th>

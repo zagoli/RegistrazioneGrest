@@ -7,14 +7,16 @@
                 <h4>Modifica contatto telefonico urgenze</h4>
             </div>
             <form action="/RegistrazioneGrest/App/ModificaCU" method="POST" data-parsley-validate>
-                <input type="hidden" name="id" value="${contatto.id}"/>
+                <input type="hidden" name="id" value="${contatto.id?c}"/>
                 <div class="form-group">
-                    <label for="nome"> Nome </label> 
-                    <input class="form-control" type="text" required id="nome" name="nome" placeholder="Nome" data-parsley-length="[2, 40]" value="${contatto.nome}"> 
+                    <label for="nome"> Nome </label>
+                    <input class="form-control" type="text" required id="nome" name="nome" placeholder="Nome"
+                           data-parsley-length="[2, 40]" value="${contatto.nome}">
                 </div>
                 <div class="form-group">
-                    <label for="cognome"> Cognome </label> 
-                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 40]" value="${contatto.cognome}">
+                    <label for="cognome"> Cognome </label>
+                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome"
+                           data-parsley-length="[2, 40]" value="${contatto.cognome}">
                 </div>
                 <div class="form-group">
                     <label for="relazione"> Relazione con l'iscritto (nonno, papà, zio...) </label>

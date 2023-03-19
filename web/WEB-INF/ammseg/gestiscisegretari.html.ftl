@@ -17,15 +17,16 @@
                         </thead>
                         <tbody>
                         <#list segretari as seg>
-                                <#assign count = count + 1>
-                                <tr>
-                                    <th scope="row">${count}</th>
-                                    <td>${seg.nome}</td>
-                                    <td>${seg.cognome}</td>
-                                    <td>${seg.mail}</td>
-                                    <td><a href="/RegistrazioneGrest/App/GestisciSegretari?del&id=${seg.id}"><img src="../risorse/img/octicons/trashcan.svg"></a></td>
-                                </tr>
-                            </#list>
+                            <#assign count = count + 1>
+                            <tr>
+                                <th scope="row">${count}</th>
+                                <td>${seg.nome}</td>
+                                <td>${seg.cognome}</td>
+                                <td>${seg.mail}</td>
+                                <td><a href="/RegistrazioneGrest/App/GestisciSegretari?del&id=${seg.id?c}"><img
+                                                src="../risorse/img/octicons/trashcan.svg"></a></td>
+                            </tr>
+                        </#list>
                         </tbody>
                     </table>
                 </#if>

@@ -8,7 +8,7 @@
             </div>
             <form action="/RegistrazioneGrest/App/ModificaRagazzo" method="POST" data-parsley-validate="">
 
-                <input type="hidden" value="${ragazzo.id}" name="id">
+                <input type="hidden" value="${ragazzo.id?c}" name="id">
 
                 <div class="form-group">
                     <label for="nome"> Nome </label>
@@ -51,9 +51,9 @@
                     <label> Partecipazione </label> <br/>
                     <#list calendari as cal, partecipa>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="${cal.idSettimana}"
-                                   id="cal${cal.idSettimana}" name="cal" <#if partecipa>checked</#if>>
-                            <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando}
+                            <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
+                                   id="cal${cal.idSettimana?c}" name="cal" <#if partecipa>checked</#if>>
+                            <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando?c}
                                 al ${cal.aQuando} </label>
                         </div>
                     </#list>
@@ -66,7 +66,7 @@
                     <label for="laboratorio"> Laboratorio </label>
                     <select id="laboratorio" class="form-control" name="laboratorio">
                         <#list laboratori as lab>
-                            <option value="${lab.id}"
+                            <option value="${lab.id?c}"
                                     <#if lab.id == ragazzo.laboratorio.id>selected</#if>>${lab.descrizione}</option>
                         </#list>
                     </select>
@@ -76,7 +76,7 @@
                     <label for="parrocchia"> Parrocchia </label>
                     <select id="parrocchia" class="form-control" name="parrocchia">
                         <#list parrocchie as par>
-                            <option value="${par.id}" <#if par.id == ragazzo.parrocchia.id>selected</#if>>
+                            <option value="${par.id?c}" <#if par.id == ragazzo.parrocchia.id>selected</#if>>
                                 Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
                         </#list>
                     </select>
@@ -86,7 +86,7 @@
                     <label for="circolo"> Circolo </label>
                     <select id="circolo" class="form-control" name="circolo">
                         <#list circoli as cir>
-                            <option value="${cir.id}"
+                            <option value="${cir.id?c}"
                                     <#if cir.id == ragazzo.circolo.id>selected</#if>>${cir.nome} (${cir.luogo})
                             </option>
                         </#list>
@@ -110,7 +110,7 @@
                     <label for="scuola"> Scuola </label>
                     <select id="scuola" class="form-control" name="scuola">
                         <#list scuole as scu>
-                            <option value="${scu.id}" <#if scu.id == ragazzo.scuola.id>selected</#if>>
+                            <option value="${scu.id?c}" <#if scu.id == ragazzo.scuola.id>selected</#if>>
                                 Scuola ${scu.grado} di ${scu.descrizione}</option>
                         </#list>
                     </select>

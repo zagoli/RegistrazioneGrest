@@ -32,11 +32,11 @@
                     <th style="text-align:center;"><#if rag[1]??>${rag[1].ordineArrivo}</#if></th>
                     <td>
                         <a href="javascript:"
-                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=inforag&id=${rag[0].id}', 'Dettagli ragazzo', 'width=600, height=700, status, scrollbars=1, location');"><img
+                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=inforag&id=${rag[0].id?c}', 'Dettagli ragazzo', 'width=600, height=700, status, scrollbars=1, location');"><img
                                     src="../risorse/img/octicons/search.svg" alt="dettaglio"></a>
-                        <a href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag[0].id}"><img
+                        <a href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag[0].id?c}"><img
                                     src="../risorse/img/octicons/pencil.svg" alt="modifica"></a>
-                        <a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag[0].id}"><img
+                        <a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag[0].id?c}"><img
                                     src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
                     </td>
                     <td>${rag[0].cognome?capitalize}</td>

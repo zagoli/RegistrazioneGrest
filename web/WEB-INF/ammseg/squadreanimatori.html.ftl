@@ -22,20 +22,20 @@
                                     <td>${ani.cognome?capitalize}</td>
                                     <td>${ani.nome?capitalize}</td>
                                     <td>
-                                        <label class="sr-only" for="${ani.id}squadra">Squadra</label>
-                                        <select class="custom-select mr-sm-2" id="${ani.id}squadra" name="${ani.id}">
+                                        <label class="sr-only" for="${ani.id?c}squadra">Squadra</label>
+                                        <select class="custom-select mr-sm-2" id="${ani.id}squadra" name="${ani.id?c}">
                                             <option <#if ani.squadra.id==0>selected</#if>></option>
                                             <#list squadre as sq>
-                                                <option value="${sq.id}"
+                                                <option value="${sq.id?c}"
                                                         <#if ani.squadra.id! == sq.id>selected</#if>>${sq.nome}</option>
                                             </#list>
                                         </select>
                                     </td>
                                     <td align="center">
                                         <div class="checkbox">
-                                            <label class="sr-only" for="${ani.id}responsabileSquadra">Responsabile
+                                            <label class="sr-only" for="${ani.id?c}responsabileSquadra">Responsabile
                                                 squadra</label>
-                                            <input id="${ani.id}responsabileSquadra" name="${ani.id}" type="checkbox"
+                                            <input id="${ani.id}responsabileSquadra" name="${ani.id?c}" type="checkbox"
                                                    data-toggle="toggle" data-off="No" data-on="Sì"
                                                    <#if ani.responsabileSquadra>checked</#if>>
                                         </div>
@@ -45,22 +45,22 @@
                         </tbody>
                     </table>
                 </form>
-            </#if>               
-        </div>  
+            </#if>
+        </div>
     </div>
-    <script>
-        $(document).ready( function () {
-            $('#t_squadreani').DataTable({
-                paging: false,
-                columnDefs: [
-                    {orderable: false, targets: [2, 3]},
-                    {searchable: false, targets: 3},
-                    {width: "10%", targets: 3}
-                ],
-                info: false
-            });
+<script>
+    $(document).ready(function () {
+        $('#t_squadreani').DataTable({
+            paging: false,
+            columnDefs: [
+                {orderable: false, targets: [2, 3]},
+                {searchable: false, targets: 3},
+                {width: "10%", targets: 3 ? c}
+            ],
+            info: false
         });
-    </script>
+    });
+</script>
 <!-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutti gli animatori compresi quelli che sono rimasti uguali-->
 <script src="../risorse/js/salvasolomodificatoanimatori.js"></script>
 <#include "../struct/footer.html.ftl">
