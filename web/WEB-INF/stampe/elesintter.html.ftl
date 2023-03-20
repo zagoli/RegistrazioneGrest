@@ -28,7 +28,7 @@
                                 <td>
                                     <i>R </i><b>${ter[0].registrato.telefono}</b> -
                                     <#list ter[2][0..*4] as cu>
-                                        <i>${cu.relazione[0..*1]apitalize+" "}</i>
+                                        <i>${cu.relazione[0..*1]?capitalize+" "}</i>
                                         <b>${cu.cellulare+" "+cu.fisso}</b> -
                                     </#list>
                                 </td>

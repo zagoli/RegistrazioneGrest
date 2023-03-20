@@ -17,7 +17,7 @@
             <#list ragazzi as rag>
                 <tr>
                     <td class="text-capitalize">${rag.cognome+" "+rag.nome}</td>
-                    <td align="center">${rag.classe+rag.scuola.grado[0..0]apitalize}</td>
+                    <td align="center">${rag.classe+rag.scuola.grado[0..0]?capitalize}</td>
                 </tr>
             </#list>
                 <!--riga vuota-->

@@ -38,11 +38,11 @@
                         <a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter[0].id}"><img
                                     src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
                     </td>
-                    <td>${ter[0].cognomeapitalize}</td>
-                    <td>${ter[0].nomeapitalize}</td>
+                    <td>${ter[0].cognome?capitalize}</td>
+                    <td>${ter[0].nome?capitalize}</td>
                     <td data-sort="${ter[0].dataNascita?string.iso}">${ter[0].dataNascita?string["dd/MM/yyyy"]}</td>
-                    <td>${ter[0].registrato.viaapitalize+" "+ter[0].registrato.civico}</td>
-                    <td>${ter[0].registrato.localitaapitalize}</td>
+                    <td>${ter[0].registrato.via?capitalize+" "+ter[0].registrato.civico}</td>
+                    <td>${ter[0].registrato.localita?capitalize}</td>
                     <td title="${ter[0].parrocchia.nome}">${ter[0].parrocchia.luogo}</td>
                     <td>${ter[0].sezione}</td>
                     <td>${ter[0].scuola.descrizione}</td>
