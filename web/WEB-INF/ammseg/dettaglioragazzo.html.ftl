@@ -14,7 +14,7 @@
                 <strong>Nome</strong>
             </div>
             <div class="col-sm">
-                <p>${ragazzo.nomeapitalize}</p>
+                <p>${ragazzo.nome?capitalize}</p>
             </div>
         </div>
         <div class="row">
@@ -22,7 +22,7 @@
                 <strong>Cognome</strong>
             </div>
             <div class="col-sm">
-                <p>${ragazzo.cognomeapitalize}</p>
+                <p>${ragazzo.cognome?capitalize}</p>
             </div>
         </div>
         <div class="row">

@@ -19,8 +19,8 @@
                         <tbody class="list">
                             <#list animatori as ani>
                                 <tr>
-                                    <td>${ani.cognomeapitalize}</td>
-                                    <td>${ani.nomeapitalize}</td>
+                                    <td>${ani.cognome?capitalize}</td>
+                                    <td>${ani.nome?capitalize}</td>
                                     <td>
                                         <label class="sr-only" for="${ani.id?c}squadra">Squadra</label>
                                         <select class="custom-select mr-sm-2" id="${ani.id?c}squadra"

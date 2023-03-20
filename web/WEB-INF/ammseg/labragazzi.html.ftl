@@ -21,7 +21,7 @@
                                     <tr>
                                         <td>${rag.cognome}</td>
                                         <td>${rag.nome}</td>
-                                        <td>${rag.classe+rag.scuola.grado[0..0]apitalize}</td>
+                                        <td>${rag.classe+rag.scuola.grado[0..0]?capitalize}</td>
                                         <td>
                                             <label class="sr-only" for="laboratorio">Laboratorio</label>
                                             <select class="custom-select mr-sm-2" id="laboratorio" name="laboratorio">

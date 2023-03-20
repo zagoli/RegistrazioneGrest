@@ -18,8 +18,8 @@
                 <tbody>
                 <#list dati as dt>
                     <tr>
-                        <td class="text-capitalize">${dt[2].cognomeapitalize+" "+dt[2].nomeapitalize}</td>
-                        <td class="text-capitalize"><#if dt[3]??>${dt[3].cognomeapitalize+" "+dt[3].nomeapitalize}</#if></td>
+                        <td class="text-capitalize">${dt[2].cognomeapitalize+" "+dt[2].nome?capitalize}</td>
+                        <td class="text-capitalize"><#if dt[3]??>${dt[3].cognomeapitalize+" "+dt[3].nome?capitalize}</#if></td>
                         <td><#if dt[4]??><#list dt[4] as cal>${cal.idSettimana+" "}</#list></#if></td>
                         <td> ${dt[2].telefono} </td>
                         <td> ${dt[1].descrizione} </td>

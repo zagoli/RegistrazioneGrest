@@ -19,9 +19,9 @@
                 <tbody>
                 <#list dati as rag>
                     <tr>
-                        <td class="text-capitalize">${rag[0].cognomeapitalize}</td>
-                        <td class="text-capitalize">${rag[0].nomeapitalize}</td>
-                        <td align="center">${rag[0].classe+rag[0].scuola.grado[0..0]apitalize}</td>
+                        <td class="text-capitalize">${rag[0].cognome?capitalize}</td>
+                        <td class="text-capitalize">${rag[0].nome?capitalize}</td>
+                        <td align="center">${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
                         <td> ${rag[1]?trim} </td>
                         <td>
                             <i>R </i><b>${rag[0].registrato.telefono}</b> -

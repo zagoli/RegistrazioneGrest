@@ -22,7 +22,7 @@
                     <tr>
                         <td class="text-capitalize">${rag[0].cognome}</td>
                         <td class="text-capitalize">${rag[0].nome}</td>
-                        <td align="center">${rag[0].classe+rag[0].scuola.grado[0..0]apitalize}</td>
+                        <td align="center">${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
                         <td> ${rag[1]?trim} </td>
                         <td> <#if rag[0].squadra.id!=0> ${rag[0].squadra.nome} </#if> </td>
                         <td> ${rag[0].laboratorio.descrizione[0..*15]}...</td>

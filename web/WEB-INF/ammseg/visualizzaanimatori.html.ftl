@@ -31,11 +31,11 @@
                         <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id?c}"><img
                                     src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
                     </td>
-                    <td>${ani.cognomeapitalize}</td>
-                    <td>${ani.nomeapitalize}</td>
+                    <td>${ani.cognome?capitalize}</td>
+                    <td>${ani.nome?capitalize}</td>
                     <td data-sort="${ani.dataNascita?string.iso}">${ani.dataNascita?string["dd/MM/yyyy"]}</td>
                     <td>${ani.codiceFiscale}</td>
-                    <td>${ani.registrato.viaapitalize+" "+ani.registrato.civico+" "+ani.registrato.localitaapitalize}</td>
+                    <td>${ani.registrato.viaapitalize+" "+ani.registrato.civico+" "+ani.registrato.localita?capitalize}</td>
                     <td title="${ani.parrocchia.nome}">${ani.parrocchia.luogo}</td>
                     <td>${ani.cellulare}</td>
                     <td>${ani.mail}</td>
