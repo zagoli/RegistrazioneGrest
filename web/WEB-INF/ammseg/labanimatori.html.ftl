@@ -19,15 +19,15 @@
                         <tbody class="list">
                             <#list animatori as an>
                                 <tr>
-                                    <td>${an.cognome?capitalize}</td>
-                                    <td>${an.nome?capitalize}</td>
+                                    <td>${an.cognomeapitalize}</td>
+                                    <td>${an.nomeapitalize}</td>
                                     <td>
                                         <label class="sr-only" for="${an.id?c}laboratorio">Laboratorio</label>
-                                        <select class="custom-select mr-sm-2" id="${an.id}laboratorio"
+                                        <select class="custom-select mr-sm-2" id="${an.id?c}laboratorio"
                                                 name="${an.id?c}">
                                             <#list laboratori as lab>
-                                                <option value="${lab.id}"
-                                                        <#if an.laboratorio.id==lab.id>selected</#if>>${lab.descrizione?c}</option>
+                                                <option value="${lab.id?c}"
+                                                        <#if an.laboratorio.id==lab.id>selected</#if>>${lab.descrizione}</option>
                                             </#list>
                                         </select>
                                     </td>
@@ -35,7 +35,7 @@
                                         <div class="checkbox">
                                             <label class="sr-only" for="${an.id?c}responsabileLaboratorio">Responsabile
                                                 laboratorio</label>
-                                            <input id="${an.id}responsabileLaboratorio" name="${an.id?c}"
+                                            <input id="${an.id?c}responsabileLaboratorio" name="${an.id?c}"
                                                    type="checkbox" data-toggle="toggle" data-off="No" data-on="Sì"
                                                    <#if an.responsabileLaboratorio>checked</#if>>
                                         </div>

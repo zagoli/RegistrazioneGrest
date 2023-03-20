@@ -31,18 +31,18 @@
                         style="text-align:center;"><#if ter[1]??>${ter[1].ordineArrivo}</#if></th>
                     <td>
                         <a href="javascript:;"
-                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoter&id=${ter[0].id?c}', 'Dettagli terzamedia', 'width=600, height=700, status, scrollbars=1, location');"><img
+                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoter&id=${ter[0].id}', 'Dettagli terzamedia', 'width=600, height=700, status, scrollbars=1, location');"><img
                                     src="../risorse/img/octicons/search.svg" alt="dettaglio"></a>
-                        <a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter[0].id?c}"><img
+                        <a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter[0].id}"><img
                                     src="../risorse/img/octicons/pencil.svg" alt="modifica"></a>
-                        <a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter[0].id?c}"><img
+                        <a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter[0].id}"><img
                                     src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
                     </td>
-                    <td>${ter[0].cognome?capitalize}</td>
-                    <td>${ter[0].nome?capitalize}</td>
+                    <td>${ter[0].cognomeapitalize}</td>
+                    <td>${ter[0].nomeapitalize}</td>
                     <td data-sort="${ter[0].dataNascita?string.iso}">${ter[0].dataNascita?string["dd/MM/yyyy"]}</td>
-                    <td>${ter[0].registrato.via?capitalize+" "+ter[0].registrato.civico}</td>
-                    <td>${ter[0].registrato.localita?capitalize}</td>
+                    <td>${ter[0].registrato.viaapitalize+" "+ter[0].registrato.civico}</td>
+                    <td>${ter[0].registrato.localitaapitalize}</td>
                     <td title="${ter[0].parrocchia.nome}">${ter[0].parrocchia.luogo}</td>
                     <td>${ter[0].sezione}</td>
                     <td>${ter[0].scuola.descrizione}</td>

@@ -21,13 +21,13 @@
                                     <tr>
                                         <td>${rag.cognome}</td>
                                         <td>${rag.nome}</td>
-                                        <td>${rag.classe+rag.scuola.grado[0..0]?capitalize}</td>
+                                        <td>${rag.classe+rag.scuola.grado[0..0]apitalize}</td>
                                         <td>
                                             <label class="sr-only" for="laboratorio">Laboratorio</label>
                                             <select class="custom-select mr-sm-2" id="laboratorio" name="laboratorio">
                                                 <#list laboratori as lab>
-                                                    <option value="${rag.id},${lab.id}"
-                                                            <#if rag.laboratorio.id==lab.id>selected</#if>>${lab.descrizione?c}</option>
+                                                    <option value="${rag.id?c},${lab.id?c}"
+                                                            <#if rag.laboratorio.id==lab.id>selected</#if>>${lab.descrizione}</option>
                                                 </#list>
                                             </select>
                                         </td>

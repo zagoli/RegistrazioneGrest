@@ -16,15 +16,15 @@
                 </thead>
                 <tbody class="list">
                 <#list attivita as attarray>
-                                <#assign count = count + 1>
-                                <tr>
-                                    <th scope="row">${count}</th>
-                                    <td>${attarray[3]}</td>
-                                    <td>${attarray[0]?capitalize}</td>
-                                    <td>${attarray[1]?capitalize}</td>
-                                    <td>${attarray[2]}</td>
-                                </tr>
-                            </#list>
+                    <#assign count = count + 1>
+                    <tr>
+                        <th scope="row">${count}</th>
+                        <td>${attarray[3]}</td>
+                        <td>${attarray[0]apitalize}</td>
+                        <td>${attarray[1]apitalize}</td>
+                        <td>${attarray[2]}</td>
+                    </tr>
+                </#list>
                         </tbody>
                     </table>
                 </div>

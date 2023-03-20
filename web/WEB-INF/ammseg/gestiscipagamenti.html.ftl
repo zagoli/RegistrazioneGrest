@@ -19,17 +19,17 @@
                             <td class="nome">${datirag[0].nome}</td>
                             <td class="cognome">${datirag[0].cognome}</td>
                             <td align="center"><a href="javascript:;"
-                                                  onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=inforag&id=${datirag[0].id?c}', 'Dettagli ragazzo', 'width=600, height=700, status, scrollbars=1, location');"><img
+                                                  onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=inforag&id=${datirag[0].id}', 'Dettagli ragazzo', 'width=600, height=700, status, scrollbars=1, location');"><img
                                             src="../risorse/img/octicons/search.svg"></a></td>
                             <td align="center"><a
-                                        href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${datirag[0].id?c}"><img
+                                        href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${datirag[0].id}"><img
                                             src="../risorse/img/octicons/file.svg"></a></td>
                             <#if datirag[1]>
                                 <!--ha già pagato-->
                                 <td>
                                     <form action="/RegistrazioneGrest/App/GestisciPagamenti" method="POST"
                                           class="form-inline">
-                                        <input type="hidden" name="deletePagamento" value="${datirag[2].id?c}"/>
+                                        <input type="hidden" name="deletePagamento" value="${datirag[2].id}"/>
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-3" align="center">
@@ -53,7 +53,7 @@
                                 <td>
                                     <form action="/RegistrazioneGrest/App/GestisciPagamenti" method="POST"
                                           class="form-inline">
-                                        <input type="hidden" name="addPagamento" value="${datirag[0].id?c}"/>
+                                        <input type="hidden" name="addPagamento" value="${datirag[0].id}"/>
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col">

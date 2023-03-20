@@ -59,7 +59,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
                                    id="cal${cal.idSettimana?c}" name="cal" checked>
-                            <label class="form-check-label" for="cal${cal.idSettimana}"> Settimana dal ${cal.daQuando?c}
+                            <label class="form-check-label" for="cal${cal.idSettimana?c}"> Settimana dal ${cal.daQuando}
                                 al ${cal.aQuando} </label>
                         </div>
                     </#list>
@@ -69,7 +69,7 @@
                     <label for="laboratorio"> Selezionare un laboratorio </label>
                     <select id="laboratorio" class="form-control" name="laboratorio">
                         <#list laboratori as lab>
-                            <option value="${lab.id}">${lab.descrizione?c}</option>
+                            <option value="${lab.id?c}">${lab.descrizione}</option>
                         </#list>
                     </select>
                 </div>
@@ -78,7 +78,7 @@
                     <label for="parrocchia"> Parrocchia di appartenenza </label>
                     <select id="parrocchia" class="form-control" name="parrocchia">
                         <#list parrocchie as par>
-                            <option value="${par.id}">Parrocchia di ${par.luogo?upper_case} - ${par.nome?c} </option>
+                            <option value="${par.id?c}">Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
                         </#list>
                     </select>
                 </div>
@@ -92,7 +92,7 @@
                     </label>
                     <select id="circolo" class="form-control" name="circolo">
                         <#list circoli as cir>
-                            <option value="${cir.id}">${cir.nome} (${cir.luogo?c})</option>
+                            <option value="${cir.id?c}">${cir.nome} (${cir.luogo})</option>
                         </#list>
                     </select>
                 </div>

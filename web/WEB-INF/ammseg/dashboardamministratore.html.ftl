@@ -144,7 +144,7 @@
                             <#--Salvo la colonna invece di ripeterla due volte-->
                                 <#assign colonna>
                                     <div class="col">
-                                        <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana}&squadra=${sq.id?c}"
+                                        <a href="/RegistrazioneGrest/App/Stampa?target=pressetsqu&idset=${set.idSettimana?c}&squadra=${sq.id?c}"
                                            class="btn btn-block btn-lg text-black"
                                            style="background-color: ${sq.colore} !important;">
                                             <b>${sq.nome}</b>
@@ -194,7 +194,7 @@
                             <#list laboratori as lab>
                                 <div class="row mt-2">
                                     <div class="col">
-                                        <a href="/RegistrazioneGrest/App/Stampa?target=pressetlab&idset=${set.idSettimana}&lab=${lab.id?c}"
+                                        <a href="/RegistrazioneGrest/App/Stampa?target=pressetlab&idset=${set.idSettimana?c}&lab=${lab.id?c}"
                                            class="btn btn-block btn-lg btn-primary"> ${lab.descrizione} </a>
                                     </div>
                                 </div>

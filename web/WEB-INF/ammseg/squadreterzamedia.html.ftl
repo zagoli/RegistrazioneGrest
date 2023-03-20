@@ -25,7 +25,7 @@
                                         <select class="custom-select mr-sm-2" id="squadra" name="squadra">
                                             <option value="${ter.id?c}" <#if ter.squadra.id==0>selected</#if>></option>
                                             <#list squadre as sq>
-                                                <option value="${ter.id},${sq.id?c}"
+                                                <option value="${ter.id?c},${sq.id?c}"
                                                         <#if ter.squadra.id! == sq.id>selected</#if>>${sq.nome}</option>
                                             </#list>
                                         </select>

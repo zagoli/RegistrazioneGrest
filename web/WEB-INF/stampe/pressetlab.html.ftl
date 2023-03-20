@@ -2,8 +2,8 @@
 <#include "../struct/header.html.ftl">
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center"> presenze settimanali ${laboratorio.descrizione}</h2>
-    <h5 class="text-uppercase text-center font-italic">settimana numero ${settimana.idSettimana}
-        <small>(dal ${settimana.daQuando} al ${settimana.aQuando?c})</small>
+    <h5 class="text-uppercase text-center font-italic">settimana numero ${settimana.idSettimana?c}
+        <small>(dal ${settimana.daQuando} al ${settimana.aQuando})</small>
     </h5>
     <div class="container">
         <table class="table table-bordered table-sm">
@@ -14,12 +14,12 @@
             </tr>
             </thead>
             <tbody>
-                <#list ragazzi as rag>
-                    <tr>
-                        <td class="text-capitalize">${rag.cognome+" "+rag.nome}</td>
-                        <td align="center">${rag.classe+rag.scuola.grado[0..0]?capitalize}</td>                        
-                    </tr>
-                    </#list>
+            <#list ragazzi as rag>
+                <tr>
+                    <td class="text-capitalize">${rag.cognome+" "+rag.nome}</td>
+                    <td align="center">${rag.classe+rag.scuola.grado[0..0]apitalize}</td>
+                </tr>
+            </#list>
                 <!--riga vuota-->
                 <tr>
                     <th>Animatore</th>

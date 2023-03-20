@@ -32,20 +32,20 @@
                     <th style="text-align:center;"><#if rag[1]??>${rag[1].ordineArrivo}</#if></th>
                     <td>
                         <a href="javascript:"
-                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=inforag&id=${rag[0].id?c}', 'Dettagli ragazzo', 'width=600, height=700, status, scrollbars=1, location');"><img
+                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=inforag&id=${rag[0].id}', 'Dettagli ragazzo', 'width=600, height=700, status, scrollbars=1, location');"><img
                                     src="../risorse/img/octicons/search.svg" alt="dettaglio"></a>
-                        <a href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag[0].id?c}"><img
+                        <a href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag[0].id}"><img
                                     src="../risorse/img/octicons/pencil.svg" alt="modifica"></a>
-                        <a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag[0].id?c}"><img
+                        <a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag[0].id}"><img
                                     src="../risorse/img/octicons/trashcan.svg" alt="elimina"></a>
                     </td>
-                    <td>${rag[0].cognome?capitalize}</td>
-                    <td>${rag[0].nome?capitalize}</td>
+                    <td>${rag[0].cognomeapitalize}</td>
+                    <td>${rag[0].nomeapitalize}</td>
                     <td data-sort="${rag[0].dataNascita?string.iso}">${rag[0].dataNascita?string["dd/MM/yyyy"]}</td>
-                    <td>${rag[0].registrato.via?capitalize+" "+rag[0].registrato.civico}</td>
-                    <td>${rag[0].registrato.localita?capitalize}</td>
+                    <td>${rag[0].registrato.viaapitalize+" "+rag[0].registrato.civico}</td>
+                    <td>${rag[0].registrato.localitaapitalize}</td>
                     <td title="${rag[0].parrocchia.nome}">${rag[0].parrocchia.luogo}</td>
-                    <td>${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
+                    <td>${rag[0].classe+rag[0].scuola.grado[0..0]apitalize}</td>
                     <td>${rag[0].sezione}</td>
                     <td>${rag[0].scuola.descrizione}</td>
                     <#--Se nel db un intero è null, il resultset lo restituisce come zero-->

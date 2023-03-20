@@ -20,9 +20,9 @@
                         <tr>
                             <th scope="row">${count}</th>
                             <td>${att.descrizione}</td>
-                            <td><#if dataid[0]??>${dataid[0]?c}</#if></td>
+                            <td><#if dataid[0]??>${dataid[0]}</#if></td>
                             <td align="center"><a
-                                        href="/RegistrazioneGrest/App/EliminaPrenotazioneAttGen?id=${dataid[1]?c}"><img
+                                        href="/RegistrazioneGrest/App/EliminaPrenotazioneAttGen?id=${dataid[1]}"><img
                                             src="../risorse/img/octicons/trashcan.svg"></a></td>
                         </tr>
                     </#list>
@@ -38,7 +38,7 @@
                         <div class="col-md-6">
                             <select class="form-control" name="attivita">
                                 <#list allattivita as att>
-                                    <option value="${att.id}">${att.descrizione?c}</option>
+                                    <option value="${att.id?c}">${att.descrizione}</option>
                                 </#list>
                             </select>
                         </div>

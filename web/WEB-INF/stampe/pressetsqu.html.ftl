@@ -23,19 +23,19 @@
             </thead>
             <tbody>
             <#list ragazzi as rag>
-                    <tr>
-                        <td class="text-capitalize">${rag[0].cognome+" "+rag[0].nome}</td>
-                        <td align="center">${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>                        
-                        <td> ${rag[0].laboratorio.descrizione[0..*15]}... </td>
-                        <td> ${rag[1]?trim} </td>
-                        <td align="center"><#if rag[0].mensa><img src="../risorse/img/octicons/check.svg"></#if></td>
-                        <td align="center"> M </td>
-                        <td align="center"> P </td>
-                        <td align="center"> M </td>
-                        <td align="center"> P </td>
-                        <td align="center"> M </td>
-                        <td align="center"> P </td>
-                        <td align="center"> M </td>
+                <tr>
+                    <td class="text-capitalize">${rag[0].cognome+" "+rag[0].nome}</td>
+                    <td align="center">${rag[0].classe+rag[0].scuola.grado[0..0]apitalize}</td>
+                    <td> ${rag[0].laboratorio.descrizione[0..*15]}...</td>
+                    <td> ${rag[1]?trim} </td>
+                    <td align="center"><#if rag[0].mensa><img src="../risorse/img/octicons/check.svg"></#if></td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
                         <td align="center"> P </td>
                         <td align="center"> M </td>
                         <td align="center"> P </td>

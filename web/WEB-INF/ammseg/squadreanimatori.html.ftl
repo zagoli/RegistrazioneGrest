@@ -19,11 +19,12 @@
                         <tbody class="list">
                             <#list animatori as ani>
                                 <tr>
-                                    <td>${ani.cognome?capitalize}</td>
-                                    <td>${ani.nome?capitalize}</td>
+                                    <td>${ani.cognomeapitalize}</td>
+                                    <td>${ani.nomeapitalize}</td>
                                     <td>
                                         <label class="sr-only" for="${ani.id?c}squadra">Squadra</label>
-                                        <select class="custom-select mr-sm-2" id="${ani.id}squadra" name="${ani.id?c}">
+                                        <select class="custom-select mr-sm-2" id="${ani.id?c}squadra"
+                                                name="${ani.id?c}">
                                             <option <#if ani.squadra.id==0>selected</#if>></option>
                                             <#list squadre as sq>
                                                 <option value="${sq.id?c}"
@@ -35,7 +36,8 @@
                                         <div class="checkbox">
                                             <label class="sr-only" for="${ani.id?c}responsabileSquadra">Responsabile
                                                 squadra</label>
-                                            <input id="${ani.id}responsabileSquadra" name="${ani.id?c}" type="checkbox"
+                                            <input id="${ani.id?c}responsabileSquadra" name="${ani.id?c}"
+                                                   type="checkbox"
                                                    data-toggle="toggle" data-off="No" data-on="Sì"
                                                    <#if ani.responsabileSquadra>checked</#if>>
                                         </div>

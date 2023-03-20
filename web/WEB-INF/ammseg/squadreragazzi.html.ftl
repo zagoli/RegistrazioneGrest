@@ -21,13 +21,13 @@
                                 <tr>
                                     <td>${rag.cognome}</td>
                                     <td>${rag.nome}</td>
-                                    <td>${rag.classe+rag.scuola.grado[0..0]?capitalize}</td>
+                                    <td>${rag.classe+rag.scuola.grado[0..0]apitalize}</td>
                                     <td>
                                         <label class="sr-only" for="squadra">Squadra</label>
                                         <select class="custom-select mr-sm-2" id="squadra" name="squadra">
                                             <option value="${rag.id?c}" <#if rag.squadra.id==0>selected</#if>></option>
                                             <#list squadre as sq>
-                                                <option value="${rag.id},${sq.id?c}"
+                                                <option value="${rag.id?c},${sq.id?c}"
                                                         <#if rag.squadra.id! == sq.id>selected</#if>>${sq.nome}</option>
                                             </#list>
                                         </select>
