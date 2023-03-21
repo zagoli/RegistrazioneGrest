@@ -375,7 +375,7 @@ public class Dispatcher extends HttpServlet {
                 break;
             case "/Stampa":
                 if (request.getSession().getAttribute("idUtente") != null) {
-                    if (request.getSession().getAttribute("tipoUtente").equals(0)) {
+                    if ((Integer) request.getSession().getAttribute("tipoUtente") <= 2) {
                         c = new ControllerStampe();
                     } else {
                         c = new Controller403();

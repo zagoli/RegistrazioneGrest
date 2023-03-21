@@ -10,14 +10,11 @@ import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 public class ControllerDashboard implements ControllerInterface {
 
@@ -58,31 +55,24 @@ public class ControllerDashboard implements ControllerInterface {
                     }
                     //iscrizioni per animatori aperte o chiuse (per togliere bottoni modifica/elimina)
                     mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
-                    mv.addObject("TITOLOPAGINA", "Dashboard utente");
                     mv.setView("user/dashboardutente.html");
+                    mv.addObject("TITOLOPAGINA", "Dashboard utente");
                     break;
                 case 1:
                 case 2:
+                    mv.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
+                    mv.addObject("settimane", DAOMan.calendarioDAO.findAll());
+                    mv.addObject("squadre", DAOMan.squadraDAO.findAll());
                     mv.setView("ammseg/dashboardsegretario.html");
                     mv.addObject("TITOLOPAGINA", "Dashboard segretario");
                     break;
                 case 0:
-                    Properties properties = new Properties();
                     mv.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
                     mv.addObject("settimane", DAOMan.calendarioDAO.findAll());
                     mv.addObject("squadre", DAOMan.squadraDAO.findAll());
-                    InputStream in = new FileInputStream("C:/conf/RegistrazioneGrest/config.properties");
-                    properties.load(in);
-                    if (properties.getProperty("ISCRRAG").equals("true")) {
-                        mv.addObject("ISCRRAG", true);
-                    }
-                    if (properties.getProperty("ISCRAN").equals("true")) {
-                        mv.addObject("ISCRAN", true);
-                    }
-                    if (properties.getProperty("ISCRTER").equals("true")) {
-                        mv.addObject("ISCRTER", true);
-                    }
-                    in.close();
+                    mv.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
+                    mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
+                    mv.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
                     mv.setView("ammseg/dashboardamministratore.html");
                     mv.addObject("TITOLOPAGINA", "Dashboard amministratore");
                     break;
