@@ -22,9 +22,11 @@ public class ControllerSegretari implements ControllerInterface {
             mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().isEmpty()) {
                 List<Registrato> lseg = DAOMan.registratoDAO.findSegretari();
+                List<Registrato> lamm = DAOMan.registratoDAO.findAmministratori();
                 if (!lseg.isEmpty()) {
                     mv.addObject("segretari", lseg);
                 }
+                mv.addObject("amministratori", lamm);
                 mv.setView("ammseg/gestiscisegretari.html");
 
             } else if (request.getParameterMap().containsKey("del")) {

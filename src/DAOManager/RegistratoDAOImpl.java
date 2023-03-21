@@ -17,6 +17,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     private static final String FIND_REGISTRATO_ID = "select * from Registrato where id = ?;";
     private static final String FIND_ALL_REGISTRATO = "select * from Registrato;";
     private static final String FIND_SEGRETARI = "select * from Registrato where tipoUt > 0 and tipoUt < 3";
+    private static final String FIND_AMMINISTRATORI = "select * from Registrato where tipoUt = 0";
     private static final String COUNT_USERS = "select count(*) from Registrato where tipoUt = 3;";
     private static final String FIND_REGISTRATO_MAIL = "select * from Registrato where mail = ?;";
     private static final String FIND_REGISTRATO_NOMINATIVO = "select * from Registrato where nome = ? and cognome = ?;";
@@ -92,6 +93,19 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     public List<Registrato> findSegretari() throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(FIND_SEGRETARI);
+        ResultSet rs = pst.executeQuery();
+        LinkedList<Registrato> lr = new LinkedList<>();
+        while (rs.next()) {
+            lr.add(this.mapRowToRegistrato(rs));
+        }
+        con.close();
+        return lr;
+    }
+
+    @Override
+    public List<Registrato> findAmministratori() throws SQLException {
+        Connection con = DAOMan.getConnection();
+        PreparedStatement pst = con.prepareStatement(FIND_AMMINISTRATORI);
         ResultSet rs = pst.executeQuery();
         LinkedList<Registrato> lr = new LinkedList<>();
         while (rs.next()) {
