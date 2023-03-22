@@ -18,7 +18,7 @@
                     <div class="form-check form-check-inline">
                         <div class="custom-control custom-switch">
                             <input class="custom-control-input" id="ISCRRAG" type="checkbox"
-                                   <#if ISCRRAG??>checked</#if>>
+                                   <#if ISCRRAG>checked</#if>>
                             <label class="custom-control-label" for="ISCRRAG">Attiva iscrizioni ragazzi</label>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                 <div class="col">
                     <div class="form-check form-check-inline">
                         <div class="custom-control custom-switch">
-                            <input class="custom-control-input" id="ISCRAN" type="checkbox" <#if ISCRAN??>checked</#if>>
+                            <input class="custom-control-input" id="ISCRAN" type="checkbox" <#if ISCRAN>checked</#if>>
                             <label class="custom-control-label" for="ISCRAN">Attiva iscrizioni animatori</label>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                     <div class="form-check form-check-inline">
                         <div class="custom-control custom-switch">
                             <input class="custom-control-input" id="ISCRTER" type="checkbox"
-                                   <#if ISCRTER??>checked</#if>>
+                                   <#if ISCRTER>checked</#if>>
                             <label class="custom-control-label" for="ISCRTER">Attiva iscrizioni terza media</label>
                         </div>
                     </div>
