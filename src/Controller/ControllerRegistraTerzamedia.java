@@ -8,7 +8,6 @@ import Utility.Checker;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -105,8 +104,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
                 //iscrizioni aperte o chiuse
                 mv.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
             }
-        } catch (final RuntimeException | IOException | ConfigPropertyException | SQLException | ParseException |
-                       UnirestException e) {
+        } catch (final RuntimeException | IOException | ConfigPropertyException | SQLException | ParseException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerRegistraTerzamedia.class.getName());
         }
         return mv;

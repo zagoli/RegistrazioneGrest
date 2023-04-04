@@ -7,7 +7,6 @@ import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -111,7 +110,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 }
                 mv.setView("user/modificaterzamedia.html");
             }
-        } catch (final RuntimeException | UnirestException | SQLException | IOException | ParseException |
+        } catch (final RuntimeException | SQLException | IOException | ParseException |
                        ConfigPropertyException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaTerzamedia.class.getName());
         }

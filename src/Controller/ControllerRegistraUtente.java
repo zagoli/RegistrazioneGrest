@@ -7,7 +7,6 @@ import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,7 +58,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                 mv.addObject("TITOLOPAGINA", "Registrazione Utente");
                 mv.addObject("DONE", false);
             }
-        } catch (final RuntimeException | UnirestException | SQLException | ConfigPropertyException | IOException e) {
+        } catch (final RuntimeException | SQLException | ConfigPropertyException | IOException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerRegistraUtente.class.getName());
         }
         return mv;

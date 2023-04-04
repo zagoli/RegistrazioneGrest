@@ -30,9 +30,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.87" level="application_server_libraries" />
     <orderEntry type="library" name="apache.commons.lang3" level="project" />
-    <orderEntry type="library" name="mashape.unirest.java" level="project" />
     <orderEntry type="library" name="microsoft.sqlserver.mssql.jdbc" level="project" />
     <orderEntry type="library" name="sun.mail.javax" level="project" />
     <orderEntry type="library" name="freemarker" level="project" />
+    <orderEntry type="library" name="konghq.unirest.java" level="project" />
   </component>
 </module>

@@ -8,7 +8,6 @@ import Utility.Checker;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,8 +74,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                 //iscrizioni aperte o chiuse
                 mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
             }
-        } catch (final RuntimeException | SQLException | IOException | ConfigPropertyException | ParseException |
-                       UnirestException e) {
+        } catch (final RuntimeException | SQLException | IOException | ConfigPropertyException | ParseException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerRegistraAnimatore.class.getName());
         }
         return mv;

@@ -7,7 +7,6 @@ import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +41,7 @@ public class ControllerModificaUtente implements ControllerInterface {
                 mv.addObject("registrato", r);
                 mv.setView("user/modificautente.html");
             }
-        } catch (final RuntimeException | SQLException | IOException | UnirestException | ConfigPropertyException e) {
+        } catch (final RuntimeException | SQLException | IOException | ConfigPropertyException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaUtente.class.getName());
         }
         return mv;
