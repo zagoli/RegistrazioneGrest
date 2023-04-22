@@ -11,15 +11,15 @@
                 <input type="hidden" value="${ragazzo.id?c}" name="id">
 
                 <div class="form-group">
-                    <label for="nome"> Nome </label>
-                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
-                           data-parsley-length="[2, 50]" value="${ragazzo.nome}">
-                </div>
-
-                <div class="form-group">
                     <label for="cognome"> Cognome </label>
                     <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome"
                            data-parsley-length="[2, 50]" value="${ragazzo.cognome}">
+                </div>
+
+                <div class="form-group">
+                    <label for="nome"> Nome </label>
+                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
+                           data-parsley-length="[2, 50]" value="${ragazzo.nome}">
                 </div>
 
                 <div class="form-group">
@@ -33,17 +33,17 @@
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="presenza" id="completo" value="C"
                                <#if ragazzo.presenza == "C">checked</#if>>
-                        <label class="form-check-label" for="completo">Completo</label>
+                        <label class="form-check-label" for="completo">Mattina e pomeriggio</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M"
                                <#if ragazzo.presenza == "M">checked</#if>>
-                        <label class="form-check-label" for="mattina">Mattina</label>
+                        <label class="form-check-label" for="mattina">Solo mattina</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P"
                                <#if ragazzo.presenza == "P">checked</#if>>
-                        <label class="form-check-label" for="pomeriggio">Pomeriggio</label>
+                        <label class="form-check-label" for="pomeriggio">Solo pomeriggio</label>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                         </div>
                     </#list>
                     <a class="btn btn-secondary btn-sm mt-1" href="javascript:;"
-                       onClick="window.open('/RegistrazioneGrest/App/VisualizzaQuote?ragazzi', '_blank', 'width=1000, height=600, status=yes, scrollbars=no, location=yes');">clicca
+                       onClick="window.open('/RegistrazioneGrest/App/VisualizzaQuote?ragazzi', '_blank', 'width=1000, height=900, status=yes, scrollbars=no, location=yes');">clicca
                         qui per consultare le quote d'iscrizione</a>
                 </div>
 
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="parrocchia"> Parrocchia </label>
+                    <label for="parrocchia"> Parrocchia di appartenenza </label>
                     <select id="parrocchia" class="form-control" name="parrocchia">
                         <#list parrocchie as par>
                             <option value="${par.id?c}" <#if par.id == ragazzo.parrocchia.id>selected</#if>>
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="circolo"> Circolo </label>
+                    <label for="circolo"> Circolo di tesseramento </label>
                     <select id="circolo" class="form-control" name="circolo">
                         <#list circoli as cir>
                             <option value="${cir.id?c}"
@@ -136,7 +136,7 @@
                 <div class="form-group">
                     <label for="richieste">Eventuali richieste o proposte:</label>
                     <textarea class="form-control" rows="5" id="richieste" name="richieste"
-                              placeholder="Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta."><#if ragazzo.richieste??>${ragazzo.richieste}</#if></textarea>
+                              placeholder="Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta, e di non richiedere cambiamenti, se non gravemente necessari."><#if ragazzo.richieste??>${ragazzo.richieste}</#if></textarea>
                 </div>
 
                 <div class="form-group">

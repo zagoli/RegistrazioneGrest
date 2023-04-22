@@ -11,39 +11,42 @@
                             <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
                         </div>
                     </#if>
-                    <form action="/RegistrazioneGrest/App/RegistraTerzamedia" method="POST" data-parsley-validate="" id="mainForm">
-                        
-                        <h3 class="text-center font-weight-bold text-uppercase"> 1 - dati anagrafici </h3>
-                        
-                        <div class="form-group">
-                            <label for="nome"> Nome </label>
-                                <input class="form-control" type="text" id ="nome" required name="nome" placeholder="Nome" autofocus data-parsley-length="[2, 50]"> 
-                        </div>
+            <form action="/RegistrazioneGrest/App/RegistraTerzamedia" method="POST" data-parsley-validate=""
+                  id="mainForm">
 
-                        <div class="form-group">
-                            <label for="cognome"> Cognome </label> 
-                                <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 50]"> 
-                        </div>
+                <h3 class="text-center font-weight-bold text-uppercase"> 1 - dati anagrafici </h3>
 
-                        <div class="form-group">
-                            <label for="dataNascita"> Data di nascita </label>
-                                <input class="form-control" type="date" required id="dataNascita" name="dataNascita">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="parrocchia"> Parrocchia </label>
-                            <select id="parrocchia" class="form-control" name="parrocchia">
-                                <#list parrocchie as par>
+                <div class="form-group">
+                    <label for="cognome"> Cognome </label>
+                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome"
+                           data-parsley-length="[2, 50]">
+                </div>
+
+                <div class="form-group">
+                    <label for="nome"> Nome </label>
+                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
+                           data-parsley-length="[2, 50]">
+                </div>
+
+                <div class="form-group">
+                    <label for="dataNascita"> Data di nascita </label>
+                    <input class="form-control" type="date" required id="dataNascita" name="dataNascita">
+                </div>
+
+                <div class="form-group">
+                    <label for="parrocchia"> Parrocchia di appartenenza </label>
+                    <select id="parrocchia" class="form-control" name="parrocchia">
+                        <#list parrocchie as par>
                                     <option value="${par.id?c}">Parrocchia di ${par.luogo?upper_case}
                                         - ${par.nome} </option>
                                 </#list>
-                            </select>
-                        </div>
+                    </select>
+                </div>
 
-                        <div class="form-group">
-                            <label for="circolo"> Circolo </label>
-                            <select id="circolo" class="form-control" name="circolo">
-                                <#list circoli as cir>
+                <div class="form-group">
+                    <label for="circolo"> Circolo di tesseramento </label>
+                    <select id="circolo" class="form-control" name="circolo">
+                        <#list circoli as cir>
                                     <option value="${cir.id?c}">${cir.nome} (${cir.luogo})</option>
                                 </#list>
                             </select>
@@ -83,28 +86,29 @@
                             <input class="form-control" type="email" required id="mail" name="mail"
                                    placeholder="E-Mail">
                         </div>
-                        
-                        <h3 class="text-center font-weight-bold text-uppercase"> 2 - partecipazione al grest nel periodo segnato </h3>
-                        
-                        <div class="form-group">
-                            <label> Presenza giornaliera </label> <br/>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="presenza" id="completo" value="C" checked>
-                                <label class="form-check-label" for="completo">Completo</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M">
-                                <label class="form-check-label" for="mattina">Mattina</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P">
-                                <label class="form-check-label" for="pomeriggio">Pomeriggio</label>
-                            </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label> Partecipazione </label>
-                            <#list calendari as cal>
+                <h3 class="text-center font-weight-bold text-uppercase"> 2 - partecipazione al grest nel periodo
+                    segnato </h3>
+
+                <div class="form-group">
+                    <label> Presenza giornaliera </label> <br/>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="presenza" id="completo" value="C" checked>
+                        <label class="form-check-label" for="completo">Mattina e pomeriggio</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M">
+                        <label class="form-check-label" for="mattina">Solo mattina</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P">
+                        <label class="form-check-label" for="pomeriggio">Solo pomeriggio</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label> Partecipazione </label>
+                    <#list calendari as cal>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
                                            id="cal${cal.idSettimana?c}" name="cal" checked>
@@ -130,24 +134,24 @@
                             </select>
                         </div>
 
-                        <h3 class="text-center font-weight-bold text-uppercase"> 4 - Allergie o intolleranze alimentari
-                            o terapie in corso </h3>
+                <h3 class="text-center font-weight-bold text-uppercase"> 4 - Allergie o intolleranze alimentari
+                    o terapie in corso </h3>
 
-                        <div class="form-group">
-                            <label for="noteAlimentari" class="sr-only">Allergie o intolleranze alimentari o terapie in
-                                corso</label>
-                            <textarea class="form-control" rows="5" id="noteAlimentari" name="noteAlimentari"
-                                      placeholder="specificare SOLO allergie certificate (non cibi che non piacciono)"></textarea>
-                        </div>
+                <div class="form-group">
+                    <label for="noteAlimentari" class="sr-only">Allergie o intolleranze alimentari o terapie in
+                        corso</label>
+                    <textarea class="form-control" rows="5" id="noteAlimentari" name="noteAlimentari"
+                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest."></textarea>
+                </div>
 
-                        <h3 class="text-center font-weight-bold text-uppercase"> 5 - Eventuali richieste o
-                            proposte </h3>
+                <h3 class="text-center font-weight-bold text-uppercase"> 5 - Eventuali richieste o
+                    proposte </h3>
 
-                        <div class="form-group">
-                            <label for="richieste" class="sr-only">Eventuali richieste o proposte</label>
-                            <textarea class="form-control" rows="5" id="richieste" name="richieste"
-                                      placeholder="specificare SOLO se presenti"></textarea>
-                        </div>
+                <div class="form-group">
+                    <label for="richieste" class="sr-only">Eventuali richieste o proposte</label>
+                    <textarea class="form-control" rows="5" id="richieste" name="richieste"
+                              placeholder="specificare SOLO se presenti"></textarea>
+                </div>
 
                         <h3 class="text-center font-weight-bold text-uppercase"> 6 - Richieste e dichiarazioni dei
                             genitori </h3>
@@ -180,7 +184,8 @@
                                 le attività ludico-sportive previste; in caso contrario, si impegnano a chiederne
                                 l'esonero al momento della conferma dell'iscrizione;
                             </li>
-                            <li>di essere consapevoli che la responsabilità della Parrocchia nei confronti dei
+                            <li>di essere consapevoli che la responsabilità della Parrocchia e del Circolo Noi di
+                                Balconi nei confronti dei
                                 ragazzi e la relativa copertura assicurativa inizia e termina negli orari indicati; non
                                 c'è copertura per gli spostamenti da e verso l'abitazione;
                             </li>

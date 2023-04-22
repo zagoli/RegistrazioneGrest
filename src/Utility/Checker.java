@@ -27,11 +27,11 @@ public class Checker {
         if (response.getStatus() == 200) {
             JSONObject responsedata = response.getBody().getObject();
             //prima controllo se la mail è in formato valido, altrimenti se splitto e non è valido magari da NullPointer
-            if (responsedata.getBoolean("formatCheck")
+            if (responsedata.getString("formatCheck").equals("true")
                     && responsedata.getString("emailAddress").equals(mail)
-                    && responsedata.getBoolean("dnsCheck")
+                    && responsedata.getString("dnsCheck").equals("true")
                     // && responsedata.getBoolean("smtpCheck")
-                    && !responsedata.getBoolean("disposableCheck")) {
+                    && responsedata.getString("disposableCheck").equals("false")) {
                 return true;
             }
         }

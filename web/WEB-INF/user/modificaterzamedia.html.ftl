@@ -17,15 +17,15 @@
                         <input type="hidden" value="${terzamedia.id?c}" name="id"></input>
 
                         <div class="form-group">
-                            <label for="nome"> Nome </label>
-                            <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome"
-                                   autofocus data-parsley-length="[2, 50]" value="${terzamedia.nome}">
-                        </div>
-
-                        <div class="form-group">
                             <label for="cognome"> Cognome </label>
                             <input class="form-control" type="text" required id="cognome" name="cognome"
                                    placeholder="Cognome" data-parsley-length="[2, 50]" value="${terzamedia.cognome}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nome"> Nome </label>
+                            <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome"
+                                   autofocus data-parsley-length="[2, 50]" value="${terzamedia.nome}">
                         </div>
 
                         <div class="form-group">
@@ -39,17 +39,17 @@
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="presenza" id="completo" value="C"
                                        <#if terzamedia.presenza == "C">checked</#if>>
-                                <label class="form-check-label" for="completo">Completo</label>
+                                <label class="form-check-label" for="completo">Mattina e pomeriggio</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M"
                                        <#if terzamedia.presenza == "M">checked</#if>>
-                                <label class="form-check-label" for="mattina">Mattina</label>
+                                <label class="form-check-label" for="mattina">Solo mattina</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P"
                                        <#if terzamedia.presenza == "P">checked</#if>>
-                                <label class="form-check-label" for="pomeriggio">Pomeriggio</label>
+                                <label class="form-check-label" for="pomeriggio">Solo pomeriggio</label>
                             </div>
                         </div>
 
@@ -79,7 +79,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="parrocchia"> Parrocchia </label>
+                            <label for="parrocchia"> Parrocchia di appartenenza </label>
                             <select id="parrocchia" class="form-control" name="parrocchia">
                                 <#list parrocchie as par>
                                     <option value="${par.id?c}" <#if par.id == terzamedia.parrocchia.id>selected</#if>>
@@ -89,7 +89,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="circolo"> Circolo </label>
+                            <label for="circolo"> Circolo di tesseramento </label>
                             <select id="circolo" class="form-control" name="circolo">
                                 <#list circoli as cir>
                                     <option value="${cir.id?c}"
