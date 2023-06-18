@@ -5,6 +5,12 @@
     <h5 class="text-uppercase text-center font-italic">settimana numero ${settimana.idSettimana?c}
         <small>(dal ${settimana.daQuando} al ${settimana.aQuando})</small>
     </h5>
+    <p>Stampato il
+        <script type="text/javascript">
+            var theDate = new Date();
+            document.write(theDate.toLocaleDateString('it-IT'));
+        </script>
+    </p>
     <div class="container">
         <table class="table table-bordered table-sm">
             <thead>

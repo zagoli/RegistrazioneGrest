@@ -5,6 +5,12 @@
                 style="color:${squadra.colore}; ">${squadra.nome}</span></h2>
     <h5 class="text-uppercase text-center font-italic">settimana numero ${settimana.idSettimana?c}
         <small>(dal ${settimana.daQuando} al ${settimana.aQuando})</small></h5>
+    <p>Stampato il
+        <script type="text/javascript">
+            var theDate = new Date();
+            document.write(theDate.toLocaleDateString('it-IT'));
+        </script>
+    </p>
     <div class="container">
         <table class="table table-bordered table-sm">
             <thead>
@@ -36,11 +42,11 @@
                     <td align="center"> M</td>
                     <td align="center"> P</td>
                     <td align="center"> M</td>
-                        <td align="center"> P </td>
-                        <td align="center"> M </td>
-                        <td align="center"> P </td>
-                    </tr>
-                    </#list>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                </tr>
+            </#list>
             <!--riga vuota-->
             <tr>
                 <th>Animatore</th>
@@ -55,27 +61,28 @@
                 <th colspan="2">Venerdì</th>
             </tr>
             <#list animatori as an>
-                        <tr>
-                            <td class="text-capitalize">${an[0].cognome+" "+an[0].nome+" "}<#if an[0].responsabileSquadra><img src="../risorse/img/octicons/ruby.svg"></#if></td>
-                            <td>${an[0].dataNascita?string.yyyy}</td>                        
-                            <td></td>
-                            <td>${an[1]?trim}</td>
-                            <td>${an[0].cellulare}</td>
-                            <td align="center"> M </td>
-                            <td align="center"> P </td>
-                            <td align="center"> M </td>
-                            <td align="center"> P </td>
-                            <td align="center"> M </td>
-                            <td align="center"> P </td>
-                            <td align="center"> M </td>
-                            <td align="center"> P </td>
-                            <td align="center"> M </td>
-                            <td align="center"> P </td>
-                        </tr>
-                    </#list>
-                </tbody>
-            </table>
-        </div>
+                <tr>
+                    <td class="text-capitalize">${an[0].cognome+" "+an[0].nome+" "}<#if an[0].responsabileSquadra><img
+                                src="../risorse/img/octicons/ruby.svg"></#if></td>
+                    <td>${an[0].dataNascita?string.yyyy}</td>
+                    <td></td>
+                    <td>${an[1]?trim}</td>
+                    <td>${an[0].cellulare}</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
     </div>
+</div>
 <#include "../struct/footer.html.ftl">
 <script> window.print() </script>

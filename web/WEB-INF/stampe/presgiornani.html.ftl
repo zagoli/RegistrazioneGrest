@@ -2,6 +2,12 @@
 <#include "../struct/header.html.ftl">
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center">presenze giornaliere animatori</h2>
+    <p>Stampato il
+        <script type="text/javascript">
+            var theDate = new Date();
+            document.write(theDate.toLocaleDateString('it-IT'));
+        </script>
+    </p>
     <div class="container">
         <table class="table table-bordered table-sm">
             <thead>
