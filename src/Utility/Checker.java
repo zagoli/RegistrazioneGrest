@@ -10,7 +10,6 @@ import kong.unirest.UnirestException;
 import kong.unirest.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -18,22 +17,18 @@ import java.util.logging.Logger;
 
 public class Checker {
 
-    public static boolean checkMail(String mail) throws UnirestException, ConfigPropertyException, IOException {
-        HttpResponse<JsonNode> response = Unirest.get("https://emailverification.whoisxmlapi.com/api/v2")
-                .queryString("apiKey", ConfigProperties.getProperty("XMLAPI_MAIL_CHECK_API_KEY"))
-                .queryString("emailAddress", mail)
-                .asJson();
-        //controllo se la richiesta è andata a buon fine
+    public static boolean checkMail(String mail) throws UnirestException {
+        HttpResponse<JsonNode> response = Unirest.post("http://172.16.0.8:8085/v0/check_email")
+                .header("Content-Type", "application/json")
+                .body("""
+                        {
+                            "to_email": "%s",
+                            "from_email": "assistenzatecnica@parrocchiadibalconi.it"
+                        }
+                        """.formatted(mail)).asJson();
         if (response.getStatus() == 200) {
             JSONObject responsedata = response.getBody().getObject();
-            //prima controllo se la mail è in formato valido, altrimenti se splitto e non è valido magari da NullPointer
-            if (responsedata.getString("formatCheck").equals("true")
-                    && responsedata.getString("emailAddress").equals(mail)
-                    && responsedata.getString("dnsCheck").equals("true")
-                    // && responsedata.getBoolean("smtpCheck")
-                    && responsedata.getString("disposableCheck").equals("false")) {
-                return true;
-            }
+            return !responsedata.getString("is_reachable").equals("invalid") && !responsedata.getString("is_reachable").equals("risky");
         }
         return false;
     }

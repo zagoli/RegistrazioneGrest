@@ -5,7 +5,6 @@ import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
-import Utility.ConfigPropertyException;
 import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -86,8 +85,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 }
                 mv.setView("user/modificaanimatore.html");
             }
-        } catch (final RuntimeException | SQLException | IOException | ParseException |
-                       ConfigPropertyException e) {
+        } catch (final RuntimeException | SQLException | IOException | ParseException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaAnimatore.class.getName());
         }
         return mv;

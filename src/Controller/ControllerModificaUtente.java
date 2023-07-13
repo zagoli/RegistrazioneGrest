@@ -5,7 +5,6 @@ import Domain.Registrato;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
-import Utility.ConfigPropertyException;
 import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +40,7 @@ public class ControllerModificaUtente implements ControllerInterface {
                 mv.addObject("registrato", r);
                 mv.setView("user/modificautente.html");
             }
-        } catch (final RuntimeException | SQLException | IOException | ConfigPropertyException e) {
+        } catch (final RuntimeException | SQLException | IOException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaUtente.class.getName());
         }
         return mv;

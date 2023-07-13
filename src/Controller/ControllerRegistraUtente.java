@@ -5,12 +5,10 @@ import Domain.Registrato;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
-import Utility.ConfigPropertyException;
 import Utility.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class ControllerRegistraUtente implements ControllerInterface {
@@ -58,7 +56,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                 mv.addObject("TITOLOPAGINA", "Registrazione Utente");
                 mv.addObject("DONE", false);
             }
-        } catch (final RuntimeException | SQLException | ConfigPropertyException | IOException e) {
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerRegistraUtente.class.getName());
         }
         return mv;
