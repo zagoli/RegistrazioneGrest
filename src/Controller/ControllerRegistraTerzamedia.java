@@ -26,8 +26,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
         try {
             mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
             mv.addObject("TITOLOPAGINA", "Registrazione ragazzo di Terzamedia");
-            boolean isMailValid = Checker.checkMail(request.getParameter("mail"));
-            if (request.getParameterMap().containsKey("nome") && isMailValid) {
+            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
                 Terzamedia terzamedia = new Terzamedia();
                 terzamedia.setNome(request.getParameter("nome"));
@@ -98,7 +97,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
                 mv.addObject("scuole", listScuola);
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
                 mv.addObject("calendari", listaCalendario);
-                if (request.getParameterMap().containsKey("mail") && !isMailValid) {
+                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
                     mv.addObject("INVALIDMAIL", true);
                 }
                 //iscrizioni aperte o chiuse
