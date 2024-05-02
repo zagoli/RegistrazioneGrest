@@ -39,5 +39,5 @@ public class CodiceSbloccoIscrizione {
     public void setDataUtilizzo(Timestamp dataUtilizzo) {
         this.dataUtilizzo = dataUtilizzo;
     }
-    
+
 }

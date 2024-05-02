@@ -27,5 +27,5 @@ public class RelPresenzaAn {
     public void setCalendarioId(int calendarioId) {
         this.calendarioId = calendarioId;
     }
-    
+
 }

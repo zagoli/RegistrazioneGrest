@@ -52,6 +52,6 @@ public class AttivitaGen {
         final AttivitaGen other = (AttivitaGen) obj;
         return Objects.equals(this.descrizione, other.descrizione);
     }
-    
-  
+
+
 }

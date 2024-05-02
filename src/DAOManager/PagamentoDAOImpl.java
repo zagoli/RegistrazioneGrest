@@ -3,7 +3,10 @@ package DAOManager;
 import Domain.Pagamento;
 import Domain.Registrato;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,7 +60,7 @@ public class PagamentoDAOImpl implements PagamentoDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ALL_PAGAMENTO);
         ResultSet rs = pst.executeQuery();
         List<Pagamento> lp = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             lp.add(this.mapRowToPagamento(rs));
         }
         con.close();
@@ -85,13 +88,13 @@ public class PagamentoDAOImpl implements PagamentoDAO {
         con.close();
         return res;
     }
-    
-    public Pagamento mapRowToPagamento (ResultSet rs) throws SQLException{
+
+    public Pagamento mapRowToPagamento(ResultSet rs) throws SQLException {
         return new Pagamento(
-                rs.getInt("pid"), 
-                rs.getDate("pdata"), 
-                rs.getFloat("pquota"), 
-                rs.getInt("pragid"), 
+                rs.getInt("pid"),
+                rs.getDate("pdata"),
+                rs.getFloat("pquota"),
+                rs.getInt("pragid"),
                 new Registrato(
                         rs.getInt("reid"),
                         rs.getString("remail"),

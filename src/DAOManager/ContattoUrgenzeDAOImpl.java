@@ -78,14 +78,14 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<ContattoUrgenze> lcu = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             lcu.add(this.mapRowToContattoUrgenze(rs));
         }
         conn.close();
         return lcu;
     }
 
-    public ContattoUrgenze mapRowToContattoUrgenze(ResultSet rs) throws SQLException{
+    public ContattoUrgenze mapRowToContattoUrgenze(ResultSet rs) throws SQLException {
         return new ContattoUrgenze(
                 rs.getInt("cuid"),
                 rs.getString("cufisso"),
@@ -94,18 +94,18 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
                 rs.getString("cucognome"),
                 rs.getString("curelazione"),
                 new Registrato(
-                    rs.getInt("reid"),
-                    rs.getString("remail"),
-                    rs.getString("repassword"),
-                    rs.getString("renome"),
-                    rs.getString("recognome"),
-                    rs.getString("retelefono"),
-                    rs.getString("relocalita"),
-                    rs.getString("revia"),
-                    rs.getString("recivico"),
-                    rs.getInt("retipoUt")
+                        rs.getInt("reid"),
+                        rs.getString("remail"),
+                        rs.getString("repassword"),
+                        rs.getString("renome"),
+                        rs.getString("recognome"),
+                        rs.getString("retelefono"),
+                        rs.getString("relocalita"),
+                        rs.getString("revia"),
+                        rs.getString("recivico"),
+                        rs.getInt("retipoUt")
                 )
         );
     }
-    
+
 }

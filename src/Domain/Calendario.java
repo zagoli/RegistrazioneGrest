@@ -3,7 +3,7 @@ package Domain;
 import java.util.Date;
 import java.util.Objects;
 
-public class Calendario implements Comparable<Calendario>{
+public class Calendario implements Comparable<Calendario> {
     private int idSettimana;
     private Date daQuando;
     private Date aQuando;
@@ -39,7 +39,7 @@ public class Calendario implements Comparable<Calendario>{
 
     public void setaQuando(Date aQuando) {
         this.aQuando = aQuando;
-    }  
+    }
 
     @Override
     public int compareTo(Calendario t) {
@@ -51,7 +51,8 @@ public class Calendario implements Comparable<Calendario>{
         }
         return result;
     }
-     @Override
+
+    @Override
     public boolean equals(Object obj) {
         boolean flag = false;
         if (obj instanceof Calendario) {
@@ -71,5 +72,5 @@ public class Calendario implements Comparable<Calendario>{
         hash = 97 * hash + Objects.hashCode(this.aQuando);
         return hash;
     }
-    
+
 }

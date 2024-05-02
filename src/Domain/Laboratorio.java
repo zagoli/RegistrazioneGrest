@@ -37,5 +37,5 @@ public class Laboratorio {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
-    
+
 }

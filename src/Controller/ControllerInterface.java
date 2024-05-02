@@ -1,5 +1,7 @@
-package Controller ;
+package Controller;
+
 import ModelAndView.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

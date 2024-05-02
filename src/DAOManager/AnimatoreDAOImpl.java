@@ -141,7 +141,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ALL_ANIMATORE);
         ResultSet rs = pst.executeQuery();
         LinkedList<Animatore> la = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             la.add(this.mapRowToAnimatore(rs));
         }
         con.close();
@@ -166,13 +166,13 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Animatore> la = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             la.add(this.mapRowToAnimatore(rs));
         }
         con.close();
         return la;
     }
-    
+
     @Override
     public List<Animatore> findByRegistratoId(int id) throws SQLException {
         Connection con = DAOMan.getConnection();
@@ -210,30 +210,30 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
                 rs.getString("anpresenza"),
                 new Laboratorio(
                         rs.getInt("laid"),
-                    rs.getString("ladescrizione"),
-                    rs.getBoolean("lariservato")
+                        rs.getString("ladescrizione"),
+                        rs.getBoolean("lariservato")
                 ),
                 new Parrocchia(
-                    rs.getInt("paid"), 
-                    rs.getString("panome"), 
-                    rs.getString("paluogo")
+                        rs.getInt("paid"),
+                        rs.getString("panome"),
+                        rs.getString("paluogo")
                 ),
                 new Registrato(
-                    rs.getInt("reid"),
-                    rs.getString("remail"),
-                    rs.getString("repassword"),
-                    rs.getString("renome"),
-                    rs.getString("recognome"),
-                    rs.getString("retelefono"),
-                    rs.getString("relocalita"),
-                    rs.getString("revia"),
-                    rs.getString("recivico"),
-                    rs.getInt("retipoUt")
+                        rs.getInt("reid"),
+                        rs.getString("remail"),
+                        rs.getString("repassword"),
+                        rs.getString("renome"),
+                        rs.getString("recognome"),
+                        rs.getString("retelefono"),
+                        rs.getString("relocalita"),
+                        rs.getString("revia"),
+                        rs.getString("recivico"),
+                        rs.getInt("retipoUt")
                 ),
                 new Circolo(
-                    rs.getInt(("ciid")), 
-                    rs.getString("cinome"), 
-                    rs.getString("ciluogo")
+                        rs.getInt(("ciid")),
+                        rs.getString("cinome"),
+                        rs.getString("ciluogo")
                 ),
                 rs.getString("ancellulare"),
                 rs.getString("anfasciaEtaRagazzi"),

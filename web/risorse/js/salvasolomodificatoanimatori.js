@@ -6,6 +6,6 @@ $("form input:checkbox, select").change(function () {
 });
 
 //prima di inviare il form elimina tutti gli elementi che non sono stati modificati
-$("form").submit(function(){
+$("form").submit(function () {
     $("input:checkbox:not(.changed), select:not(.changed)").remove();
 });

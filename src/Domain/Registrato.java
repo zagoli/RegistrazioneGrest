@@ -13,7 +13,7 @@ public class Registrato {
     private String via;
     private String civico;
     private Integer tipoUt;
-    
+
     public Registrato() {
     }
 
@@ -110,5 +110,5 @@ public class Registrato {
     public void setTipoUt(Integer tipoUt) {
         this.tipoUt = tipoUt;
     }
-    
+
 }

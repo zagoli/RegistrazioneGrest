@@ -26,10 +26,10 @@
                         <td> ${dt[0].data}</td>
                     </tr>
                 </#list>
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 <#include "../struct/footer.html.ftl">
 <script> window.print() </script>

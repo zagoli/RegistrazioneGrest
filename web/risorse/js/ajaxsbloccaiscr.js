@@ -10,29 +10,29 @@ $("#btnsblocco").click(function () {
         var codice = $("#codicesblocco").val();
         var url = '/RegistrazioneGrest/App/SbloccaIscrizioni';
         $.getJSON(
-                url,
-                {
-                    scope: "verifica",
-                    codice: codice
-                },
-                //quando sono arrivati i dati
-                function (data) {
-                    var resultString = data.result;
-                    var result = toBoolean(resultString);
-                    if (result) {
-                        $("#mainForm").submit();
-                    } else {
-                        $("#codiceForm").after(htmlfail);
-                        $("#sbloccotext").delay(5000).fadeOut("slow", function () {
-                            $(this).remove();
-                        });
-                    }
+            url,
+            {
+                scope: "verifica",
+                codice: codice
+            },
+            //quando sono arrivati i dati
+            function (data) {
+                var resultString = data.result;
+                var result = toBoolean(resultString);
+                if (result) {
+                    $("#mainForm").submit();
+                } else {
+                    $("#codiceForm").after(htmlfail);
+                    $("#sbloccotext").delay(5000).fadeOut("slow", function () {
+                        $(this).remove();
+                    });
                 }
-            );
-        } else {
-            $("#codicesblocco").attr("placeholder","Prima completa correttamente il modulo!");
-            $("#codicesblocco").addClass("border-danger");
-        }
+            }
+        );
+    } else {
+        $("#codicesblocco").attr("placeholder", "Prima completa correttamente il modulo!");
+        $("#codicesblocco").addClass("border-danger");
+    }
 });
 
 function toBoolean(v) {

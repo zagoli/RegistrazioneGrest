@@ -32,11 +32,11 @@
                         <td> <#if rag[0].squadra.id!=0> ${rag[0].squadra.nome} </#if> </td>
                         <td> ${rag[0].laboratorio.descrizione[0..*15]}...</td>
                     </tr>
-                        </#list>
-                    </tbody>
-                </table>
-            </div>
+                </#list>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 <#include "../struct/footer.html.ftl">
 <script> window.print() </script>

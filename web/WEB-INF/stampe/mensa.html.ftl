@@ -19,34 +19,34 @@
                     <th style="width:5%;">Classe</th>
                     <th>Periodo</th>
                     <th style="width:25%;">Allergia</th>
-                        <th>Squadra</th>
-                        <th>Laboratorio</th>
-                        <th>Telefoni urgenze</th>
+                    <th>Squadra</th>
+                    <th>Laboratorio</th>
+                    <th>Telefoni urgenze</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list dati as rag>
+                    <tr>
+                        <td class="text-capitalize">${rag[0].cognome}</td>
+                        <td class="text-capitalize">${rag[0].nome}</td>
+                        <td align="center">${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
+                        <td> ${rag[1]?trim} </td>
+                        <td> <#if rag[0].noteAlimentari??> ${rag[0].noteAlimentari} </#if> </td>
+                        <td> <#if rag[0].squadra.id!=0> ${rag[0].squadra.nome} </#if> </td>
+                        <td> ${rag[0].laboratorio.descrizione[0..*15]}...</td>
+                        <td>
+                            <i>R </i><b>${rag[0].registrato.telefono}</b> -
+                            <#list rag[2][0..*4] as cu>
+                                <i>${cu.relazione[0..*1]?capitalize+" "}</i>
+                                <b>${cu.cellulare+" "+cu.fisso}</b> -
+                            </#list>
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <#list dati as rag>
-                        <tr>
-                            <td class="text-capitalize">${rag[0].cognome}</td>
-                            <td class="text-capitalize">${rag[0].nome}</td>
-                            <td align="center">${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
-                            <td> ${rag[1]?trim} </td>
-                            <td> <#if rag[0].noteAlimentari??> ${rag[0].noteAlimentari} </#if> </td>
-                            <td> <#if rag[0].squadra.id!=0> ${rag[0].squadra.nome} </#if> </td>
-                            <td> ${rag[0].laboratorio.descrizione[0..*15]}...</td>
-                            <td>
-                                <i>R </i><b>${rag[0].registrato.telefono}</b> -
-                                <#list rag[2][0..*4] as cu>
-                                    <i>${cu.relazione[0..*1]?capitalize+" "}</i>
-                                    <b>${cu.cellulare+" "+cu.fisso}</b> -
-                                </#list>
-                                </td>
-                            </tr>
-                        </#list>
-                    </tbody>
-                </table>
-            </div>
+                </#list>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 <#include "../struct/footer.html.ftl">
 <script> window.print() </script>

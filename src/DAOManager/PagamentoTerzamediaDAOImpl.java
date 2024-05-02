@@ -3,7 +3,10 @@ package DAOManager;
 import Domain.PagamentoTerzamedia;
 import Domain.Registrato;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -92,7 +95,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
                         rs.getString("recivico"),
                         rs.getInt("retipoUt")
                 ),
-                 rs.getInt("pordineArrivo")
+                rs.getInt("pordineArrivo")
         );
     }
 }

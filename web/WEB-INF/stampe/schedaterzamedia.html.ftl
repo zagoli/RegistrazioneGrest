@@ -1,7 +1,8 @@
 <#include "../struct/header.html.ftl">
 <div class="container content" onclick="window.print();">
     <div class="mt-3">
-        <p class="font-weight-bold text-uppercase text-center"> da consegnare alla segreteria del grest al momento dell'iscrizione </p>
+        <p class="font-weight-bold text-uppercase text-center"> da consegnare alla segreteria del grest al momento
+            dell'iscrizione </p>
     </div>
     <div class="shadow pt-2 pl-3 pr-3">
         <div class="row">
@@ -43,7 +44,7 @@
                     </#if>
                 </p>
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-sm">
                 <strong>Laboratorio</strong>
@@ -108,7 +109,7 @@
                 </div>
             </div>
         </#list>
-        
+
         <div class="row">
             <div class="col-sm">
                 <strong>E-mail</strong>
@@ -174,11 +175,11 @@
         <hr>
         <strong> Attività genitore </strong>
         <#list attgen as attgen>
-        <div class="row">
-            <div class="col-sm">
-                <p>${attgen.descrizione}</p>
+            <div class="row">
+                <div class="col-sm">
+                    <p>${attgen.descrizione}</p>
+                </div>
             </div>
-        </div>
         </#list>
     </div>
     <div class="mt-3 shadow pt-2 pl-3 pr-3">

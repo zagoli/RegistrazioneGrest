@@ -48,11 +48,11 @@ public class RelPresenzaRagDAOImpl implements RelPresenzaRagDAO {
         return lrpr;
     }
 
-    public RelPresenzaRag mapRowToRelPresenzaRag (ResultSet rs) throws SQLException {
+    public RelPresenzaRag mapRowToRelPresenzaRag(ResultSet rs) throws SQLException {
         return new RelPresenzaRag(
                 rs.getInt("Calendario_idSettimana"),
                 rs.getInt("Ragazzo_id")
         );
     }
-    
+
 }

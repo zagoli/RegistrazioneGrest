@@ -34,7 +34,7 @@ public class CalendarioDAOImpl implements CalendarioDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ALL_CAL);
         ResultSet rs = pst.executeQuery();
         LinkedList<Calendario> lc = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             lc.add(this.mapRowToCalendario(rs));
         }
         con.close();
@@ -48,13 +48,13 @@ public class CalendarioDAOImpl implements CalendarioDAO {
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Calendario> lc = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             lc.add(this.mapRowToCalendario(rs));
         }
         con.close();
         return lc;
     }
-    
+
     @Override
     public List<Calendario> findByTerzamediaId(int id) throws SQLException {
         Connection con = DAOMan.getConnection();
@@ -62,7 +62,7 @@ public class CalendarioDAOImpl implements CalendarioDAO {
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Calendario> lc = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             lc.add(this.mapRowToCalendario(rs));
         }
         con.close();
@@ -76,14 +76,14 @@ public class CalendarioDAOImpl implements CalendarioDAO {
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Calendario> lc = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             lc.add(this.mapRowToCalendario(rs));
         }
         con.close();
         return lc;
     }
 
-    public Calendario mapRowToCalendario (ResultSet rs) throws SQLException{
+    public Calendario mapRowToCalendario(ResultSet rs) throws SQLException {
         return new Calendario(
                 rs.getInt("idSettimana"),
                 rs.getDate("daQuando"),

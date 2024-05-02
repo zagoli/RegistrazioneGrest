@@ -27,5 +27,5 @@ public class RelPresenzaRag {
     public void setRagazzoId(int ragazzoId) {
         this.ragazzoId = ragazzoId;
     }
-    
+
 }

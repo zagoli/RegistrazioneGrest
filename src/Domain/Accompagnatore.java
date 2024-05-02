@@ -47,5 +47,5 @@ public class Accompagnatore {
     public void setRegistrato(Registrato registrato) {
         this.registrato = registrato;
     }
-    
+
 }

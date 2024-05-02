@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.PagamentoTerzamedia;
+
 import java.sql.SQLException;
 import java.util.List;
 

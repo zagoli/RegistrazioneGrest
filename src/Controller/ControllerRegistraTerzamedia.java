@@ -48,7 +48,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
                 } else {
                     terzamedia.setSaNuotare(Boolean.FALSE);
                 }
-                
+
                 String cellulare = request.getParameter("cellulare");
                 if (!cellulare.isEmpty()) {
                     terzamedia.setCellulare(cellulare);

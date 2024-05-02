@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class ControllerEliminaCU implements ControllerInterface{
+public class ControllerEliminaCU implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -24,5 +24,5 @@ public class ControllerEliminaCU implements ControllerInterface{
         }
         return mv;
     }
-    
+
 }

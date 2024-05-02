@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ControllerDashboardAccCu implements ControllerInterface{
+public class ControllerDashboardAccCu implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -36,5 +36,5 @@ public class ControllerDashboardAccCu implements ControllerInterface{
         }
         return mv;
     }
-    
+
 }

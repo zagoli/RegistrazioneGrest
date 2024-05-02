@@ -26,22 +26,23 @@
                     <td align="center">${rag.classe+rag.scuola.grado[0..0]?capitalize}</td>
                 </tr>
             </#list>
-                <!--riga vuota-->
+            <!--riga vuota-->
+            <tr>
+                <th>Animatore</th>
+                <th style="width:5%;">Anno</th>
+                <th>Cellulare</th>
+            </tr>
+            <#list animatori as an>
                 <tr>
-                    <th>Animatore</th>
-                    <th style="width:5%;">Anno</th>
-                    <th>Cellulare</th>
+                    <td class="text-capitalize">${an.cognome+" "+an.nome} <#if an.responsabileLaboratorio><img
+                                src="../risorse/img/octicons/ruby.svg"></#if></td>
+                    <td>${an.dataNascita?string.yyyy}</td>
+                    <td>${an.cellulare}</td>
                 </tr>
-                <#list animatori as an>
-                        <tr>
-                            <td class="text-capitalize">${an.cognome+" "+an.nome} <#if an.responsabileLaboratorio><img src="../risorse/img/octicons/ruby.svg"></#if></td>                      
-                            <td>${an.dataNascita?string.yyyy}</td>
-                            <td>${an.cellulare}</td>
-                        </tr>
-                    </#list>
-                </tbody>
-            </table>
-        </div>
+            </#list>
+            </tbody>
+        </table>
     </div>
+</div>
 <#include "../struct/footer.html.ftl">
 <script> window.print() </script>

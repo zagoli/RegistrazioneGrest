@@ -14,13 +14,18 @@ public interface AnimatoreDAO {
     void updateSquadra(int id, Integer idSquadra, boolean responsabile) throws SQLException;
 
     void updateLaboratorio(int id, int idLaboratorio, boolean responsabile) throws SQLException;
+
     void delete(Integer idAnimatore) throws SQLException;
+
     Animatore findById(int id) throws SQLException;
+
     //SELECT
     List<Animatore> findAll() throws SQLException;
+
     int count() throws SQLException;
 
     List<Animatore> findByCalendarioId(int id) throws SQLException;
+
     List<Animatore> findByRegistratoId(int id) throws SQLException;
 
     List<Integer[]> countSettimanale() throws SQLException;

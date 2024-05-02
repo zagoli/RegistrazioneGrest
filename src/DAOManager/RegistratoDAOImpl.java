@@ -158,8 +158,8 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         pst.executeUpdate();
         con.close();
     }
-    
-    public Registrato mapRowToRegistrato (ResultSet rs) throws SQLException{
+
+    public Registrato mapRowToRegistrato(ResultSet rs) throws SQLException {
         return new Registrato(
                 rs.getInt("id"),
                 rs.getString("mail"),

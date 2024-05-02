@@ -51,7 +51,7 @@
                     </#if>
                 </p>
             </div>
-        </div> 
+        </div>
         <div class="row">
             <div class="col-sm">
                 <strong>Laboratorio</strong>
@@ -116,7 +116,7 @@
                 </div>
             </div>
         </#list>
-        
+
         <div class="row">
             <div class="col-sm">
                 <strong>E-mail</strong>
@@ -125,14 +125,14 @@
                 <p>${animatore.mail}</p>
             </div>
         </div>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Cellulare</strong>
-                </div>
-                <div class="col-sm">
-                    <p>${animatore.cellulare}</p>
-                </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Cellulare</strong>
             </div>
+            <div class="col-sm">
+                <p>${animatore.cellulare}</p>
+            </div>
+        </div>
         <strong> Sono inoltre disponibile a:</strong>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio multimediale e amplificazione</label>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio di manutenzione</label>

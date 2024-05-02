@@ -48,11 +48,11 @@ public class RelPresenzaTerDAOImpl implements RelPresenzaTerDAO {
         return lrpt;
     }
 
-    public RelPresenzaTer mapRowToRelPresenzaTer (ResultSet rs) throws SQLException {
+    public RelPresenzaTer mapRowToRelPresenzaTer(ResultSet rs) throws SQLException {
         return new RelPresenzaTer(
                 rs.getInt("Calendario_idSettimana"),
                 rs.getInt("Terzamedia_id")
         );
     }
-    
+
 }

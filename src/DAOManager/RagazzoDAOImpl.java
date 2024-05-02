@@ -140,7 +140,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         PreparedStatement pst = con.prepareStatement(FIND_RAGAZZO_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Ragazzo res = rs.next()? this.mapRowToRagazzo(rs):null;
+        Ragazzo res = rs.next() ? this.mapRowToRagazzo(rs) : null;
         con.close();
         return res;
     }
@@ -151,7 +151,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ALL_RAGAZZO);
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
-        while(rs.next()){
+        while (rs.next()) {
             lr.add(this.mapRowToRagazzo(rs));
         }
         con.close();
@@ -176,13 +176,13 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             lr.add(this.mapRowToRagazzo(rs));
         }
         con.close();
         return lr;
     }
-    
+
     @Override
     public List<Ragazzo> findByRegistratoId(int id) throws SQLException {
         Connection con = DAOMan.getConnection();
@@ -190,14 +190,14 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<Ragazzo> lr = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             lr.add(this.mapRowToRagazzo(rs));
         }
         con.close();
         return lr;
     }
-    
-        @Override
+
+    @Override
     public int countMensaTotale() throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_MENSA_TOT);
@@ -214,15 +214,15 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         PreparedStatement pst = con.prepareStatement(COUNT_MENSA_SETTIMANALE);
         ResultSet rs = pst.executeQuery();
         LinkedList<Integer[]> count = new LinkedList<>();
-        while (rs.next()){
-            Integer[] i = {rs.getInt(1),rs.getInt(2)};
+        while (rs.next()) {
+            Integer[] i = {rs.getInt(1), rs.getInt(2)};
             count.add(i);
         }
         con.close();
         return count;
     }
-    
-    
+
+
     @Override
     public int countAnticipatoTotale() throws SQLException {
         Connection con = DAOMan.getConnection();
@@ -240,22 +240,22 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         PreparedStatement pst = con.prepareStatement(COUNT_ANTICIPATO_SETTIMANALE);
         ResultSet rs = pst.executeQuery();
         LinkedList<Integer[]> count = new LinkedList<>();
-        while (rs.next()){
-            Integer[] i = {rs.getInt(1),rs.getInt(2)};
+        while (rs.next()) {
+            Integer[] i = {rs.getInt(1), rs.getInt(2)};
             count.add(i);
         }
         con.close();
         return count;
     }
-    
+
     @Override
     public List<Integer[]> countSettimanale() throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(COUNT_SETTIMANALE);
         ResultSet rs = pst.executeQuery();
         LinkedList<Integer[]> count = new LinkedList<>();
-        while (rs.next()){
-            Integer[] i = {rs.getInt(1),rs.getInt(2)};
+        while (rs.next()) {
+            Integer[] i = {rs.getInt(1), rs.getInt(2)};
             count.add(i);
         }
         con.close();
@@ -263,7 +263,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     }
 
 
-    public Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException{
+    public Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
         return new Ragazzo(
                 rs.getInt("raid"),
                 rs.getString("ranome"),

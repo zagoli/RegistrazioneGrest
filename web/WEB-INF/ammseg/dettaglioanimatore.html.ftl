@@ -88,7 +88,7 @@
             <div class="col-sm">
                 <p>${animatore.mail}</p>
             </div>
-        </div>  
+        </div>
         <div class="row">
             <div class="col-sm">
                 <strong>Laboratorio</strong>
@@ -148,88 +148,88 @@
             </div>
         </#list>
     </div>
-    
+
     <!--contatti urgenze-->
     <#if cu??>
-    <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
-        <div class="row">
-            <div class="col-sm">
-                <strong class="text-danger">Contatti telefonici Urgenze</strong>
-            </div>
-        </div>
-        <#list cu as cu>
-            <div class="pt-2 pl-3 pr-3 mb-2">
-                <div class="row">
-                    <div class="col-sm">
-                        <strong>Nome</strong>
-                    </div>
-                    <div class="col-sm">
-                        <p>${cu.nome}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm">
-                        <strong>Cognome</strong>
-                    </div>
-                    <div class="col-sm">
-                        <p>${cu.cognome}</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm">
-                        <strong>Relazione</strong>
-                    </div>
-                    <div class="col-sm">
-                        <p>${cu.relazione}</p>
-                    </div>
-                </div>
-                <#if cu.cellulare??>
-                <div class="row">
-                    <div class="col-sm">
-                        <strong>Cellulare</strong>
-                    </div>
-                    <div class="col-sm">
-                        <p>${cu.cellulare}</p>
-                    </div>
-                </div>
-                </#if>
-                <#if cu.fisso??>
-                <div class="row">
-                    <div class="col-sm">
-                        <strong>Fisso</strong>
-                    </div>
-                    <div class="col-sm">
-                        <p>${cu.fisso}</p>
-                    </div>
-                </div>
-                </#if>
-            </div>
-            <#sep>
-            <hr/>
-        </#list>
-    </div>
-    </#if>
-    
-    <!--accompagnatori-->
-    <#if accompagnatori??>
-    <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
-        <div class="row mb-3">
-            <div class="col-sm">
-                <strong>Accompagnatori autorizzati</strong>
-            </div>
-        </div>
-        <#list accompagnatori as acc>
+        <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
             <div class="row">
                 <div class="col-sm">
-                    <p>${acc.nome+" "+acc.cognome}</p>
+                    <strong class="text-danger">Contatti telefonici Urgenze</strong>
                 </div>
             </div>
-            <#sep>
-            <hr/>
-        </#list>
-    </div>
+            <#list cu as cu>
+                <div class="pt-2 pl-3 pr-3 mb-2">
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>Nome</strong>
+                        </div>
+                        <div class="col-sm">
+                            <p>${cu.nome}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>Cognome</strong>
+                        </div>
+                        <div class="col-sm">
+                            <p>${cu.cognome}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <strong>Relazione</strong>
+                        </div>
+                        <div class="col-sm">
+                            <p>${cu.relazione}</p>
+                        </div>
+                    </div>
+                    <#if cu.cellulare??>
+                        <div class="row">
+                            <div class="col-sm">
+                                <strong>Cellulare</strong>
+                            </div>
+                            <div class="col-sm">
+                                <p>${cu.cellulare}</p>
+                            </div>
+                        </div>
+                    </#if>
+                    <#if cu.fisso??>
+                        <div class="row">
+                            <div class="col-sm">
+                                <strong>Fisso</strong>
+                            </div>
+                            <div class="col-sm">
+                                <p>${cu.fisso}</p>
+                            </div>
+                        </div>
+                    </#if>
+                </div>
+                <#sep>
+                    <hr/>
+            </#list>
+        </div>
     </#if>
-    
+
+    <!--accompagnatori-->
+    <#if accompagnatori??>
+        <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
+            <div class="row mb-3">
+                <div class="col-sm">
+                    <strong>Accompagnatori autorizzati</strong>
+                </div>
+            </div>
+            <#list accompagnatori as acc>
+                <div class="row">
+                    <div class="col-sm">
+                        <p>${acc.nome+" "+acc.cognome}</p>
+                    </div>
+                </div>
+                <#sep>
+                    <hr/>
+            </#list>
+        </div>
+    </#if>
+
     <!--info registrato-->
     <div class="shadow pt-2 pl-3 pr-3 mt-3">
         <div class="text-secondary">

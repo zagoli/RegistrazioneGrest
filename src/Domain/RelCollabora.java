@@ -15,7 +15,7 @@ public class RelCollabora {
         this.attivitaGenId = attivitaGenId;
         this.data = data;
     }
-    
+
     public RelCollabora(int registratoId, int attivitaGenId, String data) {
         this.registratoId = registratoId;
         this.attivitaGenId = attivitaGenId;

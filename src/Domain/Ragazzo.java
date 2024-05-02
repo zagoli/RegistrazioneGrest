@@ -209,5 +209,5 @@ public class Ragazzo {
     public void setSquadra(Squadra squadra) {
         this.squadra = squadra;
     }
-    
+
 }

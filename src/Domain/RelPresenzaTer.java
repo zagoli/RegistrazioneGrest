@@ -27,5 +27,5 @@ public class RelPresenzaTer {
     public void setTerzamediaId(int terzamediaId) {
         this.terzamediaId = terzamediaId;
     }
-    
+
 }

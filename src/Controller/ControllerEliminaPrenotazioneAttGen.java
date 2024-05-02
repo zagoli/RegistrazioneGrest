@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class ControllerEliminaPrenotazioneAttGen implements ControllerInterface{
+public class ControllerEliminaPrenotazioneAttGen implements ControllerInterface {
 
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -26,5 +26,5 @@ public class ControllerEliminaPrenotazioneAttGen implements ControllerInterface{
         }
         return mv;
     }
-    
+
 }

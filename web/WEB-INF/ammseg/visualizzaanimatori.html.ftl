@@ -81,6 +81,6 @@
             ],
             info: false
         });
-        } );
-    </script>
+    });
+</script>
 <#include "../struct/footer.html.ftl">

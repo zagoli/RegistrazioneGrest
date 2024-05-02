@@ -25,26 +25,26 @@
             </thead>
             <tbody>
             <#list animatori as ani>
-                    <tr>
-                        <td>${ani[0].dataNascita?string.yyyy}</td>
-                        <td class="text-capitalize">${ani[0].cognome}</td>                        
-                        <td class="text-capitalize">${ani[0].nome}</td>
-                        <td>${ani[1]?trim}</td>
-                        <td align="center"> M </td>
-                        <td align="center"> P </td>
-                        <td align="center"> M </td>
-                        <td align="center"> P </td>
-                        <td align="center"> M </td>
-                        <td align="center"> P </td>
-                        <td align="center"> M </td>
-                        <td align="center"> P </td>
-                        <td align="center"> M </td>
-                        <td align="center"> P </td>
-                    </tr>
-                    </#list>
-                </tbody>
-            </table>
-        </div>
+                <tr>
+                    <td>${ani[0].dataNascita?string.yyyy}</td>
+                    <td class="text-capitalize">${ani[0].cognome}</td>
+                    <td class="text-capitalize">${ani[0].nome}</td>
+                    <td>${ani[1]?trim}</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                    <td align="center"> M</td>
+                    <td align="center"> P</td>
+                </tr>
+            </#list>
+            </tbody>
+        </table>
     </div>
+</div>
 <#include "../struct/footer.html.ftl">
 <script> window.print() </script>

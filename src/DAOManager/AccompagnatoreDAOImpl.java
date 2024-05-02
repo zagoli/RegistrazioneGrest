@@ -82,16 +82,16 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
                 rs.getString("anome"),
                 rs.getString("acognome"),
                 new Registrato(
-                    rs.getInt("reid"),
-                    rs.getString("remail"),
-                    rs.getString("repassword"),
-                    rs.getString("renome"),
-                    rs.getString("recognome"),
-                    rs.getString("retelefono"),
-                    rs.getString("relocalita"),
-                    rs.getString("revia"),
-                    rs.getString("recivico"),
-                    rs.getInt("retipoUt")
+                        rs.getInt("reid"),
+                        rs.getString("remail"),
+                        rs.getString("repassword"),
+                        rs.getString("renome"),
+                        rs.getString("recognome"),
+                        rs.getString("retelefono"),
+                        rs.getString("relocalita"),
+                        rs.getString("revia"),
+                        rs.getString("recivico"),
+                        rs.getInt("retipoUt")
                 )
         );
     }

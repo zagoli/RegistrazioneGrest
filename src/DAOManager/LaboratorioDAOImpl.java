@@ -32,7 +32,7 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ALL_LABORATORIO);
         ResultSet rs = pst.executeQuery();
         LinkedList<Laboratorio> ll = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             ll.add(this.mapRowToLaboratorio(rs));
         }
         con.close();
@@ -45,13 +45,13 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
         PreparedStatement pst = con.prepareStatement(FIND_NON_RISERVATO);
         ResultSet rs = pst.executeQuery();
         LinkedList<Laboratorio> ll = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             ll.add(this.mapRowToLaboratorio(rs));
         }
         con.close();
         return ll;
     }
-    
+
     public Laboratorio mapRowToLaboratorio(ResultSet rs) throws SQLException {
         return new Laboratorio(
                 rs.getInt("id"),

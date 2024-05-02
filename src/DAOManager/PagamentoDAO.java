@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Pagamento;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,5 +14,6 @@ public interface PagamentoDAO {
     List<Pagamento> findAll() throws SQLException;
 
     Pagamento findByRagazzoId(int id) throws SQLException;
+
     int count() throws SQLException;
 }

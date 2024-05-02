@@ -1,6 +1,6 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
-<div class="container-fluid mt-5 content">
+    <div class="container-fluid mt-5 content">
     <div class="container">
         <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white">
             <div class="text-center pb-2">

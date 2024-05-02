@@ -1,7 +1,6 @@
 package Domain;
 
 /**
- *
  * @author jacopo
  */
 public class Squadra {

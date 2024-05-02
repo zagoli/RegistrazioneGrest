@@ -40,13 +40,13 @@
                                 <i>${cu.relazione[0..*1]?capitalize+" "}</i>
                                 <b>${cu.cellulare+" "+cu.fisso}</b> -
                             </#list>
-                                </td>
-                            </tr>
-                        </#list>
-                    </tbody>
-                </table>
-            </div>
+                        </td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 <#include "../struct/footer.html.ftl">
 <script> window.print() </script>

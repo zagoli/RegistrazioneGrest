@@ -43,7 +43,7 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                 mv.addObject("scuole", listScuola);
                 List<Calendario> listaCalendari = DAOMan.calendarioDAO.findAll();
                 List<Calendario> listaCalendariRagazzo = DAOMan.calendarioDAO.findByRagazzoId(idRagazzo);
-                Map<Calendario,Boolean> calendari = new TreeMap<>();
+                Map<Calendario, Boolean> calendari = new TreeMap<>();
                 listaCalendari.forEach((calendario) -> calendari.put(calendario, listaCalendariRagazzo.contains(calendario)));
                 mv.addObject("calendari", calendari);
                 mv.setView("user/modificaragazzo.html");
@@ -107,7 +107,7 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                 }
 
                 DAOMan.ragazzoDAO.update(r);
-                
+
                 List<RelPresenzaRag> calToDelete = DAOMan.relPresenzaRagDAO.findByRagazzoId(Integer.parseInt(request.getParameter("id")));
                 for (RelPresenzaRag relPresenzaRag : calToDelete) {
                     DAOMan.relPresenzaRagDAO.delete(relPresenzaRag);

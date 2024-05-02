@@ -56,11 +56,11 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
         PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        RelCollabora res = rs.next()? this.mapRowToRelCollabora(rs) : null;
+        RelCollabora res = rs.next() ? this.mapRowToRelCollabora(rs) : null;
         con.close();
         return res;
     }
-    
+
     @Override
     public List<RelCollabora> findAll() throws SQLException {
         Connection con = DAOMan.getConnection();
@@ -73,8 +73,8 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
         con.close();
         return lrc;
     }
-    
-    public RelCollabora mapRowToRelCollabora (ResultSet rs) throws SQLException {
+
+    public RelCollabora mapRowToRelCollabora(ResultSet rs) throws SQLException {
         return new RelCollabora(
                 rs.getInt("id"),
                 rs.getInt("Registrato_id"),

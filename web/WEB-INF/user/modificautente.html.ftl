@@ -8,13 +8,15 @@
             </div>
             <#if INVALIDMAIL??>
                 <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                    <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
+                    <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente
+                        o è una e-mail temporanea! Inserisci una mail valida</p>
                 </div>
             </#if>
             <form action="/RegistrazioneGrest/App/ModificaUtente" method="POST" data-parsley-validate>
                 <div class="form-group">
                     <label for="nome"> Nome </label>
-                        <input class="form-control" type="text" id ="nome" required name="nome" placeholder="Nome" autofocus data-parsley-length="[2, 50]" value="${registrato.nome}"> 
+                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
+                           data-parsley-length="[2, 50]" value="${registrato.nome}">
                 </div>
                 <div class="form-group">
                     <label for="cognome"> Cognome </label>

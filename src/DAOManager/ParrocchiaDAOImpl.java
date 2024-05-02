@@ -65,7 +65,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ALL_PARROCCHIA);
         ResultSet rs = pst.executeQuery();
         LinkedList<Parrocchia> lp = new LinkedList<>();
-        while(rs.next()){
+        while (rs.next()) {
             lp.add(this.mapRowToParrocchia(rs));
         }
         con.close();
@@ -79,7 +79,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         pst.setString(1, name);
         ResultSet rs = pst.executeQuery();
         LinkedList<Parrocchia> lp = new LinkedList<>();
-        while(rs.next()){
+        while (rs.next()) {
             lp.add(this.mapRowToParrocchia(rs));
         }
         return lp;
@@ -95,7 +95,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         con.close();
         return res;
     }
-    
+
     public Parrocchia mapRowToParrocchia(ResultSet rs) throws SQLException {
         return new Parrocchia(
                 rs.getInt("id"),
@@ -103,5 +103,5 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
                 rs.getString("luogo")
         );
     }
-    
+
 }

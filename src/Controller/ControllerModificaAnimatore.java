@@ -55,10 +55,10 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 }
                 String[] cal = request.getParameterValues("cal");
                 for (String calId : cal) {
-                    RelPresenzaAn rpa = new RelPresenzaAn(a.getId(),Integer.parseInt(calId));
+                    RelPresenzaAn rpa = new RelPresenzaAn(a.getId(), Integer.parseInt(calId));
                     DAOMan.relPresenzaAnDAO.insert(rpa);
                 }
-                if (request.getSession().getAttribute("tipoUtente").equals(3)){
+                if (request.getSession().getAttribute("tipoUtente").equals(3)) {
                     response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
                 } else {
                     response.sendRedirect("/RegistrazioneGrest/App/VisualizzaIscritti?target=an");

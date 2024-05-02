@@ -30,19 +30,19 @@ public class CircoloDAOImpl implements CircoloDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ALL_CIRCOLO);
         ResultSet rs = pst.executeQuery();
         LinkedList<Circolo> lc = new LinkedList<>();
-        while (rs.next()){
+        while (rs.next()) {
             lc.add(this.mapRowToCircolo(rs));
         }
         con.close();
         return lc;
     }
 
-    public Circolo mapRowToCircolo(ResultSet rs) throws SQLException{
+    public Circolo mapRowToCircolo(ResultSet rs) throws SQLException {
         return new Circolo(
                 rs.getInt("id"),
                 rs.getString("nome"),
                 rs.getString("luogo")
         );
     }
-    
+
 }

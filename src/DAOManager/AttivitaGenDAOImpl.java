@@ -31,7 +31,7 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO {
         PreparedStatement pst = con.prepareStatement(FIND_ALL_ATTIVITAGEN);
         ResultSet rs = pst.executeQuery();
         LinkedList<AttivitaGen> la = new LinkedList<>();
-        while(rs.next()){
+        while (rs.next()) {
             la.add(this.mapRowToAttivitaGen(rs));
         }
         con.close();
@@ -45,18 +45,18 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO {
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
         LinkedList<AttivitaGen> la = new LinkedList<>();
-        while(rs.next()){
+        while (rs.next()) {
             la.add(this.mapRowToAttivitaGen(rs));
         }
         con.close();
         return la;
     }
 
-    public AttivitaGen mapRowToAttivitaGen(ResultSet rs) throws SQLException{
+    public AttivitaGen mapRowToAttivitaGen(ResultSet rs) throws SQLException {
         return new AttivitaGen(
                 rs.getInt("id"),
                 rs.getString("descrizione")
         );
     }
-    
+
 }

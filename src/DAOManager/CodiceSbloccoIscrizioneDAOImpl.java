@@ -16,7 +16,7 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
     public void update(CodiceSbloccoIscrizione c) throws SQLException {
         Connection con = DAOMan.getConnection();
         PreparedStatement pst = con.prepareStatement(UPDATE_CODICE);
-        pst.setShort(1,c.getUtilizzato());
+        pst.setShort(1, c.getUtilizzato());
         pst.setTimestamp(2, c.getDataUtilizzo());
         pst.setString(3, c.getCodice());
         pst.executeUpdate();
@@ -41,5 +41,5 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
                 rs.getTimestamp("dataUtilizzo")
         );
     }
-    
+
 }

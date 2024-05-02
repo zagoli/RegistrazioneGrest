@@ -37,5 +37,5 @@ public class Circolo {
     public void setLuogo(String luogo) {
         this.luogo = luogo;
     }
-    
+
 }

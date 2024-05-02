@@ -50,9 +50,9 @@
                                         src="../risorse/img/octicons/trashcan.svg"></a></td>
                     </tr>
                 </#list>
-                        </tbody>
-                    </table>
-                </#if>
+                </tbody>
+            </table>
+        </#if>
         <a href="/RegistrazioneGrest/App/RegistraUtente" class="btn btn-block btn-primary"> Registra un segretario </a>
         <hr/>
         <h5>Promuovi un utente</h5>

@@ -131,7 +131,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_ID);
         pst.setInt(1, id);
         ResultSet rs = pst.executeQuery();
-        Terzamedia res =  rs.next() ? this.mapRowToTerzamedia(rs) : null;
+        Terzamedia res = rs.next() ? this.mapRowToTerzamedia(rs) : null;
         con.close();
         return res;
     }

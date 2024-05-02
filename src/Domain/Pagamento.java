@@ -69,5 +69,5 @@ public class Pagamento {
     public void setOrdineArrivo(int ordineArrivo) {
         this.ordineArrivo = ordineArrivo;
     }
-    
+
 }

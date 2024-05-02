@@ -14,10 +14,14 @@ public interface TerzamediaDAO {
     void updateSquadra(int id, Integer idSquadra) throws SQLException;
 
     void updateLaboratorio(int id, int idLaboratorio) throws SQLException;
+
     void delete(Integer idTerzamedia) throws SQLException;
+
     Terzamedia findById(int id) throws SQLException;
+
     //SELECT
     List<Terzamedia> findAll() throws SQLException;
+
     int count() throws SQLException;
 
     List<Terzamedia> findByRegistratoId(int id) throws SQLException;

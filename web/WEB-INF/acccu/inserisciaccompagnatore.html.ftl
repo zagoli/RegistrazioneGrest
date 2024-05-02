@@ -8,12 +8,14 @@
             </div>
             <form action="/RegistrazioneGrest/App/InserisciAccompagnatore" method="POST" data-parsley-validate>
                 <div class="form-group">
-                    <label for="nome"> Nome </label> 
-                    <input class="form-control" type="text" required id="nome" name="nome" placeholder="Nome" data-parsley-length="[2, 40]"> 
+                    <label for="nome"> Nome </label>
+                    <input class="form-control" type="text" required id="nome" name="nome" placeholder="Nome"
+                           data-parsley-length="[2, 40]">
                 </div>
                 <div class="form-group">
-                    <label for="cognome"> Cognome </label> 
-                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome" data-parsley-length="[2, 40]"> 
+                    <label for="cognome"> Cognome </label>
+                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome"
+                           data-parsley-length="[2, 40]">
                 </div>
                 <div class="pt-3 form-group">
                     <input class="form-control btn btn-primary" type="submit" value="Inserisci">
