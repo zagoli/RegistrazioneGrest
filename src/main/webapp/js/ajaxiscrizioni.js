@@ -1,5 +1,5 @@
-var currentSelector = '';
-var url = '/RegistrazioneGrest/App/StatoIscrizioni';
+let currentSelector = '';
+const url = '/RegistrazioneGrest/App/StatoIscrizioni';
 //cambia stato iscrizioni ragazzi
 $(function toggleiscrrag() {
     $('#ISCRRAG').change(function () {
@@ -30,21 +30,22 @@ function makeRequest() {
         .fail(setSwitchOff);
 }
 
-function setSwitchOff() {
-    alert("Errore!");
+function setSwitchOff(error) {
+    alert("Errore: " + error);
     $(currentSelector).prop("checked", false);
 }
 
 function showRequestResult(data) {
-    var resultString = data.result;
-    var result = toBoolean(resultString);
+    const resultString = data.result;
+    const error = data.error;
+    const result = toBoolean(resultString);
     if (result) {
         alert("Salvato con successo.");
     } else {
-        setSwitchOff();
+        setSwitchOff(error);
     }
 }
 
 function toBoolean(v) {
     return v === "false" ? false : !!v;
-};
+}

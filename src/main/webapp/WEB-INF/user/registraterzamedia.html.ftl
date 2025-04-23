@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="cellulare"> Eventuale numero di cellulare </label>
+                    <label for="cellulare"> Eventuale numero di cellulare del/la ragazzo/a </label>
                     <input class="form-control" type="text" id="cellulare" name="cellulare"
                            data-parsley-length="[10, 10]" placeholder="cellulare">
                 </div>
@@ -152,7 +152,7 @@
                     <label for="noteAlimentari" class="sr-only">Allergie o intolleranze alimentari o terapie in
                         corso</label>
                     <textarea class="form-control" rows="5" id="noteAlimentari" name="noteAlimentari"
-                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest."></textarea>
+                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest. Specificare anche gli eventuali orari di assunzione."></textarea>
                 </div>
 
                 <h3 class="text-center font-weight-bold text-uppercase"> 5 - Eventuali richieste o
@@ -168,13 +168,6 @@
                     genitori </h3>
                 <p class="font-weight-normal">I genitori dichiarano:</p>
                 <ul>
-                    <li>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare">
-                            <label class="form-check-label" for="saNuotare"> Che il/la proprio/a figlio/a sa
-                                nuotare.</label>
-                        </div>
-                    </li>
                     <li>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="festaPassaggio"
@@ -194,6 +187,13 @@
                     <li>che il/la proprio/a figlio/a gode di buona salute e che pertanto può affrontare
                         le attività ludico-sportive previste; in caso contrario, si impegnano a chiederne
                         l'esonero al momento della conferma dell'iscrizione;
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare">
+                            <label class="form-check-label" for="saNuotare"> Che il/la proprio/a figlio/a sa
+                                nuotare.</label>
+                        </div>
                     </li>
                     <li>di essere consapevoli che la responsabilità della Parrocchia e del Circolo Noi di
                         Balconi nei confronti dei

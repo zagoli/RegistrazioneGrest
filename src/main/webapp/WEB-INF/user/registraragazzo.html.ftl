@@ -145,7 +145,7 @@
                     <label for="noteAlimentari" class="sr-only">Allergie o intolleranze alimentari o terapie in
                         corso</label>
                     <textarea class="form-control" rows="5" id="noteAlimentari" name="noteAlimentari"
-                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest"></textarea>
+                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest. Specificare anche gli eventuali orari di assunzione."></textarea>
                 </div>
 
                 <h3 class="text-center font-weight-bold text-uppercase"> 5 - Eventuali richieste o proposte </h3>
@@ -153,7 +153,7 @@
                 <div class="form-group">
                     <label for="richieste" class="sr-only">Eventuali richieste o proposte</label>
                     <textarea class="form-control" rows="5" id="richieste" name="richieste"
-                              placeholder="specificare SOLO se presenti. Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta e di non richiedere cambiamenti, se non gravemente necessari."></textarea>
+                              placeholder="specificare SOLO se presenti. Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili del Grest cercheranno di equilibrare le squadre anche in base alle richieste qui espresse. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta e di non richiedere cambiamenti, se non gravemente necessari."></textarea>
                 </div>
 
                 <h3 class="text-center font-weight-bold text-uppercase"> 6 - Richieste e dichiarazioni dei
@@ -176,14 +176,6 @@
                 <ul>
                     <li>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare">
-                            <label class="form-check-label" for="saNuotare"> Che il/la proprio/a figlio/a sa
-                                nuotare.</label>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="fratelloIscritto"
                                    name="fratelloIscritto">
                             <label class="form-check-label" for="fratelloIscritto"> Che il/la proprio/a figlio/a <b
@@ -195,12 +187,19 @@
                         da solo;
                     </li>
                     <li><input type="checkbox"/> di <u>NON</u> autorizzare il/la figlio/a a tornare a casa dal Grest
-                        negli orari stabiliti da solo; deve aspettare una delle seguenti persone da noi incaricate,
-                        indicate nella sezione "Accompagnatori e Contatti telefonici Urgenze" della piattaforma
+                        negli orari stabiliti da solo; deve aspettare una delle seguenti persone incaricate,
+                        indicate nella sezione "Accompagnatori e Contatti telefonici Urgenze" di questo sito
                     </li>
                     <li>che il/la proprio/a figlio/a gode di buona salute e che pertanto può affrontare le
                         attività ludico-sportive previste; in caso contrario, si impegnano a chiederne
                         l'esonero al momento della conferma dell'iscrizione;
+                    </li>
+                    <li>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare">
+                            <label class="form-check-label" for="saNuotare"> Che il/la proprio/a figlio/a sa
+                                nuotare.</label>
+                        </div>
                     </li>
                     <li>di essere consapevoli che la responsabilità della Parrocchia e del Circolo Noi di Balconi nei
                         confronti dei

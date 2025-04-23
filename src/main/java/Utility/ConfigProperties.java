@@ -9,7 +9,7 @@ import java.util.Properties;
 public class ConfigProperties {
     private static final String propertiesFilePath = "C:/conf/RegistrazioneGrest/config.properties";
     private static final List<String> modifyiablePropertyNames = List.of("ISCRRAG", "ISCRAN", "ISCRTER");
-    private static Map<String, String> cache = new HashMap<>();
+    private static final Map<String, String> cache = new HashMap<>();
 
     public static String getProperty(String propertyName) throws IOException, ConfigPropertyException {
         if (cache.containsKey(propertyName)) {

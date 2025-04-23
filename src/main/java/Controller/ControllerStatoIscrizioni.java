@@ -18,22 +18,25 @@ public class ControllerStatoIscrizioni implements ControllerInterface {
         boolean success = false;
         try {
             String state = request.getParameter("state");
-            switch (request.getParameter("target")) {
-                case "ISCRRAG":
+            success = switch (request.getParameter("target")) {
+                case "ISCRRAG" -> {
                     ConfigProperties.setProperty("ISCRRAG", state);
-                    success = true;
-                    break;
-                case "ISCRAN":
+                    yield true;
+                }
+                case "ISCRAN" -> {
                     ConfigProperties.setProperty("ISCRAN", state);
-                    success = true;
-                    break;
-                case "ISCRTER":
+                    yield true;
+                }
+                case "ISCRTER" -> {
                     ConfigProperties.setProperty("ISCRTER", state);
-                    success = true;
-                    break;
-            }
+                    yield true;
+                }
+                default -> false;
+            };
+            mv.addObject("error", "none");
         } catch (final RuntimeException | IOException | ConfigPropertyException e) {
             Utils.logException(e, ControllerStatoIscrizioni.class.getName());
+            mv.addObject("error", e.getMessage());
         } finally {
             mv.addObject("result", success);
         }
