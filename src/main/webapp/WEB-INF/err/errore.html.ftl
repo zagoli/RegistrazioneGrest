@@ -4,11 +4,10 @@
         <h2>Errore! Qualcosa non va...</h2>
     </div>
     <#if eccezione??>
-        <p>Se il seguente errore persiste, contattare l'<a href="mailto:assistenzatecnica@parrocchiadibalconi.it">amministratore
-                del sito</a>.</p>
-        <div class="border border-danger rounded pt-2 pl-3 pr-3 pb-2 bg-white">
-            <code>${eccezione.toString()}</code>
-        </div>
+        <p>Se il seguente errore persiste, contattare
+            <a href="mailto:assistenzatecnica@parrocchiadibalconi.it?subject=${"Errore del sito del Grest!"}&body=${"Ho riscontrato il seguente errore utilizzando il sito del Grest: " + eccezione.toString()}">l'amministratore
+                del sito.</a>
+        </p>
     <#else>
         <p>Errore sconosciuto.</p>
     </#if>

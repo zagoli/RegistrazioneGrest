@@ -19,17 +19,17 @@
                         <td class="nome">${datiter[0].nome}</td>
                         <td class="cognome">${datiter[0].cognome}</td>
                         <td align="center"><a href="javascript:;"
-                                              onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoter&id=${datiter[0].id}', 'Dettagli terzamedia', 'width=600, height=700, status, scrollbars=1, location');"><img
+                                              onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoter&id=${datiter[0].id?c}', 'Dettagli terzamedia', 'width=600, height=700, status, scrollbars=1, location');"><img
                                         src="../img/octicons/search.svg"></a></td>
                         <td align="center"><a
-                                    href="/RegistrazioneGrest/App/InfoDettaglio?target=schedater&id=${datiter[0].id}"><img
+                                    href="/RegistrazioneGrest/App/InfoDettaglio?target=schedater&id=${datiter[0].id?c}"><img
                                         src="../img/octicons/file.svg"></a></td>
                         <#if datiter[1]>
                             <!--ha già pagato-->
                             <td>
                                 <form action="/RegistrazioneGrest/App/GestisciPagamentiTerzamedia" method="POST"
                                       class="form-inline">
-                                    <input type="hidden" name="deletePagamento" value="${datiter[2].id}"/>
+                                    <input type="hidden" name="deletePagamento" value="${datiter[2].id?c}"/>
                                     <div class="container">
                                         <div class="row">
                                             <div align="center" class="col-3">
@@ -54,7 +54,7 @@
                             <td>
                                 <form action="/RegistrazioneGrest/App/GestisciPagamentiTerzamedia" method="POST"
                                       class="form-inline">
-                                    <input type="hidden" name="addPagamento" value="${datiter[0].id}"/>
+                                    <input type="hidden" name="addPagamento" value="${datiter[0].id?c}"/>
                                     <div class="container">
                                         <div class="row">
                                             <div class="col">

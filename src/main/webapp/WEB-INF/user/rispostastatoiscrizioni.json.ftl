@@ -1,4 +1,4 @@
 {
     "result": "${result?c}",
-    "error": "${error?c}"
+    "error": ${error?c}
 }
