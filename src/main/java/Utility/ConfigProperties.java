@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Properties;
 
 public class ConfigProperties {
-    private static final String propertiesFilePath = "C:/conf/RegistrazioneGrest/config.properties";
-    private static final List<String> modifyiablePropertyNames = List.of("ISCRRAG", "ISCRAN", "ISCRTER");
+    private static final String propertiesFilePath = System.getProperty("config.path");
+    private static final List<String> modifiablePropertyNames = List.of("ISCRRAG", "ISCRAN", "ISCRTER");
     private static final Map<String, String> cache = new HashMap<>();
 
     public static String getProperty(String propertyName) throws IOException, ConfigPropertyException {
@@ -42,7 +42,7 @@ public class ConfigProperties {
     }
 
     private static boolean isPropertyImmutable(String value) {
-        return !modifyiablePropertyNames.contains(value);
+        return !modifiablePropertyNames.contains(value);
     }
 
 }

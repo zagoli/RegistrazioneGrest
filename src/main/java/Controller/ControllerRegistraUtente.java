@@ -5,10 +5,13 @@ import Domain.Registrato;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+import Utility.ConfigPropertyException;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class ControllerRegistraUtente implements ControllerInterface {
@@ -17,7 +20,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (request.getSession().getAttribute("tipoUtente") != null && request.getSession().getAttribute("tipoUtente").equals(0)) {
                 mv.setView("ammseg/registrasegretario.html");
             } else {
@@ -56,7 +59,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                 mv.addObject("TITOLOPAGINA", "Registrazione Utente");
                 mv.addObject("DONE", false);
             }
-        } catch (final RuntimeException | SQLException e) {
+        } catch (final RuntimeException | SQLException | ConfigPropertyException | IOException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerRegistraUtente.class.getName());
         }
         return mv;

@@ -5,6 +5,7 @@ import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+import Utility.ConfigPropertyException;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,12 +26,11 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Modifica terza media");
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             int idTerzamedia = Integer.parseInt(request.getParameter("id"));
             Terzamedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO IL TERZAMEDIA E FACCIO UNA REDIRECT
-                int idUtente = (int) request.getSession().getAttribute("idUtente");
                 t.setNome(request.getParameter("nome"));
                 t.setCognome(request.getParameter("cognome"));
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -109,7 +109,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 }
                 mv.setView("user/modificaterzamedia.html");
             }
-        } catch (final RuntimeException | SQLException | IOException | ParseException e) {
+        } catch (final RuntimeException | SQLException | IOException | ParseException | ConfigPropertyException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaTerzamedia.class.getName());
         }
         return mv;

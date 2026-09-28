@@ -11,6 +11,7 @@ import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import kong.unirest.core.json.JSONObject;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -18,8 +19,13 @@ import java.util.logging.Logger;
 
 public class Checker {
 
-    public static boolean checkMail(String mail) throws UnirestException {
-        HttpResponse<JsonNode> response = Unirest.post("http://172.16.0.8:8085/v0/check_email")
+    public static boolean checkMail(String mail) throws UnirestException, ConfigPropertyException, IOException {
+        if (!ConfigProperties.getProperty("EMAIL_CHECKER_ENABLED").equals("true")) {
+            return true;
+        }
+        // http://172.16.0.8:8085/v0/check_email
+        // usare self-hosted https://reacher.email/
+        HttpResponse<JsonNode> response = Unirest.post(ConfigProperties.getProperty("EMAIL_CHECKER_ENDPOINT"))
                 .header("Content-Type", "application/json")
                 .body("""
                         {
@@ -29,7 +35,8 @@ public class Checker {
                         """.formatted(mail)).asJson();
         if (response.getStatus() == 200) {
             JSONObject responsedata = response.getBody().getObject();
-            return !responsedata.getString("is_reachable").equals("invalid") && !responsedata.getString("is_reachable").equals("risky");
+            return !responsedata.getString("is_reachable").equals("invalid")
+                    && !responsedata.getString("is_reachable").equals("risky");
         }
         return false;
     }

@@ -2,13 +2,31 @@ package DAOManager;
 
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
-import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DAOMan {
+
+    private static final HikariDataSource DS;
+
+    static {
+        HikariConfig config = new HikariConfig();
+
+        try {
+            config.setJdbcUrl(ConfigProperties.getProperty("JDBC_URL_PRODUCTION_DATABASE"));
+        } catch (ConfigPropertyException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        config.setMaximumPoolSize(10);
+        config.setMinimumIdle(2);
+
+        DS = new HikariDataSource(config);
+    }
 
     public static final AccompagnatoreDAO accompagnatoreDAO = new AccompagnatoreDAOImpl();
     public static final AnimatoreDAO animatoreDAO = new AnimatoreDAOImpl();
@@ -31,16 +49,8 @@ public class DAOMan {
     public static final CodiceSbloccoIscrizioneDAO codiceSbloccoIscrizioneDAO = new CodiceSbloccoIscrizioneDAOImpl();
     public static final SquadraDAO squadraDAO = new SquadraDAOImpl();
 
-    public static Connection getConnection() {
-        Connection connection;
-        try {
-            SQLServerDataSource ds = new SQLServerDataSource();
-            ds.setURL(ConfigProperties.getProperty("JDBC_URL_PRODUCTION_DATABASE"));
-            connection = ds.getConnection();
-        } catch (SQLException | IOException | ConfigPropertyException e) {
-            throw new RuntimeException("Connessione al database non riuscita");
-        }
-        return connection;
+    public static Connection getConnection() throws SQLException {
+        return DS.getConnection();
     }
 
 }

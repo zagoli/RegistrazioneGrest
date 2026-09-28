@@ -5,6 +5,7 @@ import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
+import Utility.ConfigPropertyException;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
         try {
             int idAnimatore = Integer.parseInt(request.getParameter("id"));
             mv.addObject("TITOLOPAGINA", "Modifica animatore");
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO ANIMATORE E FACCIO UNA REDIRECT
@@ -85,7 +86,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 }
                 mv.setView("user/modificaanimatore.html");
             }
-        } catch (final RuntimeException | SQLException | IOException | ParseException e) {
+        } catch (final RuntimeException | SQLException | IOException | ParseException | ConfigPropertyException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaAnimatore.class.getName());
         }
         return mv;
