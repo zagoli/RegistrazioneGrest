@@ -40,165 +40,167 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
 
     @Override
     public void insert(Animatore a) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(INSERT_ANIMATORE, Statement.RETURN_GENERATED_KEYS);
-        pst.setString(1, a.getNome());
-        pst.setString(2, a.getCognome());
-        pst.setDate(3, new java.sql.Date(a.getDataNascita().getTime()));
-        pst.setString(4, a.getPresenza());
-        pst.setInt(5, a.getLaboratorio().getId());
-        pst.setInt(6, a.getParrocchia().getId());
-        pst.setInt(7, a.getRegistrato().getId());
-        pst.setInt(8, a.getCircolo().getId());
-        pst.setString(9, a.getCellulare());
-        pst.setString(10, a.getFasciaEtaRagazzi());
-        pst.setString(11, a.getMail());
-        pst.setString(12, a.getnTessera());
-        pst.setString(13, a.getCodiceFiscale());
-        pst.setBoolean(14, a.isResponsabileSquadra());
-        pst.setBoolean(15, a.isResponsabileLaboratorio());
-        pst.executeUpdate();
-        ResultSet rs = pst.getGeneratedKeys();
-        if (rs.next()) {
-            a.setId(rs.getInt(1));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_ANIMATORE, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setString(1, a.getNome());
+            pst.setString(2, a.getCognome());
+            pst.setDate(3, new java.sql.Date(a.getDataNascita().getTime()));
+            pst.setString(4, a.getPresenza());
+            pst.setInt(5, a.getLaboratorio().getId());
+            pst.setInt(6, a.getParrocchia().getId());
+            pst.setInt(7, a.getRegistrato().getId());
+            pst.setInt(8, a.getCircolo().getId());
+            pst.setString(9, a.getCellulare());
+            pst.setString(10, a.getFasciaEtaRagazzi());
+            pst.setString(11, a.getMail());
+            pst.setString(12, a.getnTessera());
+            pst.setString(13, a.getCodiceFiscale());
+            pst.setBoolean(14, a.isResponsabileSquadra());
+            pst.setBoolean(15, a.isResponsabileLaboratorio());
+            pst.executeUpdate();
+            try (ResultSet rs = pst.getGeneratedKeys()) {
+                if (rs.next()) {
+                    a.setId(rs.getInt(1));
+                }
+            }
         }
-        con.close();
     }
 
     @Override
     public void update(Animatore a) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(UPDATE_ANIMATORE);
-        pst.setString(1, a.getNome());
-        pst.setString(2, a.getCognome());
-        pst.setDate(3, new java.sql.Date(a.getDataNascita().getTime()));
-        pst.setString(4, a.getPresenza());
-        pst.setInt(5, a.getLaboratorio().getId());
-        pst.setInt(6, a.getParrocchia().getId());
-        pst.setInt(7, a.getRegistrato().getId());
-        pst.setInt(8, a.getCircolo().getId());
-        pst.setString(9, a.getCellulare());
-        pst.setString(10, a.getFasciaEtaRagazzi());
-        pst.setString(11, a.getMail());
-        pst.setString(12, a.getnTessera());
-        pst.setString(13, a.getCodiceFiscale());
-        pst.setBoolean(14, a.isResponsabileSquadra());
-        pst.setBoolean(15, a.isResponsabileLaboratorio());
-        pst.setInt(16, a.getId());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_ANIMATORE)) {
+            pst.setString(1, a.getNome());
+            pst.setString(2, a.getCognome());
+            pst.setDate(3, new java.sql.Date(a.getDataNascita().getTime()));
+            pst.setString(4, a.getPresenza());
+            pst.setInt(5, a.getLaboratorio().getId());
+            pst.setInt(6, a.getParrocchia().getId());
+            pst.setInt(7, a.getRegistrato().getId());
+            pst.setInt(8, a.getCircolo().getId());
+            pst.setString(9, a.getCellulare());
+            pst.setString(10, a.getFasciaEtaRagazzi());
+            pst.setString(11, a.getMail());
+            pst.setString(12, a.getnTessera());
+            pst.setString(13, a.getCodiceFiscale());
+            pst.setBoolean(14, a.isResponsabileSquadra());
+            pst.setBoolean(15, a.isResponsabileLaboratorio());
+            pst.setInt(16, a.getId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void updateSquadra(int id, Integer idSquadra, boolean responsabile) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_ANIMATORE);
-        if (idSquadra == null) {
-            pst.setNull(1, Types.INTEGER);
-        } else {
-            pst.setInt(1, idSquadra);
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_ANIMATORE)) {
+            if (idSquadra == null) {
+                pst.setNull(1, Types.INTEGER);
+            } else {
+                pst.setInt(1, idSquadra);
+            }
+            pst.setBoolean(2, responsabile);
+            pst.setInt(3, id);
+            pst.executeUpdate();
         }
-        pst.setBoolean(2, responsabile);
-        pst.setInt(3, id);
-        pst.executeUpdate();
-        con.close();
     }
 
     @Override
     public void updateLaboratorio(int id, int idLaboratorio, boolean responsabile) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(UPDATE_LABORATORIO_ANIMATORE);
-        pst.setInt(1, idLaboratorio);
-        pst.setBoolean(2, responsabile);
-        pst.setInt(3, id);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_LABORATORIO_ANIMATORE)) {
+            pst.setInt(1, idLaboratorio);
+            pst.setBoolean(2, responsabile);
+            pst.setInt(3, id);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(Integer idAnimatore) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(DELETE_ANIMATORE);
-        pst.setInt(1, idAnimatore);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_ANIMATORE)) {
+            pst.setInt(1, idAnimatore);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public Animatore findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Animatore res = rs.next() ? this.mapRowToAnimatore(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToAnimatore(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<Animatore> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_ANIMATORE);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Animatore> la = new LinkedList<>();
-        while (rs.next()) {
-            la.add(this.mapRowToAnimatore(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_ANIMATORE);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Animatore> la = new LinkedList<>();
+            while (rs.next()) {
+                la.add(this.mapRowToAnimatore(rs));
+            }
+            return la;
         }
-        con.close();
-        return la;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(COUNT_ANIMATORE);
-        ResultSet rs = pst.executeQuery();
-        rs.next();
-        int res = rs.getInt(1);
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_ANIMATORE);
+             ResultSet rs = pst.executeQuery()) {
+            rs.next();
+            return rs.getInt(1);
+        }
     }
 
     @Override
     public List<Animatore> findByCalendarioId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_CALENDARIO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Animatore> la = new LinkedList<>();
-        while (rs.next()) {
-            la.add(this.mapRowToAnimatore(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_CALENDARIO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Animatore> la = new LinkedList<>();
+                while (rs.next()) {
+                    la.add(this.mapRowToAnimatore(rs));
+                }
+                return la;
+            }
         }
-        con.close();
-        return la;
     }
 
     @Override
     public List<Animatore> findByRegistratoId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_REGISTRATO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Animatore> la = new LinkedList<>();
-        while (rs.next()) {
-            la.add(this.mapRowToAnimatore(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_REGISTRATO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Animatore> la = new LinkedList<>();
+                while (rs.next()) {
+                    la.add(this.mapRowToAnimatore(rs));
+                }
+                return la;
+            }
         }
-        con.close();
-        return la;
     }
 
     @Override
     public List<Integer[]> countSettimanale() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(COUNT_SETTIMANALE);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Integer[]> count = new LinkedList<>();
-        while (rs.next()) {
-            Integer[] i = {rs.getInt(1), rs.getInt(2)};
-            count.add(i);
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_SETTIMANALE);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Integer[]> count = new LinkedList<>();
+            while (rs.next()) {
+                Integer[] i = {rs.getInt(1), rs.getInt(2)};
+                count.add(i);
+            }
+            return count;
         }
-        con.close();
-        return count;
     }
 
     public Animatore mapRowToAnimatore(ResultSet rs) throws SQLException {

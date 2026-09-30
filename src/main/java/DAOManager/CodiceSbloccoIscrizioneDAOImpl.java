@@ -14,24 +14,24 @@ public class CodiceSbloccoIscrizioneDAOImpl implements CodiceSbloccoIscrizioneDA
 
     @Override
     public void update(CodiceSbloccoIscrizione c) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(UPDATE_CODICE);
-        pst.setShort(1, c.getUtilizzato());
-        pst.setTimestamp(2, c.getDataUtilizzo());
-        pst.setString(3, c.getCodice());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_CODICE)) {
+            pst.setShort(1, c.getUtilizzato());
+            pst.setTimestamp(2, c.getDataUtilizzo());
+            pst.setString(3, c.getCodice());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public CodiceSbloccoIscrizione findByCodice(String codice) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_CODICE);
-        pst.setString(1, codice);
-        ResultSet rs = pst.executeQuery();
-        CodiceSbloccoIscrizione res = rs.next() ? this.mapRowToCodiceSbloccoIscrizione(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_CODICE)) {
+            pst.setString(1, codice);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToCodiceSbloccoIscrizione(rs) : null;
+            }
+        }
     }
 
     public CodiceSbloccoIscrizione mapRowToCodiceSbloccoIscrizione(ResultSet rs) throws SQLException {

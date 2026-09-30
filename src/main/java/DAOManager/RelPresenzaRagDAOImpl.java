@@ -16,36 +16,37 @@ public class RelPresenzaRagDAOImpl implements RelPresenzaRagDAO {
 
     @Override
     public void insert(RelPresenzaRag rpr) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(INSERT_RELPRESENZARAG);
-        pst.setInt(1, rpr.getRagazzoId());
-        pst.setInt(2, rpr.getCalendarioId());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_RELPRESENZARAG)) {
+            pst.setInt(1, rpr.getRagazzoId());
+            pst.setInt(2, rpr.getCalendarioId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(RelPresenzaRag rpr) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(DELETE_RELPRESENZARAG);
-        pst.setInt(1, rpr.getCalendarioId());
-        pst.setInt(2, rpr.getRagazzoId());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_RELPRESENZARAG)) {
+            pst.setInt(1, rpr.getCalendarioId());
+            pst.setInt(2, rpr.getRagazzoId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public List<RelPresenzaRag> findByRagazzoId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_RELPRESENZARAG_RAGAZZO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<RelPresenzaRag> lrpr = new LinkedList<>();
-        while (rs.next()) {
-            lrpr.add(this.mapRowToRelPresenzaRag(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_RELPRESENZARAG_RAGAZZO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<RelPresenzaRag> lrpr = new LinkedList<>();
+                while (rs.next()) {
+                    lrpr.add(this.mapRowToRelPresenzaRag(rs));
+                }
+                return lrpr;
+            }
         }
-        con.close();
-        return lrpr;
     }
 
     public RelPresenzaRag mapRowToRelPresenzaRag(ResultSet rs) throws SQLException {

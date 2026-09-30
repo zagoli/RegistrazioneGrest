@@ -19,26 +19,26 @@ public class SquadraDAOImpl implements SquadraDAO {
 
     @Override
     public Squadra findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_BY_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Squadra res = rs.next() ? this.mapRowToSquadra(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_BY_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToSquadra(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<Squadra> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Squadra> ls = new LinkedList<>();
-        while (rs.next()) {
-            ls.add(this.mapRowToSquadra(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Squadra> ls = new LinkedList<>();
+            while (rs.next()) {
+                ls.add(this.mapRowToSquadra(rs));
+            }
+            return ls;
         }
-        con.close();
-        return ls;
     }
 
     public Squadra mapRowToSquadra(ResultSet rs) throws SQLException {

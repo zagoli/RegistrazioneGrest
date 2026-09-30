@@ -15,26 +15,26 @@ public class ScuolaDAOImpl implements ScuolaDAO {
 
     @Override
     public Scuola findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_SCUOLA_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Scuola res = rs.next() ? this.mapRowToScuola(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_SCUOLA_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToScuola(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<Scuola> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_SCUOLA);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Scuola> ls = new LinkedList<>();
-        while (rs.next()) {
-            ls.add(mapRowToScuola(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_SCUOLA);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Scuola> ls = new LinkedList<>();
+            while (rs.next()) {
+                ls.add(mapRowToScuola(rs));
+            }
+            return ls;
         }
-        con.close();
-        return ls;
     }
 
     public Scuola mapRowToScuola(ResultSet rs) throws SQLException {

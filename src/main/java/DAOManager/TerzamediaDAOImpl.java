@@ -40,138 +40,140 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
 
     @Override
     public void insert(Terzamedia t) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(INSERT_TERZAMEDIA, Statement.RETURN_GENERATED_KEYS);
-        pst.setString(1, t.getNome());
-        pst.setString(2, t.getCognome());
-        pst.setDate(3, new java.sql.Date(t.getDataNascita().getTime()));
-        pst.setString(4, t.getPresenza());
-        pst.setInt(5, t.getLaboratorio().getId());
-        pst.setInt(6, t.getParrocchia().getId());
-        pst.setInt(7, t.getRegistrato().getId());
-        pst.setInt(8, t.getCircolo().getId());
-        pst.setString(9, t.getRichieste());
-        pst.setString(10, t.getNoteAlimentari());
-        pst.setBoolean(11, t.getSaNuotare());
-        pst.setInt(12, t.getScuola().getId());
-        pst.setString(13, t.getSezione());
-        pst.setString(14, t.getnTessera());
-        pst.setString(15, t.getCellulare());
-        pst.setBoolean(16, t.getFestaPassaggio());
-        pst.setString(17, t.getMail());
-        pst.executeUpdate();
-        ResultSet rs = pst.getGeneratedKeys();
-        if (rs.next()) {
-            t.setId(rs.getInt(1));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_TERZAMEDIA, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setString(1, t.getNome());
+            pst.setString(2, t.getCognome());
+            pst.setDate(3, new java.sql.Date(t.getDataNascita().getTime()));
+            pst.setString(4, t.getPresenza());
+            pst.setInt(5, t.getLaboratorio().getId());
+            pst.setInt(6, t.getParrocchia().getId());
+            pst.setInt(7, t.getRegistrato().getId());
+            pst.setInt(8, t.getCircolo().getId());
+            pst.setString(9, t.getRichieste());
+            pst.setString(10, t.getNoteAlimentari());
+            pst.setBoolean(11, t.getSaNuotare());
+            pst.setInt(12, t.getScuola().getId());
+            pst.setString(13, t.getSezione());
+            pst.setString(14, t.getnTessera());
+            pst.setString(15, t.getCellulare());
+            pst.setBoolean(16, t.getFestaPassaggio());
+            pst.setString(17, t.getMail());
+            pst.executeUpdate();
+            try (ResultSet rs = pst.getGeneratedKeys()) {
+                if (rs.next()) {
+                    t.setId(rs.getInt(1));
+                }
+            }
         }
     }
 
     @Override
     public void update(Terzamedia t) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(UPDATE_TERZAMEDIA);
-        pst.setString(1, t.getNome());
-        pst.setString(2, t.getCognome());
-        pst.setDate(3, new java.sql.Date(t.getDataNascita().getTime()));
-        pst.setString(4, t.getPresenza());
-        pst.setInt(5, t.getLaboratorio().getId());
-        pst.setInt(6, t.getParrocchia().getId());
-        pst.setInt(7, t.getRegistrato().getId());
-        pst.setInt(8, t.getCircolo().getId());
-        pst.setString(9, t.getRichieste());
-        pst.setString(10, t.getNoteAlimentari());
-        pst.setBoolean(11, t.getSaNuotare());
-        pst.setInt(12, t.getScuola().getId());
-        pst.setString(13, t.getSezione());
-        pst.setString(14, t.getnTessera());
-        pst.setString(15, t.getCellulare());
-        pst.setBoolean(16, t.getFestaPassaggio());
-        pst.setString(17, t.getMail());
-        pst.setInt(18, t.getId());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_TERZAMEDIA)) {
+            pst.setString(1, t.getNome());
+            pst.setString(2, t.getCognome());
+            pst.setDate(3, new java.sql.Date(t.getDataNascita().getTime()));
+            pst.setString(4, t.getPresenza());
+            pst.setInt(5, t.getLaboratorio().getId());
+            pst.setInt(6, t.getParrocchia().getId());
+            pst.setInt(7, t.getRegistrato().getId());
+            pst.setInt(8, t.getCircolo().getId());
+            pst.setString(9, t.getRichieste());
+            pst.setString(10, t.getNoteAlimentari());
+            pst.setBoolean(11, t.getSaNuotare());
+            pst.setInt(12, t.getScuola().getId());
+            pst.setString(13, t.getSezione());
+            pst.setString(14, t.getnTessera());
+            pst.setString(15, t.getCellulare());
+            pst.setBoolean(16, t.getFestaPassaggio());
+            pst.setString(17, t.getMail());
+            pst.setInt(18, t.getId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void updateSquadra(int id, Integer idSquadra) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_TERZAMEDIA);
-        if (idSquadra == null) {
-            pst.setNull(1, Types.INTEGER);
-        } else {
-            pst.setInt(1, idSquadra);
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_TERZAMEDIA)) {
+            if (idSquadra == null) {
+                pst.setNull(1, Types.INTEGER);
+            } else {
+                pst.setInt(1, idSquadra);
+            }
+            pst.setInt(2, id);
+            pst.executeUpdate();
         }
-        pst.setInt(2, id);
-        pst.executeUpdate();
-        con.close();
     }
 
     @Override
     public void updateLaboratorio(int id, int idLaboratorio) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(UPDATE_LABORATORIO_TERZAMEDIA);
-        pst.setInt(1, idLaboratorio);
-        pst.setInt(2, id);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_LABORATORIO_TERZAMEDIA)) {
+            pst.setInt(1, idLaboratorio);
+            pst.setInt(2, id);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(Integer idTerzamedia) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(DELETE_TERZAMEDIA);
-        pst.setInt(1, idTerzamedia);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_TERZAMEDIA)) {
+            pst.setInt(1, idTerzamedia);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public Terzamedia findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Terzamedia res = rs.next() ? this.mapRowToTerzamedia(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToTerzamedia(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<Terzamedia> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_TERZAMEDIA);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lt = new LinkedList<>();
-        while (rs.next()) {
-            lt.add(this.mapRowToTerzamedia(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_TERZAMEDIA);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Terzamedia> lt = new LinkedList<>();
+            while (rs.next()) {
+                lt.add(this.mapRowToTerzamedia(rs));
+            }
+            return lt;
         }
-        con.close();
-        return lt;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(COUNT_TERZAMEDIA);
-        ResultSet rs = pst.executeQuery();
-        rs.next();
-        int res = rs.getInt(1);
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_TERZAMEDIA);
+             ResultSet rs = pst.executeQuery()) {
+            rs.next();
+            return rs.getInt(1);
+        }
     }
 
     @Override
     public List<Terzamedia> findByRegistratoId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_REGISTRATO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Terzamedia> lt = new LinkedList<>();
-        while (rs.next()) {
-            lt.add(this.mapRowToTerzamedia(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_REGISTRATO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Terzamedia> lt = new LinkedList<>();
+                while (rs.next()) {
+                    lt.add(this.mapRowToTerzamedia(rs));
+                }
+                return lt;
+            }
         }
-        con.close();
-        return lt;
     }
 
     public Terzamedia mapRowToTerzamedia(ResultSet rs) throws SQLException {

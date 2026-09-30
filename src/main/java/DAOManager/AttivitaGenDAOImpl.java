@@ -16,40 +16,41 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO {
 
     @Override
     public AttivitaGen findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ATTIVITAGEN_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        AttivitaGen res = rs.next() ? this.mapRowToAttivitaGen(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ATTIVITAGEN_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToAttivitaGen(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<AttivitaGen> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_ATTIVITAGEN);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<AttivitaGen> la = new LinkedList<>();
-        while (rs.next()) {
-            la.add(this.mapRowToAttivitaGen(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_ATTIVITAGEN);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<AttivitaGen> la = new LinkedList<>();
+            while (rs.next()) {
+                la.add(this.mapRowToAttivitaGen(rs));
+            }
+            return la;
         }
-        con.close();
-        return la;
     }
 
     @Override
     public List<AttivitaGen> findByRegistratoId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ATTIVITAGEN_REGISTRATO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<AttivitaGen> la = new LinkedList<>();
-        while (rs.next()) {
-            la.add(this.mapRowToAttivitaGen(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ATTIVITAGEN_REGISTRATO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<AttivitaGen> la = new LinkedList<>();
+                while (rs.next()) {
+                    la.add(this.mapRowToAttivitaGen(rs));
+                }
+                return la;
+            }
         }
-        con.close();
-        return la;
     }
 
     public AttivitaGen mapRowToAttivitaGen(ResultSet rs) throws SQLException {

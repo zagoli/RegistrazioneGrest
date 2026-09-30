@@ -17,39 +17,39 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
 
     @Override
     public Laboratorio findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_LABORATORIO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Laboratorio res = rs.next() ? this.mapRowToLaboratorio(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_LABORATORIO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToLaboratorio(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<Laboratorio> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_LABORATORIO);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Laboratorio> ll = new LinkedList<>();
-        while (rs.next()) {
-            ll.add(this.mapRowToLaboratorio(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_LABORATORIO);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Laboratorio> ll = new LinkedList<>();
+            while (rs.next()) {
+                ll.add(this.mapRowToLaboratorio(rs));
+            }
+            return ll;
         }
-        con.close();
-        return ll;
     }
 
     @Override
     public List<Laboratorio> findNonRiservato() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_NON_RISERVATO);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Laboratorio> ll = new LinkedList<>();
-        while (rs.next()) {
-            ll.add(this.mapRowToLaboratorio(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_NON_RISERVATO);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Laboratorio> ll = new LinkedList<>();
+            while (rs.next()) {
+                ll.add(this.mapRowToLaboratorio(rs));
+            }
+            return ll;
         }
-        con.close();
-        return ll;
     }
 
     public Laboratorio mapRowToLaboratorio(ResultSet rs) throws SQLException {

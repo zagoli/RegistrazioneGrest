@@ -20,80 +20,81 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
 
     @Override
     public void insert(Parrocchia p) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(INSERT_PARROCCHIA);
-        pst.setString(1, p.getNome());
-        pst.setString(2, p.getLuogo());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_PARROCCHIA)) {
+            pst.setString(1, p.getNome());
+            pst.setString(2, p.getLuogo());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void update(Parrocchia p) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(UPDATE_PARROCCHIA);
-        pst.setString(1, p.getNome());
-        pst.setString(2, p.getLuogo());
-        pst.setInt(3, p.getId());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_PARROCCHIA)) {
+            pst.setString(1, p.getNome());
+            pst.setString(2, p.getLuogo());
+            pst.setInt(3, p.getId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(Integer idParrocchia) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(DELETE_PARROCCHIA);
-        pst.setInt(1, idParrocchia);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_PARROCCHIA)) {
+            pst.setInt(1, idParrocchia);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public Parrocchia findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Parrocchia res = rs.next() ? this.mapRowToParrocchia(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToParrocchia(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<Parrocchia> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_PARROCCHIA);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Parrocchia> lp = new LinkedList<>();
-        while (rs.next()) {
-            lp.add(this.mapRowToParrocchia(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_PARROCCHIA);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Parrocchia> lp = new LinkedList<>();
+            while (rs.next()) {
+                lp.add(this.mapRowToParrocchia(rs));
+            }
+            return lp;
         }
-        con.close();
-        return lp;
     }
 
     @Override
     public List<Parrocchia> findByName(String name) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_NOME);
-        pst.setString(1, name);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Parrocchia> lp = new LinkedList<>();
-        while (rs.next()) {
-            lp.add(this.mapRowToParrocchia(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_NOME)) {
+            pst.setString(1, name);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Parrocchia> lp = new LinkedList<>();
+                while (rs.next()) {
+                    lp.add(this.mapRowToParrocchia(rs));
+                }
+                return lp;
+            }
         }
-        return lp;
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(COUNT_PARROCCHIA);
-        ResultSet rs = pst.executeQuery();
-        rs.next();
-        int res = rs.getInt(1);
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_PARROCCHIA);
+             ResultSet rs = pst.executeQuery()) {
+            rs.next();
+            return rs.getInt(1);
+        }
     }
 
     public Parrocchia mapRowToParrocchia(ResultSet rs) throws SQLException {

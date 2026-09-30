@@ -18,60 +18,61 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
 
     @Override
     public void insert(RelCollabora rc) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(INSERT_RELCOLLABORA);
-        pst.setInt(1, rc.getRegistratoId());
-        pst.setInt(2, rc.getAttivitaGenId());
-        pst.setString(3, rc.getData());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_RELCOLLABORA)) {
+            pst.setInt(1, rc.getRegistratoId());
+            pst.setInt(2, rc.getAttivitaGenId());
+            pst.setString(3, rc.getData());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(RelCollabora rc) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(DELETE_RELCOLLABORA);
-        pst.setInt(1, rc.getId());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_RELCOLLABORA)) {
+            pst.setInt(1, rc.getId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public List<RelCollabora> findByRegistratoId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_REGISTRATO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<RelCollabora> lrc = new LinkedList<>();
-        while (rs.next()) {
-            lrc.add(this.mapRowToRelCollabora(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_REGISTRATO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<RelCollabora> lrc = new LinkedList<>();
+                while (rs.next()) {
+                    lrc.add(this.mapRowToRelCollabora(rs));
+                }
+                return lrc;
+            }
         }
-        con.close();
-        return lrc;
     }
 
     @Override
     public RelCollabora findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        RelCollabora res = rs.next() ? this.mapRowToRelCollabora(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToRelCollabora(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<RelCollabora> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_RELCOLLABORA);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<RelCollabora> lrc = new LinkedList<>();
-        while (rs.next()) {
-            lrc.add(this.mapRowToRelCollabora(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_RELCOLLABORA);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<RelCollabora> lrc = new LinkedList<>();
+            while (rs.next()) {
+                lrc.add(this.mapRowToRelCollabora(rs));
+            }
+            return lrc;
         }
-        con.close();
-        return lrc;
     }
 
     public RelCollabora mapRowToRelCollabora(ResultSet rs) throws SQLException {

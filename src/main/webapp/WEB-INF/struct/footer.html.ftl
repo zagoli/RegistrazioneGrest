@@ -5,9 +5,8 @@
                 var theDate = new Date();
                 document.write(theDate.getFullYear());
             </script>
-            . Tutti i diritti riservati all'autore.&nbsp;
-            Piattaforma sviluppata per la <a href="https://www.parrocchiadibalconi.it">Parrocchia di Balconi</a>. &nbsp;&nbsp;Per
-            difficoltà tecniche: <a href="mailto:assistenzatecnica@parrocchiadibalconi.it">assistenzatecnica@parrocchiadibalconi.it</a>
+            . Tutti i diritti riservati all'autore.&nbsp;&nbsp;
+            Per difficoltà tecniche: <a href="mailto:assistenzatecnica@parrocchiadibalconi.it">assistenzatecnica@parrocchiadibalconi.it</a>
             - Altre info: <a
                     href="mailto:segreteriagrest@parrocchiadibalconi.it">segreteriagrest@parrocchiadibalconi.it</a>
         </small>

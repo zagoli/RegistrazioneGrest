@@ -15,26 +15,26 @@ public class CircoloDAOImpl implements CircoloDAO {
 
     @Override
     public Circolo findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_CIRCOLO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Circolo res = rs.next() ? this.mapRowToCircolo(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_CIRCOLO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToCircolo(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<Circolo> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_CIRCOLO);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Circolo> lc = new LinkedList<>();
-        while (rs.next()) {
-            lc.add(this.mapRowToCircolo(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_CIRCOLO);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Circolo> lc = new LinkedList<>();
+            while (rs.next()) {
+                lc.add(this.mapRowToCircolo(rs));
+            }
+            return lc;
         }
-        con.close();
-        return lc;
     }
 
     public Circolo mapRowToCircolo(ResultSet rs) throws SQLException {

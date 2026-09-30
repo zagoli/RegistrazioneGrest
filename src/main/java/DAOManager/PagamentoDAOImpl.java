@@ -35,58 +35,57 @@ public class PagamentoDAOImpl implements PagamentoDAO {
 
     @Override
     public void insert(int ordineArrivo, float quota, int ragId, int regId) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(INSERT_PAGAMENTO);
-        pst.setFloat(1, quota);
-        pst.setInt(2, ragId);
-        pst.setInt(3, regId);
-        pst.setInt(4, ordineArrivo);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_PAGAMENTO)) {
+            pst.setFloat(1, quota);
+            pst.setInt(2, ragId);
+            pst.setInt(3, regId);
+            pst.setInt(4, ordineArrivo);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(Integer idPagamento) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(DELETE_PAGAMENTO);
-        pst.setInt(1, idPagamento);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_PAGAMENTO)) {
+            pst.setInt(1, idPagamento);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public List<Pagamento> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_PAGAMENTO);
-        ResultSet rs = pst.executeQuery();
-        List<Pagamento> lp = new LinkedList<>();
-        while (rs.next()) {
-            lp.add(this.mapRowToPagamento(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_PAGAMENTO);
+             ResultSet rs = pst.executeQuery()) {
+            List<Pagamento> lp = new LinkedList<>();
+            while (rs.next()) {
+                lp.add(this.mapRowToPagamento(rs));
+            }
+            return lp;
         }
-        con.close();
-        return lp;
     }
 
     @Override
     public Pagamento findByRagazzoId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_RAGAZZO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Pagamento res = rs.next() ? this.mapRowToPagamento(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_RAGAZZO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToPagamento(rs) : null;
+            }
+        }
     }
 
     @Override
     public int count() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(COUNT_PAGAMENTO);
-        ResultSet rs = pst.executeQuery();
-        rs.next();
-        int res = rs.getInt(1);
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_PAGAMENTO);
+             ResultSet rs = pst.executeQuery()) {
+            rs.next();
+            return rs.getInt(1);
+        }
     }
 
     public Pagamento mapRowToPagamento(ResultSet rs) throws SQLException {

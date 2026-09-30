@@ -19,68 +19,71 @@ public class CalendarioDAOImpl implements CalendarioDAO {
 
     @Override
     public Calendario findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_CAL_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Calendario res = rs.next() ? this.mapRowToCalendario(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_CAL_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToCalendario(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<Calendario> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_CAL);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Calendario> lc = new LinkedList<>();
-        while (rs.next()) {
-            lc.add(this.mapRowToCalendario(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_CAL);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Calendario> lc = new LinkedList<>();
+            while (rs.next()) {
+                lc.add(this.mapRowToCalendario(rs));
+            }
+            return lc;
         }
-        con.close();
-        return lc;
     }
 
     @Override
     public List<Calendario> findByRagazzoId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_CAL_RAGAZZO);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Calendario> lc = new LinkedList<>();
-        while (rs.next()) {
-            lc.add(this.mapRowToCalendario(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_CAL_RAGAZZO)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Calendario> lc = new LinkedList<>();
+                while (rs.next()) {
+                    lc.add(this.mapRowToCalendario(rs));
+                }
+                return lc;
+            }
         }
-        con.close();
-        return lc;
     }
 
     @Override
     public List<Calendario> findByTerzamediaId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_CAL_TERZAMEDIA);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Calendario> lc = new LinkedList<>();
-        while (rs.next()) {
-            lc.add(this.mapRowToCalendario(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_CAL_TERZAMEDIA)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Calendario> lc = new LinkedList<>();
+                while (rs.next()) {
+                    lc.add(this.mapRowToCalendario(rs));
+                }
+                return lc;
+            }
         }
-        con.close();
-        return lc;
     }
 
     @Override
     public List<Calendario> findByAnimatoreId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_CAL_ANIMATORE);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Calendario> lc = new LinkedList<>();
-        while (rs.next()) {
-            lc.add(this.mapRowToCalendario(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_CAL_ANIMATORE)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Calendario> lc = new LinkedList<>();
+                while (rs.next()) {
+                    lc.add(this.mapRowToCalendario(rs));
+                }
+                return lc;
+            }
         }
-        con.close();
-        return lc;
     }
 
     public Calendario mapRowToCalendario(ResultSet rs) throws SQLException {

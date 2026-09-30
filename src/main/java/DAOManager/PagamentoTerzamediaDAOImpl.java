@@ -34,47 +34,47 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
 
     @Override
     public void insert(int ordineArrivo, float quota, int terId, int regId) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(INSERT_PAGAMENTO);
-        pst.setFloat(1, quota);
-        pst.setInt(2, terId);
-        pst.setInt(3, regId);
-        pst.setInt(4, ordineArrivo);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_PAGAMENTO)) {
+            pst.setFloat(1, quota);
+            pst.setInt(2, terId);
+            pst.setInt(3, regId);
+            pst.setInt(4, ordineArrivo);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(Integer idPagamentoTer) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(DELETE_PAGAMENTO);
-        pst.setInt(1, idPagamentoTer);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_PAGAMENTO)) {
+            pst.setInt(1, idPagamentoTer);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public List<PagamentoTerzamedia> findAll() throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ALL_PAGAMENTO);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<PagamentoTerzamedia> lp = new LinkedList<>();
-        while (rs.next()) {
-            lp.add(this.mapRowToPagamentoTerzamedia(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_PAGAMENTO);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<PagamentoTerzamedia> lp = new LinkedList<>();
+            while (rs.next()) {
+                lp.add(this.mapRowToPagamentoTerzamedia(rs));
+            }
+            return lp;
         }
-        con.close();
-        return lp;
     }
 
     @Override
     public PagamentoTerzamedia findByTerzamediaId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_TERZAMEDIA_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        PagamentoTerzamedia res = rs.next() ? this.mapRowToPagamentoTerzamedia(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_TERZAMEDIA_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToPagamentoTerzamedia(rs) : null;
+            }
+        }
     }
 
     public PagamentoTerzamedia mapRowToPagamentoTerzamedia(ResultSet rs) throws SQLException {

@@ -19,70 +19,66 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
 
     @Override
     public void insert(ContattoUrgenze cu) throws SQLException {
-        Connection conn;
-        conn = DAOMan.getConnection();
-        PreparedStatement pst = conn.prepareStatement(INSERT_CU);
-        pst.setString(1, cu.getFisso());
-        pst.setString(2, cu.getCellulare());
-        pst.setString(3, cu.getNome());
-        pst.setString(4, cu.getCognome());
-        pst.setString(5, cu.getRelazione());
-        pst.setInt(6, cu.getRegistrato().getId());
-        pst.executeUpdate();
-        conn.close();
+        try (Connection conn = DAOMan.getConnection();
+             PreparedStatement pst = conn.prepareStatement(INSERT_CU)) {
+            pst.setString(1, cu.getFisso());
+            pst.setString(2, cu.getCellulare());
+            pst.setString(3, cu.getNome());
+            pst.setString(4, cu.getCognome());
+            pst.setString(5, cu.getRelazione());
+            pst.setInt(6, cu.getRegistrato().getId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void update(ContattoUrgenze cu) throws SQLException {
-        Connection conn;
-        conn = DAOMan.getConnection();
-        PreparedStatement pst = conn.prepareStatement(UPDATE_CU);
-        pst.setString(1, cu.getFisso());
-        pst.setString(2, cu.getCellulare());
-        pst.setString(3, cu.getNome());
-        pst.setString(4, cu.getCognome());
-        pst.setString(5, cu.getRelazione());
-        pst.setInt(6, cu.getRegistrato().getId());
-        pst.setInt(7, cu.getId());
-        pst.executeUpdate();
-        conn.close();
+        try (Connection conn = DAOMan.getConnection();
+             PreparedStatement pst = conn.prepareStatement(UPDATE_CU)) {
+            pst.setString(1, cu.getFisso());
+            pst.setString(2, cu.getCellulare());
+            pst.setString(3, cu.getNome());
+            pst.setString(4, cu.getCognome());
+            pst.setString(5, cu.getRelazione());
+            pst.setInt(6, cu.getRegistrato().getId());
+            pst.setInt(7, cu.getId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(Integer idCu) throws SQLException {
-        Connection conn;
-        conn = DAOMan.getConnection();
-        PreparedStatement pst = conn.prepareStatement(DELETE_CU);
-        pst.setInt(1, idCu);
-        pst.executeUpdate();
-        conn.close();
+        try (Connection conn = DAOMan.getConnection();
+             PreparedStatement pst = conn.prepareStatement(DELETE_CU)) {
+            pst.setInt(1, idCu);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public ContattoUrgenze findById(int id) throws SQLException {
-        Connection conn;
-        conn = DAOMan.getConnection();
-        PreparedStatement pst = conn.prepareStatement(FIND_CU_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        ContattoUrgenze res = rs.next() ? this.mapRowToContattoUrgenze(rs) : null;
-        conn.close();
-        return res;
+        try (Connection conn = DAOMan.getConnection();
+             PreparedStatement pst = conn.prepareStatement(FIND_CU_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToContattoUrgenze(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<ContattoUrgenze> findByRegistratoId(int id) throws SQLException {
-        Connection conn;
-        conn = DAOMan.getConnection();
-        PreparedStatement pst = conn.prepareStatement(FIND_CU_REGISTRATO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<ContattoUrgenze> lcu = new LinkedList<>();
-        while (rs.next()) {
-            lcu.add(this.mapRowToContattoUrgenze(rs));
+        try (Connection conn = DAOMan.getConnection();
+             PreparedStatement pst = conn.prepareStatement(FIND_CU_REGISTRATO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<ContattoUrgenze> lcu = new LinkedList<>();
+                while (rs.next()) {
+                    lcu.add(this.mapRowToContattoUrgenze(rs));
+                }
+                return lcu;
+            }
         }
-        conn.close();
-        return lcu;
     }
 
     public ContattoUrgenze mapRowToContattoUrgenze(ResultSet rs) throws SQLException {

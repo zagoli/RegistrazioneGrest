@@ -17,63 +17,65 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
 
     @Override
     public void insert(Accompagnatore a) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(INSERT_ACCOMPAGNATORE, Statement.RETURN_GENERATED_KEYS);
-        pst.setString(1, a.getNome());
-        pst.setString(2, a.getCognome());
-        pst.setInt(3, a.getRegistrato().getId());
-        pst.executeUpdate();
-        ResultSet rs = pst.getGeneratedKeys();
-        if (rs.next()) {
-            a.setId(rs.getInt(1));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_ACCOMPAGNATORE, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setString(1, a.getNome());
+            pst.setString(2, a.getCognome());
+            pst.setInt(3, a.getRegistrato().getId());
+            pst.executeUpdate();
+            try (ResultSet rs = pst.getGeneratedKeys()) {
+                if (rs.next()) {
+                    a.setId(rs.getInt(1));
+                }
+            }
         }
-        con.close();
     }
 
     @Override
     public void update(Accompagnatore a) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(UPDATE_ACCOMPAGNATORE);
-        pst.setString(1, a.getNome());
-        pst.setString(2, a.getCognome());
-        pst.setInt(3, a.getRegistrato().getId());
-        pst.setInt(4, a.getId());
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_ACCOMPAGNATORE)) {
+            pst.setString(1, a.getNome());
+            pst.setString(2, a.getCognome());
+            pst.setInt(3, a.getRegistrato().getId());
+            pst.setInt(4, a.getId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(Integer idAccompagnatore) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(DELETE_ACCOMPAGNATORE);
-        pst.setInt(1, idAccompagnatore);
-        pst.executeUpdate();
-        con.close();
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_ACCOMPAGNATORE)) {
+            pst.setInt(1, idAccompagnatore);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public Accompagnatore findById(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        Accompagnatore res = rs.next() ? this.mapRowToAccompagnatore(rs) : null;
-        con.close();
-        return res;
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? this.mapRowToAccompagnatore(rs) : null;
+            }
+        }
     }
 
     @Override
     public List<Accompagnatore> findByRegistratoId(int id) throws SQLException {
-        Connection con = DAOMan.getConnection();
-        PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_REGISTRATO_ID);
-        pst.setInt(1, id);
-        ResultSet rs = pst.executeQuery();
-        LinkedList<Accompagnatore> la = new LinkedList<>();
-        while (rs.next()) {
-            la.add(this.mapRowToAccompagnatore(rs));
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_REGISTRATO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Accompagnatore> la = new LinkedList<>();
+                while (rs.next()) {
+                    la.add(this.mapRowToAccompagnatore(rs));
+                }
+                return la;
+            }
         }
-        con.close();
-        return la;
     }
 
     public Accompagnatore mapRowToAccompagnatore(ResultSet rs) throws SQLException {
