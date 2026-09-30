@@ -44,11 +44,10 @@ public class Checker {
     public static Boolean checkActionCU(HttpServletRequest request) {
         boolean flag = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idCU = Integer.parseInt(request.getParameter("id"));
         try {
             ContattoUrgenze cu = DAOMan.contattoUrgenzeDAO.findById(idCU);
-            if (tipoUt.equals(3) && cu.getRegistrato().getId() == idRegistrato) {
+            if (cu.getRegistrato().getId() == idRegistrato) {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
@@ -60,11 +59,10 @@ public class Checker {
     public static Boolean checkActionAccompagnatore(HttpServletRequest request) {
         boolean flag = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
-        Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idAccompagnatore = Integer.parseInt(request.getParameter("id"));
         try {
             Accompagnatore a = DAOMan.accompagnatoreDAO.findById(idAccompagnatore);
-            if (tipoUt.equals(3) && a.getRegistrato().getId() == idRegistrato) {
+            if (a.getRegistrato().getId() == idRegistrato) {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
