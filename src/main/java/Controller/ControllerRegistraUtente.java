@@ -30,8 +30,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                 if (Checker.checkMail(request.getParameter("mail"))) {
                     Registrato r = new Registrato();
                     r.setMail(request.getParameter("mail"));
-                    String pswd = request.getParameter("password");
-                    r.setPassword(pswd);
+                    r.setPassword(request.getParameter("password"));
                     r.setNome(request.getParameter("nome"));
                     r.setCognome(request.getParameter("cognome"));
                     r.setTelefono(request.getParameter("telefono"));

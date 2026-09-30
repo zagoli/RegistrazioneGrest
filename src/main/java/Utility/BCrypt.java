@@ -789,4 +789,9 @@ public class BCrypt {
         }
         return ret;
     }
+
+    public static void main(String[] args) {
+        String pwd = "";
+        System.out.println(BCrypt.hashpw(pwd, BCrypt.gensalt()));
+    }
 }

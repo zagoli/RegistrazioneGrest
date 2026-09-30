@@ -18,6 +18,9 @@ public class DAOMan {
 
         try {
             config.setJdbcUrl(ConfigProperties.getProperty("JDBC_URL_PRODUCTION_DATABASE"));
+            config.setUsername(ConfigProperties.getProperty("DATABASE_USER"));
+            config.setPassword(ConfigProperties.getProperty("DATABASE_PASSWORD"));
+            config.setDriverClassName("org.postgresql.Driver");
         } catch (ConfigPropertyException | IOException e) {
             throw new RuntimeException(e);
         }
