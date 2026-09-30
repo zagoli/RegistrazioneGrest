@@ -13,7 +13,7 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
 
     private static final String FIND_LABORATORIO_ID = "select * from Laboratorio where id = ?;";
     private static final String FIND_ALL_LABORATORIO = "select * from Laboratorio;";
-    private static final String FIND_NON_RISERVATO = "select * from Laboratorio where riservato = 0;";
+    private static final String FIND_NON_RISERVATO = "select * from Laboratorio where riservato = false;";
 
     @Override
     public Laboratorio findById(int id) throws SQLException {

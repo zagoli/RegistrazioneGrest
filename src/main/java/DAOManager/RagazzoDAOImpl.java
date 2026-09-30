@@ -37,10 +37,10 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     private static final String FIND_RAGAZZO_CAL_ID = GENERIC_RAGAZZO_FIND + " join presenzaRag pr on (ra.id = pr.Ragazzo_id) where pr.Calendario_idSettimana = ? order by ra.cognome, ra.nome;";
     private static final String FIND_RAGAZZO_REGISTRATO_ID = GENERIC_RAGAZZO_FIND + " where re.id = ? order by ra.cognome, ra.nome;";
     private static final String COUNT_RAGAZZO = "select count(*) from Ragazzo;";
-    private static final String COUNT_MENSA_TOT = "select count(*) from Ragazzo where mensa = 1;";
-    private static final String COUNT_MENSA_SETTIMANALE = "select pr.Calendario_IdSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id) where mensa = '1' group by pr.Calendario_idSettimana;";
-    private static final String COUNT_ANTICIPATO_TOT = "select count(*) from Ragazzo where entrataAnticipata = 1;";
-    private static final String COUNT_ANTICIPATO_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id)  where entrataAnticipata = 1 group by pr.Calendario_idSettimana;";
+    private static final String COUNT_MENSA_TOT = "select count(*) from Ragazzo where mensa = true;";
+    private static final String COUNT_MENSA_SETTIMANALE = "select pr.Calendario_IdSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id) where mensa = true group by pr.Calendario_idSettimana;";
+    private static final String COUNT_ANTICIPATO_TOT = "select count(*) from Ragazzo where entrataAnticipata = true;";
+    private static final String COUNT_ANTICIPATO_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id)  where entrataAnticipata = true group by pr.Calendario_idSettimana;";
     private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from presenzaRag pr group by pr.Calendario_idSettimana;";
     // </editor-fold>
 
