@@ -22,10 +22,22 @@ public class ControllerDashboard implements ControllerInterface {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
-            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
+            var tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
             mv.addObject("tipoUt", tipoUt);
-            switch (tipoUt) {
-                case 3:
+
+            var dashboardRichiesta = switch (tipoUt) {
+                case 3 -> "dashboardRegistrato";
+                case 1, 2 -> "dashboardSegretario";
+                case 0 -> "dashboardAmministratore";
+                default -> throw new IllegalStateException("Unexpected user type value: " + tipoUt);
+            };
+
+            if (request.getParameter("user") != null) {
+                dashboardRichiesta = "dashboardRegistrato";
+            }
+
+            switch (dashboardRichiesta) {
+                case "dashboardRegistrato":
                     int idUtente = (int) request.getSession().getAttribute("idUtente");
                     List<Ragazzo> listRagazzo = DAOMan.ragazzoDAO.findByRegistratoId(idUtente);
                     if (!listRagazzo.isEmpty()) {
@@ -58,15 +70,14 @@ public class ControllerDashboard implements ControllerInterface {
                     mv.setView("user/dashboardutente.html");
                     mv.addObject("TITOLOPAGINA", "Dashboard utente");
                     break;
-                case 1:
-                case 2:
+                case "dashboardSegretario":
                     mv.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
                     mv.addObject("settimane", DAOMan.calendarioDAO.findAll());
                     mv.addObject("squadre", DAOMan.squadraDAO.findAll());
                     mv.setView("ammseg/dashboardsegretario.html");
                     mv.addObject("TITOLOPAGINA", "Dashboard segretario");
                     break;
-                case 0:
+                case "dashboardAmministratore":
                     mv.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
                     mv.addObject("settimane", DAOMan.calendarioDAO.findAll());
                     mv.addObject("squadre", DAOMan.squadraDAO.findAll());

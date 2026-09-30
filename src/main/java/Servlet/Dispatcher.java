@@ -77,9 +77,7 @@ public class Dispatcher extends HttpServlet {
             case "/RegistraAnimatore" -> new ControllerRegistraAnimatore();
             case "/RegistraTerzamedia" -> new ControllerRegistraTerzamedia();
             case "/Dashboard" -> new ControllerDashboard();
-            case "/AccompagnatoriContatti" -> Integer.valueOf(3).equals(tipoUtente)
-                    ? new ControllerDashboardAccCu()
-                    : new Controller403();
+            case "/AccompagnatoriContatti" -> new ControllerDashboardAccCu();
             case "/EliminaRagazzo" -> Checker.checkActionRagazzo(request)
                     ? new ControllerEliminaRagazzo()
                     : new Controller403();
@@ -100,33 +98,23 @@ public class Dispatcher extends HttpServlet {
                     : new Controller403();
             case "/ModificaPassword" -> new ControllerModificaPassword();
             case "/ModificaUtente" -> new ControllerModificaUtente();
-            case "/InserisciAccompagnatore" -> Integer.valueOf(3).equals(tipoUtente)
-                    ? new ControllerInserisciAccompagnatore()
-                    : new Controller403();
+            case "/InserisciAccompagnatore" -> new ControllerInserisciAccompagnatore();
             case "/ModificaAccompagnatore" -> Checker.checkActionAccompagnatore(request)
                     ? new ControllerModificaAccompagnatore()
                     : new Controller403();
             case "/EliminaAccompagnatore" -> Checker.checkActionAccompagnatore(request)
                     ? new ControllerEliminaAccompagnatore()
                     : new Controller403();
-            case "/InserisciCU" -> Integer.valueOf(3).equals(tipoUtente)
-                    ? new ControllerInserisciCU()
-                    : new Controller403();
+            case "/InserisciCU" -> new ControllerInserisciCU();
             case "/EliminaCU" -> Checker.checkActionCU(request)
                     ? new ControllerEliminaCU()
                     : new Controller403();
             case "/ModificaCU" -> Checker.checkActionCU(request)
                     ? new ControllerModificaCU()
                     : new Controller403();
-            case "/DashboardAttGen" -> Integer.valueOf(3).equals(tipoUtente)
-                    ? new ControllerDashboardAttGen()
-                    : new Controller403();
-            case "/RegistraAttGen" -> Integer.valueOf(3).equals(tipoUtente)
-                    ? new ControllerRegistraAttGen()
-                    : new Controller403();
-            case "/EliminaPrenotazioneAttGen" -> Integer.valueOf(3).equals(tipoUtente)
-                    ? new ControllerEliminaPrenotazioneAttGen()
-                    : new Controller403();
+            case "/DashboardAttGen" -> new ControllerDashboardAttGen();
+            case "/RegistraAttGen" -> new ControllerRegistraAttGen();
+            case "/EliminaPrenotazioneAttGen" -> new ControllerEliminaPrenotazioneAttGen();
             case "/GestisciPagamenti" -> (tipoUtente != null && tipoUtente <= 1)
                     ? new ControllerPagamentiRagazzi()
                     : new Controller403();
@@ -188,12 +176,11 @@ public class Dispatcher extends HttpServlet {
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
      * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         processRequest(request, response);
     }
 
@@ -202,12 +189,11 @@ public class Dispatcher extends HttpServlet {
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
      * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         processRequest(request, response);
     }
 
