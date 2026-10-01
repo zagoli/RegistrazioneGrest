@@ -12,6 +12,8 @@ import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 import javax.mail.Message;
@@ -31,6 +33,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.UUID;
 
 public class ControllerLoginEPasswordReset implements ControllerInterface {
+
+    private static final Logger logger =  LoggerFactory.getLogger(ControllerLoginEPasswordReset.class);
 
     @Override
     public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -97,6 +101,7 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
 
 
     private void sendResetPasswordEmail(String destinatario, String newpswd) throws MessagingException, ConfigPropertyException, IOException {
+        logger.info("sto inviando una email di password reset a {}", destinatario);
         String mittente = ConfigProperties.getProperty("INDIRIZZO_EMAIL_ASSISTENZA");
         String timeout = ConfigProperties.getProperty("CONNECTION_TIMEOUT_SERVER_MAIL_ASSISTENZA");
         Properties properties = new Properties();

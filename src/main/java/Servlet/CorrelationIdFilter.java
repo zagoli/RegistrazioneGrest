@@ -20,6 +20,7 @@ public class CorrelationIdFilter implements Filter {
             throws IOException, ServletException {
         HttpSession session = ((HttpServletRequest) request).getSession(false);
         Object storedId = session == null ? null : session.getAttribute(CORRELATION_ID);
+        // one-off correlation id if no session available
         String correlationId = storedId instanceof String ? (String) storedId : UUID.randomUUID().toString();
         MDC.put(CORRELATION_ID, correlationId);
         try {
