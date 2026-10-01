@@ -2,20 +2,31 @@ package Utility;
 
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
+import Servlet.CorrelationIdFilter;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Utils {
+    private static final DateTimeFormatter ERROR_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss XXX");
+
     public static ModelAndView getErrorPageAndLogException(Exception e, String loggerName) {
+        String errorTime = ZonedDateTime.now().format(ERROR_TIME_FORMAT);
         logException(e, loggerName);
         ModelAndView mv = new ModelAndViewStandard("err/errore.html");
         mv.addObject("TITOLOPAGINA", "Errore!");
-        mv.addObject("eccezione", e);
+        String correlationId = MDC.get(CorrelationIdFilter.CORRELATION_ID);
+        if (correlationId != null) {
+            mv.addObject("codiceErrore", correlationId);
+            mv.addObject("dataOraErrore", errorTime);
+        }
         return mv;
     }
 
     public static void logException(Exception e, String loggerName) {
-        Logger.getLogger(loggerName).log(Level.SEVERE, "", e);
+        LoggerFactory.getLogger(loggerName).error("Errore durante l'elaborazione della richiesta", e);
     }
 }

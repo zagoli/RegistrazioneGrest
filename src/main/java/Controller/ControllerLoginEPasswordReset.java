@@ -6,11 +6,13 @@ import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
 import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
+import Servlet.CorrelationIdFilter;
 import Utility.BCrypt;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.MDC;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -20,11 +22,13 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.UUID;
 
 public class ControllerLoginEPasswordReset implements ControllerInterface {
 
@@ -36,8 +40,9 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
             if (!request.getParameterMap().containsKey("mail") && !request.getParameterMap().containsKey("password")) {
                 mv.setView("user/login.html");
                 if (request.getParameterMap().containsKey("logout")) {
-                    if (!request.getSession().isNew()) {
-                        request.getSession().invalidate();
+                    HttpSession session = request.getSession(false);
+                    if (session != null) {
+                        session.invalidate();
                     }
                 } else if (request.getParameterMap().containsKey("reset")) {
                     mv.setView("user/resetpassword.html");
@@ -67,8 +72,13 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
                         mv.setView("user/login.html");
                         mv.addObject("ERRATO", true);
                     } else {
-                        request.getSession().setAttribute("idUtente", r.getId());
-                        request.getSession().setAttribute("tipoUtente", r.getTipoUt());
+                        HttpSession session = request.getSession();
+                        request.changeSessionId();
+                        String correlationId = UUID.randomUUID().toString();
+                        session.setAttribute(CorrelationIdFilter.CORRELATION_ID, correlationId);
+                        MDC.put(CorrelationIdFilter.CORRELATION_ID, correlationId);
+                        session.setAttribute("idUtente", r.getId());
+                        session.setAttribute("tipoUtente", r.getTipoUt());
                         return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
                     }
                 }

@@ -11,11 +11,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.Locale;
 
 public class Dispatcher extends HttpServlet {
 
+    private static final Logger logger = LoggerFactory.getLogger(Dispatcher.class);
     private RenderingContext renderingContext;
 
     @Override
@@ -38,6 +43,7 @@ public class Dispatcher extends HttpServlet {
             throws IOException, ServletException {
         request.setCharacterEncoding("utf-8");
         ControllerInterface c = this.getHandler(request);
+        logger.info("Richiesta {} gestita da {}", request.getMethod(), c.getClass().getSimpleName());
         ControllerResult result = c.handleRequest(request, response);
         if (result == null) {
             throw new ServletException(
@@ -63,8 +69,12 @@ public class Dispatcher extends HttpServlet {
         }
 
         // Controllo centralizzato autenticazione
-        var idUtente = request.getSession().getAttribute("idUtente");
-        var tipoUtente = (Integer) request.getSession().getAttribute("tipoUtente");
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return new ControllerLoginEPasswordReset();
+        }
+        var idUtente = session.getAttribute("idUtente");
+        var tipoUtente = (Integer) session.getAttribute("tipoUtente");
         if (idUtente == null || tipoUtente == null) {
             return new ControllerLoginEPasswordReset();
         }
@@ -160,7 +170,7 @@ public class Dispatcher extends HttpServlet {
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -173,7 +183,7 @@ public class Dispatcher extends HttpServlet {
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
