@@ -1,7 +1,9 @@
 package Controller;
 
 import DAOManager.DAOMan;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -14,7 +16,7 @@ import java.util.Map;
 public class ControllerSquadre implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Assegnazione Squadre");
@@ -40,7 +42,7 @@ public class ControllerSquadre implements ControllerInterface {
                                 }
                             }
                         }
-                        response.sendRedirect("/RegistrazioneGrest/App/Squadre?target=rag");
+                        return new RedirectResult("/RegistrazioneGrest/App/Squadre?target=rag");
                     }
                     break;
                 case "an":
@@ -68,7 +70,7 @@ public class ControllerSquadre implements ControllerInterface {
                                 DAOMan.animatoreDAO.updateSquadra(Integer.parseInt(entry.getKey()), squadra, value.length == 2); //figata di netbeans
                             }
                         }
-                        response.sendRedirect("/RegistrazioneGrest/App/Squadre?target=an");
+                        return new RedirectResult("/RegistrazioneGrest/App/Squadre?target=an");
                     }
                     break;
                 case "ter":
@@ -91,11 +93,11 @@ public class ControllerSquadre implements ControllerInterface {
                                 }
                             }
                         }
-                        response.sendRedirect("/RegistrazioneGrest/App/Squadre?target=ter");
+                        return new RedirectResult("/RegistrazioneGrest/App/Squadre?target=ter");
                     }
                     break;
             }
-        } catch (final RuntimeException | IOException | SQLException e) {
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerSquadre.class.getName());
         }
         return mv;

@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.ContattoUrgenze;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 public class ControllerInserisciCU implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
@@ -32,9 +34,9 @@ public class ControllerInserisciCU implements ControllerInterface {
                 cu.setFisso(request.getParameter("fisso"));
                 cu.setRegistrato(DAOMan.registratoDAO.findById(idUt));
                 DAOMan.contattoUrgenzeDAO.insert(cu);
-                response.sendRedirect("/RegistrazioneGrest/App/AccompagnatoriContatti");
+                return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }
-        } catch (final RuntimeException | SQLException | IOException e) {
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerInserisciCU.class.getName());
         }
         return mv;

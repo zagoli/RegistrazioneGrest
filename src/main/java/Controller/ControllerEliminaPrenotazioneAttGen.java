@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.RelCollabora;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -14,14 +16,14 @@ import java.sql.SQLException;
 public class ControllerEliminaPrenotazioneAttGen implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             RelCollabora toDeleteCollabora = DAOMan.relCollaboraDAO.findById(id);
             DAOMan.relCollaboraDAO.delete(toDeleteCollabora);
-            response.sendRedirect("/RegistrazioneGrest/App/DashboardAttGen");
-        } catch (final RuntimeException | IOException | SQLException e) {
+            return new RedirectResult("/RegistrazioneGrest/App/DashboardAttGen");
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerEliminaPrenotazioneAttGen.class.getName());
         }
         return mv;

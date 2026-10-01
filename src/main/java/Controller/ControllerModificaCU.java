@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.ContattoUrgenze;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 public class ControllerModificaCU implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Modifica contatto telefonico urgenze");
@@ -32,9 +34,9 @@ public class ControllerModificaCU implements ControllerInterface {
                 cu.setFisso(request.getParameter("fisso"));
                 cu.setRelazione(request.getParameter("relazione"));
                 DAOMan.contattoUrgenzeDAO.update(cu);
-                response.sendRedirect("/RegistrazioneGrest/App/AccompagnatoriContatti");
+                return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }
-        } catch (final RuntimeException | IOException | SQLException e) {
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaCU.class.getName());
         }
         return mv;

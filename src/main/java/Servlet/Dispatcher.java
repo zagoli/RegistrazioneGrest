@@ -1,11 +1,10 @@
 package Servlet;
 
 import Controller.*;
-import ModelAndView.ModelAndView;
+import ModelAndView.ControllerResult;
+import ModelAndView.RenderingContext;
 import Utility.Checker;
 import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
 import jakarta.servlet.ServletException;
@@ -13,19 +12,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Dispatcher extends HttpServlet {
 
-    private Configuration configurationTemplate;
+    private RenderingContext renderingContext;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        configurationTemplate = getConfiguration();
+        Configuration configurationTemplate = getConfiguration();
+        renderingContext = new RenderingContext(configurationTemplate);
     }
 
     @Override
@@ -42,11 +39,17 @@ public class Dispatcher extends HttpServlet {
         return cfg;
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         request.setCharacterEncoding("utf-8");
         ControllerInterface c = this.getHandler(request);
-        ModelAndView mv = c.handleRequest(request, response);
-        this.rendering(mv, response);
+        ControllerResult result = c.handleRequest(request, response);
+        if (result == null) {
+            throw new ServletException(
+                    "Il controller " + c.getClass().getName() + " ha restituito un risultato null"
+            );
+        }
+        result.render(response, renderingContext);
     }
 
     protected ControllerInterface getHandler(HttpServletRequest request) {
@@ -155,23 +158,6 @@ public class Dispatcher extends HttpServlet {
         };
     }
 
-    private void rendering(ModelAndView mv, HttpServletResponse response) {
-        String view = mv.getView();
-        String contentType = "text/html; charset=UTF-8";
-        if (view.endsWith("json")) {
-            contentType = "text/json; charset=UTF-8";
-        }
-        response.setContentType(contentType);
-        response.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String pathTemplate = view + ".ftl";
-            Template template = configurationTemplate.getTemplate(pathTemplate);
-            template.process(mv.getMap(), out);
-        } catch (NullPointerException | TemplateException | IOException e) {
-            Logger.getLogger(Dispatcher.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
     /**
@@ -183,7 +169,7 @@ public class Dispatcher extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         processRequest(request, response);
     }
 
@@ -196,7 +182,7 @@ public class Dispatcher extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
         processRequest(request, response);
     }
 

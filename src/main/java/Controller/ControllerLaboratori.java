@@ -1,7 +1,9 @@
 package Controller;
 
 import DAOManager.DAOMan;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -15,7 +17,7 @@ import java.util.Set;
 public class ControllerLaboratori implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
@@ -52,8 +54,7 @@ public class ControllerLaboratori implements ControllerInterface {
                                 DAOMan.ragazzoDAO.updateLaboratorio(idRagazzo, idLaboratorio);
                             }
                         }
-                        response.sendRedirect("/RegistrazioneGrest/App/Laboratori?target=rag");
-                        break;
+                        return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=rag");
                     }
                     case "an": {
                         Set<Map.Entry<String, String[]>> parameterSet = request.getParameterMap().entrySet();  //è un insieme di entry della mappa con chiave stringa e valore array di stringhe
@@ -68,8 +69,7 @@ public class ControllerLaboratori implements ControllerInterface {
                                 DAOMan.animatoreDAO.updateLaboratorio(Integer.parseInt(key), Integer.parseInt(value[0]), value.length == 2); //scrittura fighetta ispirata da Netbeans
                             }
                         }
-                        response.sendRedirect("/RegistrazioneGrest/App/Laboratori?target=an");
-                        break;
+                        return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=an");
                     }
                     case "ter": {
                         String[] listLabParam = request.getParameterValues("laboratorio");
@@ -80,12 +80,11 @@ public class ControllerLaboratori implements ControllerInterface {
                                 DAOMan.terzamediaDAO.updateLaboratorio(id, Integer.parseInt(terLabArray[1]));
                             }
                         }
-                        response.sendRedirect("/RegistrazioneGrest/App/Laboratori?target=ter");
-                        break;
+                        return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=ter");
                     }
                 }
             }
-        } catch (final RuntimeException | IOException | SQLException e) {
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerLaboratori.class.getName());
         }
         return mv;

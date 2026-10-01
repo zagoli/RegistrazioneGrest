@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -20,7 +22,7 @@ import java.util.TreeMap;
 public class ControllerModificaRagazzo implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Modifica ragazzo");
@@ -120,13 +122,13 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                 }
 
                 if (request.getSession().getAttribute("tipoUtente").equals(3)) {
-                    response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
+                    return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
                 } else {
-                    response.sendRedirect("/RegistrazioneGrest/App/VisualizzaIscritti?target=rag");
+                    return new RedirectResult("/RegistrazioneGrest/App/VisualizzaIscritti?target=rag");
                 }
 
             }
-        } catch (final RuntimeException | IOException | SQLException | ParseException e) {
+        } catch (final RuntimeException | SQLException | ParseException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaRagazzo.class.getName());
         }
         return mv;

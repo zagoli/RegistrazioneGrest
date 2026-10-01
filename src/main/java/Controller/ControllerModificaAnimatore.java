@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
@@ -22,7 +24,7 @@ import java.util.TreeMap;
 public class ControllerModificaAnimatore implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             int idAnimatore = Integer.parseInt(request.getParameter("id"));
@@ -60,9 +62,9 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                     DAOMan.relPresenzaAnDAO.insert(rpa);
                 }
                 if (request.getSession().getAttribute("tipoUtente").equals(3)) {
-                    response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
+                    return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
                 } else {
-                    response.sendRedirect("/RegistrazioneGrest/App/VisualizzaIscritti?target=an");
+                    return new RedirectResult("/RegistrazioneGrest/App/VisualizzaIscritti?target=an");
                 }
             } else {
                 //PREPARO I DATI PER LA PAGINA

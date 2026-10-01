@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.BCrypt;
 import Utility.ConfigProperties;
@@ -27,7 +29,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ControllerLoginEPasswordReset implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Login");
@@ -67,7 +69,7 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
                     } else {
                         request.getSession().setAttribute("idUtente", r.getId());
                         request.getSession().setAttribute("tipoUtente", r.getTipoUt());
-                        response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
+                        return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
                     }
                 }
             }

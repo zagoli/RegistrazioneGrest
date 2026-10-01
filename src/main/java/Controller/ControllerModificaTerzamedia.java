@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
@@ -22,7 +24,7 @@ import java.util.TreeMap;
 public class ControllerModificaTerzamedia implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Modifica terza media");
@@ -80,9 +82,9 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                     DAOMan.relPresenzaTerDAO.insert(rpt);
                 }
                 if (request.getSession().getAttribute("tipoUtente").equals(3)) {
-                    response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
+                    return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
                 } else {
-                    response.sendRedirect("/RegistrazioneGrest/App/VisualizzaIscritti?target=ter");
+                    return new RedirectResult("/RegistrazioneGrest/App/VisualizzaIscritti?target=ter");
                 }
             } else {
                 //PREPARO I DATI PER LA PAGINA

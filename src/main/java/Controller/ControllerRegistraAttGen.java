@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.RelCollabora;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 public class ControllerRegistraAttGen implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
@@ -29,8 +31,8 @@ public class ControllerRegistraAttGen implements ControllerInterface {
             rc.setRegistratoId(idUt);
             rc.setAttivitaGenId(idAttivita);
             DAOMan.relCollaboraDAO.insert(rc);
-            response.sendRedirect("/RegistrazioneGrest/App/DashboardAttGen");
-        } catch (final RuntimeException | IOException | SQLException e) {
+            return new RedirectResult("/RegistrazioneGrest/App/DashboardAttGen");
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerRegistraAttGen.class.getName());
         }
         return mv;

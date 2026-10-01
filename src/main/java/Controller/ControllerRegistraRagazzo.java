@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
@@ -20,7 +22,7 @@ import java.util.List;
 public class ControllerRegistraRagazzo implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
@@ -104,7 +106,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                     DAOMan.relPresenzaRagDAO.insert(rpr);
                 }
 
-                response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
+                return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             }
         } catch (final RuntimeException | IOException | SQLException | ParseException | ConfigPropertyException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerRegistraRagazzo.class.getName());

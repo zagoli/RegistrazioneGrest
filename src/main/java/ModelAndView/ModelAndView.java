@@ -2,13 +2,13 @@ package ModelAndView;
 
 import java.util.HashMap;
 
-public interface ModelAndView {
+public abstract class ModelAndView extends ControllerResult {
 
-    void addObject(String property, Object obj);
+    public abstract void addObject(String property, Object obj);
 
-    HashMap<String, Object> getMap();
+    public abstract HashMap<String, Object> getMap();
 
-    String getView();
+    public abstract String getView();
 
-    void setView(String view);
+    public abstract void setView(String view);
 }

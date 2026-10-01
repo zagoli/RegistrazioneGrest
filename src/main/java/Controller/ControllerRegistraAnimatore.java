@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigProperties;
@@ -21,7 +23,7 @@ import java.util.List;
 public class ControllerRegistraAnimatore implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
@@ -53,7 +55,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                     RelPresenzaAn rpa = new RelPresenzaAn(animatore.getId(), Integer.parseInt(calId));
                     DAOMan.relPresenzaAnDAO.insert(rpa);
                 }
-                response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
+                return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
                 mv.setView("user/registraanimatore.html");
                 //preparo i dati necessari per l'iscrizione

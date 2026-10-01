@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -15,7 +17,7 @@ import java.util.List;
 public class ControllerSegretari implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Gestisci segretari");
@@ -31,7 +33,7 @@ public class ControllerSegretari implements ControllerInterface {
 
             } else if (request.getParameterMap().containsKey("del")) {
                 DAOMan.registratoDAO.delete(Integer.parseInt(request.getParameter("id")));
-                response.sendRedirect("/RegistrazioneGrest/App/GestisciSegretari");
+                return new RedirectResult("/RegistrazioneGrest/App/GestisciSegretari");
 
             } else if (request.getParameterMap().containsKey("promote")) {
                 //problema in caso di più utenti omonimi, ma nel caso sistemo direttamente nel db
@@ -40,9 +42,9 @@ public class ControllerSegretari implements ControllerInterface {
                 if (level > 0) //non ci si promuove ad amministratori dal portale!
                     r.setTipoUt(Integer.parseInt(request.getParameter("level")));
                 DAOMan.registratoDAO.update(r);
-                response.sendRedirect("/RegistrazioneGrest/App/GestisciSegretari");
+                return new RedirectResult("/RegistrazioneGrest/App/GestisciSegretari");
             }
-        } catch (final RuntimeException | IOException | SQLException e) {
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerSegretari.class.getName());
         }
         return mv;

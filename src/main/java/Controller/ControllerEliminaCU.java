@@ -1,7 +1,9 @@
 package Controller;
 
 import DAOManager.DAOMan;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -13,13 +15,13 @@ import java.sql.SQLException;
 public class ControllerEliminaCU implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             DAOMan.contattoUrgenzeDAO.delete(id);
-            response.sendRedirect("/RegistrazioneGrest/App/AccompagnatoriContatti");
-        } catch (final RuntimeException | IOException | SQLException e) {
+            return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerEliminaCU.class.getName());
         }
         return mv;

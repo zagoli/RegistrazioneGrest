@@ -3,7 +3,9 @@ package Controller;
 import DAOManager.DAOMan;
 import Domain.Pagamento;
 import Domain.Ragazzo;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigProperties;
@@ -47,7 +49,7 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
     }
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
@@ -76,11 +78,11 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
                 int idRagazzo = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 DAOMan.pagamentoDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")), quota, idRagazzo, idUt);
-                response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamenti");
+                return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamenti");
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));
                 DAOMan.pagamentoDAO.delete(id);
-                response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamenti");
+                return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamenti");
             }
         } catch (final RuntimeException | IOException | SQLException | ConfigPropertyException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerPagamentiRagazzi.class.getName());

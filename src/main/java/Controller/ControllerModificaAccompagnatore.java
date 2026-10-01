@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Accompagnatore;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 public class ControllerModificaAccompagnatore implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
@@ -30,9 +32,9 @@ public class ControllerModificaAccompagnatore implements ControllerInterface {
                 a.setNome(request.getParameter("nome"));
                 a.setCognome(request.getParameter("cognome"));
                 DAOMan.accompagnatoreDAO.update(a);
-                response.sendRedirect("/RegistrazioneGrest/App/AccompagnatoriContatti");
+                return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }
-        } catch (final RuntimeException | IOException | SQLException e) {
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaAccompagnatore.class.getName());
         }
         return mv;

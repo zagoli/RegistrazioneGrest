@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
 
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 public class ControllerModificaPassword implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Modifica la password");
@@ -27,9 +29,9 @@ public class ControllerModificaPassword implements ControllerInterface {
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
                 r.setPassword(password);
                 DAOMan.registratoDAO.updatePassword(r);
-                response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
+                return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             }
-        } catch (final RuntimeException | IOException | SQLException e) {
+        } catch (final RuntimeException | SQLException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerModificaPassword.class.getName());
         }
         return mv;

@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigProperties;
@@ -21,7 +23,7 @@ import java.util.List;
 public class ControllerRegistraTerzamedia implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
@@ -83,7 +85,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
                     DAOMan.relPresenzaTerDAO.insert(rpt);
                 }
 
-                response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
+                return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
                 mv.setView("user/registraterzamedia.html");
                 //Recupera dati per la registrazione

@@ -2,7 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
@@ -16,7 +18,7 @@ import java.sql.SQLException;
 public class ControllerModificaUtente implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Modifica account");
@@ -32,7 +34,7 @@ public class ControllerModificaUtente implements ControllerInterface {
                 r.setVia(request.getParameter("via"));
                 r.setCivico(request.getParameter("civico"));
                 DAOMan.registratoDAO.update(r);
-                response.sendRedirect("/RegistrazioneGrest/App/Dashboard");
+                return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
                     mv.addObject("INVALIDMAIL", true);

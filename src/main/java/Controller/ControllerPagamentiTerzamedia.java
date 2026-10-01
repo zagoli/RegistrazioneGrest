@@ -3,7 +3,9 @@ package Controller;
 import DAOManager.DAOMan;
 import Domain.PagamentoTerzamedia;
 import Domain.Terzamedia;
+import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
+import ModelAndView.RedirectResult;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Checker;
 import Utility.ConfigProperties;
@@ -36,7 +38,7 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
     }
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
@@ -64,11 +66,11 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
                 int idTerzamedia = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 DAOMan.pagamentoTerzamediaDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")), quota, idTerzamedia, idUt);
-                response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
+                return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));
                 DAOMan.pagamentoTerzamediaDAO.delete(id);
-                response.sendRedirect("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
+                return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
             }
         } catch (final RuntimeException | IOException | SQLException | ConfigPropertyException e) {
             mv = Utils.getErrorPageAndLogException(e, ControllerPagamentiTerzamedia.class.getName());
