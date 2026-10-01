@@ -14,6 +14,9 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -23,6 +26,7 @@ import java.util.Set;
 
 public class ControllerPagamentiTerzamedia implements ControllerInterface {
 
+    private static final Logger logger = LoggerFactory.getLogger(ControllerPagamentiTerzamedia.class);
 
     protected static float calcolaQuota(Terzamedia t) throws SQLException, ConfigPropertyException, IOException {
         int supplementoFuoriComune = Integer.parseInt(ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_TERZAMEDIA"));
@@ -66,10 +70,12 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
                 int idTerzamedia = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 DAOMan.pagamentoTerzamediaDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")), quota, idTerzamedia, idUt);
+                logger.info("Pagamento di {} euro aggiunto per il ragazzo di terza media con id {}. Ordine arrivo: {}", quota, idTerzamedia, request.getParameter("ordineArrivo"));
                 return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));
                 DAOMan.pagamentoTerzamediaDAO.delete(id);
+                logger.info("Pagamento con id {} eliminato.", id);
                 return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
             }
         } catch (final RuntimeException | IOException | SQLException | ConfigPropertyException e) {

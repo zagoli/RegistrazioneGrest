@@ -1,5 +1,8 @@
 package Utility;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 
 public class ConfigProperties {
+    private static final Logger logger = LoggerFactory.getLogger(ConfigProperties.class);
     private static final String propertiesFilePath = System.getProperty("config.path");
     private static final List<String> modifiablePropertyNames = List.of("ISCRRAG", "ISCRAN", "ISCRTER");
     private static final Map<String, String> cache = new HashMap<>();
@@ -39,6 +43,7 @@ public class ConfigProperties {
         properties.setProperty(propertyName, value);
         OutputStream outFile = new FileOutputStream(propertiesFilePath);
         properties.store(outFile, null);
+        logger.info("Property {} impostata al valore {}.",  propertyName, value);
     }
 
     private static boolean isPropertyImmutable(String value) {

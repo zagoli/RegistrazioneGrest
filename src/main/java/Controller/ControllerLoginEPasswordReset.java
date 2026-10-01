@@ -49,19 +49,7 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
                         session.invalidate();
                     }
                 } else if (request.getParameterMap().containsKey("reset")) {
-                    mv.setView("user/resetpassword.html");
-                    if (request.getParameterMap().containsKey("mailtoreset")) {
-                        Registrato r = DAOMan.registratoDAO.findByMail(request.getParameter("mailtoreset"));
-                        if (r == null) {
-                            mv.addObject("UTENTENONTROVATO", true);
-                        } else {
-                            String newpswd = getNewPswd();
-                            r.setPassword(newpswd);
-                            DAOMan.registratoDAO.updatePassword(r);
-                            sendResetPasswordEmail(r.getMail(), newpswd);
-                            mv.addObject("FATTO", true);
-                        }
-                    }
+                    resetPassword(request, mv);
                 }
             } else {
                 String mail = request.getParameter("mail");
@@ -83,6 +71,7 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
                         MDC.put(CorrelationIdFilter.CORRELATION_ID, correlationId);
                         session.setAttribute("idUtente", r.getId());
                         session.setAttribute("tipoUtente", r.getTipoUt());
+                        logger.info("Registrato {} ha effettuato l'accesso", r.getMail());
                         return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
                     }
                 }
@@ -93,15 +82,34 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
         return mv;
     }
 
+    private void resetPassword(HttpServletRequest request, ModelAndView mv) throws SQLException, MessagingException, ConfigPropertyException, IOException {
+        mv.setView("user/resetpassword.html");
+        if (request.getParameterMap().containsKey("mailtoreset")) {
+            String mailToReset = request.getParameter("mailtoreset");
+            logger.info("Richiesto reset password per utente con email {}", mailToReset);
+            Registrato r = DAOMan.registratoDAO.findByMail(mailToReset);
+            if (r == null) {
+                logger.info("Registrato non trovato");
+                mv.addObject("UTENTENONTROVATO", true);
+            } else {
+                String newpswd = getNewPswd();
+                r.setPassword(newpswd);
+                DAOMan.registratoDAO.updatePassword(r);
+                logger.info("Password resettata. Invio email...");
+                sendResetPasswordEmail(r.getMail(), newpswd);
+                mv.addObject("FATTO", true);
+            }
+        }
+    }
+
     private String getNewPswd() {
         char[] possibleCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$&*?").toCharArray();
-        int lengthpasswd = ThreadLocalRandom.current().nextInt(12, 18 + 1);
-        return RandomStringUtils.random(lengthpasswd, 0, possibleCharacters.length - 1, false, false, possibleCharacters, new SecureRandom());
+        int length = ThreadLocalRandom.current().nextInt(12, 18 + 1);
+        return RandomStringUtils.random(length, 0, possibleCharacters.length - 1, false, false, possibleCharacters, new SecureRandom());
     }
 
 
     private void sendResetPasswordEmail(String destinatario, String newpswd) throws MessagingException, ConfigPropertyException, IOException {
-        logger.info("sto inviando una email di password reset a {}", destinatario);
         String mittente = ConfigProperties.getProperty("INDIRIZZO_EMAIL_ASSISTENZA");
         String timeout = ConfigProperties.getProperty("CONNECTION_TIMEOUT_SERVER_MAIL_ASSISTENZA");
         Properties properties = new Properties();

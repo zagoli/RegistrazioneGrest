@@ -14,6 +14,9 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -22,6 +25,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public class ControllerPagamentiRagazzi implements ControllerInterface {
+
+    private final static Logger logger = LoggerFactory.getLogger(ControllerPagamentiRagazzi.class);
 
     protected static float calcolaQuota(Ragazzo r) throws SQLException, ConfigPropertyException, IOException {
         int[][][] tabellaQuotaBase = new int[][][]{
@@ -78,10 +83,12 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
                 int idRagazzo = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 DAOMan.pagamentoDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")), quota, idRagazzo, idUt);
+                logger.info("Pagamento di {} euro aggiunto per il ragazzo con id {}. Ordine arrivo: {}", quota, idRagazzo, request.getParameter("ordineArrivo"));
                 return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamenti");
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));
                 DAOMan.pagamentoDAO.delete(id);
+                logger.info("Pagamento con id {} eliminato.", id);
                 return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamenti");
             }
         } catch (final RuntimeException | IOException | SQLException | ConfigPropertyException e) {

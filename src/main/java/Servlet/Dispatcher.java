@@ -42,13 +42,12 @@ public class Dispatcher extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         request.setCharacterEncoding("utf-8");
-        ControllerInterface c = this.getHandler(request);
-        logger.info("Richiesta {} gestita da {}", request.getMethod(), c.getClass().getSimpleName());
-        ControllerResult result = c.handleRequest(request, response);
+        ControllerInterface controller = this.getHandler(request);
+        logger.info("Controller scelto: {}", controller.getClass().getSimpleName());
+        ControllerResult result = controller.handleRequest(request, response);
         if (result == null) {
-            throw new ServletException(
-                    "Il controller " + c.getClass().getName() + " ha restituito un risultato null"
-            );
+            logger.error("ControllerResult è null per: {}", controller.getClass().getSimpleName());
+            throw new ServletException("Il controller " + controller.getClass().getName() + " ha restituito un risultato null");
         }
         result.render(response, renderingContext);
     }
@@ -58,6 +57,8 @@ public class Dispatcher extends HttpServlet {
         if (servizio == null) {
             return new ControllerLoginEPasswordReset();
         }
+
+        logger.info("Richiesto servizio {}", servizio);
 
         // Rotte pubbliche accessibili senza autenticazione
         switch (servizio) {
