@@ -61,6 +61,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     private static final String FIND_RAGAZZO_CAL_ID = GENERIC_RAGAZZO_FIND + " join presenzaRag pr on (ra.id = pr.Ragazzo_id) where pr.Calendario_idSettimana = ? order by ra.cognome, ra.nome;";
     private static final String FIND_RAGAZZO_REGISTRATO_ID = GENERIC_RAGAZZO_FIND + " where re.id = ? order by ra.cognome, ra.nome;";
     private static final String COUNT_RAGAZZO = "select count(*) from Ragazzo;";
+    private static final String COUNT_RAGAZZO_REGISTRATO_ID = "select count(*) from Ragazzo where Registrato_id = ?;";
     private static final String COUNT_MENSA_TOT = "select count(*) from Ragazzo where mensa = true;";
     private static final String COUNT_MENSA_SETTIMANALE = "select pr.Calendario_IdSettimana, count(*) from Ragazzo r join presenzaRag pr on (r.id = pr.Ragazzo_id) where mensa = true group by pr.Calendario_idSettimana;";
     private static final String COUNT_ANTICIPATO_TOT = "select count(*) from Ragazzo where entrataAnticipata = true;";
@@ -232,6 +233,18 @@ public class RagazzoDAOImpl implements RagazzoDAO {
              ResultSet rs = pst.executeQuery()) {
             rs.next();
             return rs.getInt(1);
+        }
+    }
+
+    @Override
+    public int countByRegistratoId(int id) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_RAGAZZO_REGISTRATO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                rs.next();
+                return rs.getInt(1);
+            }
         }
     }
 

@@ -31,6 +31,8 @@ public interface RagazzoDAO {
 
     int count() throws SQLException;
 
+    int countByRegistratoId(int id) throws SQLException;
+
     int countMensaTotale() throws SQLException;
 
     int countAnticipatoTotale() throws SQLException;

@@ -18,6 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ControllerRegistraRagazzo implements ControllerInterface {
 
@@ -42,6 +44,10 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 mv.addObject("calendari", listaCalendario);
                 //iscrizioni aperte o chiuse
                 mv.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
+                //indica se il registrato ha gia' almeno un ragazzo iscritto
+                int idUtenteSessione = (int) request.getSession().getAttribute("idUtente");
+                boolean haAltroRagazzoIscritto = DAOMan.ragazzoDAO.countByRegistratoId(idUtenteSessione) > 0;
+                mv.addObject("haAltroRagazzoIscritto", haAltroRagazzoIscritto);
             } else {
                 Ragazzo ragazzo = new Ragazzo();
                 ragazzo.setNome(request.getParameter("nome"));
@@ -79,6 +85,13 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
 
                 if (request.getParameterMap().containsKey("fratelloIscritto")) {
                     ragazzo.setFratelloIscritto(Boolean.TRUE);
+                    //se l'utente dichiara di avere gia' un fratello iscritto ma dal database non risulta nessun ragazzo
+                    //associato al registrato, logghiamo l'anomalia per un controllo successivo
+                    if (DAOMan.ragazzoDAO.countByRegistratoId(idUtente) == 0) {
+                        Logger.getLogger(ControllerRegistraRagazzo.class.getName()).log(Level.WARNING,
+                                "Il registrato con id " + idUtente + " ha dichiarato di avere un fratello gia' iscritto, "
+                                        + "ma non risultano altri ragazzi registrati a suo carico.");
+                    }
                 } else {
                     ragazzo.setFratelloIscritto(Boolean.FALSE);
                 }
