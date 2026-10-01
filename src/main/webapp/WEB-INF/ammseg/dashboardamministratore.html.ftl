@@ -55,7 +55,38 @@
                         STATISTICHE </a>
                 </div>
             </div>
+            <div class="row mt-2">
+                <div class="col">
+                    <button type="button" class="btn btn-success btn-block btn-lg" data-toggle="modal"
+                            data-target="#esportazioneExcelModal">
+                        ESPORTAZIONE EXCEL
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
+    </div>
+
+    <div class="modal fade" id="esportazioneExcelModal" tabindex="-1" role="dialog"
+         aria-labelledby="esportazioneExcelModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="esportazioneExcelModalTitle">Esportazione Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Sei sicuro di voler esportare i dati dei ragazzi, ragazzi di terza media e animatori in excel?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                    <a href="/RegistrazioneGrest/App/EsportazioneMassiva" class="btn btn-success">Prosegui</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/ajaxiscrizioni.js"></script>
 <#include "../struct/footer.html.ftl">
