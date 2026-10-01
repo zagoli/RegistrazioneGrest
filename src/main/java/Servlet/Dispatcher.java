@@ -66,12 +66,12 @@ public class Dispatcher extends HttpServlet {
 
         // Controllo centralizzato autenticazione
         var idUtente = request.getSession().getAttribute("idUtente");
-        if (idUtente == null) {
+        var tipoUtente = (Integer) request.getSession().getAttribute("tipoUtente");
+        if (idUtente == null || tipoUtente == null) {
             return new ControllerLoginEPasswordReset();
         }
 
         // Rotte protette (l'utente è autenticato)
-        var tipoUtente = (Integer) request.getSession().getAttribute("tipoUtente");
         return switch (servizio) {
             case "/RegistraRagazzo" -> new ControllerRegistraRagazzo();
             case "/RegistraAnimatore" -> new ControllerRegistraAnimatore();
@@ -115,36 +115,39 @@ public class Dispatcher extends HttpServlet {
             case "/DashboardAttGen" -> new ControllerDashboardAttGen();
             case "/RegistraAttGen" -> new ControllerRegistraAttGen();
             case "/EliminaPrenotazioneAttGen" -> new ControllerEliminaPrenotazioneAttGen();
-            case "/GestisciPagamenti" -> (tipoUtente != null && tipoUtente <= 1)
+            case "/GestisciPagamenti" -> (tipoUtente <= 1)
                     ? new ControllerPagamentiRagazzi()
                     : new Controller403();
-            case "/GestisciPagamentiTerzamedia" -> (tipoUtente != null && tipoUtente <= 1)
+            case "/GestisciPagamentiTerzamedia" -> (tipoUtente <= 1)
                     ? new ControllerPagamentiTerzamedia()
                     : new Controller403();
-            case "/Squadre" -> (tipoUtente != null && tipoUtente <= 1)
+            case "/Squadre" -> (tipoUtente <= 1)
                     ? new ControllerSquadre()
                     : new Controller403();
-            case "/Laboratori" -> (tipoUtente != null && tipoUtente <= 1)
+            case "/Laboratori" -> (tipoUtente <= 1)
                     ? new ControllerLaboratori()
                     : new Controller403();
             case "/InfoDettaglio" -> new ControllerInfoDettaglio();
-            case "/VisualizzaIscritti" -> (tipoUtente != null && tipoUtente <= 2)
+            case "/VisualizzaIscritti" -> (tipoUtente <= 2)
                     ? new ControllerVisualizzaIscritti()
                     : new Controller403();
-            case "/VisualizzaAttGen" -> (tipoUtente != null && tipoUtente <= 2)
+            case "/VisualizzaAttGen" -> (tipoUtente <= 2)
                     ? new ControllerVisualizzaAttGen()
                     : new Controller403();
-            case "/GestisciSegretari" -> Integer.valueOf(0).equals(tipoUtente)
+            case "/GestisciSegretari" -> tipoUtente == 0
                     ? new ControllerSegretari()
                     : new Controller403();
-            case "/Statistiche" -> Integer.valueOf(0).equals(tipoUtente)
+            case "/Statistiche" -> tipoUtente == 0
                     ? new ControllerStatistiche()
                     : new Controller403();
-            case "/Stampa" -> (tipoUtente != null && tipoUtente <= 2)
+            case "/Stampa" -> (tipoUtente <= 2)
                     ? new ControllerStampe()
                     : new Controller403();
-            case "/StatoIscrizioni" -> Integer.valueOf(0).equals(tipoUtente)
+            case "/StatoIscrizioni" -> tipoUtente == 0
                     ? new ControllerStatoIscrizioni()
+                    : new Controller403();
+            case "/EsportazioneMassiva" -> tipoUtente == 0
+                    ? new ControllerEsportazioneMassiva()
                     : new Controller403();
             case "/SbloccaIscrizioni" -> new ControllerCodice();
             case "/VisualizzaQuote" -> new ControllerVisualizzaQuote();
