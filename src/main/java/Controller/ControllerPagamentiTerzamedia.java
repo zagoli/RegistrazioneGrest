@@ -1,7 +1,9 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.PagamentoTerzamedia;
+import Domain.DatiPagamento;
+import Domain.IscrittoPagamento;
+import Domain.PagamentoRiepilogo;
 import Domain.Terzamedia;
 import ModelAndView.ControllerResult;
 import ModelAndView.ModelAndView;
@@ -19,16 +21,18 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 public class ControllerPagamentiTerzamedia implements ControllerInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerPagamentiTerzamedia.class);
 
     protected static float calcolaQuota(Terzamedia t) throws SQLException, ConfigPropertyException, IOException {
+        return calcolaQuota(t.getRegistrato().getLocalita(), DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size());
+    }
+
+    private static float calcolaQuota(String localita, int nSettimane) throws ConfigPropertyException, IOException {
         int supplementoFuoriComune = Integer.parseInt(ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_TERZAMEDIA"));
         int[] tabellaQuotaBase = new int[]{
                 Integer.parseInt(ConfigProperties.getProperty("PREZZO_1_TERZAMEDIA")),
@@ -36,9 +40,8 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
                 Integer.parseInt(ConfigProperties.getProperty("PREZZO_3_TERZAMEDIA")),
                 Integer.parseInt(ConfigProperties.getProperty("PREZZO_4_TERZAMEDIA"))
         };
-        int nSettimane = DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size();
         return tabellaQuotaBase[nSettimane - 1] +
-                nSettimane * (Checker.checkIsFromPescantina(t.getRegistrato().getLocalita()) ? 0 : supplementoFuoriComune);
+                nSettimane * (Checker.checkIsFromPescantina(localita) ? 0 : supplementoFuoriComune);
     }
 
     @Override
@@ -48,19 +51,16 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
             mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             mv.addObject("TITOLOPAGINA", "Gestisci pagamenti terzamedia");
             if (request.getParameterMap().isEmpty()) {
-                List<Terzamedia> listTerzamedia = DAOMan.terzamediaDAO.findAll();
-                List<PagamentoTerzamedia> pagamenti = DAOMan.pagamentoTerzamediaDAO.findAll();
-                Set<Object[]> datiTerzamedia = new HashSet<>();
-                if (!listTerzamedia.isEmpty()) {
-                    for (Terzamedia terzamedia : listTerzamedia) {
-                        Optional<PagamentoTerzamedia> p = pagamenti.parallelStream().filter(pag -> pag.getTerzamediaId() == terzamedia.getId()).findFirst();
-                        if (p.isPresent()) {
-                            Object[] o = {terzamedia, true, p.get()};
-                            datiTerzamedia.add(o);
-                        } else {
-                            Object[] o = {terzamedia, false, ControllerPagamentiTerzamedia.calcolaQuota(terzamedia)};
-                            datiTerzamedia.add(o);
-                        }
+                List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.terzamediaDAO.findAllConPagamenti();
+                List<Object[]> datiTerzamedia = new ArrayList<>(iscritti.size());
+                if (!iscritti.isEmpty()) {
+                    for (DatiPagamento<IscrittoPagamento, PagamentoRiepilogo> dato : iscritti) {
+                        PagamentoRiepilogo pagamento = dato.getPagamento();
+                        datiTerzamedia.add(new Object[]{
+                                dato.getIscritto(),
+                                pagamento != null,
+                                pagamento != null ? pagamento : calcolaQuota(dato.getIscritto().getLocalita(), dato.getSettimane())
+                        });
                     }
                     mv.addObject("terzamedia", datiTerzamedia);
                 }

@@ -1,6 +1,9 @@
 package DAOManager;
 
+import Domain.DatiPagamento;
+import Domain.PagamentoRiepilogo;
 import Domain.Ragazzo;
+import Domain.RagazzoPagamento;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,6 +24,8 @@ public interface RagazzoDAO {
 
     //SELECT
     List<Ragazzo> findAll() throws SQLException;
+
+    List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> findAllConPagamenti() throws SQLException;
 
     int count() throws SQLException;
 

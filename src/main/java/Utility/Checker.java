@@ -134,7 +134,7 @@ public class Checker {
     public static boolean checkIsFromPescantina(String localita) {
         String[] dintorni = {"pescantina", "settimo", "balconi", "ospedaletto", "arce", "arcè", "arcé", "santa lucia"};
         localita = localita.trim().toLowerCase();
-        return Arrays.stream(dintorni).parallel().anyMatch(localita::contains);
+        return Arrays.stream(dintorni).anyMatch(localita::contains);
     }
 
 }
