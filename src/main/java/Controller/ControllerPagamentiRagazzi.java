@@ -52,7 +52,7 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
     public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             mv.addObject("TITOLOPAGINA", "Gestisci pagamenti ragazzi");
             if (request.getParameterMap().isEmpty()) {
                 // pagamento contiene solo l'id del ragazzo, quindi sono stupido e non si può migliorare

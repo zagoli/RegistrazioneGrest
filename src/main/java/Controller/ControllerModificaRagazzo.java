@@ -10,7 +10,6 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +25,7 @@ public class ControllerModificaRagazzo implements ControllerInterface {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Modifica ragazzo");
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             int idRagazzo = Integer.parseInt(request.getParameter("id"));
             Ragazzo r = DAOMan.ragazzoDAO.findById(idRagazzo);
             if (!request.getParameterMap().containsKey("nome")) {

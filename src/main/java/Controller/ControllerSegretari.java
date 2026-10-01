@@ -10,7 +10,7 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ControllerSegretari implements ControllerInterface {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Gestisci segretari");
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().isEmpty()) {
                 List<Registrato> lseg = DAOMan.registratoDAO.findSegretari();
                 List<Registrato> lamm = DAOMan.registratoDAO.findAmministratori();

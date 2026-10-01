@@ -19,7 +19,7 @@ public class ControllerVisualizzaAttGen implements ControllerInterface {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             mv.setView("ammseg/visualizzaattgen.html");
             mv.addObject("TITOLOPAGINA", "Attivita genitori");
             List<RelCollabora> allRelCollabora = DAOMan.relCollaboraDAO.findAll();

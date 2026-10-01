@@ -25,11 +25,6 @@ public class Dispatcher extends HttpServlet {
         renderingContext = new RenderingContext(configurationTemplate);
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-    }
-
     private Configuration getConfiguration() {
         // Chiamare questo metodo solo dentro init()
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);

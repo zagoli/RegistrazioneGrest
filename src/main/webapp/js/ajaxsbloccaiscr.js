@@ -38,4 +38,3 @@ $("#btnsblocco").click(function () {
 function toBoolean(v) {
     return v === "false" ? false : !!v;
 }
-;

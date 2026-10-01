@@ -26,7 +26,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
     public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             mv.addObject("TITOLOPAGINA", "Registrazione ragazzo di Terzamedia");
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 int idUtente = (int) request.getSession().getAttribute("idUtente");

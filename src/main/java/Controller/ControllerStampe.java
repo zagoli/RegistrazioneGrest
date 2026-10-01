@@ -27,7 +27,7 @@ public class ControllerStampe implements ControllerInterface {
                     List<Object[]> ragGiusti = new LinkedList<>();
                     allRagazzi.stream().filter((rag) -> (rag.getSquadra().getId() != 0 && rag.getSquadra().getId() == squadraId)).forEachOrdered((Ragazzo rag) -> {
                         String periodoString = "";
-                        List<RelPresenzaRag> periodo = null;
+                        List<RelPresenzaRag> periodo;
                         try {
                             periodo = DAOMan.relPresenzaRagDAO.findByRagazzoId(rag.getId());
                         } catch (SQLException e) {
@@ -40,7 +40,7 @@ public class ControllerStampe implements ControllerInterface {
                     List<Object[]> anGiusti = new LinkedList<>();
                     allAnimatori.stream().filter((an) -> (an.getSquadra().getId() != 0 && an.getSquadra().getId() == squadraId)).forEachOrdered((an) -> {
                         String periodoString = "";
-                        List<RelPresenzaAn> periodo = null;
+                        List<RelPresenzaAn> periodo;
                         try {
                             periodo = DAOMan.relPresenzaAnDAO.findByAnimatoreId(an.getId());
                         } catch (SQLException e) {

@@ -82,8 +82,7 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
     private String getNewPswd() {
         char[] possibleCharacters = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!$&*?").toCharArray();
         int lengthpasswd = ThreadLocalRandom.current().nextInt(12, 18 + 1);
-        String newpswd = RandomStringUtils.random(lengthpasswd, 0, possibleCharacters.length - 1, false, false, possibleCharacters, new SecureRandom());
-        return newpswd;
+        return RandomStringUtils.random(lengthpasswd, 0, possibleCharacters.length - 1, false, false, possibleCharacters, new SecureRandom());
     }
 
 

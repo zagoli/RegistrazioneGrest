@@ -5,5 +5,5 @@ import java.io.OutputStream;
 
 @FunctionalInterface
 public interface BinaryContentWriter {
-    void write(OutputStream outputStream) throws IOException;
+    void write(OutputStream outputStream);
 }

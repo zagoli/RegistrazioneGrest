@@ -10,7 +10,7 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 import java.sql.SQLException;
 
 public class ControllerModificaCU implements ControllerInterface {
@@ -20,7 +20,7 @@ public class ControllerModificaCU implements ControllerInterface {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Modifica contatto telefonico urgenze");
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             int idCU = Integer.parseInt(request.getParameter("id"));
             if (!request.getParameterMap().containsKey("nome")) {
                 mv.setView("acccu/modificacu.html");

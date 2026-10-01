@@ -4,23 +4,23 @@ import java.util.Date;
 import java.util.List;
 
 public class AnimatoreExport {
-    private String nome;
-    private String cognome;
-    private Date dataNascita;
-    private String presenza;
-    private Laboratorio laboratorio;
-    private Parrocchia parrocchia;
-    private Registrato registrato;
-    private Circolo circolo;
-    private String cellulare;
-    private String fasciaEtaRagazzi;
-    private String mail;
-    private String nTessera;
-    private String codiceFiscale;
-    private String responsabileSquadra;
-    private String responsabileLaboratorio;
-    private Squadra squadra;
-    private List<Integer> settimanePresenza;
+    private final String nome;
+    private final String cognome;
+    private final Date dataNascita;
+    private final String presenza;
+    private final Laboratorio laboratorio;
+    private final Parrocchia parrocchia;
+    private final Registrato registrato;
+    private final Circolo circolo;
+    private final String cellulare;
+    private final String fasciaEtaRagazzi;
+    private final String mail;
+    private final String nTessera;
+    private final String codiceFiscale;
+    private final String responsabileSquadra;
+    private final String responsabileLaboratorio;
+    private final Squadra squadra;
+    private final List<Integer> settimanePresenza;
 
     public AnimatoreExport(String nome, String cognome, Date dataNascita, String presenza,
                            Laboratorio laboratorio, Parrocchia parrocchia, Registrato registrato,

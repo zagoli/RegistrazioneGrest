@@ -10,7 +10,7 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 import java.sql.SQLException;
 
 public class ControllerRegistraAttGen implements ControllerInterface {
@@ -19,7 +19,7 @@ public class ControllerRegistraAttGen implements ControllerInterface {
     public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             mv.addObject("TITOLOPAGINA", "errore");
             RelCollabora rc = new RelCollabora();
             int idUt = (int) request.getSession().getAttribute("idUtente");

@@ -10,7 +10,7 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 import java.sql.SQLException;
 
 public class ControllerModificaPassword implements ControllerInterface {
@@ -20,7 +20,7 @@ public class ControllerModificaPassword implements ControllerInterface {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Modifica la password");
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (!request.getParameterMap().containsKey("password")) {
                 mv.setView("user/modificapassword.html");
             } else {

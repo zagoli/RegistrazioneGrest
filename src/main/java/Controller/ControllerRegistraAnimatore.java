@@ -26,7 +26,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
     public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             mv.addObject("TITOLOPAGINA", "Registra Animatore");
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Animatore animatore = new Animatore();

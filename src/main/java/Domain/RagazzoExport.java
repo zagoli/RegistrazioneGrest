@@ -5,28 +5,28 @@ import java.util.Date;
 import java.util.List;
 
 public class RagazzoExport {
-    private String nome;
-    private String cognome;
-    private Date dataNascita;
-    private String presenza;
-    private Laboratorio laboratorio;
-    private Parrocchia parrocchia;
-    private Registrato registrato;
-    private Circolo circolo;
-    private String entrataAnticipata;
-    private String richieste;
-    private String noteAlimentari;
-    private String mensa;
-    private String saNuotare;
-    private String fratelloIscritto;
-    private Scuola scuola;
-    private String nTessera;
-    private String sezione;
-    private String classe;
-    private Squadra squadra;
-    private List<Integer> settimanePresenza;
-    private String pagato;
-    private BigDecimal importoPagamento;
+    private final String nome;
+    private final String cognome;
+    private final Date dataNascita;
+    private final String presenza;
+    private final Laboratorio laboratorio;
+    private final Parrocchia parrocchia;
+    private final Registrato registrato;
+    private final Circolo circolo;
+    private final String entrataAnticipata;
+    private final String richieste;
+    private final String noteAlimentari;
+    private final String mensa;
+    private final String saNuotare;
+    private final String fratelloIscritto;
+    private final Scuola scuola;
+    private final String nTessera;
+    private final String sezione;
+    private final String classe;
+    private final Squadra squadra;
+    private final List<Integer> settimanePresenza;
+    private final String pagato;
+    private final BigDecimal importoPagamento;
 
     public RagazzoExport(String nome, String cognome, Date dataNascita, String presenza,
                          Laboratorio laboratorio, Parrocchia parrocchia, Registrato registrato,

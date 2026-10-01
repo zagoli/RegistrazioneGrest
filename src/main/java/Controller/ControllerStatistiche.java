@@ -21,7 +21,7 @@ public class ControllerStatistiche implements ControllerInterface {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             mv.addObject("TITOLOPAGINA", "Statistiche");
             mv.setView("ammseg/statistiche.html");
             mv.addObject("nrag", DAOMan.ragazzoDAO.count());

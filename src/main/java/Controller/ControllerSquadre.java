@@ -9,7 +9,6 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class ControllerSquadre implements ControllerInterface {
         ModelAndView mv = new ModelAndViewStandard();
         try {
             mv.addObject("TITOLOPAGINA", "Assegnazione Squadre");
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             switch (request.getParameter("target")) {
                 case "rag":
                     if (!request.getParameterMap().containsKey("submitted")) {
@@ -58,7 +57,7 @@ public class ControllerSquadre implements ControllerInterface {
                                 Integer squadra;
                                 String[] value = entry.getValue();
                                 //imposto la squadra, se non c'è metto null
-                                if (value[0].length() == 0) {
+                                if (value[0].isEmpty()) {
                                     if (value.length == 2) {
                                         throw new IllegalArgumentException("Impossibile impostare come responsabile un animatore che non ha nessuna squadra!");
                                     }

@@ -10,14 +10,15 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 import java.sql.SQLException;
 
 public class ControllerEliminaPrenotazioneAttGen implements ControllerInterface {
 
     @Override
     public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+        new ModelAndViewStandard();
+        ModelAndView mv;
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             RelCollabora toDeleteCollabora = DAOMan.relCollaboraDAO.findById(id);

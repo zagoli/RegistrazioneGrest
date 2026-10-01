@@ -21,7 +21,7 @@ public class ControllerVisualizzaIscritti implements ControllerInterface {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndViewStandard();
         try {
-            mv.addObject("tipoUt", (Integer) request.getSession().getAttribute("tipoUtente"));
+            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             switch (request.getParameter("target")) {
                 case "rag":
                     mv.setView("ammseg/visualizzaragazzi.html");
