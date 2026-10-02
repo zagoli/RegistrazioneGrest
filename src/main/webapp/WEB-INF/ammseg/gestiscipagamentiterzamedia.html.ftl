@@ -2,6 +2,9 @@
 <#include "../struct/navbar.html.ftl">
 <div class="container-fluid mt-5 content">
     <div class="container shadow pt-2 pb-2 bg-white">
+        <#if errorePagamento??>
+            <div class="alert alert-danger" role="alert">${errorePagamento}</div>
+        </#if>
         <#if terzamedia??>
             <div class="table-responsive">
                 <table class="table table-hover" id="t_pagamentiter">

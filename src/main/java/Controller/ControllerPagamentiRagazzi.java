@@ -40,6 +40,7 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
 
     private static float calcolaQuota(boolean fratelloIscritto, boolean mensa, boolean entrataAnticipata,
                                      String localita, int nSettimane) throws ConfigPropertyException, IOException {
+        assert nSettimane > 0;
         int[][][] tabellaQuotaBase = new int[][][]{
                 // normale
                 {   //senza mensa   |   con mensa
@@ -70,27 +71,27 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
             mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             mv.addObject("TITOLOPAGINA", "Gestisci pagamenti ragazzi");
             if (request.getParameterMap().isEmpty()) {
-                List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.ragazzoDAO.findAllConPagamenti();
-                List<Object[]> datiRagazzi = new ArrayList<>(iscritti.size());
-                if (!iscritti.isEmpty()) {
-                    for (DatiPagamento<RagazzoPagamento, PagamentoRiepilogo> dato : iscritti) {
-                        PagamentoRiepilogo pagamento = dato.getPagamento();
-                        datiRagazzi.add(new Object[]{
-                                dato.getIscritto(),
-                                pagamento != null,
-                                pagamento != null ? pagamento : calcolaQuota(dato.getIscritto(), dato.getSettimane())
-                        });
-                    }
-                    mv.addObject("ragazzi", datiRagazzi);
-                }
-                mv.setView("ammseg/gestiscipagamenti.html");
+                renderPage(mv);
             } else if (request.getParameterMap().containsKey("addPagamento")) {
                 float quota = Float.parseFloat(request.getParameter("quota").replace(',', '.'));
                 int idRagazzo = Integer.parseInt(request.getParameter("addPagamento"));
                 int idUt = (int) request.getSession().getAttribute("idUtente");
-                DAOMan.pagamentoDAO.insert(Integer.parseInt(request.getParameter("ordineArrivo")), quota, idRagazzo, idUt);
-                logger.info("Pagamento di {} euro aggiunto per il ragazzo con id {}. Ordine arrivo: {}", quota, idRagazzo, request.getParameter("ordineArrivo"));
-                return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamenti");
+                int ordineArrivo = Integer.parseInt(request.getParameter("ordineArrivo"));
+                logger.info("Inserimento pagamento ragazzo richiesto per ragazzo con id {}, ordine arrivo {}, quota {}", idRagazzo, ordineArrivo, quota);
+                try {
+                    DAOMan.pagamentoDAO.insert(ordineArrivo, quota, idRagazzo, idUt);
+                    logger.info("Pagamento di {} euro aggiunto per il ragazzo con id {}. Ordine arrivo: {}", quota, idRagazzo, request.getParameter("ordineArrivo"));
+                    return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamenti");
+                } catch (SQLException e) {
+                    if (e.getSQLState().equals("23505")) {
+                        String message = "Pagamento già presente per il ragazzo, o ordine arrivo " + ordineArrivo + " già inserito.";
+                        logger.warn(message);
+                        mv.addObject("errorePagamento", message);
+                        renderPage(mv);
+                    } else {
+                        throw e;
+                    }
+                }
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));
                 DAOMan.pagamentoDAO.delete(id);
@@ -101,6 +102,23 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
             mv = Utils.getErrorPageAndLogException(e, ControllerPagamentiRagazzi.class.getName());
         }
         return mv;
+    }
+
+    private static void renderPage(ModelAndView mv) throws SQLException, ConfigPropertyException, IOException {
+        List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.ragazzoDAO.findAllConPagamenti();
+        List<Object[]> datiRagazzi = new ArrayList<>(iscritti.size());
+        if (!iscritti.isEmpty()) {
+            for (DatiPagamento<RagazzoPagamento, PagamentoRiepilogo> dato : iscritti) {
+                PagamentoRiepilogo pagamento = dato.getPagamento();
+                datiRagazzi.add(new Object[]{
+                        dato.getIscritto(),
+                        pagamento != null,
+                        pagamento != null ? pagamento : calcolaQuota(dato.getIscritto(), dato.getSettimane())
+                });
+            }
+            mv.addObject("ragazzi", datiRagazzi);
+        }
+        mv.setView("ammseg/gestiscipagamenti.html");
     }
 
 }
