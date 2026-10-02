@@ -48,6 +48,16 @@ public class RagazzoDAOImpl implements RagazzoDAO {
             left join (select Ragazzo_id, count(*) as settimane from presenzaRag group by Ragazzo_id) pr on (pr.Ragazzo_id = ra.id)
             order by ra.cognome, ra.nome;
             """;
+    private static final String FIND_ALL_CON_PAGAMENTO = """
+            select iscritti.*, p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota,
+                   pre.nome as prenome, pre.cognome as precognome
+            from (
+            """ + GENERIC_RAGAZZO_FIND + """
+            ) iscritti
+            left join lateral (select id, ordineArrivo, data, quota, Registrato_id from Pagamento where Ragazzo_id = iscritti.raid order by id limit 1) p on true
+            left join Registrato pre on (p.Registrato_id = pre.id)
+            order by iscritti.racognome, iscritti.ranome;
+            """;
     private static final String FIND_RAGAZZO_CAL_ID = GENERIC_RAGAZZO_FIND + " join presenzaRag pr on (ra.id = pr.Ragazzo_id) where pr.Calendario_idSettimana = ? order by ra.cognome, ra.nome;";
     private static final String FIND_RAGAZZO_REGISTRATO_ID = GENERIC_RAGAZZO_FIND + " where re.id = ? order by ra.cognome, ra.nome;";
     private static final String COUNT_RAGAZZO = "select count(*) from Ragazzo;";
@@ -191,6 +201,28 @@ public class RagazzoDAOImpl implements RagazzoDAO {
             }
             return dati;
         }
+    }
+
+    @Override
+    public List<IscrittoConPagamento<Ragazzo>> findAllConPagamento() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTO);
+             ResultSet rs = pst.executeQuery()) {
+            List<IscrittoConPagamento<Ragazzo>> dati = new LinkedList<>();
+            while (rs.next()) {
+                dati.add(new IscrittoConPagamento<>(mapRowToRagazzo(rs), mapRowToPagamentoRiepilogo(rs)));
+            }
+            return dati;
+        }
+    }
+
+    static PagamentoRiepilogo mapRowToPagamentoRiepilogo(ResultSet rs) throws SQLException {
+        if (rs.getObject("pid") == null) {
+            return null;
+        }
+        return new PagamentoRiepilogo(
+                rs.getInt("pid"), rs.getInt("pordineArrivo"), rs.getDate("pdata"), rs.getFloat("pquota"),
+                rs.getString("prenome"), rs.getString("precognome"));
     }
 
     @Override

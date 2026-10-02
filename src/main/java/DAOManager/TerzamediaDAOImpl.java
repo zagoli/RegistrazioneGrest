@@ -47,6 +47,16 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
             left join (select Terzamedia_id, count(*) as settimane from presenzaTer group by Terzamedia_id) pr on (pr.Terzamedia_id = ter.id)
             order by ter.cognome, ter.nome;
             """;
+    private static final String FIND_ALL_CON_PAGAMENTO = """
+            select iscritti.*, p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota,
+                   pre.nome as prenome, pre.cognome as precognome
+            from (
+            """ + GENERIC_TERZAMEDIA_FIND + """
+            ) iscritti
+            left join lateral (select id, ordineArrivo, data, quota, Registrato_id from PagamentoTerzamedia where Terzamedia_id = iscritti.terid order by id limit 1) p on true
+            left join Registrato pre on (p.Registrato_id = pre.id)
+            order by iscritti.tercognome, iscritti.ternome;
+            """;
     private static final String FIND_TERZAMEDIA_REGISTRATO_ID = GENERIC_TERZAMEDIA_FIND + " where re.id = ? order by ter.cognome, ter.nome;";
     private static final String COUNT_TERZAMEDIA = "select count(*) from Terzamedia;";
     // </editor-fold>
@@ -178,6 +188,19 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
                         rs.getInt("pid"), rs.getInt("pordineArrivo"), rs.getDate("pdata"), rs.getFloat("pquota"),
                         rs.getString("prenome"), rs.getString("precognome"));
                 dati.add(new DatiPagamento<>(iscritto, pagamento, rs.getInt("settimane")));
+            }
+            return dati;
+        }
+    }
+
+    @Override
+    public List<IscrittoConPagamento<Terzamedia>> findAllConPagamento() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTO);
+             ResultSet rs = pst.executeQuery()) {
+            List<IscrittoConPagamento<Terzamedia>> dati = new LinkedList<>();
+            while (rs.next()) {
+                dati.add(new IscrittoConPagamento<>(mapRowToTerzamedia(rs), RagazzoDAOImpl.mapRowToPagamentoRiepilogo(rs)));
             }
             return dati;
         }
