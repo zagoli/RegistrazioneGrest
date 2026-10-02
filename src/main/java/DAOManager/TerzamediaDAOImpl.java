@@ -194,13 +194,13 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     }
 
     @Override
-    public List<IscrittoConPagamento<Terzamedia>> findAllConPagamento() throws SQLException {
+    public List<DatiPagamento<Terzamedia, PagamentoRiepilogo>> findAllConPagamento() throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            List<IscrittoConPagamento<Terzamedia>> dati = new LinkedList<>();
+            List<DatiPagamento<Terzamedia, PagamentoRiepilogo>> dati = new LinkedList<>();
             while (rs.next()) {
-                dati.add(new IscrittoConPagamento<>(mapRowToTerzamedia(rs), RagazzoDAOImpl.mapRowToPagamentoRiepilogo(rs)));
+                dati.add(new DatiPagamento<>(mapRowToTerzamedia(rs), RagazzoDAOImpl.mapRowToPagamentoRiepilogo(rs)));
             }
             return dati;
         }

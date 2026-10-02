@@ -204,13 +204,13 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     }
 
     @Override
-    public List<IscrittoConPagamento<Ragazzo>> findAllConPagamento() throws SQLException {
+    public List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> findAllConPagamento() throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            List<IscrittoConPagamento<Ragazzo>> dati = new LinkedList<>();
+            List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> dati = new LinkedList<>();
             while (rs.next()) {
-                dati.add(new IscrittoConPagamento<>(mapRowToRagazzo(rs), mapRowToPagamentoRiepilogo(rs)));
+                dati.add(new DatiPagamento<>(mapRowToRagazzo(rs), mapRowToPagamentoRiepilogo(rs)));
             }
             return dati;
         }

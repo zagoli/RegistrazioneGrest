@@ -1,7 +1,6 @@
 package DAOManager;
 
 import Domain.DatiPagamento;
-import Domain.IscrittoConPagamento;
 import Domain.PagamentoRiepilogo;
 import Domain.Ragazzo;
 import Domain.RagazzoPagamento;
@@ -28,7 +27,7 @@ public interface RagazzoDAO {
 
     List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> findAllConPagamenti() throws SQLException;
 
-    List<IscrittoConPagamento<Ragazzo>> findAllConPagamento() throws SQLException;
+    List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> findAllConPagamento() throws SQLException;
 
     int count() throws SQLException;
 

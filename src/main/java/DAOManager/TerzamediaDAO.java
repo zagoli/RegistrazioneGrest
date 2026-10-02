@@ -1,7 +1,6 @@
 package DAOManager;
 
 import Domain.DatiPagamento;
-import Domain.IscrittoConPagamento;
 import Domain.IscrittoPagamento;
 import Domain.PagamentoRiepilogo;
 import Domain.Terzamedia;
@@ -28,7 +27,7 @@ public interface TerzamediaDAO {
 
     List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> findAllConPagamenti() throws SQLException;
 
-    List<IscrittoConPagamento<Terzamedia>> findAllConPagamento() throws SQLException;
+    List<DatiPagamento<Terzamedia, PagamentoRiepilogo>> findAllConPagamento() throws SQLException;
 
     int count() throws SQLException;
 

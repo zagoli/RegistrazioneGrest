@@ -1,9 +1,7 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.IscrittoConPagamento;
-import Domain.Ragazzo;
-import Domain.Terzamedia;
+import Domain.*;
 import ModelAndView.ModelAndView;
 import ModelAndView.ModelAndViewStandard;
 import Utility.Utils;
@@ -26,7 +24,7 @@ public class ControllerVisualizzaIscritti implements ControllerInterface {
                     mv.setView("ammseg/visualizzaragazzi.html");
                     mv.addObject("TITOLOPAGINA", "Visualizza ragazzi");
                     List<Object[]> ragazzi = new ArrayList<>();
-                    for (IscrittoConPagamento<Ragazzo> dato : DAOMan.ragazzoDAO.findAllConPagamento()) {
+                    for (DatiPagamento<Ragazzo, PagamentoRiepilogo> dato : DAOMan.ragazzoDAO.findAllConPagamento()) {
                         ragazzi.add(new Object[]{dato.getIscritto(), dato.getPagamento()});
                     }
                     mv.addObject("ragazzi", ragazzi);
@@ -40,7 +38,7 @@ public class ControllerVisualizzaIscritti implements ControllerInterface {
                     mv.setView("ammseg/visualizzaterzamedia.html");
                     mv.addObject("TITOLOPAGINA", "Visualizza terza media");
                     List<Object[]> terzamedia = new ArrayList<>();
-                    for (IscrittoConPagamento<Terzamedia> dato : DAOMan.terzamediaDAO.findAllConPagamento()) {
+                    for (DatiPagamento<Terzamedia, PagamentoRiepilogo> dato : DAOMan.terzamediaDAO.findAllConPagamento()) {
                         terzamedia.add(new Object[]{dato.getIscritto(), dato.getPagamento()});
                     }
                     mv.addObject("terzamedia", terzamedia);

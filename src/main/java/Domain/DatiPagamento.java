@@ -11,6 +11,12 @@ public class DatiPagamento<I, P> {
         this.settimane = settimane;
     }
 
+    public DatiPagamento(I iscritto, P pagamento) {
+        this.iscritto = iscritto;
+        this.pagamento = pagamento;
+        this.settimane = 0;
+    }
+
     public I getIscritto() {
         return iscritto;
     }
