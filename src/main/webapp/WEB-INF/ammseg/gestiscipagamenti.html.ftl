@@ -33,7 +33,7 @@
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-3" align="center">
-                                                <span title="Evaso da ${datirag[2].registrato.nome+" "+datirag[2].registrato.cognome+" il "+datirag[2].data}"> <b>${datirag[2].ordineArrivo}</b> </span>
+                                                <span title="Evaso da ${datirag[2].nomeRegistrato+" "+datirag[2].cognomeRegistrato+" il "+datirag[2].data}"> <b>${datirag[2].ordineArrivo}</b> </span>
                                             </div>
                                             <div class="col" align="center">
                                                 <p>Quota:

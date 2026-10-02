@@ -1,6 +1,5 @@
 package Utility;
 
-import Controller.ControllerLoginEPasswordReset;
 import DAOManager.DAOMan;
 import Domain.*;
 
@@ -14,10 +13,11 @@ import kong.unirest.core.json.JSONObject;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Checker {
+    private static final Logger logger = LoggerFactory.getLogger(Checker.class);
 
     public static boolean checkMail(String mail) throws UnirestException, ConfigPropertyException, IOException {
         if (!ConfigProperties.getProperty("EMAIL_CHECKER_ENABLED").equals("true")) {
@@ -51,7 +51,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Errore nella verifica dei permessi sul contatto urgenze", ex);
         }
         return flag;
     }
@@ -66,7 +66,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Errore nella verifica dei permessi sull'accompagnatore", ex);
         }
         return flag;
     }
@@ -86,7 +86,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Errore nella verifica dei permessi sul ragazzo", ex);
         }
         return flag;
     }
@@ -106,7 +106,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Errore nella verifica dei permessi sul ragazzo di terza media", ex);
         }
         return flag;
     }
@@ -126,7 +126,7 @@ public class Checker {
                 flag = true;
             }
         } catch (NullPointerException | SQLException ex) {
-            Logger.getLogger(ControllerLoginEPasswordReset.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("Errore nella verifica dei permessi sull'animatore", ex);
         }
         return flag;
     }
@@ -134,7 +134,7 @@ public class Checker {
     public static boolean checkIsFromPescantina(String localita) {
         String[] dintorni = {"pescantina", "settimo", "balconi", "ospedaletto", "arce", "arcè", "arcé", "santa lucia"};
         localita = localita.trim().toLowerCase();
-        return Arrays.stream(dintorni).parallel().anyMatch(localita::contains);
+        return Arrays.stream(dintorni).anyMatch(localita::contains);
     }
 
 }

@@ -78,22 +78,26 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
     }
 
     public PagamentoTerzamedia mapRowToPagamentoTerzamedia(ResultSet rs) throws SQLException {
+        return mapRowToPagamentoTerzamedia(rs, "re");
+    }
+
+    public PagamentoTerzamedia mapRowToPagamentoTerzamedia(ResultSet rs, String registratoPrefix) throws SQLException {
         return new PagamentoTerzamedia(
                 rs.getInt("pid"),
                 rs.getDate("pdata"),
                 rs.getFloat("pquota"),
                 rs.getInt("pterid"),
                 new Registrato(
-                        rs.getInt("reid"),
-                        rs.getString("remail"),
-                        rs.getString("repassword"),
-                        rs.getString("renome"),
-                        rs.getString("recognome"),
-                        rs.getString("retelefono"),
-                        rs.getString("relocalita"),
-                        rs.getString("revia"),
-                        rs.getString("recivico"),
-                        rs.getInt("retipoUt")
+                        rs.getInt(registratoPrefix + "id"),
+                        rs.getString(registratoPrefix + "mail"),
+                        rs.getString(registratoPrefix + "password"),
+                        rs.getString(registratoPrefix + "nome"),
+                        rs.getString(registratoPrefix + "cognome"),
+                        rs.getString(registratoPrefix + "telefono"),
+                        rs.getString(registratoPrefix + "localita"),
+                        rs.getString(registratoPrefix + "via"),
+                        rs.getString(registratoPrefix + "civico"),
+                        rs.getInt(registratoPrefix + "tipoUt")
                 ),
                 rs.getInt("pordineArrivo")
         );

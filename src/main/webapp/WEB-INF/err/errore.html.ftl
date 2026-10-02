@@ -3,9 +3,11 @@
     <div class="title">
         <h2>Errore! Qualcosa non va...</h2>
     </div>
-    <#if eccezione??>
-        <p>Se il seguente errore persiste, contattare
-            <a href="mailto:assistenzatecnica@parrocchiadibalconi.it?subject=${"Errore del sito del Grest!"}&body=${"Ho riscontrato il seguente errore utilizzando il sito del Grest: " + eccezione.toString()}">l'amministratore
+    <#if codiceErrore??>
+        <p>Codice di riferimento: <strong>${codiceErrore?html}</strong></p>
+        <p>Data e ora dell'errore: <strong>${dataOraErrore?html}</strong></p>
+        <p>Se l'errore persiste, contattare
+            <a href="mailto:assistenzatecnica@parrocchiadibalconi.it?subject=${"Errore del sito del Grest!"?url('UTF-8')}&amp;body=${("Ho riscontrato un errore utilizzando il sito del Grest.\nCodice di riferimento: " + codiceErrore + "\nData e ora dell'errore: " + dataOraErrore)?url('UTF-8')}">l'amministratore
                 del sito.</a>
         </p>
     <#else>

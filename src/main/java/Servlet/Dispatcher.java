@@ -11,11 +11,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.Locale;
 
 public class Dispatcher extends HttpServlet {
 
+    private static final Logger logger = LoggerFactory.getLogger(Dispatcher.class);
     private RenderingContext renderingContext;
 
     @Override
@@ -37,12 +42,12 @@ public class Dispatcher extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         request.setCharacterEncoding("utf-8");
-        ControllerInterface c = this.getHandler(request);
-        ControllerResult result = c.handleRequest(request, response);
+        ControllerInterface controller = this.getHandler(request);
+        logger.info("Controller scelto: {}", controller.getClass().getSimpleName());
+        ControllerResult result = controller.handleRequest(request, response);
         if (result == null) {
-            throw new ServletException(
-                    "Il controller " + c.getClass().getName() + " ha restituito un risultato null"
-            );
+            logger.error("ControllerResult è null per: {}", controller.getClass().getSimpleName());
+            throw new ServletException("Il controller " + controller.getClass().getName() + " ha restituito un risultato null");
         }
         result.render(response, renderingContext);
     }
@@ -52,6 +57,8 @@ public class Dispatcher extends HttpServlet {
         if (servizio == null) {
             return new ControllerLoginEPasswordReset();
         }
+
+        logger.info("Richiesto servizio {}", servizio);
 
         // Rotte pubbliche accessibili senza autenticazione
         switch (servizio) {
@@ -63,8 +70,12 @@ public class Dispatcher extends HttpServlet {
         }
 
         // Controllo centralizzato autenticazione
-        var idUtente = request.getSession().getAttribute("idUtente");
-        var tipoUtente = (Integer) request.getSession().getAttribute("tipoUtente");
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return new ControllerLoginEPasswordReset();
+        }
+        var idUtente = session.getAttribute("idUtente");
+        var tipoUtente = (Integer) session.getAttribute("tipoUtente");
         if (idUtente == null || tipoUtente == null) {
             return new ControllerLoginEPasswordReset();
         }
@@ -160,7 +171,7 @@ public class Dispatcher extends HttpServlet {
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -173,7 +184,7 @@ public class Dispatcher extends HttpServlet {
      *
      * @param request  servlet request
      * @param response servlet response
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

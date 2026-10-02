@@ -89,22 +89,26 @@ public class PagamentoDAOImpl implements PagamentoDAO {
     }
 
     public Pagamento mapRowToPagamento(ResultSet rs) throws SQLException {
+        return mapRowToPagamento(rs, "re");
+    }
+
+    public Pagamento mapRowToPagamento(ResultSet rs, String registratoPrefix) throws SQLException {
         return new Pagamento(
                 rs.getInt("pid"),
                 rs.getDate("pdata"),
                 rs.getFloat("pquota"),
                 rs.getInt("pragid"),
                 new Registrato(
-                        rs.getInt("reid"),
-                        rs.getString("remail"),
-                        rs.getString("repassword"),
-                        rs.getString("renome"),
-                        rs.getString("recognome"),
-                        rs.getString("retelefono"),
-                        rs.getString("relocalita"),
-                        rs.getString("revia"),
-                        rs.getString("recivico"),
-                        rs.getInt("retipoUt")
+                        rs.getInt(registratoPrefix + "id"),
+                        rs.getString(registratoPrefix + "mail"),
+                        rs.getString(registratoPrefix + "password"),
+                        rs.getString(registratoPrefix + "nome"),
+                        rs.getString(registratoPrefix + "cognome"),
+                        rs.getString(registratoPrefix + "telefono"),
+                        rs.getString(registratoPrefix + "localita"),
+                        rs.getString(registratoPrefix + "via"),
+                        rs.getString(registratoPrefix + "civico"),
+                        rs.getInt(registratoPrefix + "tipoUt")
                 ),
                 rs.getInt("pordineArrivo")
         );

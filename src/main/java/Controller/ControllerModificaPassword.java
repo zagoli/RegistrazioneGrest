@@ -10,10 +10,14 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 
 public class ControllerModificaPassword implements ControllerInterface {
+
+    Logger logger = LoggerFactory.getLogger(ControllerModificaPassword.class);
 
     @Override
     public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -29,6 +33,7 @@ public class ControllerModificaPassword implements ControllerInterface {
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
                 r.setPassword(password);
                 DAOMan.registratoDAO.updatePassword(r);
+                logger.info("Registrato {} ha modificato la password", r.getMail());
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             }
         } catch (final RuntimeException | SQLException e) {

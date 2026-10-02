@@ -9,6 +9,14 @@
         <servlet-name>Dispatcher</servlet-name>
         <url-pattern>/App/*</url-pattern>
     </servlet-mapping>
+    <filter>
+        <filter-name>CorrelationIdFilter</filter-name>
+        <filter-class>Servlet.CorrelationIdFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CorrelationIdFilter</filter-name>
+        <url-pattern>/App/*</url-pattern>
+    </filter-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
