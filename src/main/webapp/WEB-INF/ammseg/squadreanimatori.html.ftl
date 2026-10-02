@@ -4,7 +4,7 @@
     <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
         <#if animatori??>
             <form action="/RegistrazioneGrest/App/Squadre?target=an" method="POST">
-                <!-- l'input nascosto indica che abbiamo usato la pagina per impostare le squadre-->
+                <#-- l'input nascosto indica che abbiamo usato la pagina per impostare le squadre-->
                 <input type="hidden" name="submitted"/>
                 <input type="submit" class="btn btn-primary" value="Salva"/>
                 <table class="table table-striped" id="t_squadreani">
@@ -63,6 +63,6 @@
         });
     });
 </script>
-<!-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutti gli animatori compresi quelli che sono rimasti uguali-->
+<#-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutti gli animatori compresi quelli che sono rimasti uguali-->
 <script src="../js/salvasolomodificatoanimatori.js"></script>
 <#include "../struct/footer.html.ftl">

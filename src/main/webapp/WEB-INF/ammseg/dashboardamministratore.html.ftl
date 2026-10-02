@@ -12,7 +12,7 @@
             <div class="text-center">
                 <h3> Azioni amministratore </h3>
             </div>
-            <!--attivazione iscrizioni varie-->
+            <#--attivazione iscrizioni varie-->
             <div class="mt-4 row">
                 <div class="col">
                     <div class="form-check form-check-inline">
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <!--fine attivazione iscrizioni-->
+            <#--fine attivazione iscrizioni-->
             <hr/>
             <div class="row mt-2">
                 <div class="col">

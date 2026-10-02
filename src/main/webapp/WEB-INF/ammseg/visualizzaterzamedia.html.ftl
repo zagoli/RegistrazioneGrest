@@ -2,7 +2,8 @@
 <#include "../struct/navbar.html.ftl">
 <div class="container-fluid mt-5 content">
     <div class="pt-2 pl-3 pr-3 pb-2">
-        <table class="table table-hover table-responsive nowrap" id="t_ter">
+        <div class="table-responsive">
+            <table class="table table-hover nowrap" id="t_ter">
             <thead class="thead-dark">
             <tr>
                 <th scope="col" style="width: 2%;">#</th>
@@ -68,14 +69,13 @@
             </#list>
             </tbody>
         </table>
+        </div>
     </div>
 </div>
-<script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/ellipsis.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/ellipsis.js"></script>
 <script>
     $(document).ready(function () {
         $('#t_ter').DataTable({
-            paging: false,
             columnDefs: [
                 {
                     targets: [2, 3, 4, 5, 6, 7, 9, 11],

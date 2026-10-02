@@ -149,7 +149,7 @@
         </#list>
     </div>
 
-    <!--contatti urgenze-->
+    <#--contatti urgenze-->
     <#if cu??>
         <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
             <div class="row">
@@ -210,7 +210,7 @@
         </div>
     </#if>
 
-    <!--accompagnatori-->
+    <#--accompagnatori-->
     <#if accompagnatori??>
         <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
             <div class="row mb-3">
@@ -230,7 +230,7 @@
         </div>
     </#if>
 
-    <!--info registrato-->
+    <#--info registrato-->
     <div class="shadow pt-2 pl-3 pr-3 mt-3">
         <div class="text-secondary">
             <div class="row">

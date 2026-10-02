@@ -41,7 +41,7 @@
                     <td>P</td>
                 </tr>
             </#list>
-            <!--riga vuota-->
+            <#--riga vuota-->
             <tr>
                 <th>Animatore</th>
                 <th style="width:5%;">Anno</th>

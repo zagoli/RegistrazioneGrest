@@ -20,7 +20,7 @@
                     <td align="center">${rag.classe+rag.scuola.grado[0..0]?capitalize}</td>
                 </tr>
             </#list>
-            <!--riga vuota-->
+            <#--riga vuota-->
             <tr>
                 <th>Animatore</th>
                 <th style="width:5%;">Anno</th>

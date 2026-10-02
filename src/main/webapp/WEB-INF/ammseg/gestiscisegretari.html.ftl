@@ -2,7 +2,7 @@
 <#include "../struct/navbar.html.ftl">
 <div class="container-fluid mt-5 content">
     <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
-        <!--AMMINISTRATORI-->
+        <#--AMMINISTRATORI-->
         <h5 class="text-center pb-1"> Amministratori registrati </h5>
         <table class="table table-bordered">
             <thead>
@@ -22,7 +22,7 @@
             </#list>
             </tbody>
         </table>
-        <!--SEGRETARI-->
+        <#--SEGRETARI-->
         <#if segretari??>
             <h5 class="text-center pb-1"> Segretari registrati </h5>
             <#assign count = 0>

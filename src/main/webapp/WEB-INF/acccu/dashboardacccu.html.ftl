@@ -1,7 +1,7 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container-fluid mt-5 content">
-    <!--TABELLE ACCOMPAGNATORI CONTATTI-->
+    <#--TABELLE ACCOMPAGNATORI CONTATTI-->
     <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
         <#if accompagnatori??>
             <h5 class="text-center pb-1"> Accompagnatori autorizzati </h5>

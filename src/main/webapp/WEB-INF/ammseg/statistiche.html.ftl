@@ -2,7 +2,7 @@
 <#include "../struct/navbar.html.ftl">
 <div class="row mt-3 content">
     <div class="col-sm">
-        <!--colonna sinistra-->
+        <#--colonna sinistra-->
         <div class="container-fluid">
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="col-sm">
-        <!--colonna destra-->
+        <#--colonna destra-->
         <h3 class="mt-3 font-weight-bold">STATISTICHE RAGAZZI</h3>
         <div class="container-fluid">
             <div class="container border pt-2 pb-2 mt-1">
