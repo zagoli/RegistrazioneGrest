@@ -46,7 +46,7 @@
                             <#--ha già pagato-->
                             <td class="text-center">
                                 <span title="Evaso da ${datiter[2].nomeRegistrato + " " + datiter[2].cognomeRegistrato} il ${datiter[2].data}">
-                                    <b>${datiter[2].ordineArrivo}</b>
+                                    ${datiter[2].ordineArrivo}
                                 </span>
                             </td>
                             <td class="text-center">
