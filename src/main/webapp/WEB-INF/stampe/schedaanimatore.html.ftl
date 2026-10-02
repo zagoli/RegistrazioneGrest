@@ -1,7 +1,7 @@
 <#include "../struct/header.html.ftl">
 <div class="container content" onclick="window.print();">
     <div class="mt-3">
-        <p class="font-weight-bold text-uppercase text-center"> da consegnare a Don Lorenzo </p>
+        <p class="font-weight-bold text-uppercase text-center"> da consegnare al parroco </p>
     </div>
     <div class="shadow pt-2 pl-3 pr-3">
         <div class="row">

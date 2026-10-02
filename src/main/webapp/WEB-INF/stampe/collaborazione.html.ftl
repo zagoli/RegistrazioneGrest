@@ -23,7 +23,7 @@
                         <td><#if dt[4]??><#list dt[4] as cal>${cal.idSettimana+" "}</#list></#if></td>
                         <td> ${dt[2].telefono} </td>
                         <td> ${dt[1].descrizione} </td>
-                        <td> ${dt[0].data}</td>
+                        <td> ${dt[0].data!"Non specificato"}</td>
                     </tr>
                 </#list>
                 </tbody>

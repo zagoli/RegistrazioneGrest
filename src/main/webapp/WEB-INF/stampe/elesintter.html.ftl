@@ -2,12 +2,6 @@
 <#include "../struct/header.html.ftl">
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center">Elenco sintesi terzamedia</h2>
-    <p>Stampato il
-        <script type="text/javascript">
-            var theDate = new Date();
-            document.write(theDate.toLocaleDateString('it-IT'));
-        </script>
-    </p>
     <div class="container-block">
         <div class="mr-2 ml-2">
             <table class="table table-bordered pl-2 pr-2 table-sm">
@@ -34,8 +28,8 @@
                         <td>
                             <i>R </i><b>${ter[0].registrato.telefono}</b> -
                             <#list ter[2][0..*4] as cu>
-                                <i>${cu.relazione[0..*1]?capitalize+" "}</i>
-                                <b>${cu.cellulare+" "+cu.fisso}</b> -
+                                <i>${cu.relazione?capitalize+" "}</i>
+                                <b>${(cu.cellulare!"")+" "+(cu.fisso!"")}</b> -
                             </#list>
                         </td>
                     </tr>

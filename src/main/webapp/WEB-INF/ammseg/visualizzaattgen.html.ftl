@@ -22,7 +22,7 @@
                     <td>${attarray[3]}</td>
                     <td>${attarray[0]?capitalize}</td>
                     <td>${attarray[1]?capitalize}</td>
-                    <td>${attarray[2]}</td>
+                    <td>${attarray[2]!"Non specificato"}</td>
                 </tr>
             </#list>
             </tbody>

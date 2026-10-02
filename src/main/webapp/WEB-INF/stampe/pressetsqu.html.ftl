@@ -5,12 +5,6 @@
                 style="color:${squadra.colore}; ">${squadra.nome}</span></h2>
     <h5 class="text-uppercase text-center font-italic">settimana numero ${settimana.idSettimana?c}
         <small>(dal ${settimana.daQuando} al ${settimana.aQuando})</small></h5>
-    <p>Stampato il
-        <script type="text/javascript">
-            var theDate = new Date();
-            document.write(theDate.toLocaleDateString('it-IT'));
-        </script>
-    </p>
     <div class="container">
         <table class="table table-bordered table-sm">
             <thead>
@@ -31,20 +25,20 @@
             <#list ragazzi as rag>
                 <tr>
                     <td class="text-capitalize">${rag[0].cognome+" "+rag[0].nome}</td>
-                    <td align="center">${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
+                    <td>${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
                     <td> ${rag[0].laboratorio.descrizione[0..*15]}...</td>
                     <td> ${rag[1]?trim} </td>
-                    <td align="center"><#if rag[0].mensa><img src="../img/octicons/check.svg"></#if></td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
+                    <td><#if rag[0].mensa><img src="../img/octicons/check.svg"></#if></td>
+                    <td>M</td>
+                    <td>P</td>
+                    <td>M</td>
+                    <td>P</td>
+                    <td>M</td>
+                    <td>P</td>
+                    <td>M</td>
+                    <td>P</td>
+                    <td>M</td>
+                    <td>P</td>
                 </tr>
             </#list>
             <!--riga vuota-->
@@ -68,16 +62,16 @@
                     <td></td>
                     <td>${an[1]?trim}</td>
                     <td>${an[0].cellulare}</td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
-                    <td align="center"> M</td>
-                    <td align="center"> P</td>
+                    <td>M</td>
+                    <td>P</td>
+                    <td>M</td>
+                    <td>P</td>
+                    <td>M</td>
+                    <td>P</td>
+                    <td>M</td>
+                    <td>P</td>
+                    <td>M</td>
+                    <td>P</td>
                 </tr>
             </#list>
             </tbody>
