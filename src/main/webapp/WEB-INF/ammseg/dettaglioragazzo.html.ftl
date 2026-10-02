@@ -173,7 +173,12 @@
                 <strong>Ha un'altro fratello/sorella iscritto/a</strong>
             </div>
             <div class="col-sm">
-                <p><#if ragazzo.fratelloIscritto>Sì<#else>No</#if></p>
+                <span><#if ragazzo.fratelloIscritto>Sì<#else>No</#if>
+                    <#if altroFratelloNonTrovato>
+                        <img src="../img/octicons/alert.svg" alt="attenzione"
+                             title="Non sono stati trovati altri ragazzi iscritti dallo stesso utente.">
+                    </#if>
+                    </span>
             </div>
         </div>
         <#if pagamento??>

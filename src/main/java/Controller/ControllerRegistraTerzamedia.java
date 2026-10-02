@@ -45,22 +45,14 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
                 terzamedia.setSezione(request.getParameter("sezione"));
                 terzamedia.setMail(request.getParameter("mail"));
 
-                if (request.getParameterMap().containsKey("saNuotare")) {
-                    terzamedia.setSaNuotare(Boolean.TRUE);
-                } else {
-                    terzamedia.setSaNuotare(Boolean.FALSE);
-                }
+                terzamedia.setSaNuotare(request.getParameterMap().containsKey("saNuotare"));
 
                 String cellulare = request.getParameter("cellulare");
                 if (!cellulare.isEmpty()) {
                     terzamedia.setCellulare(cellulare);
                 }
 
-                if (request.getParameterMap().containsKey("festaPassaggio")) {
-                    terzamedia.setFestaPassaggio(Boolean.TRUE);
-                } else {
-                    terzamedia.setFestaPassaggio(Boolean.FALSE);
-                }
+                terzamedia.setFestaPassaggio(request.getParameterMap().containsKey("festaPassaggio"));
 
                 String richieste = request.getParameter("richieste");
                 if (!richieste.isEmpty()) {

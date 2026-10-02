@@ -12,16 +12,19 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ControllerRegistraRagazzo implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerRegistraRagazzo.class);
 
     @Override
     public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -29,6 +32,10 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
         try {
             mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             mv.addObject("TITOLOPAGINA", "Registrazione Ragazzo");
+
+            int idRegistrato = (int) request.getSession().getAttribute("idUtente");
+            boolean haAltroRagazzoIscritto = DAOMan.ragazzoDAO.countByRegistratoId(idRegistrato) > 0;
+
             if (!request.getParameterMap().containsKey("nome")) {
                 mv.setView("user/registraragazzo.html");
                 //Recupera dati per la registrazione
@@ -44,9 +51,6 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 mv.addObject("calendari", listaCalendario);
                 //iscrizioni aperte o chiuse
                 mv.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
-                //indica se il registrato ha gia' almeno un ragazzo iscritto
-                int idUtenteSessione = (int) request.getSession().getAttribute("idUtente");
-                boolean haAltroRagazzoIscritto = DAOMan.ragazzoDAO.countByRegistratoId(idUtenteSessione) > 0;
                 mv.addObject("haAltroRagazzoIscritto", haAltroRagazzoIscritto);
             } else {
                 Ragazzo ragazzo = new Ragazzo();
@@ -65,35 +69,17 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 ragazzo.setSezione(request.getParameter("sezione"));
                 ragazzo.setClasse(request.getParameter("classe"));
 
-                if (request.getParameterMap().containsKey("entrataAnticipata")) {
-                    ragazzo.setEntrataAnticipata(Boolean.TRUE);
-                } else {
-                    ragazzo.setEntrataAnticipata(Boolean.FALSE);
-                }
-
-                if (request.getParameterMap().containsKey("mensa")) {
-                    ragazzo.setMensa(Boolean.TRUE);
-                } else {
-                    ragazzo.setMensa(Boolean.FALSE);
-                }
-
-                if (request.getParameterMap().containsKey("saNuotare")) {
-                    ragazzo.setSaNuotare(Boolean.TRUE);
-                } else {
-                    ragazzo.setSaNuotare(Boolean.FALSE);
-                }
+                ragazzo.setEntrataAnticipata(request.getParameterMap().containsKey("entrataAnticipata"));
+                ragazzo.setMensa(request.getParameterMap().containsKey("mensa"));
+                ragazzo.setSaNuotare(request.getParameterMap().containsKey("saNuotare"));
 
                 if (request.getParameterMap().containsKey("fratelloIscritto")) {
-                    ragazzo.setFratelloIscritto(Boolean.TRUE);
-                    //se l'utente dichiara di avere gia' un fratello iscritto ma dal database non risulta nessun ragazzo
-                    //associato al registrato, logghiamo l'anomalia per un controllo successivo
-                    if (DAOMan.ragazzoDAO.countByRegistratoId(idUtente) == 0) {
-                        Logger.getLogger(ControllerRegistraRagazzo.class.getName()).log(Level.WARNING,
-                                "Il registrato con id " + idUtente + " ha dichiarato di avere un fratello gia' iscritto, "
-                                        + "ma non risultano altri ragazzi registrati a suo carico.");
+                    ragazzo.setFratelloIscritto(true);
+                    if (!haAltroRagazzoIscritto) {
+                        logger.warn("Il registrato con id {} ha dichiarato di avere un fratello già iscritto, ma non risultano altri ragazzi registrati a suo carico.", idRegistrato);
                     }
                 } else {
-                    ragazzo.setFratelloIscritto(Boolean.FALSE);
+                    ragazzo.setFratelloIscritto(false);
                 }
 
                 String richieste = request.getParameter("richieste");

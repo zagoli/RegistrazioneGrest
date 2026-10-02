@@ -179,12 +179,10 @@
                             <input class="form-check-input" type="checkbox" id="fratelloIscritto"
                                    name="fratelloIscritto" data-ha-altro-ragazzo="${haAltroRagazzoIscritto?c}"
                                    onclick="toggleAvvisoFratelloIscritto(this);">
-                            <label class="form-check-label" for="fratelloIscritto"> Che il/la proprio/a figlio/a <b
-                                        class="text-danger">ha già <i>uno o più</i></b>
-                                fratelli/sorelle iscritti al grest.</label>
+                            <label class="form-check-label" for="fratelloIscritto"> Che il/la proprio/a figlio/a <b>ha già uno o più</b> fratelli/sorelle iscritti al grest.</label>
                         </div>
                         <div id="avvisoFratelloIscritto" class="alert alert-warning mt-2 d-none" role="alert">
-                            Attenzione: non abbiamo trovato altri ragazzi già registrati a tuo nome. Controlla di aver selezionato l'opzione corretta.
+                            Attenzione: non abbiamo trovato altri ragazzi già registrati tramite il tuo profilo. Controlla di aver selezionato l'opzione corretta.
                         </div>
                     </li>
                     <li><input type="checkbox"/> di autorizzare il/la figlio/a a tornare a casa al termine del Grest
@@ -253,8 +251,8 @@
 </div>
 <script>
     function toggleAvvisoFratelloIscritto(checkbox) {
-        var avviso = document.getElementById("avvisoFratelloIscritto");
-        var haAltroRagazzo = checkbox.getAttribute("data-ha-altro-ragazzo") === "true";
+        const avviso = document.getElementById("avvisoFratelloIscritto");
+        const haAltroRagazzo = checkbox.getAttribute("data-ha-altro-ragazzo") === "true";
         if (checkbox.checked && !haAltroRagazzo) {
             avviso.classList.remove("d-none");
         } else {

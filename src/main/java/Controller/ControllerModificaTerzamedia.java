@@ -45,20 +45,12 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 t.setScuola(DAOMan.scuolaDAO.findById(Integer.parseInt(request.getParameter("scuola"))));
                 t.setSezione(request.getParameter("sezione"));
                 t.setMail(request.getParameter("mail"));
-                if (request.getParameterMap().containsKey("saNuotare")) {
-                    t.setSaNuotare(Boolean.TRUE);
-                } else {
-                    t.setSaNuotare(Boolean.FALSE);
-                }
+                t.setSaNuotare(request.getParameterMap().containsKey("saNuotare"));
                 String cellulare = request.getParameter("cellulare");
                 if (!cellulare.isEmpty()) {
                     t.setCellulare(cellulare);
                 }
-                if (request.getParameterMap().containsKey("festaPassaggio")) {
-                    t.setFestaPassaggio(Boolean.TRUE);
-                } else {
-                    t.setFestaPassaggio(Boolean.FALSE);
-                }
+                t.setFestaPassaggio(request.getParameterMap().containsKey("festaPassaggio"));
                 String richieste = request.getParameter("richieste");
                 if (!richieste.isEmpty()) {
                     t.setRichieste(richieste);

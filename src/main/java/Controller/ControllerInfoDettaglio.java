@@ -72,6 +72,7 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     mv.addObject("calendari", listCalendario);
                     Pagamento pagamento = DAOMan.pagamentoDAO.findByRagazzoId(id);
                     mv.addObject("pagamento", pagamento);
+                    mv.addObject("altroFratelloNonTrovato", r.getFratelloIscritto() && DAOMan.ragazzoDAO.countByRegistratoId(idRegistrato) == 1);
                     mv.setView("ammseg/dettaglioragazzo.html");
                     break;
                 }

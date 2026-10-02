@@ -64,29 +64,13 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                 r.setSezione(request.getParameter("sezione"));
                 r.setClasse(request.getParameter("classe"));
 
-                if (request.getParameterMap().containsKey("entrataAnticipata")) {
-                    r.setEntrataAnticipata(Boolean.TRUE);
-                } else {
-                    r.setEntrataAnticipata(Boolean.FALSE);
-                }
+                r.setEntrataAnticipata(request.getParameterMap().containsKey("entrataAnticipata"));
 
-                if (request.getParameterMap().containsKey("mensa")) {
-                    r.setMensa(Boolean.TRUE);
-                } else {
-                    r.setMensa(Boolean.FALSE);
-                }
+                r.setMensa(request.getParameterMap().containsKey("mensa"));
 
-                if (request.getParameterMap().containsKey("saNuotare")) {
-                    r.setSaNuotare(Boolean.TRUE);
-                } else {
-                    r.setSaNuotare(Boolean.FALSE);
-                }
+                r.setSaNuotare(request.getParameterMap().containsKey("saNuotare"));
 
-                if (request.getParameterMap().containsKey("fratelloIscritto")) {
-                    r.setFratelloIscritto(Boolean.TRUE);
-                } else {
-                    r.setFratelloIscritto(Boolean.FALSE);
-                }
+                r.setFratelloIscritto(request.getParameterMap().containsKey("fratelloIscritto"));
 
                 String richieste = request.getParameter("richieste");
                 if (!richieste.isEmpty()) {
