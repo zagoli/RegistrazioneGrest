@@ -2,9 +2,9 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
-import ModelAndView.FreemarkerTemplate;
-import ModelAndView.RedirectResult;
-import ModelAndView.Response;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
 import Utility.Utils;

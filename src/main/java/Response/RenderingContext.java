@@ -1,4 +1,4 @@
-package ModelAndView;
+package Response;
 
 import freemarker.template.Configuration;
 import lombok.Getter;

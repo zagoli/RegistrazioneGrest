@@ -1,6 +1,6 @@
 package Utility;
 
-import ModelAndView.FreemarkerTemplate;
+import Response.FreemarkerTemplate;
 import Servlet.CorrelationIdFilter;
 
 import org.slf4j.LoggerFactory;

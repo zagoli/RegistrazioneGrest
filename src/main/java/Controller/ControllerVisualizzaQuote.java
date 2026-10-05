@@ -1,7 +1,7 @@
 package Controller;
 
-import ModelAndView.FreemarkerTemplate;
-import ModelAndView.Response;
+import Response.FreemarkerTemplate;
+import Response.Response;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;

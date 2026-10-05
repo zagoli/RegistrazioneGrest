@@ -1,9 +1,9 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import ModelAndView.FreemarkerTemplate;
-import ModelAndView.RedirectResult;
-import ModelAndView.Response;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

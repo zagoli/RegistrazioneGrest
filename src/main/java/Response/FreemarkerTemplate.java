@@ -1,4 +1,4 @@
-package ModelAndView;
+package Response;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

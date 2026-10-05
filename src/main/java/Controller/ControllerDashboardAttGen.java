@@ -3,8 +3,8 @@ package Controller;
 import DAOManager.DAOMan;
 import Domain.AttivitaGen;
 import Domain.RelCollabora;
-import ModelAndView.FreemarkerTemplate;
-import ModelAndView.Response;
+import Response.FreemarkerTemplate;
+import Response.Response;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
