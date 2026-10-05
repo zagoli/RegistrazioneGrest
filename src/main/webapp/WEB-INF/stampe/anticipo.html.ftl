@@ -26,7 +26,7 @@
                         <td>
                             <i>R </i><b>${rag[0].registrato.telefono}</b> -
                             <#list rag[2][0..*4] as cu>
-                                <i>${cu.relazione?capitalize+" "}</i><b>${(cu.cellulare!"")+" "+(cu.fisso!"")}</b> -
+                                <i>${cu.relazione?capitalize+" "}</i><b>${(cu.cellulare!)+" "+(cu.fisso!)}</b> -
                             </#list>
                         </td>
                         <td> <#if rag[0].squadra.id!=0> ${rag[0].squadra.nome} </#if> </td>
