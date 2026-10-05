@@ -45,6 +45,12 @@
             <hr/>
             <div class="row mt-2">
                 <div class="col">
+                    <a href="/RegistrazioneGrest/App/GestisciLaboratori" class="btn btn-success btn-block btn-lg">
+                        GESTISCI LABORATORI </a>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col">
                     <a href="/RegistrazioneGrest/App/GestisciSegretari" class="btn btn-success btn-block btn-lg">
                         GESTISCI SEGRETARI </a>
                 </div>

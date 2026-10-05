@@ -145,6 +145,9 @@ public class Dispatcher extends HttpServlet {
             case "/GestisciSegretari" -> tipoUtente == 0
                     ? new ControllerSegretari()
                     : new Controller403();
+            case "/GestisciLaboratori" -> tipoUtente == 0
+                    ? new ControllerGestisciLaboratori()
+                    : new Controller403();
             case "/Statistiche" -> tipoUtente == 0
                     ? new ControllerStatistiche()
                     : new Controller403();
