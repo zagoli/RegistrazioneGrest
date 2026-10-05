@@ -1,33 +1,30 @@
 package Domain;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@Data
-public class RagazzoExport {
-    private final String nome;
-    private final String cognome;
-    private final Date dataNascita;
-    private final String presenza;
-    private final Laboratorio laboratorio;
-    private final Parrocchia parrocchia;
-    private final Registrato registrato;
-    private final Circolo circolo;
-    private final String entrataAnticipata;
-    private final String richieste;
-    private final String noteAlimentari;
-    private final String mensa;
-    private final String saNuotare;
-    private final String fratelloIscritto;
-    private final Scuola scuola;
-    private final String nTessera;
-    private final String sezione;
-    private final String classe;
-    private final Squadra squadra;
-    private final List<Integer> settimanePresenza;
-    private final String pagato;
-    private final BigDecimal importoPagamento;
-}
+public record RagazzoExport (
+        String nome,
+        String cognome,
+        Date dataNascita,
+        String presenza,
+        Laboratorio laboratorio,
+        Parrocchia parrocchia,
+        Registrato registrato,
+        Circolo circolo,
+        String entrataAnticipata,
+        String richieste,
+        String noteAlimentari,
+        String mensa,
+        String saNuotare,
+        String fratelloIscritto,
+        Scuola scuola,
+        String nTessera,
+        String sezione,
+        String classe,
+        Squadra squadra,
+        List<Integer> settimanePresenza,
+        String pagato,
+        BigDecimal importoPagamento
+) {}

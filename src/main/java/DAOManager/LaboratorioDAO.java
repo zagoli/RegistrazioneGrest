@@ -10,7 +10,7 @@ public interface LaboratorioDAO {
 
     //SELECT
     List<Laboratorio> findAll() throws SQLException;
-
     List<Laboratorio> findNonRiservato() throws SQLException;
+    int countIscritti(int laboratorioId) throws SQLException;
 
 }

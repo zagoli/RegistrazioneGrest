@@ -52,6 +52,11 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
         }
     }
 
+    @Override
+    public int countIscritti(int laboratorioId) throws SQLException {
+        return 0;
+    }
+
     public Laboratorio mapRowToLaboratorio(ResultSet rs) throws SQLException {
         return new Laboratorio(
                 rs.getInt("id"),
