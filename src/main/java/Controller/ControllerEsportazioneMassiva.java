@@ -5,7 +5,7 @@ import Domain.AnimatoreExport;
 import Domain.RagazzoExport;
 import Domain.TerzamediaExport;
 import ModelAndView.BinaryResult;
-import ModelAndView.ControllerResult;
+import ModelAndView.Response;
 import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ import java.util.List;
 public class ControllerEsportazioneMassiva implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
         try (Workbook workbook = new XSSFWorkbook()) {
             List<RagazzoExport> ragazzi = DAOMan.ragazzoExportDAO.findAll();

@@ -2,8 +2,8 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.FreemarkerTemplate;
+import ModelAndView.Response;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
@@ -19,11 +19,11 @@ import java.util.Map;
 public class ControllerDashboard implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             var tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            mv.addObject("tipoUt", tipoUt);
+            template.addObject("tipoUt", tipoUt);
 
             var dashboardRichiesta = switch (tipoUt) {
                 case 3 -> "dashboardRegistrato";
@@ -46,11 +46,11 @@ public class ControllerDashboard implements ControllerInterface {
                             Pagamento p = DAOMan.pagamentoDAO.findByRagazzoId(ragazzo.getId());
                             mapRagazzoPagato.put(ragazzo, p != null);
                         }
-                        mv.addObject("ragazzi", mapRagazzoPagato);
+                        template.addObject("ragazzi", mapRagazzoPagato);
                     }
                     List<Animatore> listAnimatore = DAOMan.animatoreDAO.findByRegistratoId(idUtente);
                     if (!listAnimatore.isEmpty()) {
-                        mv.addObject("animatori", listAnimatore);
+                        template.addObject("animatori", listAnimatore);
                     }
                     List<Terzamedia> listTerzamedia = DAOMan.terzamediaDAO.findByRegistratoId(idUtente);
                     if (!listTerzamedia.isEmpty()) {
@@ -59,38 +59,38 @@ public class ControllerDashboard implements ControllerInterface {
                             PagamentoTerzamedia p = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(ter.getId());
                             mapTerzamediaPagato.put(ter, p != null);
                         }
-                        mv.addObject("terzamedia", mapTerzamediaPagato);
+                        template.addObject("terzamedia", mapTerzamediaPagato);
                     }
                     int nContattiUrgenze = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idUtente).size();
                     if (nContattiUrgenze == 0) {
-                        mv.addObject("NOCU", "true");
+                        template.addObject("NOCU", "true");
                     }
                     //iscrizioni per animatori aperte o chiuse (per togliere bottoni modifica/elimina)
-                    mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
-                    mv.setView("user/dashboardutente.html");
-                    mv.addObject("TITOLOPAGINA", "Dashboard utente");
+                    template.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
+                    template.setView("user/dashboardutente.html");
+                    template.addObject("TITOLOPAGINA", "Dashboard utente");
                     break;
                 case "dashboardSegretario":
-                    mv.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
-                    mv.addObject("settimane", DAOMan.calendarioDAO.findAll());
-                    mv.addObject("squadre", DAOMan.squadraDAO.findAll());
-                    mv.setView("ammseg/dashboardsegretario.html");
-                    mv.addObject("TITOLOPAGINA", "Dashboard segretario");
+                    template.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
+                    template.addObject("settimane", DAOMan.calendarioDAO.findAll());
+                    template.addObject("squadre", DAOMan.squadraDAO.findAll());
+                    template.setView("ammseg/dashboardsegretario.html");
+                    template.addObject("TITOLOPAGINA", "Dashboard segretario");
                     break;
                 case "dashboardAmministratore":
-                    mv.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
-                    mv.addObject("settimane", DAOMan.calendarioDAO.findAll());
-                    mv.addObject("squadre", DAOMan.squadraDAO.findAll());
-                    mv.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
-                    mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
-                    mv.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
-                    mv.setView("ammseg/dashboardamministratore.html");
-                    mv.addObject("TITOLOPAGINA", "Dashboard amministratore");
+                    template.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
+                    template.addObject("settimane", DAOMan.calendarioDAO.findAll());
+                    template.addObject("squadre", DAOMan.squadraDAO.findAll());
+                    template.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
+                    template.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
+                    template.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
+                    template.setView("ammseg/dashboardamministratore.html");
+                    template.addObject("TITOLOPAGINA", "Dashboard amministratore");
                     break;
             }
         } catch (final RuntimeException | IOException | SQLException | ConfigPropertyException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerDashboard.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerDashboard.class.getName());
         }
-        return mv;
+        return template;
     }
 }

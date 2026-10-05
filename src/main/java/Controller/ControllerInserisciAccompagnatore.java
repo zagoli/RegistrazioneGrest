@@ -2,12 +2,10 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Accompagnatore;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
+import ModelAndView.FreemarkerTemplate;
 import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.Response;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -16,14 +14,14 @@ import java.sql.SQLException;
 public class ControllerInserisciAccompagnatore implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            mv.addObject("tipoUt", tipoUt);
+            template.addObject("tipoUt", tipoUt);
             if (!request.getParameterMap().containsKey("nome")) {
-                mv.setView("acccu/inserisciaccompagnatore.html");
-                mv.addObject("TITOLOPAGINA", "Inserisci accompagnatore");
+                template.setView("acccu/inserisciaccompagnatore.html");
+                template.addObject("TITOLOPAGINA", "Inserisci accompagnatore");
             } else {
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 Accompagnatore a = new Accompagnatore();
@@ -34,9 +32,9 @@ public class ControllerInserisciAccompagnatore implements ControllerInterface {
                 return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerInserisciAccompagnatore.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerInserisciAccompagnatore.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

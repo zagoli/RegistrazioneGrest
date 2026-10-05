@@ -3,8 +3,8 @@ package Controller;
 import DAOManager.DAOMan;
 import Domain.Accompagnatore;
 import Domain.ContattoUrgenze;
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.FreemarkerTemplate;
+import ModelAndView.Response;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,26 +15,26 @@ import java.util.List;
 public class ControllerDashboardAccCu implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("TITOLOPAGINA", "Accompagnatori e Contatti telefonici Urgenze");
-            mv.setView("acccu/dashboardacccu.html");
+            template.addObject("TITOLOPAGINA", "Accompagnatori e Contatti telefonici Urgenze");
+            template.setView("acccu/dashboardacccu.html");
             int idUtente = (int) request.getSession().getAttribute("idUtente");
             List<Accompagnatore> listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idUtente);
             if (!listAccompagnatore.isEmpty()) {
-                mv.addObject("accompagnatori", listAccompagnatore);
+                template.addObject("accompagnatori", listAccompagnatore);
             }
             List<ContattoUrgenze> listContattoUrgenze = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idUtente);
             if (!listContattoUrgenze.isEmpty()) {
-                mv.addObject("contatti", listContattoUrgenze);
+                template.addObject("contatti", listContattoUrgenze);
             }
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            mv.addObject("tipoUt", tipoUt);
+            template.addObject("tipoUt", tipoUt);
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerDashboardAccCu.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerDashboardAccCu.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

@@ -1,11 +1,6 @@
 package DAOManager;
 
-import Domain.Circolo;
-import Domain.Laboratorio;
-import Domain.Parrocchia;
-import Domain.Registrato;
-import Domain.Scuola;
-import Domain.Squadra;
+import Domain.*;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;

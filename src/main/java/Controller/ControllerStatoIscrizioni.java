@@ -1,7 +1,7 @@
 package Controller;
 
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.FreemarkerTemplate;
+import ModelAndView.Response;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
@@ -13,8 +13,8 @@ import java.io.IOException;
 public class ControllerStatoIscrizioni implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard("user/rispostastatoiscrizioni.json");
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate("user/rispostastatoiscrizioni.json");
         boolean success = false;
         try {
             String state = request.getParameter("state");
@@ -33,14 +33,14 @@ public class ControllerStatoIscrizioni implements ControllerInterface {
                 }
                 default -> false;
             };
-            mv.addObject("error", "none");
+            template.addObject("error", "none");
         } catch (final RuntimeException | IOException | ConfigPropertyException e) {
             Utils.logException(e, ControllerStatoIscrizioni.class.getName());
-            mv.addObject("error", e.getMessage());
+            template.addObject("error", e.getMessage());
         } finally {
-            mv.addObject("result", success);
+            template.addObject("result", success);
         }
-        return mv;
+        return template;
     }
 
 }

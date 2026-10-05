@@ -4,41 +4,32 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
 
-public class ModelAndViewStandard extends ModelAndView {
+@NoArgsConstructor
+public class FreemarkerTemplate implements Response {
 
+    @Getter
     final HashMap<String, Object> map = new HashMap<>();
+    @Setter
     protected String view = "err/errore.html";
 
-    public ModelAndViewStandard() {
-    }
-
-    public ModelAndViewStandard(String view) {
+    public FreemarkerTemplate(String view) {
         this.view = view;
     }
 
-    @Override
-    public String getView() {
-        return view;
-    }
-
-    @Override
-    public void setView(String viewJsp) {
-        this.view = viewJsp;
-    }
-
-    @Override
     public void addObject(String prop, Object ob) {
         this.map.put(prop, ob);
     }
 
-    @Override
-    public HashMap<String, Object> getMap() {
-        return map;
+    public void setTitoloPagina(String titoloPagina) {
+        this.addObject("TITOLOPAGINA", titoloPagina);
     }
 
     @Override
@@ -52,9 +43,7 @@ public class ModelAndViewStandard extends ModelAndView {
             throw new ServletException("Errore durante il rendering della vista " + view, e);
         }
 
-        String contentType = view.endsWith("json")
-                ? "application/json; charset=UTF-8"
-                : "text/html; charset=UTF-8";
+        String contentType = view.endsWith("json")  ? "application/json; charset=UTF-8" : "text/html; charset=UTF-8";
         response.setContentType(contentType);
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(renderedView.toString());

@@ -2,19 +2,18 @@ package Utility;
 
 import DAOManager.DAOMan;
 import Domain.*;
-
 import jakarta.servlet.http.HttpServletRequest;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import kong.unirest.core.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Checker {
     private static final Logger logger = LoggerFactory.getLogger(Checker.class);

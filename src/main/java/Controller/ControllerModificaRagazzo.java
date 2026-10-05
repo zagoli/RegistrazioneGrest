@@ -2,14 +2,13 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
+import ModelAndView.FreemarkerTemplate;
 import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.Response;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,33 +20,33 @@ import java.util.TreeMap;
 public class ControllerModificaRagazzo implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("TITOLOPAGINA", "Modifica ragazzo");
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Modifica ragazzo");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             int idRagazzo = Integer.parseInt(request.getParameter("id"));
             Ragazzo r = DAOMan.ragazzoDAO.findById(idRagazzo);
             if (!request.getParameterMap().containsKey("nome")) {
                 //PREPARO I DATI PER LA PAGINA
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String dataNascita = sdf.format(r.getDataNascita());
-                mv.addObject("dataNascita", dataNascita);
-                mv.addObject("ragazzo", r);
+                template.addObject("dataNascita", dataNascita);
+                template.addObject("ragazzo", r);
                 List<Laboratorio> listLabGiusti = DAOMan.laboratorioDAO.findNonRiservato();
-                mv.addObject("laboratori", listLabGiusti);
+                template.addObject("laboratori", listLabGiusti);
                 List<Parrocchia> listParrocchia = DAOMan.parrocchiaDAO.findAll();
-                mv.addObject("parrocchie", listParrocchia);
+                template.addObject("parrocchie", listParrocchia);
                 List<Circolo> listCircolo = DAOMan.circoloDAO.findAll();
-                mv.addObject("circoli", listCircolo);
+                template.addObject("circoli", listCircolo);
                 List<Scuola> listScuola = DAOMan.scuolaDAO.findAll();
-                mv.addObject("scuole", listScuola);
+                template.addObject("scuole", listScuola);
                 List<Calendario> listaCalendari = DAOMan.calendarioDAO.findAll();
                 List<Calendario> listaCalendariRagazzo = DAOMan.calendarioDAO.findByRagazzoId(idRagazzo);
                 Map<Calendario, Boolean> calendari = new TreeMap<>();
                 listaCalendari.forEach((calendario) -> calendari.put(calendario, listaCalendariRagazzo.contains(calendario)));
-                mv.addObject("calendari", calendari);
-                mv.setView("user/modificaragazzo.html");
+                template.addObject("calendari", calendari);
+                template.setView("user/modificaragazzo.html");
             } else {
                 //INSERISCO IL RAGAZZO E FACCIO UNA REDIRECT
                 r.setId(Integer.parseInt(request.getParameter("id")));
@@ -112,9 +111,9 @@ public class ControllerModificaRagazzo implements ControllerInterface {
 
             }
         } catch (final RuntimeException | SQLException | ParseException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerModificaRagazzo.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerModificaRagazzo.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

@@ -1,14 +1,13 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
+import ModelAndView.FreemarkerTemplate;
 import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.Response;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
@@ -16,29 +15,29 @@ import java.util.Set;
 public class ControllerLaboratori implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            mv.addObject("tipoUt", tipoUt);
-            mv.addObject("TITOLOPAGINA", "Assegnazione Laboratori");
+            template.addObject("tipoUt", tipoUt);
+            template.addObject("TITOLOPAGINA", "Assegnazione Laboratori");
             //preparo gli oggetti per la pagina
             if (!request.getParameterMap().containsKey("submitted")) {
                 switch (request.getParameter("target")) {
                     case "rag":
-                        mv.addObject("ragazzi", DAOMan.ragazzoDAO.findAll());
-                        mv.addObject("laboratori", DAOMan.laboratorioDAO.findNonRiservato());
-                        mv.setView("ammseg/labragazzi.html");
+                        template.addObject("ragazzi", DAOMan.ragazzoDAO.findAll());
+                        template.addObject("laboratori", DAOMan.laboratorioDAO.findNonRiservato());
+                        template.setView("ammseg/labragazzi.html");
                         break;
                     case "an":
-                        mv.addObject("animatori", DAOMan.animatoreDAO.findAll());
-                        mv.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
-                        mv.setView("ammseg/labanimatori.html");
+                        template.addObject("animatori", DAOMan.animatoreDAO.findAll());
+                        template.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
+                        template.setView("ammseg/labanimatori.html");
                         break;
                     case "ter":
-                        mv.addObject("terzamedia", DAOMan.terzamediaDAO.findAll());
-                        mv.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
-                        mv.setView("ammseg/labterzamedia.html");
+                        template.addObject("terzamedia", DAOMan.terzamediaDAO.findAll());
+                        template.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
+                        template.setView("ammseg/labterzamedia.html");
                         break;
                 }
             } else {
@@ -84,8 +83,8 @@ public class ControllerLaboratori implements ControllerInterface {
                 }
             }
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerLaboratori.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerLaboratori.class.getName());
         }
-        return mv;
+        return template;
     }
 }

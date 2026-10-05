@@ -1,7 +1,6 @@
 package Utility;
 
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.FreemarkerTemplate;
 import Servlet.CorrelationIdFilter;
 
 import org.slf4j.LoggerFactory;
@@ -13,10 +12,10 @@ import java.time.format.DateTimeFormatter;
 public class Utils {
     private static final DateTimeFormatter ERROR_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss XXX");
 
-    public static ModelAndView getErrorPageAndLogException(Exception e, String loggerName) {
+    public static FreemarkerTemplate getErrorPageAndLogException(Exception e, String loggerName) {
         String errorTime = ZonedDateTime.now().format(ERROR_TIME_FORMAT);
         logException(e, loggerName);
-        ModelAndView mv = new ModelAndViewStandard("err/errore.html");
+        FreemarkerTemplate mv = new FreemarkerTemplate("err/errore.html");
         mv.addObject("TITOLOPAGINA", "Errore!");
         String correlationId = MDC.get(CorrelationIdFilter.CORRELATION_ID);
         if (correlationId != null) {

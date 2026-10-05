@@ -7,15 +7,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
-public class BinaryResult extends ControllerResult {
+public class BinaryResult implements Response {
     private final String contentType;
     private final String fileName;
     private final BinaryContentWriter contentWriter;
 
     public BinaryResult(String contentType, String fileName, BinaryContentWriter contentWriter) {
-        this.contentType = requireHeaderValue(contentType, "Il content type e obbligatorio");
-        this.fileName = requireHeaderValue(fileName, "Il nome file e obbligatorio");
-        this.contentWriter = Objects.requireNonNull(contentWriter, "Il writer binario e obbligatorio");
+        this.contentType = requireHeaderValue(contentType, "Il content type è obbligatorio");
+        this.fileName = requireHeaderValue(fileName, "Il nome file è obbligatorio");
+        this.contentWriter = Objects.requireNonNull(contentWriter, "Il writer binario è obbligatorio");
     }
 
     @Override

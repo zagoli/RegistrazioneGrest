@@ -1,12 +1,11 @@
 package Servlet;
 
 import Controller.*;
-import ModelAndView.ControllerResult;
 import ModelAndView.RenderingContext;
+import ModelAndView.Response;
 import Utility.Checker;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,7 +43,7 @@ public class Dispatcher extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         ControllerInterface controller = this.getHandler(request);
         logger.info("Controller scelto: {}", controller.getClass().getSimpleName());
-        ControllerResult result = controller.handleRequest(request, response);
+        Response result = controller.handleRequest(request, response);
         if (result == null) {
             logger.error("ControllerResult è null per: {}", controller.getClass().getSimpleName());
             throw new ServletException("Il controller " + controller.getClass().getName() + " ha restituito un risultato null");

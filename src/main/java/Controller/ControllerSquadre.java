@@ -1,32 +1,31 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
+import ModelAndView.FreemarkerTemplate;
 import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.Response;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.sql.SQLException;
 import java.util.Map;
 
 public class ControllerSquadre implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("TITOLOPAGINA", "Assegnazione Squadre");
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Assegnazione Squadre");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             switch (request.getParameter("target")) {
                 case "rag":
                     if (!request.getParameterMap().containsKey("submitted")) {
                         //preparo i dati iniziali per visualizzare la pagina
-                        mv.addObject("ragazzi", DAOMan.ragazzoDAO.findAll());
-                        mv.addObject("squadre", DAOMan.squadraDAO.findAll());
-                        mv.setView("ammseg/squadreragazzi.html");
+                        template.addObject("ragazzi", DAOMan.ragazzoDAO.findAll());
+                        template.addObject("squadre", DAOMan.squadraDAO.findAll());
+                        template.setView("ammseg/squadreragazzi.html");
                     } else {
                         //salvo le modifiche
                         String[] listSquadreParam = request.getParameterValues("squadra");
@@ -47,9 +46,9 @@ public class ControllerSquadre implements ControllerInterface {
                 case "an":
                     if (!request.getParameterMap().containsKey("submitted")) {
                         //preparo i dati iniziali per visualizzare la pagina
-                        mv.addObject("animatori", DAOMan.animatoreDAO.findAll());
-                        mv.addObject("squadre", DAOMan.squadraDAO.findAll());
-                        mv.setView("ammseg/squadreanimatori.html");
+                        template.addObject("animatori", DAOMan.animatoreDAO.findAll());
+                        template.addObject("squadre", DAOMan.squadraDAO.findAll());
+                        template.setView("ammseg/squadreanimatori.html");
                     } else {
                         //salvo le modifiche
                         for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
@@ -75,9 +74,9 @@ public class ControllerSquadre implements ControllerInterface {
                 case "ter":
                     if (!request.getParameterMap().containsKey("submitted")) {
                         //preparo i dati iniziali per visualizzare la pagina
-                        mv.addObject("terzamedia", DAOMan.terzamediaDAO.findAll());
-                        mv.addObject("squadre", DAOMan.squadraDAO.findAll());
-                        mv.setView("ammseg/squadreterzamedia.html");
+                        template.addObject("terzamedia", DAOMan.terzamediaDAO.findAll());
+                        template.addObject("squadre", DAOMan.squadraDAO.findAll());
+                        template.setView("ammseg/squadreterzamedia.html");
                     } else {
                         //salvo le modifiche
                         String[] listSquadreParam = request.getParameterValues("squadra");
@@ -97,8 +96,8 @@ public class ControllerSquadre implements ControllerInterface {
                     break;
             }
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerSquadre.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerSquadre.class.getName());
         }
-        return mv;
+        return template;
     }
 }

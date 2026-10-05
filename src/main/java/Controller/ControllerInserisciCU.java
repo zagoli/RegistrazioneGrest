@@ -2,12 +2,10 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.ContattoUrgenze;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
+import ModelAndView.FreemarkerTemplate;
 import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.Response;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -16,14 +14,14 @@ import java.sql.SQLException;
 public class ControllerInserisciCU implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            mv.addObject("tipoUt", tipoUt);
+            template.addObject("tipoUt", tipoUt);
             if (!request.getParameterMap().containsKey("nome")) {
-                mv.setView("acccu/inseriscicu.html");
-                mv.addObject("TITOLOPAGINA", "Inserisci contatto telefonico urgenze");
+                template.setView("acccu/inseriscicu.html");
+                template.addObject("TITOLOPAGINA", "Inserisci contatto telefonico urgenze");
             } else {
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 ContattoUrgenze cu = new ContattoUrgenze();
@@ -37,9 +35,9 @@ public class ControllerInserisciCU implements ControllerInterface {
                 return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerInserisciCU.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerInserisciCU.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

@@ -1,20 +1,15 @@
 package ModelAndView;
 
 import freemarker.template.Configuration;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
-import java.util.Objects;
-
+@Getter
+@RequiredArgsConstructor()
 public class RenderingContext {
+
+    @NonNull
     private final Configuration templateConfiguration;
 
-    public RenderingContext(Configuration templateConfiguration) {
-        this.templateConfiguration = Objects.requireNonNull(
-                templateConfiguration,
-                "La configurazione FreeMarker e obbligatoria"
-        );
-    }
-
-    public Configuration getTemplateConfiguration() {
-        return templateConfiguration;
-    }
 }

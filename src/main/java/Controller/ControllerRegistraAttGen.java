@@ -2,12 +2,10 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.RelCollabora;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
+import ModelAndView.FreemarkerTemplate;
 import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import ModelAndView.Response;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -16,11 +14,11 @@ import java.sql.SQLException;
 public class ControllerRegistraAttGen implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            mv.addObject("TITOLOPAGINA", "errore");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "errore");
             RelCollabora rc = new RelCollabora();
             int idUt = (int) request.getSession().getAttribute("idUtente");
             int idAttivita = Integer.parseInt(request.getParameter("attivita"));
@@ -33,8 +31,8 @@ public class ControllerRegistraAttGen implements ControllerInterface {
             DAOMan.relCollaboraDAO.insert(rc);
             return new RedirectResult("/RegistrazioneGrest/App/DashboardAttGen");
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraAttGen.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerRegistraAttGen.class.getName());
         }
-        return mv;
+        return template;
     }
 }
