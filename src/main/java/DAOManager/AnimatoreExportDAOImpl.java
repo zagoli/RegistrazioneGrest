@@ -56,20 +56,20 @@ public class AnimatoreExportDAOImpl implements AnimatoreExportDAO {
                 ExportDAOMapper.text(rs, "nome"),
                 ExportDAOMapper.text(rs, "cognome"),
                 rs.getDate("dataNascita"),
-                ExportDAOMapper.presenza(rs),
-                ExportDAOMapper.laboratorio(rs),
-                ExportDAOMapper.parrocchia(rs),
-                ExportDAOMapper.registrato(rs),
-                ExportDAOMapper.circolo(rs),
-                ExportDAOMapper.trimmedText(rs, "cellularePersonale"),
-                ExportDAOMapper.fasciaEtaRagazzi(rs),
-                ExportDAOMapper.text(rs, "mail"),
-                ExportDAOMapper.trimmedText(rs, "nTessera"),
                 ExportDAOMapper.text(rs, "codiceFiscale"),
-                ExportDAOMapper.siNo(rs.getBoolean("isResponsabileSquadra")),
+                ExportDAOMapper.trimmedText(rs, "cellularePersonale"),
+                ExportDAOMapper.text(rs, "mail"),
+                ExportDAOMapper.parrocchia(rs),
+                ExportDAOMapper.circolo(rs),
+                ExportDAOMapper.trimmedText(rs, "nTessera"),
+                ExportDAOMapper.settimane(rs),
+                ExportDAOMapper.presenza(rs),
+                ExportDAOMapper.fasciaEtaRagazzi(rs),
+                ExportDAOMapper.laboratorio(rs),
                 ExportDAOMapper.siNo(rs.getBoolean("isResponsabileLaboratorio")),
                 ExportDAOMapper.squadra(rs),
-                ExportDAOMapper.settimane(rs)
+                ExportDAOMapper.siNo(rs.getBoolean("isResponsabileSquadra")),
+                ExportDAOMapper.registrato(rs)
         );
     }
 }
