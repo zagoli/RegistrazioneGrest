@@ -43,7 +43,7 @@ public class FreemarkerTemplate implements Response {
             throw new ServletException("Errore durante il rendering della vista " + view, e);
         }
 
-        String contentType = view.endsWith("json")  ? "application/json; charset=UTF-8" : "text/html; charset=UTF-8";
+        String contentType = view.endsWith("json") ? "application/json; charset=UTF-8" : "text/html; charset=UTF-8";
         response.setContentType(contentType);
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(renderedView.toString());

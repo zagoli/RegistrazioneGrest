@@ -26,6 +26,40 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerPagamentiTerzamedia.class);
 
+    private static void renderPage(FreemarkerTemplate template) throws SQLException, ConfigPropertyException, IOException {
+        List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.terzamediaDAO.findAllConPagamenti();
+        List<Object[]> datiTerzamedia = new ArrayList<>(iscritti.size());
+        if (!iscritti.isEmpty()) {
+            for (DatiPagamento<IscrittoPagamento, PagamentoRiepilogo> dato : iscritti) {
+                PagamentoRiepilogo pagamento = dato.getPagamento();
+                datiTerzamedia.add(new Object[]{
+                        dato.getIscritto(),
+                        pagamento != null,
+                        pagamento != null ? pagamento : calcolaQuota(dato.getIscritto().getLocalita(), dato.getSettimane())
+                });
+            }
+            template.addObject("terzamedia", datiTerzamedia);
+        }
+        template.setView("ammseg/gestiscipagamentiterzamedia.html");
+    }
+
+    protected static float calcolaQuota(TerzaMedia t) throws SQLException, ConfigPropertyException, IOException {
+        return calcolaQuota(t.getRegistrato().getLocalita(), DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size());
+    }
+
+    private static float calcolaQuota(String localita, int nSettimane) throws ConfigPropertyException, IOException {
+        assert nSettimane > 0;
+        int supplementoFuoriComune = Integer.parseInt(ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_TERZAMEDIA"));
+        int[] tabellaQuotaBase = new int[]{
+                Integer.parseInt(ConfigProperties.getProperty("PREZZO_1_TERZAMEDIA")),
+                Integer.parseInt(ConfigProperties.getProperty("PREZZO_2_TERZAMEDIA")),
+                Integer.parseInt(ConfigProperties.getProperty("PREZZO_3_TERZAMEDIA")),
+                Integer.parseInt(ConfigProperties.getProperty("PREZZO_4_TERZAMEDIA"))
+        };
+        return tabellaQuotaBase[nSettimane - 1] +
+                nSettimane * (Checker.checkIsFromPescantina(localita) ? 0 : supplementoFuoriComune);
+    }
+
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
@@ -64,40 +98,6 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
             template = Utils.getErrorPageAndLogException(e, ControllerPagamentiTerzamedia.class.getName());
         }
         return template;
-    }
-
-    private static void renderPage(FreemarkerTemplate template) throws SQLException, ConfigPropertyException, IOException {
-        List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.terzamediaDAO.findAllConPagamenti();
-        List<Object[]> datiTerzamedia = new ArrayList<>(iscritti.size());
-        if (!iscritti.isEmpty()) {
-            for (DatiPagamento<IscrittoPagamento, PagamentoRiepilogo> dato : iscritti) {
-                PagamentoRiepilogo pagamento = dato.getPagamento();
-                datiTerzamedia.add(new Object[]{
-                        dato.getIscritto(),
-                        pagamento != null,
-                        pagamento != null ? pagamento : calcolaQuota(dato.getIscritto().getLocalita(), dato.getSettimane())
-                });
-            }
-            template.addObject("terzamedia", datiTerzamedia);
-        }
-        template.setView("ammseg/gestiscipagamentiterzamedia.html");
-    }
-
-    protected static float calcolaQuota(TerzaMedia t) throws SQLException, ConfigPropertyException, IOException {
-        return calcolaQuota(t.getRegistrato().getLocalita(), DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size());
-    }
-
-    private static float calcolaQuota(String localita, int nSettimane) throws ConfigPropertyException, IOException {
-        assert nSettimane > 0;
-        int supplementoFuoriComune = Integer.parseInt(ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_TERZAMEDIA"));
-        int[] tabellaQuotaBase = new int[]{
-                Integer.parseInt(ConfigProperties.getProperty("PREZZO_1_TERZAMEDIA")),
-                Integer.parseInt(ConfigProperties.getProperty("PREZZO_2_TERZAMEDIA")),
-                Integer.parseInt(ConfigProperties.getProperty("PREZZO_3_TERZAMEDIA")),
-                Integer.parseInt(ConfigProperties.getProperty("PREZZO_4_TERZAMEDIA"))
-        };
-        return tabellaQuotaBase[nSettimane - 1] +
-                nSettimane * (Checker.checkIsFromPescantina(localita) ? 0 : supplementoFuoriComune);
     }
 
 }

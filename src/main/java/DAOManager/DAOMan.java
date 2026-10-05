@@ -11,26 +11,6 @@ import java.sql.SQLException;
 
 public class DAOMan {
 
-    private static final HikariDataSource DS;
-
-    static {
-        HikariConfig config = new HikariConfig();
-
-        try {
-            config.setJdbcUrl(ConfigProperties.getProperty("JDBC_URL_PRODUCTION_DATABASE"));
-            config.setUsername(ConfigProperties.getProperty("DATABASE_USER"));
-            config.setPassword(ConfigProperties.getProperty("DATABASE_PASSWORD"));
-            config.setDriverClassName("org.postgresql.Driver");
-        } catch (ConfigPropertyException | IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        config.setMaximumPoolSize(10);
-        config.setMinimumIdle(2);
-
-        DS = new HikariDataSource(config);
-    }
-
     public static final AccompagnatoreDAO accompagnatoreDAO = new AccompagnatoreDAOImpl();
     public static final AnimatoreDAO animatoreDAO = new AnimatoreDAOImpl();
     public static final AnimatoreExportDAO animatoreExportDAO = new AnimatoreExportDAOImpl();
@@ -54,6 +34,25 @@ public class DAOMan {
     public static final PagamentoTerzamediaDAO pagamentoTerzamediaDAO = new PagamentoTerzamediaDAOImpl();
     public static final CodiceSbloccoIscrizioneDAO codiceSbloccoIscrizioneDAO = new CodiceSbloccoIscrizioneDAOImpl();
     public static final SquadraDAO squadraDAO = new SquadraDAOImpl();
+    private static final HikariDataSource DS;
+
+    static {
+        HikariConfig config = new HikariConfig();
+
+        try {
+            config.setJdbcUrl(ConfigProperties.getProperty("JDBC_URL_PRODUCTION_DATABASE"));
+            config.setUsername(ConfigProperties.getProperty("DATABASE_USER"));
+            config.setPassword(ConfigProperties.getProperty("DATABASE_PASSWORD"));
+            config.setDriverClassName("org.postgresql.Driver");
+        } catch (ConfigPropertyException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        config.setMaximumPoolSize(10);
+        config.setMinimumIdle(2);
+
+        DS = new HikariDataSource(config);
+    }
 
     public static Connection getConnection() throws SQLException {
         return DS.getConnection();

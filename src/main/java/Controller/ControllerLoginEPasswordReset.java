@@ -33,7 +33,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class ControllerLoginEPasswordReset implements ControllerInterface {
 
-    private static final Logger logger =  LoggerFactory.getLogger(ControllerLoginEPasswordReset.class);
+    private static final Logger logger = LoggerFactory.getLogger(ControllerLoginEPasswordReset.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {

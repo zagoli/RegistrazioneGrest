@@ -69,6 +69,71 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from presenzaRag pr group by pr.Calendario_idSettimana;";
     // </editor-fold>
 
+    static PagamentoRiepilogo mapRowToPagamentoRiepilogo(ResultSet rs) throws SQLException {
+        if (rs.getObject("pid") == null) {
+            return null;
+        }
+        return new PagamentoRiepilogo(
+                rs.getInt("pid"), rs.getInt("pordineArrivo"), rs.getDate("pdata"), rs.getFloat("pquota"),
+                rs.getString("prenome"), rs.getString("precognome"));
+    }
+
+    private static Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
+        return new Ragazzo(
+                rs.getInt("raid"),
+                rs.getString("ranome"),
+                rs.getString("racognome"),
+                rs.getDate("radataNascita"),
+                rs.getString("rapresenza"),
+                new Laboratorio(
+                        rs.getInt("laid"),
+                        rs.getString("ladescrizione"),
+                        rs.getBoolean("lariservato")
+                ),
+                new Parrocchia(
+                        rs.getInt("paid"),
+                        rs.getString("panome"),
+                        rs.getString("paluogo")
+                ),
+                new Registrato(
+                        rs.getInt("reid"),
+                        rs.getString("remail"),
+                        rs.getString("repassword"),
+                        rs.getString("renome"),
+                        rs.getString("recognome"),
+                        rs.getString("retelefono"),
+                        rs.getString("relocalita"),
+                        rs.getString("revia"),
+                        rs.getString("recivico"),
+                        rs.getInt("retipoUt")
+                ),
+                new Circolo(
+                        rs.getInt(("ciid")),
+                        rs.getString("cinome"),
+                        rs.getString("ciluogo")
+                ),
+                rs.getBoolean("raentrataAnticipata"),
+                rs.getString("rarichieste"),
+                rs.getString("ranoteAlimentari"),
+                rs.getBoolean("ramensa"),
+                rs.getBoolean("rasaNuotare"),
+                rs.getBoolean("rafratelloIscritto"),
+                new Scuola(
+                        rs.getInt("scid"),
+                        rs.getString("scgrado"),
+                        rs.getString("scdescrizione")
+                ),
+                rs.getString("rasezione"),
+                rs.getString("raclasse"),
+                rs.getString("ranTessera"),
+                new Squadra(
+                        rs.getInt("sqid"),
+                        rs.getString("sqnome"),
+                        rs.getString("sqcolore")
+                )
+        );
+    }
+
     @Override
     public void insert(Ragazzo r) throws SQLException {
         try (Connection con = DAOMan.getConnection();
@@ -217,15 +282,6 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         }
     }
 
-    static PagamentoRiepilogo mapRowToPagamentoRiepilogo(ResultSet rs) throws SQLException {
-        if (rs.getObject("pid") == null) {
-            return null;
-        }
-        return new PagamentoRiepilogo(
-                rs.getInt("pid"), rs.getInt("pordineArrivo"), rs.getDate("pdata"), rs.getFloat("pquota"),
-                rs.getString("prenome"), rs.getString("precognome"));
-    }
-
     @Override
     public int count() throws SQLException {
         try (Connection con = DAOMan.getConnection();
@@ -302,7 +358,6 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         }
     }
 
-
     @Override
     public int countAnticipatoTotale() throws SQLException {
         try (Connection con = DAOMan.getConnection();
@@ -339,63 +394,6 @@ public class RagazzoDAOImpl implements RagazzoDAO {
             }
             return count;
         }
-    }
-
-
-    private static Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
-        return new Ragazzo(
-                rs.getInt("raid"),
-                rs.getString("ranome"),
-                rs.getString("racognome"),
-                rs.getDate("radataNascita"),
-                rs.getString("rapresenza"),
-                new Laboratorio(
-                        rs.getInt("laid"),
-                        rs.getString("ladescrizione"),
-                        rs.getBoolean("lariservato")
-                ),
-                new Parrocchia(
-                        rs.getInt("paid"),
-                        rs.getString("panome"),
-                        rs.getString("paluogo")
-                ),
-                new Registrato(
-                        rs.getInt("reid"),
-                        rs.getString("remail"),
-                        rs.getString("repassword"),
-                        rs.getString("renome"),
-                        rs.getString("recognome"),
-                        rs.getString("retelefono"),
-                        rs.getString("relocalita"),
-                        rs.getString("revia"),
-                        rs.getString("recivico"),
-                        rs.getInt("retipoUt")
-                ),
-                new Circolo(
-                        rs.getInt(("ciid")),
-                        rs.getString("cinome"),
-                        rs.getString("ciluogo")
-                ),
-                rs.getBoolean("raentrataAnticipata"),
-                rs.getString("rarichieste"),
-                rs.getString("ranoteAlimentari"),
-                rs.getBoolean("ramensa"),
-                rs.getBoolean("rasaNuotare"),
-                rs.getBoolean("rafratelloIscritto"),
-                new Scuola(
-                        rs.getInt("scid"),
-                        rs.getString("scgrado"),
-                        rs.getString("scdescrizione")
-                ),
-                rs.getString("rasezione"),
-                rs.getString("raclasse"),
-                rs.getString("ranTessera"),
-                new Squadra(
-                        rs.getInt("sqid"),
-                        rs.getString("sqnome"),
-                        rs.getString("sqcolore")
-                )
-        );
     }
 
 }

@@ -8,6 +8,7 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 public class ControllerVisualizzaQuote implements ControllerInterface {
