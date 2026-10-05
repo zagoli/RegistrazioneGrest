@@ -3,7 +3,7 @@ package Controller;
 import DAOManager.DAOMan;
 import Domain.AnimatoreExport;
 import Domain.RagazzoExport;
-import Domain.TerzamediaExport;
+import Domain.TerzaMediaExport;
 import Response.BinaryResult;
 import Response.Response;
 import Utility.Utils;
@@ -23,7 +23,7 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
 
         try (Workbook workbook = new XSSFWorkbook()) {
             List<RagazzoExport> ragazzi = DAOMan.ragazzoExportDAO.findAll();
-            List<TerzamediaExport> ragazziTerzamedia = DAOMan.terzamediaExportDAO.findAll();
+            List<TerzaMediaExport> ragazziTerzamedia = DAOMan.terzamediaExportDAO.findAll();
             List<AnimatoreExport> animatori = DAOMan.animatoreExportDAO.findAll();
 
             return new BinaryResult("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

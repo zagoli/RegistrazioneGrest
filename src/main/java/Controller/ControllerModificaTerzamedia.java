@@ -29,7 +29,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
             template.addObject("TITOLOPAGINA", "Modifica terza media");
             template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             int idTerzamedia = Integer.parseInt(request.getParameter("id"));
-            Terzamedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
+            TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO IL TERZAMEDIA E FACCIO UNA REDIRECT
                 t.setNome(request.getParameter("nome"));
@@ -60,7 +60,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 }
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    t.setnTessera(nTessera);
+                    t.setNTessera(nTessera);
                 }
                 DAOMan.terzamediaDAO.update(t);
                 List<RelPresenzaTer> calToDelete = DAOMan.relPresenzaTerDAO.findByTerzamediaId(idTerzamedia);

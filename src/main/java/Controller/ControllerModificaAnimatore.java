@@ -48,7 +48,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 a.setCodiceFiscale(request.getParameter("codiceFiscale").toUpperCase());
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    a.setnTessera(nTessera);
+                    a.setNTessera(nTessera);
                 }
                 DAOMan.animatoreDAO.update(a);
                 List<RelPresenzaAn> calToDelete = DAOMan.relPresenzaAnDAO.findByAnimatoreId(Integer.parseInt(request.getParameter("id")));

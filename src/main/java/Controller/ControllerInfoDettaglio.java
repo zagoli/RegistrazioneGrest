@@ -103,7 +103,7 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     break;
                 }
                 case "infoter": {
-                    Terzamedia t = DAOMan.terzamediaDAO.findById(id);
+                    TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
                     template.addObject("terzamedia", t);
                     int idRegistrato = t.getRegistrato().getId();
                     List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
@@ -125,7 +125,7 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     break;
                 }
                 case "schedater": {
-                    Terzamedia t = DAOMan.terzamediaDAO.findById(id);
+                    TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
                     template.addObject("terzamedia", t);
                     int idRegistrato = t.getRegistrato().getId();
                     List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);

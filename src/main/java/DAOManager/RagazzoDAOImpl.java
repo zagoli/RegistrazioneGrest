@@ -90,7 +90,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
             pst.setInt(15, r.getScuola().getId());
             pst.setString(16, r.getSezione());
             pst.setString(17, r.getClasse());
-            pst.setString(18, r.getnTessera());
+            pst.setString(18, r.getNTessera());
             pst.executeUpdate();
             try (ResultSet rs = pst.getGeneratedKeys()) {
                 if (rs.next()) {
@@ -121,7 +121,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
             pst.setInt(15, r.getScuola().getId());
             pst.setString(16, r.getSezione());
             pst.setString(17, r.getClasse());
-            pst.setString(18, r.getnTessera());
+            pst.setString(18, r.getNTessera());
             pst.setInt(19, r.getId());
             pst.executeUpdate();
         }
@@ -166,7 +166,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
              PreparedStatement pst = con.prepareStatement(FIND_RAGAZZO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? this.mapRowToRagazzo(rs) : null;
+                return rs.next() ? mapRowToRagazzo(rs) : null;
             }
         }
     }
@@ -178,7 +178,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
              ResultSet rs = pst.executeQuery()) {
             LinkedList<Ragazzo> lr = new LinkedList<>();
             while (rs.next()) {
-                lr.add(this.mapRowToRagazzo(rs));
+                lr.add(mapRowToRagazzo(rs));
             }
             return lr;
         }
@@ -211,7 +211,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
              ResultSet rs = pst.executeQuery()) {
             List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> dati = new LinkedList<>();
             while (rs.next()) {
-                dati.add(new DatiPagamento<>(mapRowToRagazzo(rs), mapRowToPagamentoRiepilogo(rs)));
+                dati.add(new DatiPagamento<>(mapRowToPagamentoRiepilogo(rs), mapRowToRagazzo(rs)));
             }
             return dati;
         }
@@ -256,7 +256,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
             try (ResultSet rs = pst.executeQuery()) {
                 LinkedList<Ragazzo> lr = new LinkedList<>();
                 while (rs.next()) {
-                    lr.add(this.mapRowToRagazzo(rs));
+                    lr.add(mapRowToRagazzo(rs));
                 }
                 return lr;
             }
@@ -271,7 +271,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
             try (ResultSet rs = pst.executeQuery()) {
                 LinkedList<Ragazzo> lr = new LinkedList<>();
                 while (rs.next()) {
-                    lr.add(this.mapRowToRagazzo(rs));
+                    lr.add(mapRowToRagazzo(rs));
                 }
                 return lr;
             }
@@ -342,7 +342,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     }
 
 
-    public Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
+    private static Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
         return new Ragazzo(
                 rs.getInt("raid"),
                 rs.getString("ranome"),

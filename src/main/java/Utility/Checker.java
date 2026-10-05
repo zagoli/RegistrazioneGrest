@@ -96,7 +96,7 @@ public class Checker {
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idTerzamedia = Integer.parseInt(request.getParameter("id"));
         try {
-            Terzamedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
+            TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
             if (tipoUt.equals(3)) {
                 if (t.getRegistrato().getId() == idRegistrato) {
                     flag = true;

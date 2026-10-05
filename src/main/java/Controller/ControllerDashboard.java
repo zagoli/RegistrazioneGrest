@@ -52,10 +52,10 @@ public class ControllerDashboard implements ControllerInterface {
                     if (!listAnimatore.isEmpty()) {
                         template.addObject("animatori", listAnimatore);
                     }
-                    List<Terzamedia> listTerzamedia = DAOMan.terzamediaDAO.findByRegistratoId(idUtente);
-                    if (!listTerzamedia.isEmpty()) {
-                        Map<Terzamedia, Boolean> mapTerzamediaPagato = new HashMap<>();
-                        for (Terzamedia ter : listTerzamedia) {
+                    List<TerzaMedia> listTerzaMedia = DAOMan.terzamediaDAO.findByRegistratoId(idUtente);
+                    if (!listTerzaMedia.isEmpty()) {
+                        Map<TerzaMedia, Boolean> mapTerzamediaPagato = new HashMap<>();
+                        for (TerzaMedia ter : listTerzaMedia) {
                             PagamentoTerzamedia p = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(ter.getId());
                             mapTerzamediaPagato.put(ter, p != null);
                         }

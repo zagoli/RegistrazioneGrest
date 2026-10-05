@@ -4,7 +4,7 @@ import DAOManager.DAOMan;
 import Domain.DatiPagamento;
 import Domain.IscrittoPagamento;
 import Domain.PagamentoRiepilogo;
-import Domain.Terzamedia;
+import Domain.TerzaMedia;
 import Response.FreemarkerTemplate;
 import Response.RedirectResult;
 import Response.Response;
@@ -83,7 +83,7 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
         template.setView("ammseg/gestiscipagamentiterzamedia.html");
     }
 
-    protected static float calcolaQuota(Terzamedia t) throws SQLException, ConfigPropertyException, IOException {
+    protected static float calcolaQuota(TerzaMedia t) throws SQLException, ConfigPropertyException, IOException {
         return calcolaQuota(t.getRegistrato().getLocalita(), DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size());
     }
 

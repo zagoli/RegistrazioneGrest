@@ -92,7 +92,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
 
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    ragazzo.setnTessera(nTessera);
+                    ragazzo.setNTessera(nTessera);
                 }
 
                 DAOMan.ragazzoDAO.insert(ragazzo);

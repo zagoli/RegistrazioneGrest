@@ -62,7 +62,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     // </editor-fold>
 
     @Override
-    public void insert(Terzamedia t) throws SQLException {
+    public void insert(TerzaMedia t) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(INSERT_TERZAMEDIA, Statement.RETURN_GENERATED_KEYS)) {
             pst.setString(1, t.getNome());
@@ -78,7 +78,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
             pst.setBoolean(11, t.getSaNuotare());
             pst.setInt(12, t.getScuola().getId());
             pst.setString(13, t.getSezione());
-            pst.setString(14, t.getnTessera());
+            pst.setString(14, t.getNTessera());
             pst.setString(15, t.getCellulare());
             pst.setBoolean(16, t.getFestaPassaggio());
             pst.setString(17, t.getMail());
@@ -92,7 +92,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     }
 
     @Override
-    public void update(Terzamedia t) throws SQLException {
+    public void update(TerzaMedia t) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(UPDATE_TERZAMEDIA)) {
             pst.setString(1, t.getNome());
@@ -108,7 +108,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
             pst.setBoolean(11, t.getSaNuotare());
             pst.setInt(12, t.getScuola().getId());
             pst.setString(13, t.getSezione());
-            pst.setString(14, t.getnTessera());
+            pst.setString(14, t.getNTessera());
             pst.setString(15, t.getCellulare());
             pst.setBoolean(16, t.getFestaPassaggio());
             pst.setString(17, t.getMail());
@@ -151,7 +151,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     }
 
     @Override
-    public Terzamedia findById(int id) throws SQLException {
+    public TerzaMedia findById(int id) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_ID)) {
             pst.setInt(1, id);
@@ -162,11 +162,11 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     }
 
     @Override
-    public List<Terzamedia> findAll() throws SQLException {
+    public List<TerzaMedia> findAll() throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_TERZAMEDIA);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Terzamedia> lt = new LinkedList<>();
+            LinkedList<TerzaMedia> lt = new LinkedList<>();
             while (rs.next()) {
                 lt.add(this.mapRowToTerzamedia(rs));
             }
@@ -194,13 +194,13 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     }
 
     @Override
-    public List<DatiPagamento<Terzamedia, PagamentoRiepilogo>> findAllConPagamento() throws SQLException {
+    public List<DatiPagamento<TerzaMedia, PagamentoRiepilogo>> findAllConPagamento() throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            List<DatiPagamento<Terzamedia, PagamentoRiepilogo>> dati = new LinkedList<>();
+            List<DatiPagamento<TerzaMedia, PagamentoRiepilogo>> dati = new LinkedList<>();
             while (rs.next()) {
-                dati.add(new DatiPagamento<>(mapRowToTerzamedia(rs), RagazzoDAOImpl.mapRowToPagamentoRiepilogo(rs)));
+                dati.add(new DatiPagamento<>(RagazzoDAOImpl.mapRowToPagamentoRiepilogo(rs), mapRowToTerzamedia(rs)));
             }
             return dati;
         }
@@ -217,12 +217,12 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     }
 
     @Override
-    public List<Terzamedia> findByRegistratoId(int id) throws SQLException {
+    public List<TerzaMedia> findByRegistratoId(int id) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Terzamedia> lt = new LinkedList<>();
+                LinkedList<TerzaMedia> lt = new LinkedList<>();
                 while (rs.next()) {
                     lt.add(this.mapRowToTerzamedia(rs));
                 }
@@ -231,8 +231,8 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         }
     }
 
-    public Terzamedia mapRowToTerzamedia(ResultSet rs) throws SQLException {
-        return new Terzamedia(
+    public TerzaMedia mapRowToTerzamedia(ResultSet rs) throws SQLException {
+        return new TerzaMedia(
                 rs.getInt("terid"),
                 rs.getString("ternome"),
                 rs.getString("tercognome"),

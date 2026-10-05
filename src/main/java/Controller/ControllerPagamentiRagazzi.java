@@ -72,11 +72,7 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
         if (!iscritti.isEmpty()) {
             for (DatiPagamento<RagazzoPagamento, PagamentoRiepilogo> dato : iscritti) {
                 PagamentoRiepilogo pagamento = dato.getPagamento();
-                datiRagazzi.add(new Object[]{
-                        dato.getIscritto(),
-                        pagamento != null,
-                        pagamento != null ? pagamento : calcolaQuota(dato.getIscritto(), dato.getSettimane())
-                });
+                datiRagazzi.add(new Object[]{dato.getIscritto(), pagamento != null, pagamento != null ? pagamento : calcolaQuota(dato.getIscritto(), dato.getSettimane())});
             }
             template.addObject("ragazzi", datiRagazzi);
         }
@@ -84,17 +80,14 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
     }
 
     protected static float calcolaQuota(Ragazzo r) throws SQLException, ConfigPropertyException, IOException {
-        return calcolaQuota(r.getFratelloIscritto(), r.getMensa(), r.getEntrataAnticipata(),
-                r.getRegistrato().getLocalita(), DAOMan.relPresenzaRagDAO.findByRagazzoId(r.getId()).size());
+        return calcolaQuota(r.getFratelloIscritto(), r.getMensa(), r.getEntrataAnticipata(), r.getRegistrato().getLocalita(), DAOMan.relPresenzaRagDAO.findByRagazzoId(r.getId()).size());
     }
 
     private static float calcolaQuota(RagazzoPagamento r, int nSettimane) throws ConfigPropertyException, IOException {
-        return calcolaQuota(r.getFratelloIscritto(), r.getMensa(), r.getEntrataAnticipata(),
-                r.getLocalita(), nSettimane);
+        return calcolaQuota(r.isFratelloIscritto(), r.isMensa(), r.isEntrataAnticipata(), r.getLocalita(), nSettimane);
     }
 
-    private static float calcolaQuota(boolean fratelloIscritto, boolean mensa, boolean entrataAnticipata,
-                                      String localita, int nSettimane) throws ConfigPropertyException, IOException {
+    private static float calcolaQuota(boolean fratelloIscritto, boolean mensa, boolean entrataAnticipata, String localita, int nSettimane) throws ConfigPropertyException, IOException {
         assert nSettimane > 0;
         int[][][] tabellaQuotaBase = new int[][][]{
                 // normale
@@ -110,13 +103,10 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
                         {Integer.parseInt(ConfigProperties.getProperty("PREZZO_2_FRATELLI_RAGAZZI")), Integer.parseInt(ConfigProperties.getProperty("PREZZO_2_FRATELLI_MENSA_RAGAZZI"))},   // due settimane
                         {Integer.parseInt(ConfigProperties.getProperty("PREZZO_3_FRATELLI_RAGAZZI")), Integer.parseInt(ConfigProperties.getProperty("PREZZO_3_FRATELLI_MENSA_RAGAZZI"))},   // tre settimane
                         {Integer.parseInt(ConfigProperties.getProperty("PREZZO_4_FRATELLI_RAGAZZI")), Integer.parseInt(ConfigProperties.getProperty("PREZZO_4_FRATELLI_MENSA_RAGAZZI"))}    // quattro settimane
-                }
-        };
+                }};
         int supplementoFuoriComune = Integer.parseInt(ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_RAGAZZI"));
         int supplementoEntrataAnticipataRagazzi = Integer.parseInt(ConfigProperties.getProperty("SUPPLEMENTO_ENTRATA_ANTICIPATA_RAGAZZI"));
-        return tabellaQuotaBase[fratelloIscritto ? 1 : 0][nSettimane - 1][mensa ? 1 : 0] +
-                nSettimane * (entrataAnticipata ? supplementoEntrataAnticipataRagazzi : 0) +
-                nSettimane * (Checker.checkIsFromPescantina(localita) ? 0 : supplementoFuoriComune);
+        return tabellaQuotaBase[fratelloIscritto ? 1 : 0][nSettimane - 1][mensa ? 1 : 0] + nSettimane * (entrataAnticipata ? supplementoEntrataAnticipataRagazzi : 0) + nSettimane * (Checker.checkIsFromPescantina(localita) ? 0 : supplementoFuoriComune);
     }
 
 }

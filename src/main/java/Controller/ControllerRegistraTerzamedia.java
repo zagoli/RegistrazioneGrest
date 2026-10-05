@@ -29,7 +29,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
             template.addObject("TITOLOPAGINA", "Registrazione ragazzo di Terzamedia");
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
-                Terzamedia terzamedia = new Terzamedia();
+                TerzaMedia terzamedia = new TerzaMedia();
                 terzamedia.setNome(request.getParameter("nome"));
                 terzamedia.setCognome(request.getParameter("cognome"));
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -65,7 +65,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
 
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    terzamedia.setnTessera(nTessera);
+                    terzamedia.setNTessera(nTessera);
                 }
 
                 DAOMan.terzamediaDAO.insert(terzamedia);

@@ -177,9 +177,9 @@ public class ControllerStampe implements ControllerInterface {
                 }
                 break;
                 case "elesintter": {
-                    List<Terzamedia> allTerzamedia = DAOMan.terzamediaDAO.findAll();
+                    List<TerzaMedia> allTerzaMedia = DAOMan.terzamediaDAO.findAll();
                     List<Object[]> dati = new LinkedList<>();
-                    for (Terzamedia ter : allTerzamedia) {
+                    for (TerzaMedia ter : allTerzaMedia) {
                         String periodoString = "";
                         List<RelPresenzaTer> periodo = DAOMan.relPresenzaTerDAO.findByTerzamediaId(ter.getId());
                         periodoString = periodo.stream().map((relPresenzaTer) -> relPresenzaTer.getCalendarioId() + " ").reduce(periodoString, String::concat);

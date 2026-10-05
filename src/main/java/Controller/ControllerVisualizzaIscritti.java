@@ -4,7 +4,7 @@ import DAOManager.DAOMan;
 import Domain.DatiPagamento;
 import Domain.PagamentoRiepilogo;
 import Domain.Ragazzo;
-import Domain.Terzamedia;
+import Domain.TerzaMedia;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.Utils;
@@ -41,7 +41,7 @@ public class ControllerVisualizzaIscritti implements ControllerInterface {
                     template.setView("ammseg/visualizzaterzamedia.html");
                     template.addObject("TITOLOPAGINA", "Visualizza terza media");
                     List<Object[]> terzamedia = new ArrayList<>();
-                    for (DatiPagamento<Terzamedia, PagamentoRiepilogo> dato : DAOMan.terzamediaDAO.findAllConPagamento()) {
+                    for (DatiPagamento<TerzaMedia, PagamentoRiepilogo> dato : DAOMan.terzamediaDAO.findAllConPagamento()) {
                         terzamedia.add(new Object[]{dato.getIscritto(), dato.getPagamento()});
                     }
                     template.addObject("terzamedia", terzamedia);

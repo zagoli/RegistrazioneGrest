@@ -87,7 +87,7 @@ public class ControllerModificaRagazzo implements ControllerInterface {
 
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    r.setnTessera(nTessera);
+                    r.setNTessera(nTessera);
                 }
 
                 DAOMan.ragazzoDAO.update(r);

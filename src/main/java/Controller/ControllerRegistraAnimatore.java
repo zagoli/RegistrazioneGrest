@@ -46,7 +46,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                 animatore.setCodiceFiscale(request.getParameter("codiceFiscale").toUpperCase());
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    animatore.setnTessera(nTessera);
+                    animatore.setNTessera(nTessera);
                 }
                 DAOMan.animatoreDAO.insert(animatore);
                 String[] cal = request.getParameterValues("cal");

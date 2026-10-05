@@ -1,6 +1,6 @@
 package DAOManager;
 
-import Domain.TerzamediaExport;
+import Domain.TerzaMediaExport;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,11 +43,11 @@ public class TerzamediaExportDAOImpl implements TerzamediaExportDAO {
                     """;
 
     @Override
-    public List<TerzamediaExport> findAll() throws SQLException {
+    public List<TerzaMediaExport> findAll() throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL);
              ResultSet rs = pst.executeQuery()) {
-            List<TerzamediaExport> terzamedia = new LinkedList<>();
+            List<TerzaMediaExport> terzamedia = new LinkedList<>();
             while (rs.next()) {
                 terzamedia.add(mapRow(rs));
             }
@@ -55,9 +55,9 @@ public class TerzamediaExportDAOImpl implements TerzamediaExportDAO {
         }
     }
 
-    private TerzamediaExport mapRow(ResultSet rs) throws SQLException {
+    private TerzaMediaExport mapRow(ResultSet rs) throws SQLException {
         boolean pagato = rs.getObject("pagamento_id") != null;
-        return new TerzamediaExport(
+        return new TerzaMediaExport(
                 ExportDAOMapper.text(rs, "nome"),
                 ExportDAOMapper.text(rs, "cognome"),
                 rs.getDate("dataNascita"),
