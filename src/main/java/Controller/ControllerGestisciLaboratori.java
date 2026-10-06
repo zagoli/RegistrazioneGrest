@@ -35,7 +35,4 @@ public class ControllerGestisciLaboratori implements ControllerInterface {
         return template;
     }
 
-    private record LaboratorioConConteggioIscritti(Laboratorio laboratorio, int numeroIscritti) {
-    }
-
 }
