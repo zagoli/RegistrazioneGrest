@@ -26,18 +26,22 @@
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">Riservato agli animatori</th>
-                        <th scope="col" style="width: 2%;"></th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                <#list laboratori as lab>
+                <#list laboratori as labConNumero>
                     <tr>
-                        <td>${lab.nome}</td>
-                        <td><#if lab.riservato == 1>sì<#else>no</#if></td>
+                        <td>${labConNumero.laboratorio.descrizione}</td>
+                        <td><#if labConNumero.laboratorio.riservato>sì<#else>no</#if></td>
                         <td>
-                            <a href="/RegistrazioneGrest/App/GestisciLaboratori?delete&idLaboratorio=${lab.id?c}">
-                                <img src="../img/octicons/trashcan.svg">
-                            </a>
+                            <#if labConNumero.numeroIscritti > 0>
+                                <p>Questo laboratorio ha ${labConNumero.numeroIscritti} iscritti</p>
+                            <#else>
+                                <a href="/RegistrazioneGrest/App/GestisciLaboratori?delete&idLaboratorio=${labConNumero.laboratorio.id?c}">
+                                    <img src="../img/octicons/trashcan.svg">
+                                </a>
+                            </#if>
                         </td>
                     </tr>
                 </#list>
