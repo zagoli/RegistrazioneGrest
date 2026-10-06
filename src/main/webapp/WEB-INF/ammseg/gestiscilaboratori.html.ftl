@@ -24,10 +24,9 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col" style="width: 2%;">#</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Riservato agli animatori</th>
-                        <th scope="col" style="width: 2%;">Elimina</th>
+                        <th scope="col" style="width: 2%;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +35,7 @@
                         <td>${lab.nome}</td>
                         <td><#if lab.riservato == 1>sì<#else>no</#if></td>
                         <td>
-                            <a href="/RegistrazioneGrest/App/GestisciLaboratori?del&id=${lab.id?c}">
+                            <a href="/RegistrazioneGrest/App/GestisciLaboratori?delete&idLaboratorio=${lab.id?c}">
                                 <img src="../img/octicons/trashcan.svg">
                             </a>
                         </td>
