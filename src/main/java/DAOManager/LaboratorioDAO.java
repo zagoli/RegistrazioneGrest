@@ -9,9 +9,14 @@ import java.util.List;
 public interface LaboratorioDAO {
     Laboratorio findById(int id) throws SQLException;
 
-    //SELECT
+    // SELECT
     List<Laboratorio> findAll() throws SQLException;
     List<Laboratorio> findNonRiservato() throws SQLException;
     List<LaboratorioConNumeroIscritti> findAllConNumeroIscritti() throws SQLException;
 
+    // INSERT
+    int insert(Laboratorio laboratorio) throws SQLException;
+
+    // DELETE
+    void delete(int id) throws SQLException;
 }
