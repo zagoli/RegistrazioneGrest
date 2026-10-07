@@ -13,13 +13,7 @@ public class Calendario implements Comparable<Calendario> {
     private Date aQuando;
 
     @Override
-    public int compareTo(Calendario t) {
-        int result = 1;
-        if (this.idSettimana == t.idSettimana) {
-            result = 0;
-        } else if (this.idSettimana < t.idSettimana) {
-            result = -1;
-        }
-        return result;
+    public int compareTo(Calendario other) {
+        return other.idSettimana - this.idSettimana;
     }
 }

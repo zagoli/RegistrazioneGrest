@@ -145,7 +145,7 @@
                 <button class="btn btn-link" data-toggle="collapse"
                         data-target="#pressetsqu${set.idSettimana?c}" aria-expanded="false"
                         aria-controls="pressetsqu${set.idSettimana?c}">
-                    Settimana dal ${set.daQuando} al ${set.aQuando}
+                    Settimana dal ${set.daQuando} al ${set.AQuando}
                 </button>
             </h5>
         </div>
@@ -196,7 +196,7 @@
                     <button class="btn btn-link" data-toggle="collapse"
                             data-target="#pressetlab${set.idSettimana?c}" aria-expanded="false"
                             aria-controls="spressetlab${set.idSettimana?c}">
-                        Settimana dal ${set.daQuando} al ${set.aQuando}
+                        Settimana dal ${set.daQuando} al ${set.AQuando}
                     </button>
                 </h5>
             </div>

@@ -12,7 +12,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -21,8 +23,12 @@ import java.util.stream.Collectors;
 
 public class ControllerEsportazioneMassiva implements ControllerInterface {
 
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(ControllerEsportazioneMassiva.class);
+
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+
+        logger.info("Inizio esportazione massiva");
 
         try (Workbook workbook = new XSSFWorkbook()) {
             List<RagazzoExport> ragazzi = DAOMan.ragazzoExportDAO.findAll();
@@ -33,9 +39,14 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
             creaFoglioRagazziTerzaMedia(workbook, ragazziTerzaMedia);
             creaFoglioAnimatori(workbook, animatori);
 
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            workbook.write(output);
+
+            logger.info("Foglio excel salvato in memoria. Invio la risposta");
+
             return new BinaryResult("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     "export_grest.xlsx",
-                    workbook::write);
+                    output.toByteArray());
         } catch (SQLException | IOException e) {
             return Utils.getErrorPageAndLogException(e, ControllerEsportazioneMassiva.class.getSimpleName());
         }
@@ -46,8 +57,10 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
     private static void creaFoglioAnimatori(Workbook workbook, List<AnimatoreExport> animatori) {
         String nomeFoglio = WorkbookUtil.createSafeSheetName("Animatori");
         Sheet sheet = workbook.createSheet(nomeFoglio);
-        creaIntestazioneAnimatore(workbook, sheet);
+        creaIntestazioneAnimatore(sheet);
         popolaFoglioAnimatori(animatori, sheet);
+        autoSizeColumns(sheet);
+        logger.info("Creato foglio Animatori");
     }
 
     private static void popolaFoglioAnimatori(List<AnimatoreExport> animatori, Sheet sheet) {
@@ -80,38 +93,35 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
         }
     }
 
-    private static void creaIntestazioneAnimatore(Workbook workbook, Sheet sheet) {
-        Row row = sheet.createRow(0);
-        row.setRowStyle(boldFont(workbook));
-
-        row.createCell(0).setCellValue("Nome");
-        row.createCell(1).setCellValue("Cognome");
-        row.createCell(2).setCellValue("Data di nascita");
-        row.createCell(3).setCellValue("Codice Fiscale");
-        row.createCell(4).setCellValue("Cellulare");
-        row.createCell(5).setCellValue("E-Mail");
-
-        row.createCell(6).setCellValue("Parrocchia");
-        row.createCell(7).setCellValue("Circolo NOI");
-        row.createCell(8).setCellValue("Numero tessera Circolo NOI");
-
-        row.createCell(9).setCellValue("Settimane di Presenza");
-        row.createCell(10).setCellValue("Presenza giornaliera");
-
-        row.createCell(11).setCellValue("Fascia d'età ragazzi preferita");
-        row.createCell(12).setCellValue("Laboratorio");
-        row.createCell(13).setCellValue("Responsabile laboratorio");
-        row.createCell(14).setCellValue("Squadra");
-        row.createCell(15).setCellValue("Responsabile squadra");
-
-        row.createCell(16).setCellValue("Indirizzo");
+    private static void creaIntestazioneAnimatore(Sheet sheet) {
+        creaRigaIntestazione(sheet, new String[]{
+                "Nome",
+                "Cognome",
+                "Data di nascita",
+                "Codice Fiscale",
+                "Cellulare",
+                "E-Mail",
+                "Parrocchia",
+                "Circolo NOI",
+                "Numero tessera Circolo NOI",
+                "Settimane di Presenza",
+                "Presenza giornaliera",
+                "Fascia d'età ragazzi preferita",
+                "Laboratorio",
+                "Responsabile laboratorio",
+                "Squadra",
+                "Responsabile squadra",
+                "Indirizzo"
+        });
     }
 
     private static void creaFoglioRagazziTerzaMedia(Workbook workbook, List<TerzaMediaExport> ragazziTerzaMedia) {
         String nomeFoglio = WorkbookUtil.createSafeSheetName("Ragazzi Terza Media");
         Sheet sheet = workbook.createSheet(nomeFoglio);
-        creaIntestazioneRagazzoTerzaMedia(workbook, sheet);
+        creaIntestazioneRagazzoTerzaMedia(sheet);
         popolaFoglioRagazziTerzaMedia(ragazziTerzaMedia, sheet);
+        autoSizeColumns(sheet);
+        logger.info("Creato foglio Ragazzi Terza Media");
     }
 
     private static void popolaFoglioRagazziTerzaMedia(List<TerzaMediaExport> ragazziTerzaMedia, Sheet sheet) {
@@ -153,49 +163,41 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
         }
     }
 
-    private static void creaIntestazioneRagazzoTerzaMedia(Workbook workbook, Sheet sheet) {
-        Row row = sheet.createRow(0);
-        row.setRowStyle(boldFont(workbook));
-
-        row.createCell(0).setCellValue("Nome");
-        row.createCell(1).setCellValue("Cognome");
-        row.createCell(2).setCellValue("Data di nascita");
-
-        row.createCell(3).setCellValue("Scuola");
-        row.createCell(4).setCellValue("Classe");
-        row.createCell(5).setCellValue("Parrocchia");
-        row.createCell(6).setCellValue("Circolo NOI");
-        row.createCell(7).setCellValue("Numero tessera Circolo NOI");
-
-
-        row.createCell(8).setCellValue("Settimane di Presenza");
-        row.createCell(9).setCellValue("Presenza giornaliera");
-
-        row.createCell(10).setCellValue("Laboratorio");
-        row.createCell(11).setCellValue("Squadra");
-
-        row.createCell(12).setCellValue("Sa nuotare");
-        row.createCell(13).setCellValue("Festa del passaggio");
-
-        row.createCell(14).setCellValue("Richieste");
-        row.createCell(15).setCellValue("Note alimentari");
-
-        row.createCell(16).setCellValue("Ha pagato");
-        row.createCell(17).setCellValue("Importo pagamento");
-
-        row.createCell(18).setCellValue("Nome genitore");
-        row.createCell(19).setCellValue("Cognome genitore");
-        row.createCell(20).setCellValue("Email genitore");
-        row.createCell(21).setCellValue("Telefono genitore");
-        row.createCell(22).setCellValue("Indirizzo");
+    private static void creaIntestazioneRagazzoTerzaMedia(Sheet sheet) {
+        creaRigaIntestazione(sheet, new String[] {
+                "Nome",
+                "Cognome",
+                "Data di nascita",
+                "Scuola",
+                "Classe",
+                "Parrocchia",
+                "Circolo NOI",
+                "Numero tessera Circolo NOI",
+                "Settimane di Presenza",
+                "Presenza giornaliera",
+                "Laboratorio",
+                "Squadra",
+                "Sa nuotare",
+                "Festa del passaggio",
+                "Richieste",
+                "Note alimentari",
+                "Ha pagato",
+                "Importo pagamento",
+                "Nome genitore",
+                "Cognome genitore",
+                "Email genitore",
+                "Telefono genitore",
+                "Indirizzo"
+        });
     }
 
     private static void creaFoglioRagazzi(Workbook workbook, List<RagazzoExport> ragazzi) {
         String nomeFoglio = WorkbookUtil.createSafeSheetName("Ragazzi");
         Sheet sheet = workbook.createSheet(nomeFoglio);
-        creaIntestazioneRagazzo(workbook, sheet);
+        creaIntestazioneRagazzo(sheet);
         popolaFoglioRagazzi(ragazzi, sheet);
-
+        autoSizeColumns(sheet);
+        logger.info("Creato foglio Ragazzi");
     }
 
     private static void popolaFoglioRagazzi(List<RagazzoExport> ragazzi, Sheet sheet) {
@@ -240,43 +242,61 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
         }
     }
 
-    private static void creaIntestazioneRagazzo(Workbook workbook, Sheet sheet) {
-        Row row = sheet.createRow(0);
-        row.setRowStyle(boldFont(workbook));
+    private static void creaIntestazioneRagazzo(Sheet sheet) {
+        creaRigaIntestazione(sheet,
+                new String[] {
+                        "Nome",
+                        "Cognome",
+                        "Data di nascita",
+                        "Scuola",
+                        "Grado",
+                        "Classe",
+                        "Parrocchia",
+                        "Circolo NOI",
+                        "Numero tessera Circolo NOI",
+                        "Settimane di Presenza",
+                        "Presenza giornaliera",
+                        "Laboratorio",
+                        "Squadra",
+                        "Mensa",
+                        "Sa nuotare",
+                        "Entrata Anticipata",
+                        "Richieste",
+                        "Note alimentari",
+                        "Fratello iscritto",
+                        "Ha pagato",
+                        "Importo pagamento",
+                        "Nome genitore",
+                        "Cognome genitore",
+                        "Email genitore",
+                        "Telefono genitore",
+                        "Indirizzo"
+        });
+    }
 
-        row.createCell(0).setCellValue("Nome");
-        row.createCell(1).setCellValue("Cognome");
-        row.createCell(2).setCellValue("Data di nascita");
+    private static void creaRigaIntestazione(Sheet foglio, String[] nomiColonne) {
+        Row row = foglio.createRow(0);
+        for (int i = 0; i < nomiColonne.length; i++) {
+            creaCellaIntestazione(row, i, nomiColonne[i]);
+        }
+    }
 
-        row.createCell(3).setCellValue("Scuola");
-        row.createCell(4).setCellValue("Grado");
-        row.createCell(5).setCellValue("Classe");
-        row.createCell(6).setCellValue("Parrocchia");
-        row.createCell(7).setCellValue("Circolo NOI");
-        row.createCell(8).setCellValue("Numero tessera Circolo NOI");
+    private static void creaCellaIntestazione(Row riga, int indice, String intestazione) {
+        Cell cell = riga.createCell(indice);
+        cell.setCellValue(intestazione);
+        cell.setCellStyle(boldFont(riga.getSheet().getWorkbook()));
+    }
 
-        row.createCell(9).setCellValue("Settimane di Presenza");
-        row.createCell(10).setCellValue("Presenza giornaliera");
-
-        row.createCell(11).setCellValue("Laboratorio");
-        row.createCell(12).setCellValue("Squadra");
-
-        row.createCell(13).setCellValue("Mensa");
-        row.createCell(14).setCellValue("Sa nuotare");
-        row.createCell(15).setCellValue("Entrata Anticipata");
-
-        row.createCell(16).setCellValue("Richieste");
-        row.createCell(17).setCellValue("Note alimentari");
-
-        row.createCell(18).setCellValue("Fratello iscritto");
-        row.createCell(19).setCellValue("Ha pagato");
-        row.createCell(20).setCellValue("Importo pagamento");
-
-        row.createCell(21).setCellValue("Nome genitore");
-        row.createCell(22).setCellValue("Cognome genitore");
-        row.createCell(23).setCellValue("Email genitore");
-        row.createCell(24).setCellValue("Telefono genitore");
-        row.createCell(25).setCellValue("Indirizzo");
+    private static void autoSizeColumns(Sheet sheet) {
+        int maxNumColumns = 0;
+        for (Row row : sheet) {
+            if (row.getLastCellNum() > maxNumColumns) {
+                maxNumColumns = row.getLastCellNum();
+            }
+        }
+        for (int i = 0; i < maxNumColumns; i++) {
+            sheet.autoSizeColumn(i);
+        }
     }
 
     private static CellStyle boldFont(Workbook workbook) {
@@ -286,6 +306,5 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
         style.setFont(font);
         return style;
     }
-
 
 }

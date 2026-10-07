@@ -2,7 +2,7 @@
 <#include "../struct/header.html.ftl">
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center">Elenco mensa ${set.idSettimana?c} settimana</h2>
-    <h5 class="text-uppercase text-center">Settimana dal ${set.daQuando} al ${set.aQuando} </h5>
+    <h5 class="text-uppercase text-center">Settimana dal ${set.daQuando} al ${set.AQuando} </h5>
     <div class="container-block">
         <div class="mr-2 ml-2">
             <table class="table table-bordered pl-2 pr-2 table-sm">
@@ -32,7 +32,7 @@
                             <i>R </i><b>${rag[0].registrato.telefono}</b> -
                             <#list rag[2][0..*4] as cu>
                                 <i>${cu.relazione?capitalize+" "}</i>
-                                <b>${(cu.cellulare!"")+" "+(cu.fisso!"")}</b> -
+                                <b>${(cu.cellulare!)+" "+(cu.fisso!)}</b> -
                             </#list>
                         </td>
                     </tr>

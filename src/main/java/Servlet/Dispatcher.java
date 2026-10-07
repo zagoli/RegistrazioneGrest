@@ -31,7 +31,7 @@ public class Dispatcher extends HttpServlet {
 
     private Configuration getConfiguration() {
         // Chiamare questo metodo solo dentro init()
-        Configuration cfg = new Configuration(Configuration.VERSION_2_3_32);
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_35);
         cfg.setServletContextForTemplateLoading(getServletContext(), "WEB-INF");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
         cfg.setEncoding(Locale.ITALY, "utf-8");
@@ -42,7 +42,7 @@ public class Dispatcher extends HttpServlet {
             throws IOException, ServletException {
         request.setCharacterEncoding("utf-8");
         ControllerInterface controller = this.getHandler(request);
-        logger.info("Controller scelto: {}", controller.getClass().getSimpleName());
+        logger.debug("Controller scelto: {}", controller.getClass().getSimpleName());
         Response result = controller.handleRequest(request, response);
         if (result == null) {
             logger.error("ControllerResult è null per: {}", controller.getClass().getSimpleName());
@@ -57,7 +57,7 @@ public class Dispatcher extends HttpServlet {
             return new ControllerLoginEPasswordReset();
         }
 
-        logger.info("Richiesto servizio {}", servizio);
+        logger.debug("Richiesto servizio {}", servizio);
 
         // Rotte pubbliche accessibili senza autenticazione
         switch (servizio) {

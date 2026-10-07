@@ -89,13 +89,13 @@
                 <p>${terzamedia.sezione}</p>
             </div>
         </div>
-        <#if terzamedia.nTessera??>
+        <#if terzamedia.NTessera??>
             <div class="row">
                 <div class="col-sm">
                     <strong>Numero tessera Circolo NOI</strong>
                 </div>
                 <div class="col-sm">
-                    <p>${terzamedia.nTessera}</p>
+                    <p>${terzamedia.NTessera}</p>
                 </div>
             </div>
         </#if>
@@ -109,7 +109,7 @@
             <div class="row">
                 <div class="col-sm"></div>
                 <div class="col-sm">
-                    <p>dal ${cal.daQuando+" al "+cal.aQuando}</p>
+                    <p>dal ${cal.daQuando+" al "+cal.AQuando}</p>
                 </div>
             </div>
         </#list>

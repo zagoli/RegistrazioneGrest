@@ -54,7 +54,7 @@
                             <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
                                    id="cal${cal.idSettimana?c}" name="cal" <#if partecipa>checked</#if>>
                             <label class="form-check-label" for="cal${cal.idSettimana?c}"> Settimana dal ${cal.daQuando}
-                                al ${cal.aQuando} </label>
+                                al ${cal.AQuando} </label>
                         </div>
                     </#list>
                     <a class="btn btn-secondary btn-sm mt-1" href="javascript:;"
@@ -99,7 +99,7 @@
                         </b></label>
                     <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control"
                            data-parsley-length="[11, 11]" aria-describedby="helpNTessera"
-                           <#if ragazzo.nTessera??>value="${ragazzo.nTessera}"</#if>/>
+                           <#if ragazzo.NTessera??>value="${ragazzo.NTessera}"</#if>/>
                     <small id="helpNTessera" class="form-text text-muted">
                         Inserire il numero di tessera del Circolo Noi se non si è iscritti al Circolo Noi di Balconi.
                     </small>

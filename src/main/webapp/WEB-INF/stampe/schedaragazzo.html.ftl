@@ -85,13 +85,13 @@
                 <p>${ragazzo.classe+ragazzo.sezione}</p>
             </div>
         </div>
-        <#if ragazzo.nTessera??>
+        <#if ragazzo.NTessera??>
             <div class="row">
                 <div class="col-sm">
                     <strong>Numero tessera Circolo NOI</strong>
                 </div>
                 <div class="col-sm">
-                    <p>${ragazzo.nTessera}</p>
+                    <p>${ragazzo.NTessera}</p>
                 </div>
             </div>
         </#if>
@@ -105,7 +105,7 @@
             <div class="row">
                 <div class="col-sm"></div>
                 <div class="col-sm">
-                    <p>dal ${cal.daQuando+" al "+cal.aQuando}</p>
+                    <p>dal ${cal.daQuando+" al "+cal.AQuando}</p>
                 </div>
             </div>
         </#list>

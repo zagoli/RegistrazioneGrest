@@ -118,7 +118,7 @@
                             <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
                                    id="cal${cal.idSettimana?c}" name="cal" checked>
                             <label class="form-check-label" for="cal${cal.idSettimana?c}"> Settimana
-                                dal ${cal.daQuando} al ${cal.aQuando} </label>
+                                dal ${cal.daQuando} al ${cal.AQuando} </label>
                         </div>
                     </#list>
                     <a class="btn btn-secondary btn-sm mt-1" href="javascript:;"

@@ -27,4 +27,5 @@ public class Animatore {
     private String codiceFiscale;
     private boolean responsabileSquadra;
     private boolean responsabileLaboratorio;
+
 }
