@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 public record TerzaMediaExport (
-        int id,
         String nome,
         String cognome,
         Date dataNascita,

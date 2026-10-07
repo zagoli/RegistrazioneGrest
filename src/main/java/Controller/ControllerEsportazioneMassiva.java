@@ -69,27 +69,27 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
             AnimatoreExport animatore = animatori.get(i - 1);
             Row row = sheet.createRow(i);
 
-            row.createCell(0).setCellValue(animatore.getNome());
-            row.createCell(1).setCellValue(animatore.getCognome());
-            row.createCell(2).setCellValue(sdf.format(animatore.getDataNascita()));
-            row.createCell(3).setCellValue(animatore.getCodiceFiscale());
-            row.createCell(4).setCellValue(animatore.getCellulare());
-            row.createCell(5).setCellValue(animatore.getMail());
+            row.createCell(0).setCellValue(animatore.nome());
+            row.createCell(1).setCellValue(animatore.cognome());
+            row.createCell(2).setCellValue(sdf.format(animatore.dataNascita()));
+            row.createCell(3).setCellValue(animatore.codiceFiscale());
+            row.createCell(4).setCellValue(animatore.cellulare());
+            row.createCell(5).setCellValue(animatore.mail());
 
-            row.createCell(6).setCellValue(animatore.getParrocchia().getNome() + ", " + animatore.getParrocchia().getLuogo());
-            row.createCell(7).setCellValue(animatore.getCircolo().getNome() + ", " + animatore.getCircolo().getLuogo());
-            row.createCell(8).setCellValue(animatore.getNTessera());
+            row.createCell(6).setCellValue(animatore.parrocchia().getNome() + ", " + animatore.parrocchia().getLuogo());
+            row.createCell(7).setCellValue(animatore.circolo().getNome() + ", " + animatore.circolo().getLuogo());
+            row.createCell(8).setCellValue(animatore.nTessera());
 
-            row.createCell(9).setCellValue(animatore.getSettimanePresenza().stream().map(String::valueOf).collect(Collectors.joining(", ")));
-            row.createCell(10).setCellValue(animatore.getPresenza());
+            row.createCell(9).setCellValue(animatore.settimanePresenza().stream().map(String::valueOf).collect(Collectors.joining(", ")));
+            row.createCell(10).setCellValue(animatore.presenza());
 
-            row.createCell(11).setCellValue(animatore.getFasciaEtaRagazzi());
-            row.createCell(12).setCellValue(animatore.getLaboratorio().getDescrizione());
-            row.createCell(13).setCellValue(animatore.getResponsabileLaboratorio());
-            row.createCell(14).setCellValue(animatore.getSquadra().getNome());
-            row.createCell(15).setCellValue(animatore.getResponsabileSquadra());
+            row.createCell(11).setCellValue(animatore.fasciaEtaRagazzi());
+            row.createCell(12).setCellValue(animatore.laboratorio().getDescrizione());
+            row.createCell(13).setCellValue(animatore.responsabileLaboratorio());
+            row.createCell(14).setCellValue(animatore.squadra().getNome());
+            row.createCell(15).setCellValue(animatore.responsabileSquadra());
 
-            row.createCell(16).setCellValue(animatore.getRegistrato().getVia() + " " + animatore.getRegistrato().getCivico() + ", " + animatore.getRegistrato().getLocalita());
+            row.createCell(16).setCellValue(animatore.registrato().getVia() + " " + animatore.registrato().getCivico() + ", " + animatore.registrato().getLocalita());
         }
     }
 
@@ -130,36 +130,36 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
             TerzaMediaExport terzaMedia = ragazziTerzaMedia.get(i - 1);
             Row row = sheet.createRow(i);
 
-            row.createCell(0).setCellValue(terzaMedia.getNome());
-            row.createCell(1).setCellValue(terzaMedia.getCognome());
-            row.createCell(2).setCellValue(sdf.format(terzaMedia.getDataNascita()));
+            row.createCell(0).setCellValue(terzaMedia.nome());
+            row.createCell(1).setCellValue(terzaMedia.cognome());
+            row.createCell(2).setCellValue(sdf.format(terzaMedia.dataNascita()));
 
-            row.createCell(3).setCellValue(terzaMedia.getScuola().getDescrizione());
-            row.createCell(4).setCellValue("3" + terzaMedia.getSezione());
-            row.createCell(5).setCellValue(terzaMedia.getParrocchia().getNome() + ", " + terzaMedia.getParrocchia().getLuogo());
-            row.createCell(6).setCellValue(terzaMedia.getCircolo().getNome() + ", " + terzaMedia.getCircolo().getLuogo());
-            row.createCell(7).setCellValue(terzaMedia.getNTessera());
+            row.createCell(3).setCellValue(terzaMedia.scuola().getDescrizione());
+            row.createCell(4).setCellValue("3" + terzaMedia.sezione());
+            row.createCell(5).setCellValue(terzaMedia.parrocchia().getNome() + ", " + terzaMedia.parrocchia().getLuogo());
+            row.createCell(6).setCellValue(terzaMedia.circolo().getNome() + ", " + terzaMedia.circolo().getLuogo());
+            row.createCell(7).setCellValue(terzaMedia.nTessera());
 
-            row.createCell(8).setCellValue(terzaMedia.getSettimanePresenza().stream().map(String::valueOf).collect(Collectors.joining(", ")));
-            row.createCell(9).setCellValue(terzaMedia.getPresenza());
+            row.createCell(8).setCellValue(terzaMedia.settimanePresenza().stream().map(String::valueOf).collect(Collectors.joining(", ")));
+            row.createCell(9).setCellValue(terzaMedia.presenza());
 
-            row.createCell(10).setCellValue(terzaMedia.getLaboratorio().getDescrizione());
-            row.createCell(11).setCellValue(terzaMedia.getSquadra().getNome());
+            row.createCell(10).setCellValue(terzaMedia.laboratorio().getDescrizione());
+            row.createCell(11).setCellValue(terzaMedia.squadra().getNome());
 
-            row.createCell(12).setCellValue(terzaMedia.getSaNuotare());
-            row.createCell(13).setCellValue(terzaMedia.getFestaPassaggio());
+            row.createCell(12).setCellValue(terzaMedia.saNuotare());
+            row.createCell(13).setCellValue(terzaMedia.festaPassaggio());
 
-            row.createCell(14).setCellValue(terzaMedia.getRichieste());
-            row.createCell(15).setCellValue(terzaMedia.getNoteAlimentari());
+            row.createCell(14).setCellValue(terzaMedia.richieste());
+            row.createCell(15).setCellValue(terzaMedia.noteAlimentari());
 
-            row.createCell(16).setCellValue(terzaMedia.getPagato());
-            row.createCell(17).setCellValue(terzaMedia.getImportoPagamento().doubleValue());
+            row.createCell(16).setCellValue(terzaMedia.pagato());
+            row.createCell(17).setCellValue(terzaMedia.importoPagamento().doubleValue());
 
-            row.createCell(18).setCellValue(terzaMedia.getRegistrato().getNome());
-            row.createCell(19).setCellValue(terzaMedia.getRegistrato().getCognome());
-            row.createCell(20).setCellValue(terzaMedia.getRegistrato().getMail());
-            row.createCell(21).setCellValue(terzaMedia.getRegistrato().getTelefono());
-            row.createCell(22).setCellValue(terzaMedia.getRegistrato().getVia() + " " + terzaMedia.getRegistrato().getCivico() + ", " + terzaMedia.getRegistrato().getLocalita());
+            row.createCell(18).setCellValue(terzaMedia.registrato().getNome());
+            row.createCell(19).setCellValue(terzaMedia.registrato().getCognome());
+            row.createCell(20).setCellValue(terzaMedia.registrato().getMail());
+            row.createCell(21).setCellValue(terzaMedia.registrato().getTelefono());
+            row.createCell(22).setCellValue(terzaMedia.registrato().getVia() + " " + terzaMedia.registrato().getCivico() + ", " + terzaMedia.registrato().getLocalita());
         }
     }
 
@@ -206,39 +206,39 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
             RagazzoExport ragazzo = ragazzi.get(i - 1);
             Row row = sheet.createRow(i);
 
-            row.createCell(0).setCellValue(ragazzo.getNome());
-            row.createCell(1).setCellValue(ragazzo.getCognome());
-            row.createCell(2).setCellValue(dateFormat.format(ragazzo.getDataNascita()));
+            row.createCell(0).setCellValue(ragazzo.nome());
+            row.createCell(1).setCellValue(ragazzo.cognome());
+            row.createCell(2).setCellValue(dateFormat.format(ragazzo.dataNascita()));
 
-            row.createCell(3).setCellValue(ragazzo.getScuola().getDescrizione());
-            row.createCell(4).setCellValue(ragazzo.getScuola().getGrado());
-            row.createCell(5).setCellValue(ragazzo.getClasse() + ragazzo.getSezione());
-            row.createCell(6).setCellValue(ragazzo.getParrocchia().getNome() + ", " + ragazzo.getParrocchia().getLuogo());
-            row.createCell(7).setCellValue(ragazzo.getCircolo().getNome() + ", " + ragazzo.getCircolo().getLuogo());
-            row.createCell(8).setCellValue(ragazzo.getNTessera());
+            row.createCell(3).setCellValue(ragazzo.scuola().getDescrizione());
+            row.createCell(4).setCellValue(ragazzo.scuola().getGrado());
+            row.createCell(5).setCellValue(ragazzo.classe() + ragazzo.sezione());
+            row.createCell(6).setCellValue(ragazzo.parrocchia().getNome() + ", " + ragazzo.parrocchia().getLuogo());
+            row.createCell(7).setCellValue(ragazzo.circolo().getNome() + ", " + ragazzo.circolo().getLuogo());
+            row.createCell(8).setCellValue(ragazzo.nTessera());
 
-            row.createCell(9).setCellValue(ragazzo.getSettimanePresenza().stream().map(String::valueOf).collect(Collectors.joining(", ")));
-            row.createCell(10).setCellValue(ragazzo.getPresenza());
+            row.createCell(9).setCellValue(ragazzo.settimanePresenza().stream().map(String::valueOf).collect(Collectors.joining(", ")));
+            row.createCell(10).setCellValue(ragazzo.presenza());
 
-            row.createCell(11).setCellValue(ragazzo.getLaboratorio().getDescrizione());
-            row.createCell(12).setCellValue(ragazzo.getSquadra().getNome());
+            row.createCell(11).setCellValue(ragazzo.laboratorio().getDescrizione());
+            row.createCell(12).setCellValue(ragazzo.squadra().getNome());
 
-            row.createCell(13).setCellValue(ragazzo.getMensa());
-            row.createCell(14).setCellValue(ragazzo.getSaNuotare());
-            row.createCell(15).setCellValue(ragazzo.getEntrataAnticipata());
+            row.createCell(13).setCellValue(ragazzo.mensa());
+            row.createCell(14).setCellValue(ragazzo.saNuotare());
+            row.createCell(15).setCellValue(ragazzo.entrataAnticipata());
 
-            row.createCell(16).setCellValue(ragazzo.getRichieste());
-            row.createCell(17).setCellValue(ragazzo.getNoteAlimentari());
+            row.createCell(16).setCellValue(ragazzo.richieste());
+            row.createCell(17).setCellValue(ragazzo.noteAlimentari());
 
-            row.createCell(18).setCellValue(ragazzo.getFratelloIscritto());
-            row.createCell(19).setCellValue(ragazzo.getPagato());
-            row.createCell(20).setCellValue(ragazzo.getImportoPagamento().doubleValue());
+            row.createCell(18).setCellValue(ragazzo.fratelloIscritto());
+            row.createCell(19).setCellValue(ragazzo.pagato());
+            row.createCell(20).setCellValue(ragazzo.importoPagamento().doubleValue());
 
-            row.createCell(21).setCellValue(ragazzo.getRegistrato().getNome());
-            row.createCell(22).setCellValue(ragazzo.getRegistrato().getCognome());
-            row.createCell(23).setCellValue(ragazzo.getRegistrato().getMail());
-            row.createCell(24).setCellValue(ragazzo.getRegistrato().getTelefono());
-            row.createCell(25).setCellValue(ragazzo.getRegistrato().getVia() + " " + ragazzo.getRegistrato().getCivico() + ", " + ragazzo.getRegistrato().getLocalita());
+            row.createCell(21).setCellValue(ragazzo.registrato().getNome());
+            row.createCell(22).setCellValue(ragazzo.registrato().getCognome());
+            row.createCell(23).setCellValue(ragazzo.registrato().getMail());
+            row.createCell(24).setCellValue(ragazzo.registrato().getTelefono());
+            row.createCell(25).setCellValue(ragazzo.registrato().getVia() + " " + ragazzo.registrato().getCivico() + ", " + ragazzo.registrato().getLocalita());
         }
     }
 

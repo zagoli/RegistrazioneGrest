@@ -5,22 +5,23 @@
 
         <#-- Aggiunta laboratorio -->
         <h5>Aggiungi un laboratorio</h5>
-        <form action="/RegistrazioneGrest/App/GestisciLaboratori" class="form-inline">
+
+        <form action="/RegistrazioneGrest/App/GestisciLaboratori">
             <input type="hidden" name="add"/>
-            <div class="form-group m-2">
-                <label for="nome" class="sr-only">Nome</label>
-                <input type="text" placeholder="nome" name="nome" id="nome" class="form-control" required/>
+            <div class="form-group">
+                <label for="nome">Nome laboratorio</label>
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome laboratorio"/>
             </div>
-            <div class="form-group m-2">
-                <label for="riservato" class="sr-only">Riservato agli animatori</label>
-                <input type="checkbox" name="riservato" id="riservato" class="form-control ml-2" required/>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="riservato" name="riservato">
+                <label class="form-check-label" for="riservato">Riservato agli animatori</label>
             </div>
-            <input type="submit" class="btn btn-primary m-2" value="Aggiungi"/>
+            <button type="submit" class="btn btn-primary mt-2">Aggiungi</button>
         </form>
 
         <#-- Laboratori -->
         <#if laboratori??>
-            <h5 class="text-center pb-1"> Laboratori </h5>
+            <h5 class="mt-4 mb-2"> Laboratori </h5>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -35,11 +36,11 @@
                         <td>${labConNumero.laboratorio.descrizione}</td>
                         <td><#if labConNumero.laboratorio.riservato>sì<#else>no</#if></td>
                         <td>
-                            <#if labConNumero.numeroIscritti > 0>
+                            <#if (labConNumero.numeroIscritti > 0)>
                                 <p>Questo laboratorio ha ${labConNumero.numeroIscritti} iscritti</p>
                             <#else>
                                 <a href="/RegistrazioneGrest/App/GestisciLaboratori?delete&idLaboratorio=${labConNumero.laboratorio.id?c}">
-                                    <img src="../img/octicons/trashcan.svg">
+                                    <button type="button" class="btn btn-danger">Elimina</button>
                                 </a>
                             </#if>
                         </td>
