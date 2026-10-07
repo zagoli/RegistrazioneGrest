@@ -3,12 +3,13 @@ package Controller;
 import DAOManager.DAOMan;
 import Domain.Registrato;
 import Domain.RelCollabora;
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.Response;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,12 +17,12 @@ import java.util.List;
 public class ControllerVisualizzaAttGen implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            mv.setView("ammseg/visualizzaattgen.html");
-            mv.addObject("TITOLOPAGINA", "Attivita genitori");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.setView("ammseg/visualizzaattgen.html");
+            template.addObject("TITOLOPAGINA", "Attivita genitori");
             List<RelCollabora> allRelCollabora = DAOMan.relCollaboraDAO.findAll();
             List<Object[]> parametri = new LinkedList<>();
             for (RelCollabora relCollabora : allRelCollabora) {
@@ -33,11 +34,11 @@ public class ControllerVisualizzaAttGen implements ControllerInterface {
                 Object[] datiAttivita = {nome, cognome, data, descrizione};
                 parametri.add(datiAttivita);
             }
-            mv.addObject("attivita", parametri);
+            template.addObject("attivita", parametri);
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerVisualizzaAttGen.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerVisualizzaAttGen.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

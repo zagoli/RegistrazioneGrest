@@ -4,11 +4,10 @@ import DAOManager.DAOMan;
 import Domain.DatiPagamento;
 import Domain.IscrittoPagamento;
 import Domain.PagamentoRiepilogo;
-import Domain.Terzamedia;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
-import ModelAndView.RedirectResult;
+import Domain.TerzaMedia;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.Checker;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
@@ -27,7 +26,24 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerPagamentiTerzamedia.class);
 
-    protected static float calcolaQuota(Terzamedia t) throws SQLException, ConfigPropertyException, IOException {
+    private static void renderPage(FreemarkerTemplate template) throws SQLException, ConfigPropertyException, IOException {
+        List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.terzamediaDAO.findAllConPagamenti();
+        List<Object[]> datiTerzamedia = new ArrayList<>(iscritti.size());
+        if (!iscritti.isEmpty()) {
+            for (DatiPagamento<IscrittoPagamento, PagamentoRiepilogo> dato : iscritti) {
+                PagamentoRiepilogo pagamento = dato.getPagamento();
+                datiTerzamedia.add(new Object[]{
+                        dato.getIscritto(),
+                        pagamento != null,
+                        pagamento != null ? pagamento : calcolaQuota(dato.getIscritto().getLocalita(), dato.getSettimane())
+                });
+            }
+            template.addObject("terzamedia", datiTerzamedia);
+        }
+        template.setView("ammseg/gestiscipagamentiterzamedia.html");
+    }
+
+    protected static float calcolaQuota(TerzaMedia t) throws SQLException, ConfigPropertyException, IOException {
         return calcolaQuota(t.getRegistrato().getLocalita(), DAOMan.relPresenzaTerDAO.findByTerzamediaId(t.getId()).size());
     }
 
@@ -45,13 +61,13 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
     }
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            mv.addObject("TITOLOPAGINA", "Gestisci pagamenti terzamedia");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Gestisci pagamenti terzamedia");
             if (request.getParameterMap().isEmpty()) {
-                renderPage(mv);
+                renderPage(template);
             } else if (request.getParameterMap().containsKey("addPagamento")) {
                 float quota = Float.parseFloat(request.getParameter("quota").replace(',', '.'));
                 int idTerzamedia = Integer.parseInt(request.getParameter("addPagamento"));
@@ -66,8 +82,8 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
                     if (e.getSQLState().equals("23505")) {
                         String message = "Pagamento già presente per il ragazzo di terza media, o ordine arrivo " + ordineArrivo + " già inserito.";
                         logger.warn(message);
-                        mv.addObject("errorePagamento", message);
-                        renderPage(mv);
+                        template.addObject("errorePagamento", message);
+                        renderPage(template);
                     } else {
                         throw e;
                     }
@@ -79,26 +95,9 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
                 return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
             }
         } catch (final RuntimeException | IOException | SQLException | ConfigPropertyException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerPagamentiTerzamedia.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerPagamentiTerzamedia.class.getName());
         }
-        return mv;
-    }
-
-    private static void renderPage(ModelAndView mv) throws SQLException, ConfigPropertyException, IOException {
-        List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.terzamediaDAO.findAllConPagamenti();
-        List<Object[]> datiTerzamedia = new ArrayList<>(iscritti.size());
-        if (!iscritti.isEmpty()) {
-            for (DatiPagamento<IscrittoPagamento, PagamentoRiepilogo> dato : iscritti) {
-                PagamentoRiepilogo pagamento = dato.getPagamento();
-                datiTerzamedia.add(new Object[]{
-                        dato.getIscritto(),
-                        pagamento != null,
-                        pagamento != null ? pagamento : calcolaQuota(dato.getIscritto().getLocalita(), dato.getSettimane())
-                });
-            }
-            mv.addObject("terzamedia", datiTerzamedia);
-        }
-        mv.setView("ammseg/gestiscipagamentiterzamedia.html");
+        return template;
     }
 
 }

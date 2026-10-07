@@ -2,12 +2,10 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
-import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -20,13 +18,13 @@ public class ControllerModificaPassword implements ControllerInterface {
     Logger logger = LoggerFactory.getLogger(ControllerModificaPassword.class);
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("TITOLOPAGINA", "Modifica la password");
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Modifica la password");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (!request.getParameterMap().containsKey("password")) {
-                mv.setView("user/modificapassword.html");
+                template.setView("user/modificapassword.html");
             } else {
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 String password = request.getParameter("password");
@@ -37,9 +35,9 @@ public class ControllerModificaPassword implements ControllerInterface {
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             }
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerModificaPassword.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerModificaPassword.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

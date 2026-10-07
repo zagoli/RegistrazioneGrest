@@ -3,12 +3,13 @@ package Controller;
 import DAOManager.DAOMan;
 import Domain.AttivitaGen;
 import Domain.RelCollabora;
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.Response;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -17,11 +18,11 @@ import java.util.Map;
 public class ControllerDashboardAttGen implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("TITOLOPAGINA", "Attività genitori");
-            mv.setView("user/dashboardattgen.html");
+            template.addObject("TITOLOPAGINA", "Attività genitori");
+            template.setView("user/dashboardattgen.html");
             int idUt = (int) request.getSession().getAttribute("idUtente");
             Map<AttivitaGen, Object[]> mapAttivitaGen = new HashMap<>();
             List<RelCollabora> listRelCollabora = DAOMan.relCollaboraDAO.findByRegistratoId(idUt);
@@ -31,15 +32,15 @@ public class ControllerDashboardAttGen implements ControllerInterface {
                     Object[] o = {rc.getData(), rc.getId()};
                     mapAttivitaGen.put(ag, o);
                 }
-                mv.addObject("attivita", mapAttivitaGen);
+                template.addObject("attivita", mapAttivitaGen);
             }
-            mv.addObject("allattivita", DAOMan.attivitaGenDAO.findAll());
+            template.addObject("allattivita", DAOMan.attivitaGenDAO.findAll());
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            mv.addObject("tipoUt", tipoUt);
+            template.addObject("tipoUt", tipoUt);
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerDashboardAttGen.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerDashboardAttGen.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

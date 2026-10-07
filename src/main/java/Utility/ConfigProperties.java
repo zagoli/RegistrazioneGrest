@@ -43,7 +43,7 @@ public class ConfigProperties {
         properties.setProperty(propertyName, value);
         OutputStream outFile = new FileOutputStream(propertiesFilePath);
         properties.store(outFile, null);
-        logger.info("Property {} impostata al valore {}.",  propertyName, value);
+        logger.info("Property {} impostata al valore {}.", propertyName, value);
     }
 
     private static boolean isPropertyImmutable(String value) {

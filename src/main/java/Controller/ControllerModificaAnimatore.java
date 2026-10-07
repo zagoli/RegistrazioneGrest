@@ -2,16 +2,15 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
-import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -24,12 +23,12 @@ import java.util.TreeMap;
 public class ControllerModificaAnimatore implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             int idAnimatore = Integer.parseInt(request.getParameter("id"));
-            mv.addObject("TITOLOPAGINA", "Modifica animatore");
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Modifica animatore");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO ANIMATORE E FACCIO UNA REDIRECT
@@ -49,7 +48,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 a.setCodiceFiscale(request.getParameter("codiceFiscale").toUpperCase());
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    a.setnTessera(nTessera);
+                    a.setNTessera(nTessera);
                 }
                 DAOMan.animatoreDAO.update(a);
                 List<RelPresenzaAn> calToDelete = DAOMan.relPresenzaAnDAO.findByAnimatoreId(Integer.parseInt(request.getParameter("id")));
@@ -70,28 +69,28 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 //PREPARO I DATI PER LA PAGINA
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String dataNascita = sdf.format(a.getDataNascita());
-                mv.addObject("dataNascita", dataNascita);
-                mv.addObject("animatore", a);
+                template.addObject("dataNascita", dataNascita);
+                template.addObject("animatore", a);
                 List<Laboratorio> listLab = DAOMan.laboratorioDAO.findAll();
-                mv.addObject("laboratori", listLab);
+                template.addObject("laboratori", listLab);
                 List<Parrocchia> listParrocchia = DAOMan.parrocchiaDAO.findAll();
-                mv.addObject("parrocchie", listParrocchia);
+                template.addObject("parrocchie", listParrocchia);
                 List<Circolo> listCircolo = DAOMan.circoloDAO.findAll();
-                mv.addObject("circoli", listCircolo);
+                template.addObject("circoli", listCircolo);
                 List<Calendario> listaCalendari = DAOMan.calendarioDAO.findAll();
                 List<Calendario> listaCalendariAnimatore = DAOMan.calendarioDAO.findByAnimatoreId(idAnimatore);
                 Map<Calendario, Boolean> calendari = new TreeMap<>();
                 listaCalendari.forEach((calendario) -> calendari.put(calendario, listaCalendariAnimatore.contains(calendario)));
-                mv.addObject("calendari", calendari);
+                template.addObject("calendari", calendari);
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
-                    mv.addObject("INVALIDMAIL", true);
+                    template.addObject("INVALIDMAIL", true);
                 }
-                mv.setView("user/modificaanimatore.html");
+                template.setView("user/modificaanimatore.html");
             }
         } catch (final RuntimeException | SQLException | IOException | ParseException | ConfigPropertyException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerModificaAnimatore.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerModificaAnimatore.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

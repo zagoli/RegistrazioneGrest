@@ -2,12 +2,13 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.Response;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,8 +16,8 @@ import java.util.List;
 public class ControllerStampe implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             switch (request.getParameter("target")) {
                 case "pressetsqu": {
@@ -50,12 +51,12 @@ public class ControllerStampe implements ControllerInterface {
                         Object[] o = {an, periodoString};
                         anGiusti.add(o);
                     });
-                    mv.addObject("TITOLOPAGINA", "Presenze settimanali squadre");
-                    mv.setView("stampe/pressetsqu.html");
-                    mv.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
-                    mv.addObject("squadra", DAOMan.squadraDAO.findById(squadraId));
-                    mv.addObject("ragazzi", ragGiusti);
-                    mv.addObject("animatori", anGiusti);
+                    template.addObject("TITOLOPAGINA", "Presenze settimanali squadre");
+                    template.setView("stampe/pressetsqu.html");
+                    template.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
+                    template.addObject("squadra", DAOMan.squadraDAO.findById(squadraId));
+                    template.addObject("ragazzi", ragGiusti);
+                    template.addObject("animatori", anGiusti);
                 }
                 break;
                 case "elesintrag": {
@@ -70,9 +71,9 @@ public class ControllerStampe implements ControllerInterface {
                         Object[] o = {rag, periodoString, cu};
                         dati.add(o);
                     }
-                    mv.addObject("ragazzi", dati);
-                    mv.addObject("TITOLOPAGINA", "Elenco sintesi ragazzi");
-                    mv.setView("stampe/elesintrag.html");
+                    template.addObject("ragazzi", dati);
+                    template.addObject("TITOLOPAGINA", "Elenco sintesi ragazzi");
+                    template.setView("stampe/elesintrag.html");
                 }
                 break;
                 case "pressetlab": {
@@ -84,12 +85,12 @@ public class ControllerStampe implements ControllerInterface {
                     List<Animatore> anGiusti = new LinkedList<>();
                     allRagazzi.stream().filter((rag) -> (rag.getLaboratorio().getId() == labid)).forEachOrdered(ragGiusti::add);
                     allAnimatori.stream().filter((an) -> (an.getLaboratorio().getId() == labid)).forEachOrdered(anGiusti::add);
-                    mv.addObject("ragazzi", ragGiusti);
-                    mv.addObject("animatori", anGiusti);
-                    mv.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
-                    mv.addObject("laboratorio", DAOMan.laboratorioDAO.findById(labid));
-                    mv.addObject("TITOLOPAGINA", "Presenze settimanali laboratori");
-                    mv.setView("stampe/pressetlab.html");
+                    template.addObject("ragazzi", ragGiusti);
+                    template.addObject("animatori", anGiusti);
+                    template.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
+                    template.addObject("laboratorio", DAOMan.laboratorioDAO.findById(labid));
+                    template.addObject("TITOLOPAGINA", "Presenze settimanali laboratori");
+                    template.setView("stampe/pressetlab.html");
                 }
                 break;
                 case "collaborazione": {
@@ -104,9 +105,9 @@ public class ControllerStampe implements ControllerInterface {
                         Object[] o = {col, ag, reg, rag, lcal};
                         lob.add(o);
                     }
-                    mv.addObject("dati", lob);
-                    mv.addObject("TITOLOPAGINA", "Collaborazione genitori");
-                    mv.setView("stampe/collaborazione.html");
+                    template.addObject("dati", lob);
+                    template.addObject("TITOLOPAGINA", "Collaborazione genitori");
+                    template.setView("stampe/collaborazione.html");
                 }
                 break;
                 case "mensa": {
@@ -122,10 +123,10 @@ public class ControllerStampe implements ControllerInterface {
                             lob.add(o);
                         }
                     }
-                    mv.addObject("set", DAOMan.calendarioDAO.findById(Integer.parseInt(request.getParameter("idSet"))));
-                    mv.addObject("dati", lob);
-                    mv.addObject("TITOLOPAGINA", "Mensa");
-                    mv.setView("stampe/mensa.html");
+                    template.addObject("set", DAOMan.calendarioDAO.findById(Integer.parseInt(request.getParameter("idSet"))));
+                    template.addObject("dati", lob);
+                    template.addObject("TITOLOPAGINA", "Mensa");
+                    template.setView("stampe/mensa.html");
                 }
                 break;
                 case "anticipo": {
@@ -141,9 +142,9 @@ public class ControllerStampe implements ControllerInterface {
                             lob.add(o);
                         }
                     }
-                    mv.addObject("dati", lob);
-                    mv.addObject("TITOLOPAGINA", "Anticipo");
-                    mv.setView("stampe/anticipo.html");
+                    template.addObject("dati", lob);
+                    template.addObject("TITOLOPAGINA", "Anticipo");
+                    template.setView("stampe/anticipo.html");
                 }
                 break;
                 case "presgiornani": {
@@ -156,9 +157,9 @@ public class ControllerStampe implements ControllerInterface {
                         Object[] o = {ani, periodoString};
                         lob.add(o);
                     }
-                    mv.addObject("animatori", lob);
-                    mv.addObject("TITOLOPAGINA", "Presenza giornaliera animatori");
-                    mv.setView("stampe/presgiornani.html");
+                    template.addObject("animatori", lob);
+                    template.addObject("TITOLOPAGINA", "Presenza giornaliera animatori");
+                    template.setView("stampe/presgiornani.html");
                 }
                 break;
                 case "elesintan": {
@@ -171,15 +172,15 @@ public class ControllerStampe implements ControllerInterface {
                         Object[] o = {ani, periodoString};
                         lob.add(o);
                     }
-                    mv.addObject("animatori", lob);
-                    mv.addObject("TITOLOPAGINA", "Elenco sintesi animatori");
-                    mv.setView("stampe/elesintan.html");
+                    template.addObject("animatori", lob);
+                    template.addObject("TITOLOPAGINA", "Elenco sintesi animatori");
+                    template.setView("stampe/elesintan.html");
                 }
                 break;
                 case "elesintter": {
-                    List<Terzamedia> allTerzamedia = DAOMan.terzamediaDAO.findAll();
+                    List<TerzaMedia> allTerzaMedia = DAOMan.terzamediaDAO.findAll();
                     List<Object[]> dati = new LinkedList<>();
-                    for (Terzamedia ter : allTerzamedia) {
+                    for (TerzaMedia ter : allTerzaMedia) {
                         String periodoString = "";
                         List<RelPresenzaTer> periodo = DAOMan.relPresenzaTerDAO.findByTerzamediaId(ter.getId());
                         periodoString = periodo.stream().map((relPresenzaTer) -> relPresenzaTer.getCalendarioId() + " ").reduce(periodoString, String::concat);
@@ -188,16 +189,16 @@ public class ControllerStampe implements ControllerInterface {
                         Object[] o = {ter, periodoString, cu};
                         dati.add(o);
                     }
-                    mv.addObject("terzamedia", dati);
-                    mv.addObject("TITOLOPAGINA", "Elenco sintesi terzamedia");
-                    mv.setView("stampe/elesintter.html");
+                    template.addObject("terzamedia", dati);
+                    template.addObject("TITOLOPAGINA", "Elenco sintesi terzamedia");
+                    template.setView("stampe/elesintter.html");
                 }
                 break;
             }
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerStampe.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerStampe.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

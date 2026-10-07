@@ -1,10 +1,10 @@
 package DAOManager;
 
-import Domain.TerzamediaExport;
+import Domain.TerzaMediaExport;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface TerzamediaExportDAO {
-    List<TerzamediaExport> findAll() throws SQLException;
+    List<TerzaMediaExport> findAll() throws SQLException;
 }

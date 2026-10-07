@@ -53,7 +53,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
             pst.setString(9, a.getCellulare());
             pst.setString(10, a.getFasciaEtaRagazzi());
             pst.setString(11, a.getMail());
-            pst.setString(12, a.getnTessera());
+            pst.setString(12, a.getNTessera());
             pst.setString(13, a.getCodiceFiscale());
             pst.setBoolean(14, a.isResponsabileSquadra());
             pst.setBoolean(15, a.isResponsabileLaboratorio());
@@ -81,7 +81,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
             pst.setString(9, a.getCellulare());
             pst.setString(10, a.getFasciaEtaRagazzi());
             pst.setString(11, a.getMail());
-            pst.setString(12, a.getnTessera());
+            pst.setString(12, a.getNTessera());
             pst.setString(13, a.getCodiceFiscale());
             pst.setBoolean(14, a.isResponsabileSquadra());
             pst.setBoolean(15, a.isResponsabileLaboratorio());

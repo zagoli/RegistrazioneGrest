@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Animatore {
+public class TerzaMedia {
     private int id;
     private String nome;
     private String cognome;
@@ -19,13 +19,15 @@ public class Animatore {
     private Parrocchia parrocchia;
     private Registrato registrato;
     private Circolo circolo;
-    private String cellulare;
-    private String fasciaEtaRagazzi;
-    private String mail;
+    private String richieste;
+    private String noteAlimentari;
+    private Boolean saNuotare;
+    private Boolean festaPassaggio;
+    private Scuola scuola;
+    private String sezione;
     private String nTessera;
     private Squadra squadra;
-    private String codiceFiscale;
-    private boolean responsabileSquadra;
-    private boolean responsabileLaboratorio;
+    private String cellulare;
+    private String mail;
 
 }

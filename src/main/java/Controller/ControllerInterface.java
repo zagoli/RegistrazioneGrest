@@ -1,12 +1,12 @@
 package Controller;
 
-import ModelAndView.ControllerResult;
+import Response.Response;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public interface ControllerInterface {
 
-    ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response);
+    Response handleRequest(HttpServletRequest request, HttpServletResponse response);
 
 }

@@ -2,28 +2,27 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
-import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class ControllerModificaUtente implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("TITOLOPAGINA", "Modifica account");
+            template.addObject("TITOLOPAGINA", "Modifica account");
             int idUt = (int) request.getSession().getAttribute("idUtente");
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
                 r.setMail(request.getParameter("mail"));
@@ -37,15 +36,15 @@ public class ControllerModificaUtente implements ControllerInterface {
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
-                    mv.addObject("INVALIDMAIL", true);
+                    template.addObject("INVALIDMAIL", true);
                 }
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
-                mv.addObject("registrato", r);
-                mv.setView("user/modificautente.html");
+                template.addObject("registrato", r);
+                template.setView("user/modificautente.html");
             }
         } catch (final RuntimeException | SQLException | IOException | ConfigPropertyException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerModificaUtente.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerModificaUtente.class.getName());
         }
-        return mv;
+        return template;
     }
 }

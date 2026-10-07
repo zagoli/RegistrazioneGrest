@@ -2,8 +2,8 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.Response;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
@@ -17,14 +17,14 @@ import java.sql.SQLException;
 public class ControllerRegistraUtente implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (request.getSession().getAttribute("tipoUtente") != null && request.getSession().getAttribute("tipoUtente").equals(0)) {
-                mv.setView("ammseg/registrasegretario.html");
+                template.setView("ammseg/registrasegretario.html");
             } else {
-                mv.setView("user/registrautente.html");
+                template.setView("user/registrautente.html");
             }
             if (request.getParameterMap().containsKey("nome")) {
                 if (Checker.checkMail(request.getParameter("mail"))) {
@@ -47,21 +47,21 @@ public class ControllerRegistraUtente implements ControllerInterface {
                         r.setTipoUt(3);
                     }
                     DAOMan.registratoDAO.insert(r);
-                    mv.addObject("TITOLOPAGINA", "Utente Registrato");
-                    mv.addObject("DONE", true);
+                    template.addObject("TITOLOPAGINA", "Utente Registrato");
+                    template.addObject("DONE", true);
                 } else {
-                    mv.addObject("INVALIDMAIL", true);
-                    mv.addObject("TITOLOPAGINA", "Registrazione Utente");
-                    mv.addObject("DONE", false);
+                    template.addObject("INVALIDMAIL", true);
+                    template.addObject("TITOLOPAGINA", "Registrazione Utente");
+                    template.addObject("DONE", false);
                 }
             } else {
-                mv.addObject("TITOLOPAGINA", "Registrazione Utente");
-                mv.addObject("DONE", false);
+                template.addObject("TITOLOPAGINA", "Registrazione Utente");
+                template.addObject("DONE", false);
             }
         } catch (final RuntimeException | SQLException | ConfigPropertyException | IOException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraUtente.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerRegistraUtente.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

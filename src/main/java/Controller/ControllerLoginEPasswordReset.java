@@ -2,15 +2,17 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
-import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Servlet.CorrelationIdFilter;
 import Utility.BCrypt;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,47 +24,46 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ControllerLoginEPasswordReset implements ControllerInterface {
 
-    private static final Logger logger =  LoggerFactory.getLogger(ControllerLoginEPasswordReset.class);
+    private static final Logger logger = LoggerFactory.getLogger(ControllerLoginEPasswordReset.class);
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("TITOLOPAGINA", "Login");
+            template.addObject("TITOLOPAGINA", "Login");
             if (!request.getParameterMap().containsKey("mail") && !request.getParameterMap().containsKey("password")) {
-                mv.setView("user/login.html");
+                template.setView("user/login.html");
                 if (request.getParameterMap().containsKey("logout")) {
                     HttpSession session = request.getSession(false);
                     if (session != null) {
                         session.invalidate();
                     }
                 } else if (request.getParameterMap().containsKey("reset")) {
-                    resetPassword(request, mv);
+                    resetPassword(request, template);
                 }
             } else {
                 String mail = request.getParameter("mail");
                 String pswdDaValidare = request.getParameter("password");
                 Registrato r = DAOMan.registratoDAO.findByMail(mail);
                 if (r == null) {
-                    mv.setView("user/login.html");
-                    mv.addObject("UTENTENONTROVATO", true);
+                    template.setView("user/login.html");
+                    template.addObject("UTENTENONTROVATO", true);
+                    logger.info("Registrato {} non è stato trovato durante il login", mail);
                 } else {
                     String pswd = r.getPassword();
                     if (!BCrypt.checkpw(pswdDaValidare, pswd)) {
-                        mv.setView("user/login.html");
-                        mv.addObject("ERRATO", true);
+                        template.setView("user/login.html");
+                        template.addObject("ERRATO", true);
+                        logger.info("Registrato {} ha inserito la password errata durante il login", r.getMail());
                     } else {
                         HttpSession session = request.getSession();
                         request.changeSessionId();
@@ -77,27 +78,27 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
                 }
             }
         } catch (final RuntimeException | IOException | SQLException | MessagingException | ConfigPropertyException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerLoginEPasswordReset.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerLoginEPasswordReset.class.getName());
         }
-        return mv;
+        return template;
     }
 
-    private void resetPassword(HttpServletRequest request, ModelAndView mv) throws SQLException, MessagingException, ConfigPropertyException, IOException {
-        mv.setView("user/resetpassword.html");
+    private void resetPassword(HttpServletRequest request, FreemarkerTemplate template) throws SQLException, MessagingException, ConfigPropertyException, IOException {
+        template.setView("user/resetpassword.html");
         if (request.getParameterMap().containsKey("mailtoreset")) {
             String mailToReset = request.getParameter("mailtoreset");
             logger.info("Richiesto reset password per utente con email {}", mailToReset);
             Registrato r = DAOMan.registratoDAO.findByMail(mailToReset);
             if (r == null) {
                 logger.info("Registrato non trovato");
-                mv.addObject("UTENTENONTROVATO", true);
+                template.addObject("UTENTENONTROVATO", true);
             } else {
                 String newpswd = getNewPswd();
                 r.setPassword(newpswd);
                 DAOMan.registratoDAO.updatePassword(r);
                 logger.info("Password resettata. Invio email...");
                 sendResetPasswordEmail(r.getMail(), newpswd);
-                mv.addObject("FATTO", true);
+                template.addObject("FATTO", true);
             }
         }
     }

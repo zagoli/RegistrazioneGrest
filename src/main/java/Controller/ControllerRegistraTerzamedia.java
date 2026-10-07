@@ -2,17 +2,16 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
-import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.Checker;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -23,14 +22,14 @@ import java.util.List;
 public class ControllerRegistraTerzamedia implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            mv.addObject("TITOLOPAGINA", "Registrazione ragazzo di Terzamedia");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Registrazione ragazzo di Terzamedia");
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
-                Terzamedia terzamedia = new Terzamedia();
+                TerzaMedia terzamedia = new TerzaMedia();
                 terzamedia.setNome(request.getParameter("nome"));
                 terzamedia.setCognome(request.getParameter("cognome"));
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -66,7 +65,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
 
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    terzamedia.setnTessera(nTessera);
+                    terzamedia.setNTessera(nTessera);
                 }
 
                 DAOMan.terzamediaDAO.insert(terzamedia);
@@ -79,27 +78,27 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
 
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
-                mv.setView("user/registraterzamedia.html");
+                template.setView("user/registraterzamedia.html");
                 //Recupera dati per la registrazione
                 List<Laboratorio> listLabGiusti = DAOMan.laboratorioDAO.findAll();
-                mv.addObject("laboratori", listLabGiusti);
+                template.addObject("laboratori", listLabGiusti);
                 List<Parrocchia> listParrocchia = DAOMan.parrocchiaDAO.findAll();
-                mv.addObject("parrocchie", listParrocchia);
+                template.addObject("parrocchie", listParrocchia);
                 List<Circolo> listCircolo = DAOMan.circoloDAO.findAll();
-                mv.addObject("circoli", listCircolo);
+                template.addObject("circoli", listCircolo);
                 List<Scuola> listScuola = DAOMan.scuolaDAO.findAll();
-                mv.addObject("scuole", listScuola);
+                template.addObject("scuole", listScuola);
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
-                mv.addObject("calendari", listaCalendario);
+                template.addObject("calendari", listaCalendario);
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
-                    mv.addObject("INVALIDMAIL", true);
+                    template.addObject("INVALIDMAIL", true);
                 }
                 //iscrizioni aperte o chiuse
-                mv.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
+                template.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
             }
         } catch (final RuntimeException | IOException | ConfigPropertyException | SQLException | ParseException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraTerzamedia.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerRegistraTerzamedia.class.getName());
         }
-        return mv;
+        return template;
     }
 }

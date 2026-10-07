@@ -4,7 +4,7 @@
     <h2 class="text-uppercase text-center"> presenze settimanali <span
                 style="color:${squadra.colore}; ">${squadra.nome}</span></h2>
     <h5 class="text-uppercase text-center font-italic">settimana numero ${settimana.idSettimana?c}
-        <small>(dal ${settimana.daQuando} al ${settimana.aQuando})</small></h5>
+        <small>(dal ${settimana.daQuando} al ${settimana.AQuando})</small></h5>
     <div class="container">
         <table class="table table-bordered table-sm">
             <thead>

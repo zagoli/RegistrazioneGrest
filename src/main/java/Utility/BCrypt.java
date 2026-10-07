@@ -437,8 +437,8 @@ public class BCrypt {
      *
      * @param s       the string to decode
      * @param maxolen the maximum number of bytes to decode
-     * @throws IllegalArgumentException if maxolen is invalid
      * @return an array containing the decoded bytes
+     * @throws IllegalArgumentException if maxolen is invalid
      */
     private static byte[] decode_base64(String s, int maxolen)
             throws IllegalArgumentException {
@@ -645,6 +645,11 @@ public class BCrypt {
         return ret == 0;
     }
 
+    public static void main(String[] args) {
+        String pwd = "";
+        System.out.println(BCrypt.hashpw(pwd, BCrypt.gensalt()));
+    }
+
     /**
      * Blowfish encipher a single 64-bit block encoded as
      * two 32-bit halves
@@ -788,10 +793,5 @@ public class BCrypt {
             ret[j++] = (byte) (cdata[i] & 0xff);
         }
         return ret;
-    }
-
-    public static void main(String[] args) {
-        String pwd = "";
-        System.out.println(BCrypt.hashpw(pwd, BCrypt.gensalt()));
     }
 }

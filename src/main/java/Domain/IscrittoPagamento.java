@@ -1,5 +1,8 @@
 package Domain;
 
+import lombok.Getter;
+
+@Getter
 public class IscrittoPagamento {
     private final int id;
     private final String nome;
@@ -11,21 +14,5 @@ public class IscrittoPagamento {
         this.nome = nome;
         this.cognome = cognome;
         this.localita = localita;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getCognome() {
-        return cognome;
-    }
-
-    public String getLocalita() {
-        return localita;
     }
 }

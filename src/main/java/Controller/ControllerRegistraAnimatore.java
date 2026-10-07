@@ -2,17 +2,16 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
-import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.Checker;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -23,11 +22,11 @@ import java.util.List;
 public class ControllerRegistraAnimatore implements ControllerInterface {
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            mv.addObject("TITOLOPAGINA", "Registra Animatore");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Registra Animatore");
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Animatore animatore = new Animatore();
                 animatore.setNome(request.getParameter("nome"));
@@ -47,7 +46,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                 animatore.setCodiceFiscale(request.getParameter("codiceFiscale").toUpperCase());
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    animatore.setnTessera(nTessera);
+                    animatore.setNTessera(nTessera);
                 }
                 DAOMan.animatoreDAO.insert(animatore);
                 String[] cal = request.getParameterValues("cal");
@@ -57,28 +56,28 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                 }
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
-                mv.setView("user/registraanimatore.html");
+                template.setView("user/registraanimatore.html");
                 //preparo i dati necessari per l'iscrizione
                 List<Laboratorio> listLab = DAOMan.laboratorioDAO.findAll();
-                mv.addObject("laboratori", listLab);
+                template.addObject("laboratori", listLab);
                 List<Parrocchia> listParrocchia = DAOMan.parrocchiaDAO.findAll();
-                mv.addObject("parrocchie", listParrocchia);
+                template.addObject("parrocchie", listParrocchia);
                 List<Circolo> listCircolo = DAOMan.circoloDAO.findAll();
-                mv.addObject("circoli", listCircolo);
+                template.addObject("circoli", listCircolo);
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
-                mv.addObject("calendari", listaCalendario);
+                template.addObject("calendari", listaCalendario);
                 Registrato reg = DAOMan.registratoDAO.findById((int) request.getSession().getAttribute("idUtente"));
-                mv.addObject("registrato", reg);
+                template.addObject("registrato", reg);
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
-                    mv.addObject("INVALIDMAIL", true);
+                    template.addObject("INVALIDMAIL", true);
                 }
                 //iscrizioni aperte o chiuse
-                mv.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
+                template.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
             }
         } catch (final RuntimeException | SQLException | IOException | ConfigPropertyException | ParseException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraAnimatore.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerRegistraAnimatore.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

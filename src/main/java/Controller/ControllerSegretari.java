@@ -2,12 +2,10 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.Registrato;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
-import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -21,19 +19,19 @@ public class ControllerSegretari implements ControllerInterface {
     private static final Logger logger = LoggerFactory.getLogger(ControllerSegretari.class);
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("TITOLOPAGINA", "Gestisci segretari");
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Gestisci segretari");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().isEmpty()) {
                 List<Registrato> lseg = DAOMan.registratoDAO.findSegretari();
                 List<Registrato> lamm = DAOMan.registratoDAO.findAmministratori();
                 if (!lseg.isEmpty()) {
-                    mv.addObject("segretari", lseg);
+                    template.addObject("segretari", lseg);
                 }
-                mv.addObject("amministratori", lamm);
-                mv.setView("ammseg/gestiscisegretari.html");
+                template.addObject("amministratori", lamm);
+                template.setView("ammseg/gestiscisegretari.html");
 
             } else if (request.getParameterMap().containsKey("del")) {
                 DAOMan.registratoDAO.delete(Integer.parseInt(request.getParameter("id")));
@@ -55,9 +53,9 @@ public class ControllerSegretari implements ControllerInterface {
                 return new RedirectResult("/RegistrazioneGrest/App/GestisciSegretari");
             }
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerSegretari.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerSegretari.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

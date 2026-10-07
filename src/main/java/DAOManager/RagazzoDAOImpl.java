@@ -69,154 +69,6 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from presenzaRag pr group by pr.Calendario_idSettimana;";
     // </editor-fold>
 
-    @Override
-    public void insert(Ragazzo r) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(INSERT_RAGAZZO, Statement.RETURN_GENERATED_KEYS)) {
-            pst.setString(1, r.getNome());
-            pst.setString(2, r.getCognome());
-            pst.setDate(3, new java.sql.Date(r.getDataNascita().getTime()));
-            pst.setString(4, r.getPresenza());
-            pst.setInt(5, r.getLaboratorio().getId());
-            pst.setInt(6, r.getParrocchia().getId());
-            pst.setInt(7, r.getRegistrato().getId());
-            pst.setInt(8, r.getCircolo().getId());
-            pst.setBoolean(9, r.getEntrataAnticipata());
-            pst.setString(10, r.getRichieste());
-            pst.setString(11, r.getNoteAlimentari());
-            pst.setBoolean(12, r.getMensa());
-            pst.setBoolean(13, r.getSaNuotare());
-            pst.setBoolean(14, r.getFratelloIscritto());
-            pst.setInt(15, r.getScuola().getId());
-            pst.setString(16, r.getSezione());
-            pst.setString(17, r.getClasse());
-            pst.setString(18, r.getnTessera());
-            pst.executeUpdate();
-            try (ResultSet rs = pst.getGeneratedKeys()) {
-                if (rs.next()) {
-                    r.setId(rs.getInt(1));
-                }
-            }
-        }
-    }
-
-    @Override
-    public void update(Ragazzo r) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(UPDATE_RAGAZZO)) {
-            pst.setString(1, r.getNome());
-            pst.setString(2, r.getCognome());
-            pst.setDate(3, new java.sql.Date(r.getDataNascita().getTime()));
-            pst.setString(4, r.getPresenza());
-            pst.setInt(5, r.getLaboratorio().getId());
-            pst.setInt(6, r.getParrocchia().getId());
-            pst.setInt(7, r.getRegistrato().getId());
-            pst.setInt(8, r.getCircolo().getId());
-            pst.setBoolean(9, r.getEntrataAnticipata());
-            pst.setString(10, r.getRichieste());
-            pst.setString(11, r.getNoteAlimentari());
-            pst.setBoolean(12, r.getMensa());
-            pst.setBoolean(13, r.getSaNuotare());
-            pst.setBoolean(14, r.getFratelloIscritto());
-            pst.setInt(15, r.getScuola().getId());
-            pst.setString(16, r.getSezione());
-            pst.setString(17, r.getClasse());
-            pst.setString(18, r.getnTessera());
-            pst.setInt(19, r.getId());
-            pst.executeUpdate();
-        }
-    }
-
-    @Override
-    public void updateSquadra(int id, Integer idSquadra) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_RAGAZZO)) {
-            if (idSquadra == null) {
-                pst.setNull(1, Types.INTEGER);
-            } else {
-                pst.setInt(1, idSquadra);
-            }
-            pst.setInt(2, id);
-            pst.executeUpdate();
-        }
-    }
-
-    @Override
-    public void updateLaboratorio(int id, int idLaboratorio) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(UPDATE_LABORATORIO_RAGAZZO)) {
-            pst.setInt(1, idLaboratorio);
-            pst.setInt(2, id);
-            pst.executeUpdate();
-        }
-    }
-
-    @Override
-    public void delete(Integer idRagazzo) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(DELETE_RAGAZZO)) {
-            pst.setInt(1, idRagazzo);
-            pst.executeUpdate();
-        }
-    }
-
-    @Override
-    public Ragazzo findById(int id) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_RAGAZZO_ID)) {
-            pst.setInt(1, id);
-            try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? this.mapRowToRagazzo(rs) : null;
-            }
-        }
-    }
-
-    @Override
-    public List<Ragazzo> findAll() throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_ALL_RAGAZZO);
-             ResultSet rs = pst.executeQuery()) {
-            LinkedList<Ragazzo> lr = new LinkedList<>();
-            while (rs.next()) {
-                lr.add(this.mapRowToRagazzo(rs));
-            }
-            return lr;
-        }
-    }
-
-    @Override
-    public List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> findAllConPagamenti() throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTI);
-             ResultSet rs = pst.executeQuery()) {
-            List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> dati = new LinkedList<>();
-            while (rs.next()) {
-                int id = rs.getInt("raid");
-                RagazzoPagamento iscritto = new RagazzoPagamento(
-                        id, rs.getString("ranome"), rs.getString("racognome"), rs.getString("relocalita"),
-                        rs.getBoolean("ramensa"), rs.getBoolean("rafratelloIscritto"), rs.getBoolean("raentrataAnticipata"));
-                PagamentoRiepilogo pagamento = rs.getObject("pid") == null ? null : new PagamentoRiepilogo(
-                        rs.getInt("pid"), rs.getInt("pordineArrivo"), rs.getDate("pdata"), rs.getFloat("pquota"),
-                        rs.getString("prenome"), rs.getString("precognome"));
-                dati.add(new DatiPagamento<>(iscritto, pagamento, rs.getInt("settimane")));
-            }
-            return dati;
-        }
-    }
-
-    @Override
-    public List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> findAllConPagamento() throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTO);
-             ResultSet rs = pst.executeQuery()) {
-            List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> dati = new LinkedList<>();
-            while (rs.next()) {
-                dati.add(new DatiPagamento<>(mapRowToRagazzo(rs), mapRowToPagamentoRiepilogo(rs)));
-            }
-            return dati;
-        }
-    }
-
     static PagamentoRiepilogo mapRowToPagamentoRiepilogo(ResultSet rs) throws SQLException {
         if (rs.getObject("pid") == null) {
             return null;
@@ -226,123 +78,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
                 rs.getString("prenome"), rs.getString("precognome"));
     }
 
-    @Override
-    public int count() throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(COUNT_RAGAZZO);
-             ResultSet rs = pst.executeQuery()) {
-            rs.next();
-            return rs.getInt(1);
-        }
-    }
-
-    @Override
-    public int countByRegistratoId(int id) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(COUNT_RAGAZZO_REGISTRATO_ID)) {
-            pst.setInt(1, id);
-            try (ResultSet rs = pst.executeQuery()) {
-                rs.next();
-                return rs.getInt(1);
-            }
-        }
-    }
-
-    @Override
-    public List<Ragazzo> findByCalendarioId(int id) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_RAGAZZO_CAL_ID)) {
-            pst.setInt(1, id);
-            try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Ragazzo> lr = new LinkedList<>();
-                while (rs.next()) {
-                    lr.add(this.mapRowToRagazzo(rs));
-                }
-                return lr;
-            }
-        }
-    }
-
-    @Override
-    public List<Ragazzo> findByRegistratoId(int id) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_RAGAZZO_REGISTRATO_ID)) {
-            pst.setInt(1, id);
-            try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Ragazzo> lr = new LinkedList<>();
-                while (rs.next()) {
-                    lr.add(this.mapRowToRagazzo(rs));
-                }
-                return lr;
-            }
-        }
-    }
-
-    @Override
-    public int countMensaTotale() throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(COUNT_MENSA_TOT);
-             ResultSet rs = pst.executeQuery()) {
-            rs.next();
-            return rs.getInt(1);
-        }
-    }
-
-    @Override
-    public List<Integer[]> countMensaSettimanale() throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(COUNT_MENSA_SETTIMANALE);
-             ResultSet rs = pst.executeQuery()) {
-            LinkedList<Integer[]> count = new LinkedList<>();
-            while (rs.next()) {
-                Integer[] i = {rs.getInt(1), rs.getInt(2)};
-                count.add(i);
-            }
-            return count;
-        }
-    }
-
-
-    @Override
-    public int countAnticipatoTotale() throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(COUNT_ANTICIPATO_TOT);
-             ResultSet rs = pst.executeQuery()) {
-            rs.next();
-            return rs.getInt(1);
-        }
-    }
-
-    @Override
-    public List<Integer[]> countAnticipatoSettimanale() throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(COUNT_ANTICIPATO_SETTIMANALE);
-             ResultSet rs = pst.executeQuery()) {
-            LinkedList<Integer[]> count = new LinkedList<>();
-            while (rs.next()) {
-                Integer[] i = {rs.getInt(1), rs.getInt(2)};
-                count.add(i);
-            }
-            return count;
-        }
-    }
-
-    @Override
-    public List<Integer[]> countSettimanale() throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(COUNT_SETTIMANALE);
-             ResultSet rs = pst.executeQuery()) {
-            LinkedList<Integer[]> count = new LinkedList<>();
-            while (rs.next()) {
-                Integer[] i = {rs.getInt(1), rs.getInt(2)};
-                count.add(i);
-            }
-            return count;
-        }
-    }
-
-
-    public Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
+    private static Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
         return new Ragazzo(
                 rs.getInt("raid"),
                 rs.getString("ranome"),
@@ -396,6 +132,268 @@ public class RagazzoDAOImpl implements RagazzoDAO {
                         rs.getString("sqcolore")
                 )
         );
+    }
+
+    @Override
+    public void insert(Ragazzo r) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_RAGAZZO, Statement.RETURN_GENERATED_KEYS)) {
+            pst.setString(1, r.getNome());
+            pst.setString(2, r.getCognome());
+            pst.setDate(3, new java.sql.Date(r.getDataNascita().getTime()));
+            pst.setString(4, r.getPresenza());
+            pst.setInt(5, r.getLaboratorio().getId());
+            pst.setInt(6, r.getParrocchia().getId());
+            pst.setInt(7, r.getRegistrato().getId());
+            pst.setInt(8, r.getCircolo().getId());
+            pst.setBoolean(9, r.getEntrataAnticipata());
+            pst.setString(10, r.getRichieste());
+            pst.setString(11, r.getNoteAlimentari());
+            pst.setBoolean(12, r.getMensa());
+            pst.setBoolean(13, r.getSaNuotare());
+            pst.setBoolean(14, r.getFratelloIscritto());
+            pst.setInt(15, r.getScuola().getId());
+            pst.setString(16, r.getSezione());
+            pst.setString(17, r.getClasse());
+            pst.setString(18, r.getNTessera());
+            pst.executeUpdate();
+            try (ResultSet rs = pst.getGeneratedKeys()) {
+                if (rs.next()) {
+                    r.setId(rs.getInt(1));
+                }
+            }
+        }
+    }
+
+    @Override
+    public void update(Ragazzo r) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_RAGAZZO)) {
+            pst.setString(1, r.getNome());
+            pst.setString(2, r.getCognome());
+            pst.setDate(3, new java.sql.Date(r.getDataNascita().getTime()));
+            pst.setString(4, r.getPresenza());
+            pst.setInt(5, r.getLaboratorio().getId());
+            pst.setInt(6, r.getParrocchia().getId());
+            pst.setInt(7, r.getRegistrato().getId());
+            pst.setInt(8, r.getCircolo().getId());
+            pst.setBoolean(9, r.getEntrataAnticipata());
+            pst.setString(10, r.getRichieste());
+            pst.setString(11, r.getNoteAlimentari());
+            pst.setBoolean(12, r.getMensa());
+            pst.setBoolean(13, r.getSaNuotare());
+            pst.setBoolean(14, r.getFratelloIscritto());
+            pst.setInt(15, r.getScuola().getId());
+            pst.setString(16, r.getSezione());
+            pst.setString(17, r.getClasse());
+            pst.setString(18, r.getNTessera());
+            pst.setInt(19, r.getId());
+            pst.executeUpdate();
+        }
+    }
+
+    @Override
+    public void updateSquadra(int id, Integer idSquadra) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_RAGAZZO)) {
+            if (idSquadra == null) {
+                pst.setNull(1, Types.INTEGER);
+            } else {
+                pst.setInt(1, idSquadra);
+            }
+            pst.setInt(2, id);
+            pst.executeUpdate();
+        }
+    }
+
+    @Override
+    public void updateLaboratorio(int id, int idLaboratorio) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_LABORATORIO_RAGAZZO)) {
+            pst.setInt(1, idLaboratorio);
+            pst.setInt(2, id);
+            pst.executeUpdate();
+        }
+    }
+
+    @Override
+    public void delete(Integer idRagazzo) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_RAGAZZO)) {
+            pst.setInt(1, idRagazzo);
+            pst.executeUpdate();
+        }
+    }
+
+    @Override
+    public Ragazzo findById(int id) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_RAGAZZO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? mapRowToRagazzo(rs) : null;
+            }
+        }
+    }
+
+    @Override
+    public List<Ragazzo> findAll() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_RAGAZZO);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Ragazzo> lr = new LinkedList<>();
+            while (rs.next()) {
+                lr.add(mapRowToRagazzo(rs));
+            }
+            return lr;
+        }
+    }
+
+    @Override
+    public List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> findAllConPagamenti() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTI);
+             ResultSet rs = pst.executeQuery()) {
+            List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> dati = new LinkedList<>();
+            while (rs.next()) {
+                int id = rs.getInt("raid");
+                RagazzoPagamento iscritto = new RagazzoPagamento(
+                        id, rs.getString("ranome"), rs.getString("racognome"), rs.getString("relocalita"),
+                        rs.getBoolean("ramensa"), rs.getBoolean("rafratelloIscritto"), rs.getBoolean("raentrataAnticipata"));
+                PagamentoRiepilogo pagamento = rs.getObject("pid") == null ? null : new PagamentoRiepilogo(
+                        rs.getInt("pid"), rs.getInt("pordineArrivo"), rs.getDate("pdata"), rs.getFloat("pquota"),
+                        rs.getString("prenome"), rs.getString("precognome"));
+                dati.add(new DatiPagamento<>(iscritto, pagamento, rs.getInt("settimane")));
+            }
+            return dati;
+        }
+    }
+
+    @Override
+    public List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> findAllConPagamento() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTO);
+             ResultSet rs = pst.executeQuery()) {
+            List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> dati = new LinkedList<>();
+            while (rs.next()) {
+                dati.add(new DatiPagamento<>(mapRowToPagamentoRiepilogo(rs), mapRowToRagazzo(rs)));
+            }
+            return dati;
+        }
+    }
+
+    @Override
+    public int count() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_RAGAZZO);
+             ResultSet rs = pst.executeQuery()) {
+            rs.next();
+            return rs.getInt(1);
+        }
+    }
+
+    @Override
+    public int countByRegistratoId(int id) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_RAGAZZO_REGISTRATO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                rs.next();
+                return rs.getInt(1);
+            }
+        }
+    }
+
+    @Override
+    public List<Ragazzo> findByCalendarioId(int id) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_RAGAZZO_CAL_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Ragazzo> lr = new LinkedList<>();
+                while (rs.next()) {
+                    lr.add(mapRowToRagazzo(rs));
+                }
+                return lr;
+            }
+        }
+    }
+
+    @Override
+    public List<Ragazzo> findByRegistratoId(int id) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_RAGAZZO_REGISTRATO_ID)) {
+            pst.setInt(1, id);
+            try (ResultSet rs = pst.executeQuery()) {
+                LinkedList<Ragazzo> lr = new LinkedList<>();
+                while (rs.next()) {
+                    lr.add(mapRowToRagazzo(rs));
+                }
+                return lr;
+            }
+        }
+    }
+
+    @Override
+    public int countMensaTotale() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_MENSA_TOT);
+             ResultSet rs = pst.executeQuery()) {
+            rs.next();
+            return rs.getInt(1);
+        }
+    }
+
+    @Override
+    public List<Integer[]> countMensaSettimanale() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_MENSA_SETTIMANALE);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Integer[]> count = new LinkedList<>();
+            while (rs.next()) {
+                Integer[] i = {rs.getInt(1), rs.getInt(2)};
+                count.add(i);
+            }
+            return count;
+        }
+    }
+
+    @Override
+    public int countAnticipatoTotale() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_ANTICIPATO_TOT);
+             ResultSet rs = pst.executeQuery()) {
+            rs.next();
+            return rs.getInt(1);
+        }
+    }
+
+    @Override
+    public List<Integer[]> countAnticipatoSettimanale() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_ANTICIPATO_SETTIMANALE);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Integer[]> count = new LinkedList<>();
+            while (rs.next()) {
+                Integer[] i = {rs.getInt(1), rs.getInt(2)};
+                count.add(i);
+            }
+            return count;
+        }
+    }
+
+    @Override
+    public List<Integer[]> countSettimanale() throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(COUNT_SETTIMANALE);
+             ResultSet rs = pst.executeQuery()) {
+            LinkedList<Integer[]> count = new LinkedList<>();
+            while (rs.next()) {
+                Integer[] i = {rs.getInt(1), rs.getInt(2)};
+                count.add(i);
+            }
+            return count;
+        }
     }
 
 }

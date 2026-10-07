@@ -3,12 +3,13 @@ package Controller;
 import DAOManager.DAOMan;
 import Domain.Animatore;
 import Domain.Ragazzo;
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.Response;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -18,23 +19,23 @@ import java.util.Map;
 public class ControllerStatistiche implements ControllerInterface {
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            mv.addObject("TITOLOPAGINA", "Statistiche");
-            mv.setView("ammseg/statistiche.html");
-            mv.addObject("nrag", DAOMan.ragazzoDAO.count());
-            mv.addObject("nani", DAOMan.animatoreDAO.count());
-            mv.addObject("nter", DAOMan.terzamediaDAO.count());
-            mv.addObject("npag", DAOMan.pagamentoDAO.count());
-            mv.addObject("nreg", DAOMan.registratoDAO.countUsers());
-            mv.addObject("nmensatot", DAOMan.ragazzoDAO.countMensaTotale());
-            mv.addObject("eanttot", DAOMan.ragazzoDAO.countAnticipatoTotale());
-            mv.addObject("ragsett", DAOMan.ragazzoDAO.countSettimanale());
-            mv.addObject("anisett", DAOMan.animatoreDAO.countSettimanale());
-            mv.addObject("mensasett", DAOMan.ragazzoDAO.countMensaSettimanale());
-            mv.addObject("eansett", DAOMan.ragazzoDAO.countAnticipatoSettimanale());
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Statistiche");
+            template.setView("ammseg/statistiche.html");
+            template.addObject("nrag", DAOMan.ragazzoDAO.count());
+            template.addObject("nani", DAOMan.animatoreDAO.count());
+            template.addObject("nter", DAOMan.terzamediaDAO.count());
+            template.addObject("npag", DAOMan.pagamentoDAO.count());
+            template.addObject("nreg", DAOMan.registratoDAO.countUsers());
+            template.addObject("nmensatot", DAOMan.ragazzoDAO.countMensaTotale());
+            template.addObject("eanttot", DAOMan.ragazzoDAO.countAnticipatoTotale());
+            template.addObject("ragsett", DAOMan.ragazzoDAO.countSettimanale());
+            template.addObject("anisett", DAOMan.animatoreDAO.countSettimanale());
+            template.addObject("mensasett", DAOMan.ragazzoDAO.countMensaSettimanale());
+            template.addObject("eansett", DAOMan.ragazzoDAO.countAnticipatoSettimanale());
 
             Map<String, Integer> mapragclassi = new HashMap<>();
             Map<String, Integer> mapraglab = new HashMap<>();
@@ -49,8 +50,8 @@ public class ControllerStatistiche implements ControllerInterface {
                     mapraglab.put(rag.getLaboratorio().getDescrizione(), nragazzilab + 1);
                 }
             });
-            mv.addObject("mapragclassi", mapragclassi);
-            mv.addObject("mapraglab", mapraglab);
+            template.addObject("mapragclassi", mapragclassi);
+            template.addObject("mapraglab", mapraglab);
 
 
             Map<Integer, Integer> mapanieta = new HashMap<>();
@@ -72,12 +73,12 @@ public class ControllerStatistiche implements ControllerInterface {
                     mapanilab.put(ani.getLaboratorio().getDescrizione(), nanilab + 1);
                 }
             });
-            mv.addObject("mapanieta", mapanieta);
-            mv.addObject("mapanilab", mapanilab);
+            template.addObject("mapanieta", mapanieta);
+            template.addObject("mapanilab", mapanilab);
         } catch (final RuntimeException | SQLException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerStatistiche.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerStatistiche.class.getName());
         }
-        return mv;
+        return template;
     }
 
 }

@@ -2,8 +2,8 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.CodiceSbloccoIscrizione;
-import ModelAndView.ModelAndView;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.Response;
 import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,8 +19,8 @@ public class ControllerCodice implements ControllerInterface {
     private final static Logger logger = LoggerFactory.getLogger(ControllerCodice.class);
 
     @Override
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard("user/rispostacodice.json");
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate("user/rispostacodice.json");
         boolean success = false;
         try {
             if (request.getParameter("scope").equals("verifica")) {
@@ -42,9 +42,9 @@ public class ControllerCodice implements ControllerInterface {
         } catch (final RuntimeException | SQLException e) {
             Utils.logException(e, ControllerCodice.class.getName());
         } finally {
-            mv.addObject("result", success);
+            template.addObject("result", success);
         }
-        return mv;
+        return template;
     }
 
 }

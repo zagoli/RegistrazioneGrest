@@ -2,14 +2,12 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.*;
-import ModelAndView.ControllerResult;
-import ModelAndView.ModelAndView;
-import ModelAndView.RedirectResult;
-import ModelAndView.ModelAndViewStandard;
+import Response.FreemarkerTemplate;
+import Response.RedirectResult;
+import Response.Response;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -27,31 +25,31 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
     private static final Logger logger = LoggerFactory.getLogger(ControllerRegistraRagazzo.class);
 
     @Override
-    public ControllerResult handleRequest(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mv = new ModelAndViewStandard();
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+        FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            mv.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            mv.addObject("TITOLOPAGINA", "Registrazione Ragazzo");
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("TITOLOPAGINA", "Registrazione Ragazzo");
 
             int idRegistrato = (int) request.getSession().getAttribute("idUtente");
             boolean haAltroRagazzoIscritto = DAOMan.ragazzoDAO.countByRegistratoId(idRegistrato) > 0;
 
             if (!request.getParameterMap().containsKey("nome")) {
-                mv.setView("user/registraragazzo.html");
+                template.setView("user/registraragazzo.html");
                 //Recupera dati per la registrazione
                 List<Laboratorio> listLabGiusti = DAOMan.laboratorioDAO.findNonRiservato();
-                mv.addObject("laboratori", listLabGiusti);
+                template.addObject("laboratori", listLabGiusti);
                 List<Parrocchia> listParrocchia = DAOMan.parrocchiaDAO.findAll();
-                mv.addObject("parrocchie", listParrocchia);
+                template.addObject("parrocchie", listParrocchia);
                 List<Circolo> listCircolo = DAOMan.circoloDAO.findAll();
-                mv.addObject("circoli", listCircolo);
+                template.addObject("circoli", listCircolo);
                 List<Scuola> listScuola = DAOMan.scuolaDAO.findAll();
-                mv.addObject("scuole", listScuola);
+                template.addObject("scuole", listScuola);
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
-                mv.addObject("calendari", listaCalendario);
+                template.addObject("calendari", listaCalendario);
                 //iscrizioni aperte o chiuse
-                mv.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
-                mv.addObject("haAltroRagazzoIscritto", haAltroRagazzoIscritto);
+                template.addObject("ISCRRAG", ConfigProperties.getProperty("ISCRRAG").equals("true"));
+                template.addObject("haAltroRagazzoIscritto", haAltroRagazzoIscritto);
             } else {
                 Ragazzo ragazzo = new Ragazzo();
                 ragazzo.setNome(request.getParameter("nome"));
@@ -94,7 +92,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
 
                 String nTessera = request.getParameter("nTessera");
                 if (!nTessera.isEmpty()) {
-                    ragazzo.setnTessera(nTessera);
+                    ragazzo.setNTessera(nTessera);
                 }
 
                 DAOMan.ragazzoDAO.insert(ragazzo);
@@ -108,8 +106,8 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             }
         } catch (final RuntimeException | IOException | SQLException | ParseException | ConfigPropertyException e) {
-            mv = Utils.getErrorPageAndLogException(e, ControllerRegistraRagazzo.class.getName());
+            template = Utils.getErrorPageAndLogException(e, ControllerRegistraRagazzo.class.getName());
         }
-        return mv;
+        return template;
     }
 }
