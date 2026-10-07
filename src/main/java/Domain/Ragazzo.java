@@ -30,4 +30,5 @@ public class Ragazzo {
     private String classe;
     private String nTessera;
     private Squadra squadra;
+
 }

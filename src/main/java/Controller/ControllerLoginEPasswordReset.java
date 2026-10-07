@@ -57,11 +57,13 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
                 if (r == null) {
                     template.setView("user/login.html");
                     template.addObject("UTENTENONTROVATO", true);
+                    logger.info("Registrato {} non è stato trovato durante il login", mail);
                 } else {
                     String pswd = r.getPassword();
                     if (!BCrypt.checkpw(pswdDaValidare, pswd)) {
                         template.setView("user/login.html");
                         template.addObject("ERRATO", true);
+                        logger.info("Registrato {} ha inserito la password errata durante il login", r.getMail());
                     } else {
                         HttpSession session = request.getSession();
                         request.changeSessionId();

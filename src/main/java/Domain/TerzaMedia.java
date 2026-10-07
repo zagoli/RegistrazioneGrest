@@ -29,4 +29,5 @@ public class TerzaMedia {
     private Squadra squadra;
     private String cellulare;
     private String mail;
+
 }

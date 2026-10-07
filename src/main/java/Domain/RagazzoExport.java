@@ -30,4 +30,5 @@ public class RagazzoExport {
     private final List<Integer> settimanePresenza;
     private final String pagato;
     private final BigDecimal importoPagamento;
+
 }

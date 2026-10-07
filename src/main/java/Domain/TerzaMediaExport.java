@@ -29,4 +29,5 @@ public class TerzaMediaExport {
     private final Registrato registrato;
     private final String pagato;
     private final BigDecimal importoPagamento;
+
 }

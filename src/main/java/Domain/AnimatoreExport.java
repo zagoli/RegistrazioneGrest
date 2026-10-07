@@ -24,4 +24,5 @@ public class AnimatoreExport {
     private final Squadra squadra;
     private final String responsabileSquadra;
     private final Registrato registrato;
+
 }

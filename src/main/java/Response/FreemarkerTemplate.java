@@ -33,19 +33,15 @@ public class FreemarkerTemplate implements Response {
     }
 
     @Override
-    public void render(HttpServletResponse response, RenderingContext context)
-            throws ServletException, IOException {
-        StringWriter renderedView = new StringWriter();
+    public void render(HttpServletResponse response, RenderingContext context) throws ServletException {
         try {
+            String contentType = view.endsWith("json") ? "application/json; charset=UTF-8" : "text/html; charset=UTF-8";
+            response.setContentType(contentType);
+            response.setCharacterEncoding("UTF-8");
             Template template = context.getTemplateConfiguration().getTemplate(view + ".ftl");
-            template.process(map, renderedView);
+            template.process(map, response.getWriter());
         } catch (TemplateException | IOException e) {
             throw new ServletException("Errore durante il rendering della vista " + view, e);
         }
-
-        String contentType = view.endsWith("json") ? "application/json; charset=UTF-8" : "text/html; charset=UTF-8";
-        response.setContentType(contentType);
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(renderedView.toString());
     }
 }
