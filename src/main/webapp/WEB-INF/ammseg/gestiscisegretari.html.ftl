@@ -55,16 +55,16 @@
         </#if>
         <a href="/RegistrazioneGrest/App/RegistraUtente" class="btn btn-block btn-primary"> Registra un segretario </a>
         <hr/>
-        <h5>Promuovi un utente</h5>
+        <h5>Modifica permessi utente</h5>
         <form action="/RegistrazioneGrest/App/GestisciSegretari" class="form-inline">
-            <input type="hidden" name="promote"/>
+            <input type="hidden" name="changeUserType"/>
             <div class="form-group m-2">
                 <label for="nome" class="sr-only">Nome</label>
-                <input type="text" placeholder="nome" name="nome" id="nome" class="form-control" required/>
+                <input type="text" placeholder="Nome" name="nome" id="nome" class="form-control" required/>
             </div>
             <div class="form-group m-2">
                 <label for="cognome" class="sr-only">Cognome</label>
-                <input type="text" placeholder="cognome" name="cognome" id="cognome" class="form-control ml-2"
+                <input type="text" placeholder="Cognome" name="cognome" id="cognome" class="form-control ml-2"
                        required/>
             </div>
             <div class="form-group m-2">
@@ -73,9 +73,10 @@
                     <option value="1">Segretario con modifica</option>
                     <option value="2">Segretario normale</option>
                     <option value="3">Utente normale</option>
+                    <option value="4">Disabilita profilo</option>
                 </select>
             </div>
-            <input type="submit" class="btn btn-primary m-2" value="promuovi"/>
+            <input type="submit" class="btn btn-primary m-2" value="Modifica"/>
         </form>
     </div>
 </div>

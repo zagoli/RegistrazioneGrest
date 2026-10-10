@@ -70,14 +70,14 @@ public class Dispatcher extends HttpServlet {
 
         // Controllo centralizzato autenticazione
         HttpSession session = request.getSession(false);
-        if (session == null) {
+        if (session == null)
             return new ControllerLoginEPasswordReset();
-        }
         var idUtente = session.getAttribute("idUtente");
         var tipoUtente = (Integer) session.getAttribute("tipoUtente");
-        if (idUtente == null || tipoUtente == null) {
+        if (idUtente == null || tipoUtente == null)
             return new ControllerLoginEPasswordReset();
-        }
+        else if (tipoUtente == 4)
+            return new ControllerProfiloDisabilitato();
 
         // Rotte protette (l'utente è autenticato)
         return switch (servizio) {

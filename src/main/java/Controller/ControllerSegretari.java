@@ -32,12 +32,10 @@ public class ControllerSegretari implements ControllerInterface {
                 }
                 template.addObject("amministratori", lamm);
                 template.setView("ammseg/gestiscisegretari.html");
-
             } else if (request.getParameterMap().containsKey("del")) {
                 DAOMan.registratoDAO.delete(Integer.parseInt(request.getParameter("id")));
                 return new RedirectResult("/RegistrazioneGrest/App/GestisciSegretari");
-
-            } else if (request.getParameterMap().containsKey("promote")) {
+            } else if (request.getParameterMap().containsKey("changeUserType")) {
                 //problema in caso di più utenti omonimi, ma nel caso sistemo direttamente nel db
                 Registrato r = DAOMan.registratoDAO.findByNominativo(request.getParameter("nome"), request.getParameter("cognome"));
                 int oldLevel = r.getTipoUt();
