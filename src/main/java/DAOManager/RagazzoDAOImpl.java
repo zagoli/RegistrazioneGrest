@@ -54,7 +54,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
             from (
             """ + GENERIC_RAGAZZO_FIND + """
             ) iscritti
-            left join Pagamento p on (p.Ragazzo_id = ra.id)
+            left join Pagamento p on (p.Ragazzo_id = iscritti.raid)
             left join Registrato pre on (p.Registrato_id = pre.id)
             order by iscritti.racognome, iscritti.ranome;
             """;
