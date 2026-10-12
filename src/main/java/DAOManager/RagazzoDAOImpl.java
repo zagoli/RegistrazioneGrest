@@ -14,7 +14,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     private static final String UPDATE_SQUADRA_RAGAZZO = "update Ragazzo set squadra_id = ? where id = ?;";
     private static final String UPDATE_LABORATORIO_RAGAZZO = "update Ragazzo set Laboratorio_id = ? where id = ?;";
     private static final String DELETE_RAGAZZO = "delete from Ragazzo where id = ?;";
-    private static final String GENERIC_RAGAZZO_FIND =
+    static final String GENERIC_RAGAZZO_FIND =
             """
                     select
                     ra.id as raid, ra.nome as ranome, ra.cognome as racognome, ra.dataNascita as radataNascita, ra.presenza as rapresenza,ra.entrataAnticipata as raentrataAnticipata, ra.richieste as rarichieste, ra.noteAlimentari as ranoteAlimentari, ra.mensa as ramensa, ra.saNuotare as rasaNuotare, ra.fratelloIscritto as rafratelloIscritto, ra.sezione as rasezione, ra.classe as raclasse, ra.nTessera as ranTessera,
@@ -78,7 +78,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
                 rs.getString("prenome"), rs.getString("precognome"));
     }
 
-    private static Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
+    static Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
         return new Ragazzo(
                 rs.getInt("raid"),
                 rs.getString("ranome"),

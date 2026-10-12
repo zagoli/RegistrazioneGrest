@@ -34,6 +34,7 @@ public class DAOMan {
     public static final PagamentoTerzamediaDAO pagamentoTerzamediaDAO = new PagamentoTerzamediaDAOImpl();
     public static final CodiceSbloccoIscrizioneDAO codiceSbloccoIscrizioneDAO = new CodiceSbloccoIscrizioneDAOImpl();
     public static final SquadraDAO squadraDAO = new SquadraDAOImpl();
+    public static final AnnotazioneSegreteriaDAO annotazioneSegreteriaDAO = new AnnotazioneSegreteriaDAOImpl();
     private static final HikariDataSource DS;
 
     static {

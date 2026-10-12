@@ -14,7 +14,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     private static final String UPDATE_SQUADRA_TERZAMEDIA = "update Terzamedia set squadra_id = ? where id = ?;";
     private static final String UPDATE_LABORATORIO_TERZAMEDIA = "update Terzamedia set Laboratorio_id = ? where id = ?;";
     private static final String DELETE_TERZAMEDIA = "delete from Terzamedia where id = ?;";
-    private static final String GENERIC_TERZAMEDIA_FIND =
+    static final String GENERIC_TERZAMEDIA_FIND =
             """
                     select
                     ter.id as terid, ter.nome as ternome, ter.cognome as tercognome, ter.dataNascita as terdataNascita, ter.presenza as terpresenza, ter.richieste as terrichieste, ter.noteAlimentari as ternoteAlimentari, ter.saNuotare as tersaNuotare, ter.sezione as tersezione, ter.nTessera as terTessera, ter.mail as termail, ter.cellulare as tercellulare, ter.festaPassaggio as terfestaPassaggio,

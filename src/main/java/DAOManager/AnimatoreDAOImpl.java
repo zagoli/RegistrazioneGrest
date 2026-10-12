@@ -14,7 +14,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
     private static final String UPDATE_SQUADRA_ANIMATORE = "update Animatore set squadra_id = ?, isResponsabileSquadra = ? where id = ?;";
     private static final String UPDATE_LABORATORIO_ANIMATORE = "update Animatore set Laboratorio_id = ?, isResponsabileLaboratorio = ? where id = ?;";
     private static final String DELETE_ANIMATORE = "delete from Animatore where id = ?;";
-    private static final String GENERIC_ANIMATORE_FIND =
+    static final String GENERIC_ANIMATORE_FIND =
             """
                     select
                     an.codiceFiscale as ancodiceFiscale, an.id as anid, an.nome as annome, an.cognome as ancognome, an.dataNascita as andataNascita, an.presenza as anpresenza, an.cellularePersonale as ancellulare, an.fasciaEtaRagazzi as anfasciaEtaRagazzi, an.mail as anmail, an.nTessera as annTessera, an.isResponsabileSquadra as anisResponsabileSquadra, an.isResponsabileLaboratorio as anisResponsabileLaboratorio,
