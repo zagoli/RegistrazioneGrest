@@ -27,7 +27,7 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
     private static final Logger logger = LoggerFactory.getLogger(ControllerPagamentiTerzamedia.class);
 
     private static void renderPage(FreemarkerTemplate template) throws SQLException, ConfigPropertyException, IOException {
-        List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.terzamediaDAO.findAllConPagamenti();
+        List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.terzamediaDAO.findAllIscrittoConPagamento();
         List<Object[]> datiTerzamedia = new ArrayList<>(iscritti.size());
         if (!iscritti.isEmpty()) {
             for (DatiPagamento<IscrittoPagamento, PagamentoRiepilogo> dato : iscritti) {

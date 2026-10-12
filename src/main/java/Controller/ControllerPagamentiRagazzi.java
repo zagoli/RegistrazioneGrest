@@ -27,7 +27,7 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
     private final static Logger logger = LoggerFactory.getLogger(ControllerPagamentiRagazzi.class);
 
     private static void renderPage(FreemarkerTemplate template) throws SQLException, ConfigPropertyException, IOException {
-        List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.ragazzoDAO.findAllConPagamenti();
+        List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.ragazzoDAO.findAllIscrittoConPagamento();
         List<Object[]> datiRagazzi = new ArrayList<>(iscritti.size());
         if (!iscritti.isEmpty()) {
             for (DatiPagamento<RagazzoPagamento, PagamentoRiepilogo> dato : iscritti) {

@@ -34,7 +34,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
                     """;
     private static final String FIND_TERZAMEDIA_ID = GENERIC_TERZAMEDIA_FIND + " where ter.id = ?;";
     private static final String FIND_ALL_TERZAMEDIA = GENERIC_TERZAMEDIA_FIND + " order by ter.cognome, ter.nome;";
-    private static final String FIND_ALL_CON_PAGAMENTI = """
+    private static final String FIND_ALL_ISCRITTO_CON_PAGAMENTO = """
             select ter.id as terid, ter.nome as ternome, ter.cognome as tercognome,
                    re.localita as relocalita,
                    p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata,
@@ -42,7 +42,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
                    coalesce(pr.settimane, 0) as settimane
             from Terzamedia ter
             join Registrato re on (ter.Registrato_id = re.id)
-            left join lateral (select id, ordineArrivo, data, quota, Registrato_id from PagamentoTerzamedia where Terzamedia_id = ter.id order by id limit 1) p on true
+            left join PagamentoTerzamedia p on (p.Terzamedia_id = ter.id)
             left join Registrato pre on (p.Registrato_id = pre.id)
             left join (select Terzamedia_id, count(*) as settimane from presenzaTer group by Terzamedia_id) pr on (pr.Terzamedia_id = ter.id)
             order by ter.cognome, ter.nome;
@@ -53,7 +53,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
             from (
             """ + GENERIC_TERZAMEDIA_FIND + """
             ) iscritti
-            left join lateral (select id, ordineArrivo, data, quota, Registrato_id from PagamentoTerzamedia where Terzamedia_id = iscritti.terid order by id limit 1) p on true
+            left join PagamentoTerzamedia p on (p.Terzamedia_id = iscritti.terid)
             left join Registrato pre on (p.Registrato_id = pre.id)
             order by iscritti.tercognome, iscritti.ternome;
             """;
@@ -175,9 +175,9 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
     }
 
     @Override
-    public List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> findAllConPagamenti() throws SQLException {
+    public List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> findAllIscrittoConPagamento() throws SQLException {
         try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTI);
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_ISCRITTO_CON_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
             List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> dati = new LinkedList<>();
             while (rs.next()) {

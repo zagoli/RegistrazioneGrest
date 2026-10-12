@@ -25,7 +25,7 @@ public interface RagazzoDAO {
     //SELECT
     List<Ragazzo> findAll() throws SQLException;
 
-    List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> findAllConPagamenti() throws SQLException;
+    List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> findAllIscrittoConPagamento() throws SQLException;
 
     List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> findAllConPagamento() throws SQLException;
 

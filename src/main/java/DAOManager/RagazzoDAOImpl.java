@@ -34,27 +34,27 @@ public class RagazzoDAOImpl implements RagazzoDAO {
                     """;
     private static final String FIND_RAGAZZO_ID = GENERIC_RAGAZZO_FIND + " where ra.id = ?;";
     private static final String FIND_ALL_RAGAZZO = GENERIC_RAGAZZO_FIND + " order by ra.cognome, ra.nome;";
-    private static final String FIND_ALL_CON_PAGAMENTI = """
-            select ra.id as raid, ra.nome as ranome, ra.cognome as racognome,
-                   ra.mensa as ramensa, ra.fratelloIscritto as rafratelloIscritto,
-                   ra.entrataAnticipata as raentrataAnticipata, re.localita as relocalita,
-                   p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata,
-                   p.quota as pquota, pre.nome as prenome, pre.cognome as precognome,
-                   coalesce(pr.settimane, 0) as settimane
-            from Ragazzo ra
-            join Registrato re on (ra.Registrato_id = re.id)
-            left join lateral (select id, ordineArrivo, data, quota, Registrato_id from Pagamento where Ragazzo_id = ra.id order by id limit 1) p on true
-            left join Registrato pre on (p.Registrato_id = pre.id)
-            left join (select Ragazzo_id, count(*) as settimane from presenzaRag group by Ragazzo_id) pr on (pr.Ragazzo_id = ra.id)
-            order by ra.cognome, ra.nome;
-            """;
+    private static final String FIND_ALL_ISCRITTO_CON_PAGAMENTO = """
+        select ra.id as raid, ra.nome as ranome, ra.cognome as racognome,
+               ra.mensa as ramensa, ra.fratelloIscritto as rafratelloIscritto,
+               ra.entrataAnticipata as raentrataAnticipata, re.localita as relocalita,
+               p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata,
+               p.quota as pquota, pre.nome as prenome, pre.cognome as precognome,
+               coalesce(pr.settimane, 0) as settimane
+        from Ragazzo ra
+        join Registrato re on (ra.Registrato_id = re.id)
+        left join Pagamento p on (p.Ragazzo_id = ra.id)
+        left join Registrato pre on (p.Registrato_id = pre.id)
+        left join (select Ragazzo_id, count(*) as settimane from presenzaRag group by Ragazzo_id) pr on (pr.Ragazzo_id = ra.id)
+        order by ra.cognome, ra.nome;
+        """;
     private static final String FIND_ALL_CON_PAGAMENTO = """
             select iscritti.*, p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota,
                    pre.nome as prenome, pre.cognome as precognome
             from (
             """ + GENERIC_RAGAZZO_FIND + """
             ) iscritti
-            left join lateral (select id, ordineArrivo, data, quota, Registrato_id from Pagamento where Ragazzo_id = iscritti.raid order by id limit 1) p on true
+            left join Pagamento p on (p.Ragazzo_id = ra.id)
             left join Registrato pre on (p.Registrato_id = pre.id)
             order by iscritti.racognome, iscritti.ranome;
             """;
@@ -250,9 +250,9 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     }
 
     @Override
-    public List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> findAllConPagamenti() throws SQLException {
+    public List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> findAllIscrittoConPagamento() throws SQLException {
         try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTI);
+             PreparedStatement pst = con.prepareStatement(FIND_ALL_ISCRITTO_CON_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
             List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> dati = new LinkedList<>();
             while (rs.next()) {

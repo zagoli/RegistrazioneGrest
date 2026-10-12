@@ -25,7 +25,7 @@ public interface TerzamediaDAO {
     //SELECT
     List<TerzaMedia> findAll() throws SQLException;
 
-    List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> findAllConPagamenti() throws SQLException;
+    List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> findAllIscrittoConPagamento() throws SQLException;
 
     List<DatiPagamento<TerzaMedia, PagamentoRiepilogo>> findAllConPagamento() throws SQLException;
 
