@@ -28,28 +28,6 @@ public class ControllerInfoDettaglio implements ControllerInterface {
             String target = request.getParameter("target");
             int id = Integer.parseInt(request.getParameter("id"));
             switch (target) {
-                case "infoani": {
-                    Animatore a = DAOMan.animatoreDAO.findById(id);
-                    template.addObject("animatore", a);
-                    int idRegistrato = a.getRegistrato().getId();
-                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
-                    if (!listCU.isEmpty()) {
-                        template.addObject("cu", listCU);
-                    }
-                    List<Accompagnatore> listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idRegistrato);
-                    if (!listAccompagnatore.isEmpty()) {
-                        template.addObject("accompagnatori", listAccompagnatore);
-                    }
-                    List<RelPresenzaAn> listRelPresenzaAn = DAOMan.relPresenzaAnDAO.findByAnimatoreId(id);
-                    List<Calendario> listCalendario = new LinkedList<>();
-                    for (RelPresenzaAn rpa : listRelPresenzaAn) {
-                        Calendario c = DAOMan.calendarioDAO.findById(rpa.getCalendarioId());
-                        listCalendario.add(c);
-                    }
-                    template.addObject("calendari", listCalendario);
-                    template.setView("ammseg/dettaglioanimatore.html");
-                    break;
-                }
                 case "inforag": {
                     Ragazzo r = DAOMan.ragazzoDAO.findById(id);
                     template.addObject("ragazzo", r);
@@ -74,7 +52,63 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Pagamento pagamento = DAOMan.pagamentoDAO.findByRagazzoId(id);
                     template.addObject("pagamento", pagamento);
                     template.addObject("altroFratelloNonTrovato", r.getFratelloIscritto() && DAOMan.ragazzoDAO.countByRegistratoId(idRegistrato) == 1);
+                    if (tipoUt < 3) {
+                        List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByRagazzoId(id);
+                        template.addObject("annotazioni", annotazioni);
+                    }
                     template.setView("ammseg/dettaglioragazzo.html");
+                    break;
+                }
+                case "infoter": {
+                    TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
+                    template.addObject("terzamedia", t);
+                    int idRegistrato = t.getRegistrato().getId();
+                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
+                    if (!listCU.isEmpty()) {
+                        template.addObject("cu", listCU);
+                    }
+                    List<RelPresenzaTer> listRelPresenzaTer = DAOMan.relPresenzaTerDAO.findByTerzamediaId(id);
+                    List<Calendario> listCalendario = new LinkedList<>();
+                    for (RelPresenzaTer rpt : listRelPresenzaTer) {
+                        Calendario c = DAOMan.calendarioDAO.findById(rpt.getCalendarioId());
+                        listCalendario.add(c);
+                    }
+                    List<AttivitaGen> listAttivitaGen = DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato);
+                    template.addObject("attgen", listAttivitaGen);
+                    template.addObject("calendari", listCalendario);
+                    PagamentoTerzamedia pt = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(id);
+                    template.addObject("pagamento", pt);
+                    if (tipoUt < 3) {
+                        List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByTerzamediaId(id);
+                        template.addObject("annotazioni", annotazioni);
+                    }
+                    template.setView("ammseg/dettaglioterzamedia.html");
+                    break;
+                }
+                case "infoani": {
+                    Animatore a = DAOMan.animatoreDAO.findById(id);
+                    template.addObject("animatore", a);
+                    int idRegistrato = a.getRegistrato().getId();
+                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
+                    if (!listCU.isEmpty()) {
+                        template.addObject("cu", listCU);
+                    }
+                    List<Accompagnatore> listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idRegistrato);
+                    if (!listAccompagnatore.isEmpty()) {
+                        template.addObject("accompagnatori", listAccompagnatore);
+                    }
+                    List<RelPresenzaAn> listRelPresenzaAn = DAOMan.relPresenzaAnDAO.findByAnimatoreId(id);
+                    List<Calendario> listCalendario = new LinkedList<>();
+                    for (RelPresenzaAn rpa : listRelPresenzaAn) {
+                        Calendario c = DAOMan.calendarioDAO.findById(rpa.getCalendarioId());
+                        listCalendario.add(c);
+                    }
+                    template.addObject("calendari", listCalendario);
+                    if (tipoUt < 3) {
+                        List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByAnimatoreId(id);
+                        template.addObject("annotazioni", annotazioni);
+                    }
+                    template.setView("ammseg/dettaglioanimatore.html");
                     break;
                 }
                 case "schedarag": {
@@ -101,28 +135,6 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     template.addObject("calendari", listCalendario);
                     template.addObject("quotaIscrizione", ControllerPagamentiRagazzi.calcolaQuota(r));
                     template.setView("stampe/schedaragazzo.html");
-                    break;
-                }
-                case "infoter": {
-                    TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
-                    template.addObject("terzamedia", t);
-                    int idRegistrato = t.getRegistrato().getId();
-                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
-                    if (!listCU.isEmpty()) {
-                        template.addObject("cu", listCU);
-                    }
-                    List<RelPresenzaTer> listRelPresenzaTer = DAOMan.relPresenzaTerDAO.findByTerzamediaId(id);
-                    List<Calendario> listCalendario = new LinkedList<>();
-                    for (RelPresenzaTer rpt : listRelPresenzaTer) {
-                        Calendario c = DAOMan.calendarioDAO.findById(rpt.getCalendarioId());
-                        listCalendario.add(c);
-                    }
-                    List<AttivitaGen> listAttivitaGen = DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato);
-                    template.addObject("attgen", listAttivitaGen);
-                    template.addObject("calendari", listCalendario);
-                    PagamentoTerzamedia pt = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(id);
-                    template.addObject("pagamento", pt);
-                    template.setView("ammseg/dettaglioterzamedia.html");
                     break;
                 }
                 case "schedater": {
