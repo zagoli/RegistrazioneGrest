@@ -52,10 +52,8 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Pagamento pagamento = DAOMan.pagamentoDAO.findByRagazzoId(id);
                     template.addObject("pagamento", pagamento);
                     template.addObject("altroFratelloNonTrovato", r.getFratelloIscritto() && DAOMan.ragazzoDAO.countByRegistratoId(idRegistrato) == 1);
-                    if (tipoUt < 3) {
-                        List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByRagazzoId(id);
-                        template.addObject("annotazioni", annotazioni);
-                    }
+                    List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByRagazzoId(id);
+                    template.addObject("annotazioni", annotazioni);
                     template.setView("ammseg/dettaglioragazzo.html");
                     break;
                 }
@@ -78,10 +76,8 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     template.addObject("calendari", listCalendario);
                     PagamentoTerzamedia pt = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(id);
                     template.addObject("pagamento", pt);
-                    if (tipoUt < 3) {
-                        List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByTerzamediaId(id);
-                        template.addObject("annotazioni", annotazioni);
-                    }
+                    List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByTerzamediaId(id);
+                    template.addObject("annotazioni", annotazioni);
                     template.setView("ammseg/dettaglioterzamedia.html");
                     break;
                 }
@@ -104,10 +100,8 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                         listCalendario.add(c);
                     }
                     template.addObject("calendari", listCalendario);
-                    if (tipoUt < 3) {
-                        List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByAnimatoreId(id);
-                        template.addObject("annotazioni", annotazioni);
-                    }
+                    List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByAnimatoreId(id);
+                    template.addObject("annotazioni", annotazioni);
                     template.setView("ammseg/dettaglioanimatore.html");
                     break;
                 }

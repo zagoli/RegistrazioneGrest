@@ -231,7 +231,7 @@
         </div>
     </#if>
 
-    <@note.pannello annotazioni=annotazioni![] />
+    <@note.pannello/>
 
     <#--info registrato-->
     <div class="shadow pt-2 pl-3 pr-3 mt-3">
