@@ -1,3 +1,4 @@
+<#import "annotazioni.html.ftl" as note>
 <#include "../struct/header.html.ftl">
 <div class="container mt-3 content">
     <div class="shadow pt-2 pl-3 pr-3 bg-white">
@@ -281,6 +282,8 @@
             </#list>
         </div>
     </#if>
+
+    <@note.pannello annotazioni=annotazioni![] />
 
     <#--info registrato-->
     <div class="shadow pt-2 pl-3 pr-3 mt-3">
