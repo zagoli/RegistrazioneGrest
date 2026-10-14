@@ -40,38 +40,55 @@ public class Checker {
         return false;
     }
 
+    public static boolean checkActionAnnotazione(HttpServletRequest request) {
+        int tipoUt = (int) request.getSession().getAttribute("tipoUtente");
+        if (request.getParameterMap().containsKey("add")) {
+            return tipoUt < 2;
+        } else if (request.getParameterMap().containsKey("del")) {
+            if (tipoUt == 0) return true;
+            try {
+                var idSegretario = DAOMan.annotazioneSegreteriaDAO.getIdSegretario(Integer.parseInt(request.getParameter("id")));
+                var idUtente = (int) request.getSession().getAttribute("idUtente");
+                return idSegretario == idUtente;
+            } catch (final NullPointerException | SQLException e) {
+                logger.error("Errore nella verifica dell'identificativo del segretario", e);
+            }
+        }
+        return false;
+    }
+
     public static Boolean checkActionCU(HttpServletRequest request) {
-        boolean flag = false;
+        boolean result = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         int idCU = Integer.parseInt(request.getParameter("id"));
         try {
             ContattoUrgenze cu = DAOMan.contattoUrgenzeDAO.findById(idCU);
             if (cu.getRegistrato().getId() == idRegistrato) {
-                flag = true;
+                result = true;
             }
-        } catch (NullPointerException | SQLException ex) {
+        } catch (final NullPointerException | SQLException ex) {
             logger.error("Errore nella verifica dei permessi sul contatto urgenze", ex);
         }
-        return flag;
+        return result;
     }
 
     public static Boolean checkActionAccompagnatore(HttpServletRequest request) {
-        boolean flag = false;
+        boolean result = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         int idAccompagnatore = Integer.parseInt(request.getParameter("id"));
         try {
             Accompagnatore a = DAOMan.accompagnatoreDAO.findById(idAccompagnatore);
             if (a.getRegistrato().getId() == idRegistrato) {
-                flag = true;
+                result = true;
             }
-        } catch (NullPointerException | SQLException ex) {
+        } catch (final NullPointerException | SQLException ex) {
             logger.error("Errore nella verifica dei permessi sull'accompagnatore", ex);
         }
-        return flag;
+        return result;
     }
 
     public static Boolean checkActionRagazzo(HttpServletRequest request) {
-        boolean flag = false;
+        boolean result = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idRagazzo = Integer.parseInt(request.getParameter("id"));
@@ -79,19 +96,19 @@ public class Checker {
             Ragazzo r = DAOMan.ragazzoDAO.findById(idRagazzo);
             if (tipoUt.equals(3)) {
                 if (r.getRegistrato().getId() == idRegistrato) {
-                    flag = true;
+                    result = true;
                 }
             } else if (tipoUt <= 1) {
-                flag = true;
+                result = true;
             }
-        } catch (NullPointerException | SQLException ex) {
+        } catch (final NullPointerException | SQLException ex) {
             logger.error("Errore nella verifica dei permessi sul ragazzo", ex);
         }
-        return flag;
+        return result;
     }
 
     public static Boolean checkActionTerzamedia(HttpServletRequest request) {
-        boolean flag = false;
+        boolean result = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idTerzamedia = Integer.parseInt(request.getParameter("id"));
@@ -99,19 +116,19 @@ public class Checker {
             TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
             if (tipoUt.equals(3)) {
                 if (t.getRegistrato().getId() == idRegistrato) {
-                    flag = true;
+                    result = true;
                 }
             } else if (tipoUt <= 1) {
-                flag = true;
+                result = true;
             }
-        } catch (NullPointerException | SQLException ex) {
+        } catch (final NullPointerException | SQLException ex) {
             logger.error("Errore nella verifica dei permessi sul ragazzo di terza media", ex);
         }
-        return flag;
+        return result;
     }
 
     public static Boolean checkActionAnimatore(HttpServletRequest request) {
-        boolean flag = false;
+        boolean result = false;
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
         int idAnimatore = Integer.parseInt(request.getParameter("id"));
@@ -119,15 +136,15 @@ public class Checker {
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);
             if (tipoUt.equals(3)) {
                 if (a.getRegistrato().getId() == idRegistrato) {
-                    flag = true;
+                    result = true;
                 }
             } else if (tipoUt <= 1) {
-                flag = true;
+                result = true;
             }
-        } catch (NullPointerException | SQLException ex) {
+        } catch (final NullPointerException | SQLException ex) {
             logger.error("Errore nella verifica dei permessi sull'animatore", ex);
         }
-        return flag;
+        return result;
     }
 
     public static boolean checkIsFromPescantina(String localita) {

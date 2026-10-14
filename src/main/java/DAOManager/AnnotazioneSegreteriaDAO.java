@@ -22,6 +22,8 @@ public interface AnnotazioneSegreteriaDAO {
 
     List<AnnotazioneSegreteria> findByTerzamediaId(int terzamediaId) throws SQLException;
 
+    int getIdSegretario(int idAnnotazione) throws SQLException;
+
     @FunctionalInterface
     interface FunzioneInserisciAnnotazione {
         void insert(String annotazione, int idIscritto, int segretarioId) throws SQLException;

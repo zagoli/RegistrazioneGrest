@@ -162,7 +162,7 @@ public class Dispatcher extends HttpServlet {
                     : new Controller403();
             case "/SbloccaIscrizioni" -> new ControllerCodice();
             case "/VisualizzaQuote" -> new ControllerVisualizzaQuote();
-            case "/ModificaAnnotazioni" -> tipoUtente <= 1
+            case "/ModificaAnnotazioni" -> Checker.checkActionAnnotazione(request)
                     ? new ControllerModificaAnnotazioni()
                     : new Controller403();
             default -> new Controller404();

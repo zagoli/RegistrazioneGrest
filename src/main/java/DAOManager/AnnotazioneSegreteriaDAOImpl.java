@@ -1,9 +1,7 @@
 package DAOManager;
 
 import Domain.AnnotazioneSegreteria;
-import Domain.Ragazzo;
 import Domain.Registrato;
-import Domain.TerzaMedia;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +17,7 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
     private static final String INSERT_ANNOTAZIONE_ANIMATORE = "insert into AnnotazioniSegreteria (annotazione,animatore_id,segretario_id) values (?,?,?);";
     private static final String INSERT_ANNOTAZIONE_TERZAMEDIA = "insert into AnnotazioniSegreteria (annotazione,terzamedia_id,segretario_id) values (?,?,?);";
     private static final String DELETE_ANNOTAZIONE = "delete from AnnotazioniSegreteria where id = ?;";
+    private static final String FIND_ID_SEGRETARIO_DI_ANNOTAZIONE = "select segretario_id from AnnotazioniSegreteria where id = ?;";
     private static final String FIND_ANNOTAZIONI_RAGAZZO_ID =
             """
                     select an.id as anid, an.annotazione as anannotazione, an.dataCreazione as andataCreazione,
@@ -95,22 +94,31 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
 
     @Override
     public List<AnnotazioneSegreteria> findByAnimatoreId(int animatoreId) throws SQLException {
-        AnimatoreDAOImpl animatoreDAO = new AnimatoreDAOImpl();
         return find(FIND_ANNOTAZIONI_ANIMATORE_ID, animatoreId, rs -> {
             AnnotazioneSegreteria annotazione = mapRowToAnnotazioneSegreteria(rs);
-            annotazione.setAnimatore(animatoreDAO.mapRowToAnimatore(rs));
+            annotazione.setAnimatore(AnimatoreDAOImpl.mapRowToAnimatore(rs));
             return annotazione;
         });
     }
 
     @Override
     public List<AnnotazioneSegreteria> findByTerzamediaId(int terzamediaId) throws SQLException {
-        TerzamediaDAOImpl terzamediaDAO = new TerzamediaDAOImpl();
         return find(FIND_ANNOTAZIONI_TERZAMEDIA_ID, terzamediaId, rs -> {
             AnnotazioneSegreteria annotazione = mapRowToAnnotazioneSegreteria(rs);
-            annotazione.setTerzaMedia(terzamediaDAO.mapRowToTerzamedia(rs));
+            annotazione.setTerzaMedia(TerzamediaDAOImpl.mapRowToTerzamedia(rs));
             return annotazione;
         });
+    }
+
+    @Override
+    public int getIdSegretario(int idAnnotazione) throws SQLException {
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(FIND_ID_SEGRETARIO_DI_ANNOTAZIONE)) {
+            pst.setInt(1, idAnnotazione);
+            try (ResultSet rs = pst.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : -1;
+            }
+        }
     }
 
     private void insert(String query, String annotazione, int destinatarioId, int segretarioId) throws SQLException {
