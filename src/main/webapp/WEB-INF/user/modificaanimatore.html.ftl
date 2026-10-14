@@ -1,4 +1,5 @@
 <#import "../ammseg/annotazioni.html.ftl" as note>
+<#import "../struct/macros.html.ftl" as ui>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
@@ -6,10 +7,7 @@
         <div class="container">
             <h5 class="title text-center">Modifica l'iscrizione come animatore</h5>
             <#if INVALIDMAIL??>
-                <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                    <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente
-                        o è una e-mail temporanea! Inserisci una mail valida</p>
-                </div>
+                <@ui.avvisoMailNonValida/>
             </#if>
             <form action="/RegistrazioneGrest/App/ModificaAnimatore" method="POST" data-parsley-validate>
 

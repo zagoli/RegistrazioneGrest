@@ -1,4 +1,5 @@
 <#import "../ammseg/annotazioni.html.ftl" as note>
+<#import "../struct/macros.html.ftl" as ui>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
@@ -8,10 +9,7 @@
                 <h5>Modifica terza media</h5>
             </div>
             <#if INVALIDMAIL??>
-                <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-                    <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta
-                        correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
-                </div>
+                <@ui.avvisoMailNonValida/>
             </#if>
             <form action="/RegistrazioneGrest/App/ModificaTerzamedia" method="POST" data-parsley-validate="">
 

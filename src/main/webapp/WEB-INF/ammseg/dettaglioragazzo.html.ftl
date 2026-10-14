@@ -1,4 +1,5 @@
 <#import "annotazioni.html.ftl" as note>
+<#import "../struct/macros.html.ftl" as ui>
 <#include "../struct/header.html.ftl">
 <div class="container mt-3 content">
     <div class="shadow pt-2 pl-3 pr-3 bg-white">
@@ -101,19 +102,7 @@
             </div>
         </#if>
 
-        <div class="row">
-            <div class="col-sm">
-                <strong>Presenza settimanale</strong>
-            </div>
-        </div>
-        <#list calendari as cal>
-            <div class="row">
-                <div class="col-sm"></div>
-                <div class="col-sm">
-                    <p>dal ${cal.daQuando+" al "+cal.AQuando}</p>
-                </div>
-            </div>
-        </#list>
+        <@ui.presenzaSettimanale calendari=calendari/>
 
         <#if ragazzo.richieste??>
             <div class="row">
@@ -204,146 +193,16 @@
 
     <#--contatti urgenze-->
     <#if cu??>
-        <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
-            <div class="row">
-                <div class="col-sm">
-                    <strong class="text-danger">Contatti telefonici Urgenze</strong>
-                </div>
-            </div>
-            <#list cu as cu>
-                <div class="pt-2 pl-3 pr-3 mb-2">
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>Nome</strong>
-                        </div>
-                        <div class="col-sm">
-                            <p>${cu.nome}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>Cognome</strong>
-                        </div>
-                        <div class="col-sm">
-                            <p>${cu.cognome}</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <strong>Relazione</strong>
-                        </div>
-                        <div class="col-sm">
-                            <p>${cu.relazione}</p>
-                        </div>
-                    </div>
-                    <#if cu.cellulare??>
-                        <div class="row">
-                            <div class="col-sm">
-                                <strong>Cellulare</strong>
-                            </div>
-                            <div class="col-sm">
-                                <p>${cu.cellulare}</p>
-                            </div>
-                        </div>
-                    </#if>
-                    <#if cu.fisso??>
-                        <div class="row">
-                            <div class="col-sm">
-                                <strong>Fisso</strong>
-                            </div>
-                            <div class="col-sm">
-                                <p>${cu.fisso}</p>
-                            </div>
-                        </div>
-                    </#if>
-                </div>
-                <#sep>
-                    <hr/>
-            </#list>
-        </div>
+        <@ui.contattiUrgenze contatti=cu/>
     </#if>
 
     <#--accompagnatori-->
     <#if accompagnatori??>
-        <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
-            <div class="row mb-3">
-                <div class="col-sm">
-                    <strong>Accompagnatori autorizzati</strong>
-                </div>
-            </div>
-            <#list accompagnatori as acc>
-                <div class="row">
-                    <div class="col-sm">
-                        <p>${acc.nome+" "+acc.cognome}</p>
-                    </div>
-                </div>
-                <#sep>
-                    <hr/>
-            </#list>
-        </div>
+        <@ui.accompagnatoriAutorizzati accompagnatori=accompagnatori/>
     </#if>
 
     <#--info registrato-->
-    <div class="shadow pt-2 pl-3 pr-3 mt-3">
-        <div class="text-secondary">
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Info registrato</strong>
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-sm">
-                    <strong><i>E-Mail</i></strong>
-                </div>
-                <div class="col-sm">
-                    <p>${ragazzo.registrato.mail}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <strong><i>Nome</i></strong>
-                </div>
-                <div class="col-sm">
-                    <p>${ragazzo.registrato.nome}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <strong><i>Cognome</i></strong>
-                </div>
-                <div class="col-sm">
-                    <p>${ragazzo.registrato.cognome}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <strong><i>Telefono</i></strong>
-                </div>
-                <div class="col-sm">
-                    <p>${ragazzo.registrato.telefono}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <strong><i>Indirizzo</i></strong>
-                </div>
-                <div class="col-sm">
-                    <p>${ragazzo.registrato.via+" "+ragazzo.registrato.civico+" "+ragazzo.registrato.localita}</p>
-                </div>
-            </div>
-            <#if attgen?size != 0>
-                <hr>
-                <strong> Attività genitore </strong>
-                <#list attgen as attgen>
-                    <div class="row">
-                        <div class="col-sm">
-                            <p>${attgen.descrizione}</p>
-                        </div>
-                    </div>
-                </#list>
-            </#if>
-        </div>
-    </div>
+    <@ui.informazioniRegistrato registrato=ragazzo.registrato attgen=attgen/>
 
     <#-- Annotazioni segreteria -->
     <@note.pannelloInfoDettaglio annotazioni=annotazioni/>

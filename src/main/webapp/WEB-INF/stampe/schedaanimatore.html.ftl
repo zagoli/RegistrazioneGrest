@@ -1,3 +1,4 @@
+<#import "../struct/macros.html.ftl" as ui>
 <#include "../struct/header.html.ftl">
 <div class="container content" onclick="window.print();">
     <div class="mt-3">
@@ -103,19 +104,7 @@
             </div>
         </#if>
 
-        <div class="row">
-            <div class="col-sm">
-                <strong>Presenza settimanale</strong>
-            </div>
-        </div>
-        <#list calendari as cal>
-            <div class="row">
-                <div class="col-sm"></div>
-                <div class="col-sm">
-                    <p>dal ${cal.daQuando+" al "+cal.AQuando}</p>
-                </div>
-            </div>
-        </#list>
+        <@ui.presenzaSettimanale calendari=calendari/>
 
         <div class="row">
             <div class="col-sm">
