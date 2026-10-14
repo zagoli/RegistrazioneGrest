@@ -1,6 +1,7 @@
 <#macro avvisoMailNonValida>
     <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
-        <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una e-mail temporanea! Inserisci una mail valida</p>
+        <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente o è una
+            e-mail temporanea! Inserisci una mail valida</p>
     </div>
 </#macro>
 
@@ -9,26 +10,23 @@
         <div class="col-sm">
             <strong>Presenza settimanale</strong>
         </div>
-    </div>
-    <#list calendari as cal>
-        <div class="row">
-            <div class="col-sm"></div>
-            <div class="col-sm">
+        <div class="col-sm">
+            <#list calendari as cal>
                 <p>dal ${cal.daQuando+" al "+cal.AQuando}</p>
-            </div>
+            </#list>
         </div>
-    </#list>
+    </div>
 </#macro>
 
 <#macro contattiUrgenze contatti>
-    <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
+    <div class="shadow py-2 pl-3 pr-3 mt-3 bg-white">
         <div class="row">
             <div class="col-sm">
                 <strong class="text-danger">Contatti telefonici Urgenze</strong>
             </div>
         </div>
         <#list contatti as contatto>
-            <div class="pt-2 pl-3 pr-3 mb-2">
+            <div class="pt-2 mb-2">
                 <div class="row">
                     <div class="col-sm">
                         <strong>Nome</strong>
@@ -81,7 +79,7 @@
 </#macro>
 
 <#macro accompagnatoriAutorizzati accompagnatori>
-    <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
+    <div class="shadow py-2 pl-3 pr-3 mt-3 bg-white">
         <div class="row mb-3">
             <div class="col-sm">
                 <strong>Accompagnatori autorizzati</strong>
@@ -100,7 +98,7 @@
 </#macro>
 
 <#macro informazioniRegistrato registrato attgen=[]>
-    <div class="shadow pt-2 pl-3 pr-3 mt-3">
+    <div class="shadow py-2 pl-3 pr-3 mt-3">
         <div class="text-secondary">
             <div class="row">
                 <div class="col-sm">

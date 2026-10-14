@@ -2,7 +2,7 @@
 <#import "../struct/macros.html.ftl" as ui>
 <#include "../struct/header.html.ftl">
 <div class="container mt-3 content">
-    <div class="shadow pt-2 pl-3 pr-3 bg-white">
+    <div class="shadow py-2 pl-3 pr-3 bg-white">
         <div class="row">
             <div class="col-sm">
                 <strong>Id Animatore</strong>
