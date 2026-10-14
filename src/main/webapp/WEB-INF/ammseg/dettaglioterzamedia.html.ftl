@@ -340,9 +340,9 @@
                 </#list>
             </#if>
         </div>
-
-        <#-- Annotazioni segreteria -->
-        <@note.pannelloInfoDettaglio annotazioni=annotazioni/>
     </div>
+
+    <#-- Annotazioni segreteria -->
+    <@note.pannelloInfoDettaglio annotazioni=annotazioni/>
 </div>
 <#include "../struct/footer.html.ftl">

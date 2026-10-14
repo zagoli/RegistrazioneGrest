@@ -12,7 +12,7 @@
 </#macro>
 
 <#macro modificaAnnotazioni tipoIscritto id annotazioni=[]>
-    <h5 class="mb-3 title text-center">Annotazioni della segreteria</h5>
+    <h5 class="mb-3 title text-center" id="annotazioni">Annotazioni della segreteria</h5>
     <form action="/RegistrazioneGrest/App/ModificaAnnotazioni" method="POST" class="card mb-3">
         <input type="hidden" name="tipoIscritto" value="${tipoIscritto}"/>
         <input type="hidden" name="idIscritto" value="${id?c}"/>
@@ -25,7 +25,7 @@
                     rows="5" maxlength="5000" required
                     placeholder="Scrivi la tua annotazione. Massimo 5000 caratteri."></textarea>
         </div>
-        <div class="card-footer text-right" style="padding-top: .25rem; padding-bottom: .25rem;">
+        <div class="card-footer text-right" style="padding-top: .5rem; padding-bottom: .5rem;">
             <button type="submit" class="btn btn-primary">Aggiungi</button>
         </div>
     </form>
