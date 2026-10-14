@@ -1,13 +1,11 @@
 package DAOManager;
 
 import Domain.ContattoUrgenze;
-import Domain.Registrato;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
@@ -17,16 +15,20 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
     private static final String FIND_CU_ID = "select cu.id as cuid, cu.fisso as cufisso, cu.cellulare as cucellulare, cu.nome as cunome, cu.cognome as cucognome, cu.relazione as curelazione, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Contatto_Urgenze cu join Registrato re on (cu.idRegistrato=re.id) where cu.id = ?;";
     private static final String FIND_CU_REGISTRATO_ID = "select cu.id as cuid, cu.fisso as cufisso, cu.cellulare as cucellulare, cu.nome as cunome, cu.cognome as cucognome, cu.relazione as curelazione, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Contatto_Urgenze cu join Registrato re on (cu.idRegistrato=re.id) where re.id = ?;";
 
+    static void bindContatto(PreparedStatement pst, ContattoUrgenze cu) throws SQLException {
+        pst.setString(1, cu.getFisso());
+        pst.setString(2, cu.getCellulare());
+        pst.setString(3, cu.getNome());
+        pst.setString(4, cu.getCognome());
+        pst.setString(5, cu.getRelazione());
+        pst.setInt(6, cu.getRegistrato().getId());
+    }
+
     @Override
     public void insert(ContattoUrgenze cu) throws SQLException {
         try (Connection conn = DAOMan.getConnection();
              PreparedStatement pst = conn.prepareStatement(INSERT_CU)) {
-            pst.setString(1, cu.getFisso());
-            pst.setString(2, cu.getCellulare());
-            pst.setString(3, cu.getNome());
-            pst.setString(4, cu.getCognome());
-            pst.setString(5, cu.getRelazione());
-            pst.setInt(6, cu.getRegistrato().getId());
+            bindContatto(pst, cu);
             pst.executeUpdate();
         }
     }
@@ -35,12 +37,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
     public void update(ContattoUrgenze cu) throws SQLException {
         try (Connection conn = DAOMan.getConnection();
              PreparedStatement pst = conn.prepareStatement(UPDATE_CU)) {
-            pst.setString(1, cu.getFisso());
-            pst.setString(2, cu.getCellulare());
-            pst.setString(3, cu.getNome());
-            pst.setString(4, cu.getCognome());
-            pst.setString(5, cu.getRelazione());
-            pst.setInt(6, cu.getRegistrato().getId());
+            bindContatto(pst, cu);
             pst.setInt(7, cu.getId());
             pst.executeUpdate();
         }
@@ -72,11 +69,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
              PreparedStatement pst = conn.prepareStatement(FIND_CU_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<ContattoUrgenze> lcu = new LinkedList<>();
-                while (rs.next()) {
-                    lcu.add(this.mapRowToContattoUrgenze(rs));
-                }
-                return lcu;
+                return DAORows.readAll(rs, this::mapRowToContattoUrgenze);
             }
         }
     }
@@ -89,18 +82,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
                 rs.getString("cunome"),
                 rs.getString("cucognome"),
                 rs.getString("curelazione"),
-                new Registrato(
-                        rs.getInt("reid"),
-                        rs.getString("remail"),
-                        rs.getString("repassword"),
-                        rs.getString("renome"),
-                        rs.getString("recognome"),
-                        rs.getString("retelefono"),
-                        rs.getString("relocalita"),
-                        rs.getString("revia"),
-                        rs.getString("recivico"),
-                        rs.getInt("retipoUt")
-                )
+                IscrittoDAOMapper.registrato(rs, "re")
         );
     }
 

@@ -1,13 +1,11 @@
 package DAOManager;
 
 import Domain.PagamentoTerzamedia;
-import Domain.Registrato;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
@@ -36,10 +34,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
     public void insert(int ordineArrivo, float quota, int terId, int regId) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(INSERT_PAGAMENTO)) {
-            pst.setFloat(1, quota);
-            pst.setInt(2, terId);
-            pst.setInt(3, regId);
-            pst.setInt(4, ordineArrivo);
+            PagamentoDAOMapper.bindInsert(pst, ordineArrivo, quota, terId, regId);
             pst.executeUpdate();
         }
     }
@@ -58,11 +53,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<PagamentoTerzamedia> lp = new LinkedList<>();
-            while (rs.next()) {
-                lp.add(this.mapRowToPagamentoTerzamedia(rs));
-            }
-            return lp;
+            return DAORows.readAll(rs, this::mapRowToPagamentoTerzamedia);
         }
     }
 
@@ -87,18 +78,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
                 rs.getDate("pdata"),
                 rs.getFloat("pquota"),
                 rs.getInt("pterid"),
-                new Registrato(
-                        rs.getInt(registratoPrefix + "id"),
-                        rs.getString(registratoPrefix + "mail"),
-                        rs.getString(registratoPrefix + "password"),
-                        rs.getString(registratoPrefix + "nome"),
-                        rs.getString(registratoPrefix + "cognome"),
-                        rs.getString(registratoPrefix + "telefono"),
-                        rs.getString(registratoPrefix + "localita"),
-                        rs.getString(registratoPrefix + "via"),
-                        rs.getString(registratoPrefix + "civico"),
-                        rs.getInt(registratoPrefix + "tipoUt")
-                ),
+                IscrittoDAOMapper.registrato(rs, registratoPrefix),
                 rs.getInt("pordineArrivo")
         );
     }

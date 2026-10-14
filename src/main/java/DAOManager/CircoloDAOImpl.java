@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CircoloDAOImpl implements CircoloDAO {
@@ -29,11 +28,7 @@ public class CircoloDAOImpl implements CircoloDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_CIRCOLO);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Circolo> lc = new LinkedList<>();
-            while (rs.next()) {
-                lc.add(this.mapRowToCircolo(rs));
-            }
-            return lc;
+            return DAORows.readAll(rs, this::mapRowToCircolo);
         }
     }
 

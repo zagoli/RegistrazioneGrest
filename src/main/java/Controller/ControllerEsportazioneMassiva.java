@@ -2,7 +2,10 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.AnimatoreExport;
+import Domain.Circolo;
+import Domain.Parrocchia;
 import Domain.RagazzoExport;
+import Domain.Registrato;
 import Domain.TerzaMediaExport;
 import Response.BinaryResult;
 import Response.Response;
@@ -19,6 +22,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class ControllerEsportazioneMassiva implements ControllerInterface {
@@ -55,12 +60,8 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
     }
 
     private static void creaFoglioAnimatori(Workbook workbook, List<AnimatoreExport> animatori) {
-        String nomeFoglio = WorkbookUtil.createSafeSheetName("Animatori");
-        Sheet sheet = workbook.createSheet(nomeFoglio);
-        creaIntestazioneAnimatore(sheet);
-        popolaFoglioAnimatori(animatori, sheet);
-        autoSizeColumns(sheet);
-        logger.info("Creato foglio Animatori");
+        creaFoglio(workbook, "Animatori", animatori,
+                ControllerEsportazioneMassiva::creaIntestazioneAnimatore, ControllerEsportazioneMassiva::popolaFoglioAnimatori);
     }
 
     private static void popolaFoglioAnimatori(List<AnimatoreExport> animatori, Sheet sheet) {
@@ -76,12 +77,8 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
             row.createCell(4).setCellValue(animatore.cellulare());
             row.createCell(5).setCellValue(animatore.mail());
 
-            row.createCell(6).setCellValue(animatore.parrocchia().getNome() + ", " + animatore.parrocchia().getLuogo());
-            row.createCell(7).setCellValue(animatore.circolo().getNome() + ", " + animatore.circolo().getLuogo());
-            row.createCell(8).setCellValue(animatore.nTessera());
-
-            row.createCell(9).setCellValue(animatore.settimanePresenza().stream().map(String::valueOf).collect(Collectors.joining(", ")));
-            row.createCell(10).setCellValue(animatore.presenza());
+            affiliazioneEPresenza(row, 6, animatore.parrocchia(), animatore.circolo(), animatore.nTessera(),
+                    animatore.settimanePresenza(), animatore.presenza());
 
             row.createCell(11).setCellValue(animatore.fasciaEtaRagazzi());
             row.createCell(12).setCellValue(animatore.laboratorio().getDescrizione());
@@ -116,12 +113,8 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
     }
 
     private static void creaFoglioRagazziTerzaMedia(Workbook workbook, List<TerzaMediaExport> ragazziTerzaMedia) {
-        String nomeFoglio = WorkbookUtil.createSafeSheetName("Ragazzi Terza Media");
-        Sheet sheet = workbook.createSheet(nomeFoglio);
-        creaIntestazioneRagazzoTerzaMedia(sheet);
-        popolaFoglioRagazziTerzaMedia(ragazziTerzaMedia, sheet);
-        autoSizeColumns(sheet);
-        logger.info("Creato foglio Ragazzi Terza Media");
+        creaFoglio(workbook, "Ragazzi Terza Media", ragazziTerzaMedia,
+                ControllerEsportazioneMassiva::creaIntestazioneRagazzoTerzaMedia, ControllerEsportazioneMassiva::popolaFoglioRagazziTerzaMedia);
     }
 
     private static void popolaFoglioRagazziTerzaMedia(List<TerzaMediaExport> ragazziTerzaMedia, Sheet sheet) {
@@ -136,12 +129,8 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
 
             row.createCell(3).setCellValue(terzaMedia.scuola().getDescrizione());
             row.createCell(4).setCellValue("3" + terzaMedia.sezione());
-            row.createCell(5).setCellValue(terzaMedia.parrocchia().getNome() + ", " + terzaMedia.parrocchia().getLuogo());
-            row.createCell(6).setCellValue(terzaMedia.circolo().getNome() + ", " + terzaMedia.circolo().getLuogo());
-            row.createCell(7).setCellValue(terzaMedia.nTessera());
-
-            row.createCell(8).setCellValue(terzaMedia.settimanePresenza().stream().map(String::valueOf).collect(Collectors.joining(", ")));
-            row.createCell(9).setCellValue(terzaMedia.presenza());
+            affiliazioneEPresenza(row, 5, terzaMedia.parrocchia(), terzaMedia.circolo(), terzaMedia.nTessera(),
+                    terzaMedia.settimanePresenza(), terzaMedia.presenza());
 
             row.createCell(10).setCellValue(terzaMedia.laboratorio().getDescrizione());
             row.createCell(11).setCellValue(terzaMedia.squadra().getNome());
@@ -155,11 +144,7 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
             row.createCell(16).setCellValue(terzaMedia.pagato());
             row.createCell(17).setCellValue(terzaMedia.importoPagamento().doubleValue());
 
-            row.createCell(18).setCellValue(terzaMedia.registrato().getNome());
-            row.createCell(19).setCellValue(terzaMedia.registrato().getCognome());
-            row.createCell(20).setCellValue(terzaMedia.registrato().getMail());
-            row.createCell(21).setCellValue(terzaMedia.registrato().getTelefono());
-            row.createCell(22).setCellValue(terzaMedia.registrato().getVia() + " " + terzaMedia.registrato().getCivico() + ", " + terzaMedia.registrato().getLocalita());
+            datiGenitore(row, 18, terzaMedia.registrato());
         }
     }
 
@@ -192,12 +177,8 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
     }
 
     private static void creaFoglioRagazzi(Workbook workbook, List<RagazzoExport> ragazzi) {
-        String nomeFoglio = WorkbookUtil.createSafeSheetName("Ragazzi");
-        Sheet sheet = workbook.createSheet(nomeFoglio);
-        creaIntestazioneRagazzo(sheet);
-        popolaFoglioRagazzi(ragazzi, sheet);
-        autoSizeColumns(sheet);
-        logger.info("Creato foglio Ragazzi");
+        creaFoglio(workbook, "Ragazzi", ragazzi,
+                ControllerEsportazioneMassiva::creaIntestazioneRagazzo, ControllerEsportazioneMassiva::popolaFoglioRagazzi);
     }
 
     private static void popolaFoglioRagazzi(List<RagazzoExport> ragazzi, Sheet sheet) {
@@ -213,12 +194,8 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
             row.createCell(3).setCellValue(ragazzo.scuola().getDescrizione());
             row.createCell(4).setCellValue(ragazzo.scuola().getGrado());
             row.createCell(5).setCellValue(ragazzo.classe() + ragazzo.sezione());
-            row.createCell(6).setCellValue(ragazzo.parrocchia().getNome() + ", " + ragazzo.parrocchia().getLuogo());
-            row.createCell(7).setCellValue(ragazzo.circolo().getNome() + ", " + ragazzo.circolo().getLuogo());
-            row.createCell(8).setCellValue(ragazzo.nTessera());
-
-            row.createCell(9).setCellValue(ragazzo.settimanePresenza().stream().map(String::valueOf).collect(Collectors.joining(", ")));
-            row.createCell(10).setCellValue(ragazzo.presenza());
+            affiliazioneEPresenza(row, 6, ragazzo.parrocchia(), ragazzo.circolo(), ragazzo.nTessera(),
+                    ragazzo.settimanePresenza(), ragazzo.presenza());
 
             row.createCell(11).setCellValue(ragazzo.laboratorio().getDescrizione());
             row.createCell(12).setCellValue(ragazzo.squadra().getNome());
@@ -234,11 +211,7 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
             row.createCell(19).setCellValue(ragazzo.pagato());
             row.createCell(20).setCellValue(ragazzo.importoPagamento().doubleValue());
 
-            row.createCell(21).setCellValue(ragazzo.registrato().getNome());
-            row.createCell(22).setCellValue(ragazzo.registrato().getCognome());
-            row.createCell(23).setCellValue(ragazzo.registrato().getMail());
-            row.createCell(24).setCellValue(ragazzo.registrato().getTelefono());
-            row.createCell(25).setCellValue(ragazzo.registrato().getVia() + " " + ragazzo.registrato().getCivico() + ", " + ragazzo.registrato().getLocalita());
+            datiGenitore(row, 21, ragazzo.registrato());
         }
     }
 
@@ -272,6 +245,32 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
                         "Telefono genitore",
                         "Indirizzo"
         });
+    }
+
+    private static <T> void creaFoglio(Workbook workbook, String name, List<T> dati,
+                                     Consumer<Sheet> header, BiConsumer<List<T>, Sheet> populate) {
+        Sheet sheet = workbook.createSheet(WorkbookUtil.createSafeSheetName(name));
+        header.accept(sheet);
+        populate.accept(dati, sheet);
+        autoSizeColumns(sheet);
+        logger.info("Creato foglio " + name);
+    }
+
+    private static void affiliazioneEPresenza(Row row, int firstColumn, Parrocchia parrocchia, Circolo circolo,
+                                             String tessera, List<Integer> settimane, String presenza) {
+        row.createCell(firstColumn).setCellValue(parrocchia.getNome() + ", " + parrocchia.getLuogo());
+        row.createCell(firstColumn + 1).setCellValue(circolo.getNome() + ", " + circolo.getLuogo());
+        row.createCell(firstColumn + 2).setCellValue(tessera);
+        row.createCell(firstColumn + 3).setCellValue(settimane.stream().map(String::valueOf).collect(Collectors.joining(", ")));
+        row.createCell(firstColumn + 4).setCellValue(presenza);
+    }
+
+    private static void datiGenitore(Row row, int firstColumn, Registrato registrato) {
+        row.createCell(firstColumn).setCellValue(registrato.getNome());
+        row.createCell(firstColumn + 1).setCellValue(registrato.getCognome());
+        row.createCell(firstColumn + 2).setCellValue(registrato.getMail());
+        row.createCell(firstColumn + 3).setCellValue(registrato.getTelefono());
+        row.createCell(firstColumn + 4).setCellValue(registrato.getVia() + " " + registrato.getCivico() + ", " + registrato.getLocalita());
     }
 
     private static void creaRigaIntestazione(Sheet foglio, String[] nomiColonne) {

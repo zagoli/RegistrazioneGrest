@@ -1,19 +1,17 @@
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=true>
 <div class="container-fluid mt-5 content">
     <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
         <#if attivita??>
         <#assign count = 0>
         <table class="table table-striped nowrap" id="t_collab">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" style="width: 2%;">#</th>
-                <th scope="col">Attività</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Cognome</th>
-                <th scope="col">Data</th>
-            </tr>
-            </thead>
+            <@ui.tableHead columns=[
+                {"label": "#", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Attività", "attributes": {"scope": "col"}},
+                {"label": "Nome", "attributes": {"scope": "col"}},
+                {"label": "Cognome", "attributes": {"scope": "col"}},
+                {"label": "Data", "attributes": {"scope": "col"}}
+            ] class="thead-dark"/>
             <tbody class="list">
             <#list attivita as attarray>
                 <#assign count = count + 1>
@@ -31,13 +29,9 @@
     </#if>
 </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('#t_collab').DataTable({
+<@ui.dataTable id="t_collab">
             paging: false,
             columnDefs: [{targets: [0], orderable: false}],
             info: false
-        });
-    });
-</script>
-<#include "../struct/footer.html.ftl">
+</@ui.dataTable>
+</@ui.page>

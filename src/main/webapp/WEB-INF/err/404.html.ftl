@@ -1,13 +1,4 @@
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
-<div class="container content">
-    <div class="row vertical-center">
-        <div class="col-md-12">
-            <div class="text-center">
-                <h2 class="text-danger font-weight-bold">ERRORE 404</h2>
-                <h3 class="font-italic">Cosa stavi cercando? Qui non c'è nulla!</h3>
-            </div>
-        </div>
-    </div>
-</div>
-<#include "../struct/footer.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=true>
+<@ui.errorPanel title="ERRORE 404" message="Cosa stavi cercando? Qui non c'è nulla!" titleClass="text-danger font-weight-bold"/>
+</@ui.page>

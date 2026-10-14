@@ -1,60 +1,47 @@
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
-<div class="container-fluid mt-5 content">
-    <div class="pt-2 pl-3 pr-3 pb-2">
-        <div class="table-responsive">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=true>
+<@ui.contentPanel panelClass="pt-2 pl-3 pr-3 pb-2" responsive=true>
             <table class="table table-hover nowrap" id="t_rag">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" style="width: 2%;">#</th>
-                <th scope="col">Azioni</th>
-                <th scope="col">Cognome</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Nascita</th>
-                <th scope="col">Via</th>
-                <th scope="col">Località</th>
-                <th scope="col">Parrocchia</th>
-                <th scope="col">Classe</th>
-                <th scope="col">Sezione</th>
-                <th scope="col">Scuola</th>
-                <th scope="col">Squadra</th>
-                <th scope="col">Laboratorio</th>
-                <th scope="col">Mensa</th>
-                <th scope="col">Nuota</th>
-                <th scope="col">Entrata</th>
-                <th scope="col">Richieste</th>
-                <th scope="col">Allergie</th>
-                <th scope="col">Pagamento</th>
-            </tr>
-            </thead>
+            <@ui.tableHead columns=[
+                {"label": "#", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Azioni", "attributes": {"scope": "col"}},
+                {"label": "Cognome", "attributes": {"scope": "col"}},
+                {"label": "Nome", "attributes": {"scope": "col"}},
+                {"label": "Nascita", "attributes": {"scope": "col"}},
+                {"label": "Via", "attributes": {"scope": "col"}},
+                {"label": "Località", "attributes": {"scope": "col"}},
+                {"label": "Parrocchia", "attributes": {"scope": "col"}},
+                {"label": "Classe", "attributes": {"scope": "col"}},
+                {"label": "Sezione", "attributes": {"scope": "col"}},
+                {"label": "Scuola", "attributes": {"scope": "col"}},
+                {"label": "Squadra", "attributes": {"scope": "col"}},
+                {"label": "Laboratorio", "attributes": {"scope": "col"}},
+                {"label": "Mensa", "attributes": {"scope": "col"}},
+                {"label": "Nuota", "attributes": {"scope": "col"}},
+                {"label": "Entrata", "attributes": {"scope": "col"}},
+                {"label": "Richieste", "attributes": {"scope": "col"}},
+                {"label": "Allergie", "attributes": {"scope": "col"}},
+                {"label": "Pagamento", "attributes": {"scope": "col"}}
+            ] class="thead-dark"/>
             <tbody class="list">
             <#list ragazzi as rag>
                 <tr>
                     <th style="text-align:center;"><#if rag[1]??>${rag[1].ordineArrivo}</#if></th>
                     <td>
-                        <a href="javascript:"
-                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=inforag&id=${rag[0].id?c}', 'Dettagli ragazzo', 'width=600, height=700, status, scrollbars=1, location');"><img
-                                    src="../img/octicons/search.svg" alt="dettaglio"></a>
-                        <a href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag[0].id?c}"><img
-                                    src="../img/octicons/pencil.svg" alt="modifica"></a>
-                        <a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag[0].id?c}"><img
-                                    src="../img/octicons/trashcan.svg" alt="elimina"></a>
+                        <@ui.iscrittoActions id=rag[0].id infoTarget="inforag" popupTitle="Dettagli ragazzo" modifyAction="ModificaRagazzo" deleteAction="EliminaRagazzo" href="javascript:" detailAlt="dettaglio"/>
                     </td>
                     <td>${rag[0].cognome?capitalize}</td>
                     <td>${rag[0].nome?capitalize}</td>
                     <td data-sort="${rag[0].dataNascita?string.iso}">${rag[0].dataNascita?string["dd/MM/yyyy"]}</td>
-                    <td>${rag[0].registrato.via?capitalize+" "+rag[0].registrato.civico}</td>
-                    <td>${rag[0].registrato.localita?capitalize}</td>
+                    <td>${ui.indirizzo(rag[0].registrato, true, false)}</td>
+                    <td>${(rag[0].registrato.localita!"")?capitalize}</td>
                     <td title="${rag[0].parrocchia.nome}">${rag[0].parrocchia.luogo}</td>
                     <td>${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
                     <td>${rag[0].sezione}</td>
                     <td>${rag[0].scuola.descrizione}</td>
                     <#--Se nel db un intero è null, il resultset lo restituisce come zero-->
                     <td class="badge-squadra-support">
-                        <#if rag[0].squadra.id!=0>
-                            <div class="badge-squadra"
-                                 style="background-color: ${rag[0].squadra.colore}; margin-right: 5px;"></div> ${rag[0].squadra.nome}
-                        </#if>
+                        <@ui.squadraBadge squadra=rag[0].squadra style="list"/>
                     </td>
                     <td>${rag[0].laboratorio.descrizione}</td>
                     <td><#if rag[0].mensa>Sì<#else>No</#if></td>
@@ -71,29 +58,7 @@
             </#list>
             </tbody>
         </table>
-        </div>
-    </div>
-</div>
+</@ui.contentPanel>
 <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/ellipsis.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#t_rag').DataTable({
-            columnDefs: [
-                {
-                    targets: [2, 3, 4, 5, 6, 7, 10, 12],
-                    render: $.fn.dataTable.render.ellipsis(15, true)
-                },
-                {
-                    targets: [1, 8, 9, 13, 14, 15, 16, 17],
-                    searchable: false
-                },
-                {
-                    targets: [1, 16, 17, 18],
-                    orderable: false
-                }
-            ],
-            info: false
-        });
-    });
-</script>
-<#include "../struct/footer.html.ftl">
+<@ui.iscrittiDataTable id="t_rag" ellipsisTargets="[2, 3, 4, 5, 6, 7, 10, 12]" searchTargets="[1, 8, 9, 13, 14, 15, 16, 17]" orderTargets="[1, 16, 17, 18]"/>
+</@ui.page>

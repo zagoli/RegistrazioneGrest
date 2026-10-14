@@ -1,10 +1,8 @@
 package DAOManager;
 
 import Domain.Accompagnatore;
-import Domain.Registrato;
 
 import java.sql.*;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
@@ -23,11 +21,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
             pst.setString(2, a.getCognome());
             pst.setInt(3, a.getRegistrato().getId());
             pst.executeUpdate();
-            try (ResultSet rs = pst.getGeneratedKeys()) {
-                if (rs.next()) {
-                    a.setId(rs.getInt(1));
-                }
-            }
+            DAORows.assignGeneratedId(pst, a::setId);
         }
     }
 
@@ -69,11 +63,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
              PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Accompagnatore> la = new LinkedList<>();
-                while (rs.next()) {
-                    la.add(this.mapRowToAccompagnatore(rs));
-                }
-                return la;
+                return DAORows.readAll(rs, this::mapRowToAccompagnatore);
             }
         }
     }
@@ -83,18 +73,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
                 rs.getInt("aid"),
                 rs.getString("anome"),
                 rs.getString("acognome"),
-                new Registrato(
-                        rs.getInt("reid"),
-                        rs.getString("remail"),
-                        rs.getString("repassword"),
-                        rs.getString("renome"),
-                        rs.getString("recognome"),
-                        rs.getString("retelefono"),
-                        rs.getString("relocalita"),
-                        rs.getString("revia"),
-                        rs.getString("recivico"),
-                        rs.getInt("retipoUt")
-                )
+                IscrittoDAOMapper.registrato(rs, "re")
         );
     }
 

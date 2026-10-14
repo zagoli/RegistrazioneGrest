@@ -1,18 +1,16 @@
 <#ftl strip_whitespace = true>
-<#include "../struct/header.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=false>
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center"> presenze settimanali ${laboratorio.descrizione}</h2>
     <h5 class="text-uppercase text-center font-italic">settimana numero ${settimana.idSettimana?c}
         <small>(dal ${settimana.daQuando} al ${settimana.AQuando})</small>
     </h5>
-    <div class="container">
-        <table class="table table-bordered table-sm">
-            <thead>
-            <tr>
-                <th>Ragazzo</th>
-                <th style="width:5%;">Classe</th>
-            </tr>
-            </thead>
+    <@ui.reportTable>
+            <@ui.tableHead columns=[
+                {"label": "Ragazzo", "attributes": {}},
+                {"label": "Classe", "attributes": {"style": "width:5%;"}}
+            ]/>
             <tbody>
             <#list ragazzi as rag>
                 <tr>
@@ -35,8 +33,7 @@
                 </tr>
             </#list>
             </tbody>
-        </table>
-    </div>
+        </@ui.reportTable>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>
 <script> window.print() </script>

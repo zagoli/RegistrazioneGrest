@@ -1,13 +1,11 @@
 package DAOManager;
 
 import Domain.AnnotazioneSegreteria;
-import Domain.Registrato;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
@@ -131,23 +129,14 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
         }
     }
 
-    private List<AnnotazioneSegreteria> find(String query, int id, AnnotationMapper mapper) throws SQLException {
+    private List<AnnotazioneSegreteria> find(String query, int id, DAORows.Mapper<AnnotazioneSegreteria> mapper) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<AnnotazioneSegreteria> la = new LinkedList<>();
-                while (rs.next()) {
-                    la.add(mapper.map(rs));
-                }
-                return la;
+                return DAORows.readAll(rs, mapper);
             }
         }
-    }
-
-    @FunctionalInterface
-    private interface AnnotationMapper {
-        AnnotazioneSegreteria map(ResultSet rs) throws SQLException;
     }
 
     public AnnotazioneSegreteria mapRowToAnnotazioneSegreteria(ResultSet rs) throws SQLException {
@@ -157,18 +146,7 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
                 null,
                 null,
                 null,
-                new Registrato(
-                        rs.getInt("seid"),
-                        rs.getString("semail"),
-                        rs.getString("sepassword"),
-                        rs.getString("senome"),
-                        rs.getString("secognome"),
-                        rs.getString("setelefono"),
-                        rs.getString("selocalita"),
-                        rs.getString("sevia"),
-                        rs.getString("secivico"),
-                        rs.getInt("setipoUt")
-                ),
+                IscrittoDAOMapper.registrato(rs, "se"),
                 rs.getTimestamp("andataCreazione")
         );
     }

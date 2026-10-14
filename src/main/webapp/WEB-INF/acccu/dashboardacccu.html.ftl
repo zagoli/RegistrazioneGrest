@@ -1,5 +1,5 @@
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=true>
 <div class="container-fluid mt-5 content">
     <#--TABELLE ACCOMPAGNATORI CONTATTI-->
     <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
@@ -8,15 +8,13 @@
             <#assign count = 0>
             <div class="table-responsive">
                 <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col" style="width: 2%;">#</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Cognome</th>
-                        <th scope="col" style="width: 2%;">Modifica</th>
-                        <th scope="col" style="width: 2%;">Elimina</th>
-                    </tr>
-                    </thead>
+                    <@ui.tableHead columns=[
+                {"label": "#", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Nome", "attributes": {"scope": "col"}},
+                {"label": "Cognome", "attributes": {"scope": "col"}},
+                {"label": "Modifica", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Elimina", "attributes": {"scope": "col", "style": "width: 2%;"}}
+            ]/>
                     <tbody>
                     <#list accompagnatori as acc>
                         <#assign count = count + 1>
@@ -45,18 +43,16 @@
             <#assign count = 0>
             <div class="table-responsive">
                 <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col" style="width: 2%;">#</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Cognome</th>
-                        <th scope="col">Cellulare</th>
-                        <th scope="col">Fisso</th>
-                        <th scope="col">Relazione</th>
-                        <th scope="col" style="width: 2%;">Modifica</th>
-                        <th scope="col" style="width: 2%;">Elimina</th>
-                    </tr>
-                    </thead>
+                    <@ui.tableHead columns=[
+                {"label": "#", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Nome", "attributes": {"scope": "col"}},
+                {"label": "Cognome", "attributes": {"scope": "col"}},
+                {"label": "Cellulare", "attributes": {"scope": "col"}},
+                {"label": "Fisso", "attributes": {"scope": "col"}},
+                {"label": "Relazione", "attributes": {"scope": "col"}},
+                {"label": "Modifica", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Elimina", "attributes": {"scope": "col", "style": "width: 2%;"}}
+            ]/>
                     <tbody>
                     <#list contatti as cu>
                         <#assign count = count + 1>
@@ -88,4 +84,4 @@
     </div>
 
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>

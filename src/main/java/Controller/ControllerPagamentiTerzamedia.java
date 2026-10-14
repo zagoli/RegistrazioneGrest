@@ -1,9 +1,6 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.DatiPagamento;
-import Domain.IscrittoPagamento;
-import Domain.PagamentoRiepilogo;
 import Domain.TerzaMedia;
 import Response.FreemarkerTemplate;
 import Response.RedirectResult;
@@ -19,28 +16,15 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ControllerPagamentiTerzamedia implements ControllerInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerPagamentiTerzamedia.class);
 
     private static void renderPage(FreemarkerTemplate template) throws SQLException, ConfigPropertyException, IOException {
-        List<DatiPagamento<IscrittoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.terzamediaDAO.findAllIscrittoConPagamento();
-        List<Object[]> datiTerzamedia = new ArrayList<>(iscritti.size());
-        if (!iscritti.isEmpty()) {
-            for (DatiPagamento<IscrittoPagamento, PagamentoRiepilogo> dato : iscritti) {
-                PagamentoRiepilogo pagamento = dato.getPagamento();
-                datiTerzamedia.add(new Object[]{
-                        dato.getIscritto(),
-                        pagamento != null,
-                        pagamento != null ? pagamento : calcolaQuota(dato.getIscritto().getLocalita(), dato.getSettimane())
-                });
-            }
-            template.addObject("terzamedia", datiTerzamedia);
-        }
-        template.setView("ammseg/gestiscipagamentiterzamedia.html");
+        PagamentiSupport.render(template, DAOMan.terzamediaDAO.findAllIscrittoConPagamento(),
+                "terzamedia", "ammseg/gestiscipagamentiterzamedia.html",
+                (iscritto, settimane) -> calcolaQuota(iscritto.getLocalita(), settimane));
     }
 
     protected static float calcolaQuota(TerzaMedia t) throws SQLException, ConfigPropertyException, IOException {
@@ -69,24 +53,17 @@ public class ControllerPagamentiTerzamedia implements ControllerInterface {
             if (request.getParameterMap().isEmpty()) {
                 renderPage(template);
             } else if (request.getParameterMap().containsKey("addPagamento")) {
-                float quota = Float.parseFloat(request.getParameter("quota").replace(',', '.'));
-                int idTerzamedia = Integer.parseInt(request.getParameter("addPagamento"));
-                int idUt = (int) request.getSession().getAttribute("idUtente");
-                final var ordineArrivo = Integer.parseInt(request.getParameter("ordineArrivo"));
+                PagamentiSupport.PaymentRequest payment = PagamentiSupport.PaymentRequest.read(request);
+                float quota = payment.quota();
+                int idTerzamedia = payment.id();
+                int ordineArrivo = payment.ordineArrivo();
                 logger.info("Inserimento pagamento terzamedia richiesto per ragazzo con id {}, ordine arrivo {}, quota {}", idTerzamedia, ordineArrivo, quota);
-                try {
-                    DAOMan.pagamentoTerzamediaDAO.insert(ordineArrivo, quota, idTerzamedia, idUt);
+                if (PagamentiSupport.insert(template,
+                        () -> DAOMan.pagamentoTerzamediaDAO.insert(ordineArrivo, quota, idTerzamedia, payment.userId()),
+                        "Pagamento già presente per il ragazzo di terza media, o ordine arrivo " + ordineArrivo + " già inserito.",
+                        logger, ControllerPagamentiTerzamedia::renderPage)) {
                     logger.info("Pagamento di {} euro aggiunto per il ragazzo di terza media con id {}. Ordine arrivo: {}", quota, idTerzamedia, request.getParameter("ordineArrivo"));
                     return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamentiTerzamedia");
-                } catch (SQLException e) {
-                    if (e.getSQLState().equals("23505")) {
-                        String message = "Pagamento già presente per il ragazzo di terza media, o ordine arrivo " + ordineArrivo + " già inserito.";
-                        logger.warn(message);
-                        template.addObject("errorePagamento", message);
-                        renderPage(template);
-                    } else {
-                        throw e;
-                    }
                 }
             } else if (request.getParameterMap().containsKey("deletePagamento")) {
                 int id = Integer.parseInt(request.getParameter("deletePagamento"));

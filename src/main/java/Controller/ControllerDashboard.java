@@ -13,9 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ControllerDashboard implements ControllerInterface {
 
@@ -41,27 +39,13 @@ public class ControllerDashboard implements ControllerInterface {
                 case "dashboardRegistrato":
                     int idUtente = (int) request.getSession().getAttribute("idUtente");
                     List<Ragazzo> listRagazzo = DAOMan.ragazzoDAO.findByRegistratoId(idUtente);
-                    if (!listRagazzo.isEmpty()) {
-                        Map<Ragazzo, Boolean> mapRagazzoPagato = new HashMap<>();
-                        for (Ragazzo ragazzo : listRagazzo) {
-                            Pagamento p = DAOMan.pagamentoDAO.findByRagazzoId(ragazzo.getId());
-                            mapRagazzoPagato.put(ragazzo, p != null);
-                        }
-                        template.addObject("ragazzi", mapRagazzoPagato);
-                    }
+                    PagamentiSupport.statuses(template, "ragazzi", listRagazzo, DAOMan.pagamentoDAO::findByRagazzoId);
                     List<Animatore> listAnimatore = DAOMan.animatoreDAO.findByRegistratoId(idUtente);
                     if (!listAnimatore.isEmpty()) {
                         template.addObject("animatori", listAnimatore);
                     }
                     List<TerzaMedia> listTerzaMedia = DAOMan.terzamediaDAO.findByRegistratoId(idUtente);
-                    if (!listTerzaMedia.isEmpty()) {
-                        Map<TerzaMedia, Boolean> mapTerzamediaPagato = new HashMap<>();
-                        for (TerzaMedia ter : listTerzaMedia) {
-                            PagamentoTerzamedia p = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(ter.getId());
-                            mapTerzamediaPagato.put(ter, p != null);
-                        }
-                        template.addObject("terzamedia", mapTerzamediaPagato);
-                    }
+                    PagamentiSupport.statuses(template, "terzamedia", listTerzaMedia, DAOMan.pagamentoTerzamediaDAO::findByTerzamediaId);
                     int nContattiUrgenze = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idUtente).size();
                     if (nContattiUrgenze == 0) {
                         template.addObject("NOCU", "true");

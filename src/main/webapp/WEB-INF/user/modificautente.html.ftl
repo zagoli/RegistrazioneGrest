@@ -1,58 +1,18 @@
 <#import "../struct/macros.html.ftl" as ui>
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
-<div class="container pt-4 content">
-    <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
-        <div class="container">
-            <div class="title text-center">
-                <h5>Modifica account</h5>
-            </div>
+<@ui.page navbar=true>
+<@ui.formPanel title="Modifica account" containerClass="container pt-4 content" inlineTitle=false>
             <#if INVALIDMAIL??>
                 <@ui.avvisoMailNonValida/>
             </#if>
             <form action="/RegistrazioneGrest/App/ModificaUtente" method="POST" data-parsley-validate>
-                <div class="form-group">
-                    <label for="nome"> Nome </label>
-                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome" autofocus
-                           data-parsley-length="[2, 50]" value="${registrato.nome}">
-                </div>
-                <div class="form-group">
-                    <label for="cognome"> Cognome </label>
-                    <input class="form-control" type="text" required id="cognome" name="cognome" placeholder="Cognome"
-                           data-parsley-length="[2, 50]" value="${registrato.cognome}">
-                </div>
-                <div class="form-group">
-                    <label for="email"> E-Mail </label>
-                    <input class="form-control" type="email" required id="email" name="mail" placeholder="E-Mail"
-                           value="${registrato.mail}">
-                </div>
-                <div class="form-group">
-                    <label for="telefono"> Numero di telefono </label>
-                    <input class="form-control" data-parsley-type="digits" data-parsley-length="[10,10]"
-                           <#if tipoUt == 3>required</#if> id="telefono" name="telefono"
-                           placeholder="Cellulare personale" <#if registrato.telefono??>value="${registrato.telefono}"</#if>>
-                </div>
-                <div class="form-group">
-                    <label for="localita"> Localita </label>
-                    <input class="form-control" type="text" <#if tipoUt == 3>required</#if> id="localita"
-                           name="localita"
-                           placeholder="Localit&agrave" <#if registrato.localita??>value="${registrato.localita}"</#if>>
-                </div>
-                <div class="form-group">
-                    <label for="via"> Via </label>
-                    <input class="form-control" type="text" <#if tipoUt == 3>required</#if> id="via" name="via"
-                           placeholder="Via" <#if registrato.via??>value="${registrato.via}"</#if>>
-                </div>
-                <div class="form-group">
-                    <label for="civico"> Numero civico </label>
-                    <input class="form-control" type="text" <#if tipoUt == 3>required</#if> id="civico" name="civico"
-                           placeholder="Numero Civico" <#if registrato.civico??>value="${registrato.civico}"</#if>>
-                </div>
-                <div class="pt-3 form-group">
-                    <input class="form-control btn btn-primary" type="submit" value="Conferma">
-                </div>
+                <@ui.inputField id="nome" label="Nome" required=true autofocus=true placeholder="Nome" length="[2, 50]" value="${registrato.nome}"/>
+                <@ui.inputField id="cognome" label="Cognome" required=true placeholder="Cognome" length="[2, 50]" value="${registrato.cognome}"/>
+                <@ui.inputField id="email" label="E-Mail" type="email" name="mail" required=true placeholder="E-Mail" value="${registrato.mail}"/>
+                <@ui.inputField id="telefono" label="Numero di telefono" type="" required=(tipoUt == 3) placeholder="Cellulare personale" length="[10,10]" value=(registrato.telefono)![] attributes={"data-parsley-type": "digits"}/>
+                <@ui.inputField id="localita" label="Localita" required=(tipoUt == 3) placeholder="Localit&agrave" value=(registrato.localita)![]/>
+                <@ui.inputField id="via" label="Via" required=(tipoUt == 3) placeholder="Via" value=(registrato.via)![]/>
+                <@ui.inputField id="civico" label="Numero civico" required=(tipoUt == 3) placeholder="Numero Civico" value=(registrato.civico)![]/>
+                <@ui.submitButton label="Conferma"/>
             </form>
-        </div>
-    </div>
-</div>
-<#include "../struct/footer.html.ftl">
+</@ui.formPanel>
+</@ui.page>

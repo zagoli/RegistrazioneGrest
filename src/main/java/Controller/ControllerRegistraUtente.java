@@ -7,6 +7,7 @@ import Response.Response;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
+import Utility.RequestFields;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -29,14 +30,8 @@ public class ControllerRegistraUtente implements ControllerInterface {
             if (request.getParameterMap().containsKey("nome")) {
                 if (Checker.checkMail(request.getParameter("mail"))) {
                     Registrato r = new Registrato();
-                    r.setMail(request.getParameter("mail"));
                     r.setPassword(request.getParameter("password"));
-                    r.setNome(request.getParameter("nome"));
-                    r.setCognome(request.getParameter("cognome"));
-                    r.setTelefono(request.getParameter("telefono"));
-                    r.setLocalita(request.getParameter("localita"));
-                    r.setVia(request.getParameter("via"));
-                    r.setCivico(request.getParameter("civico"));
+                    RequestFields.account(request, r);
                     if (request.getSession().getAttribute("tipoUtente") != null && request.getSession().getAttribute("tipoUtente").equals(0)) {
                         if (request.getParameterMap().containsKey("consentiModifica")) {
                             r.setTipoUt(1);

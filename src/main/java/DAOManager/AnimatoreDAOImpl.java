@@ -3,7 +3,6 @@ package DAOManager;
 import Domain.*;
 
 import java.sql.*;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AnimatoreDAOImpl implements AnimatoreDAO {
@@ -38,31 +37,24 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
     private static final String COUNT_SETTIMANALE = "select pa.Calendario_idSettimana, count(*) from presenzaAn pa group by pa.Calendario_idSettimana;";
     // </editor-fold>
 
+    static void bindAnimatore(PreparedStatement pst, Animatore a) throws SQLException {
+        IscrittoDAOMapper.bindCommonFields(pst, a);
+        pst.setString(9, a.getCellulare());
+        pst.setString(10, a.getFasciaEtaRagazzi());
+        pst.setString(11, a.getMail());
+        pst.setString(12, a.getNTessera());
+        pst.setString(13, a.getCodiceFiscale());
+        pst.setBoolean(14, a.isResponsabileSquadra());
+        pst.setBoolean(15, a.isResponsabileLaboratorio());
+    }
+
     @Override
     public void insert(Animatore a) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(INSERT_ANIMATORE, Statement.RETURN_GENERATED_KEYS)) {
-            pst.setString(1, a.getNome());
-            pst.setString(2, a.getCognome());
-            pst.setDate(3, new java.sql.Date(a.getDataNascita().getTime()));
-            pst.setString(4, a.getPresenza());
-            pst.setInt(5, a.getLaboratorio().getId());
-            pst.setInt(6, a.getParrocchia().getId());
-            pst.setInt(7, a.getRegistrato().getId());
-            pst.setInt(8, a.getCircolo().getId());
-            pst.setString(9, a.getCellulare());
-            pst.setString(10, a.getFasciaEtaRagazzi());
-            pst.setString(11, a.getMail());
-            pst.setString(12, a.getNTessera());
-            pst.setString(13, a.getCodiceFiscale());
-            pst.setBoolean(14, a.isResponsabileSquadra());
-            pst.setBoolean(15, a.isResponsabileLaboratorio());
+            bindAnimatore(pst, a);
             pst.executeUpdate();
-            try (ResultSet rs = pst.getGeneratedKeys()) {
-                if (rs.next()) {
-                    a.setId(rs.getInt(1));
-                }
-            }
+            DAORows.assignGeneratedId(pst, a::setId);
         }
     }
 
@@ -70,21 +62,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
     public void update(Animatore a) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(UPDATE_ANIMATORE)) {
-            pst.setString(1, a.getNome());
-            pst.setString(2, a.getCognome());
-            pst.setDate(3, new java.sql.Date(a.getDataNascita().getTime()));
-            pst.setString(4, a.getPresenza());
-            pst.setInt(5, a.getLaboratorio().getId());
-            pst.setInt(6, a.getParrocchia().getId());
-            pst.setInt(7, a.getRegistrato().getId());
-            pst.setInt(8, a.getCircolo().getId());
-            pst.setString(9, a.getCellulare());
-            pst.setString(10, a.getFasciaEtaRagazzi());
-            pst.setString(11, a.getMail());
-            pst.setString(12, a.getNTessera());
-            pst.setString(13, a.getCodiceFiscale());
-            pst.setBoolean(14, a.isResponsabileSquadra());
-            pst.setBoolean(15, a.isResponsabileLaboratorio());
+            bindAnimatore(pst, a);
             pst.setInt(16, a.getId());
             pst.executeUpdate();
         }
@@ -94,11 +72,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
     public void updateSquadra(int id, Integer idSquadra, boolean responsabile) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_ANIMATORE)) {
-            if (idSquadra == null) {
-                pst.setNull(1, Types.INTEGER);
-            } else {
-                pst.setInt(1, idSquadra);
-            }
+            IscrittoDAOMapper.bindSquadra(pst, idSquadra);
             pst.setBoolean(2, responsabile);
             pst.setInt(3, id);
             pst.executeUpdate();
@@ -141,11 +115,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_ANIMATORE);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Animatore> la = new LinkedList<>();
-            while (rs.next()) {
-                la.add(mapRowToAnimatore(rs));
-            }
-            return la;
+            return DAORows.readAll(rs, AnimatoreDAOImpl::mapRowToAnimatore);
         }
     }
 
@@ -161,30 +131,20 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
 
     @Override
     public List<Animatore> findByCalendarioId(int id) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_CALENDARIO_ID)) {
-            pst.setInt(1, id);
-            try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Animatore> la = new LinkedList<>();
-                while (rs.next()) {
-                    la.add(mapRowToAnimatore(rs));
-                }
-                return la;
-            }
-        }
+        return findByRelationId(FIND_ANIMATORE_CALENDARIO_ID, id);
     }
 
     @Override
     public List<Animatore> findByRegistratoId(int id) throws SQLException {
+        return findByRelationId(FIND_ANIMATORE_REGISTRATO_ID, id);
+    }
+
+    private List<Animatore> findByRelationId(String query, int id) throws SQLException {
         try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_REGISTRATO_ID)) {
+             PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Animatore> la = new LinkedList<>();
-                while (rs.next()) {
-                    la.add(mapRowToAnimatore(rs));
-                }
-                return la;
+                return DAORows.readAll(rs, AnimatoreDAOImpl::mapRowToAnimatore);
             }
         }
     }
@@ -194,62 +154,19 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(COUNT_SETTIMANALE);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Integer[]> count = new LinkedList<>();
-            while (rs.next()) {
-                Integer[] i = {rs.getInt(1), rs.getInt(2)};
-                count.add(i);
-            }
-            return count;
+            return DAORows.weeklyCounts(rs);
         }
     }
 
     public static Animatore mapRowToAnimatore(ResultSet rs) throws SQLException {
-        return new Animatore(
-                rs.getInt("anid"),
-                rs.getString("annome"),
-                rs.getString("ancognome"),
-                rs.getDate("andataNascita"),
-                rs.getString("anpresenza"),
-                new Laboratorio(
-                        rs.getInt("laid"),
-                        rs.getString("ladescrizione"),
-                        rs.getBoolean("lariservato")
-                ),
-                new Parrocchia(
-                        rs.getInt("paid"),
-                        rs.getString("panome"),
-                        rs.getString("paluogo")
-                ),
-                new Registrato(
-                        rs.getInt("reid"),
-                        rs.getString("remail"),
-                        rs.getString("repassword"),
-                        rs.getString("renome"),
-                        rs.getString("recognome"),
-                        rs.getString("retelefono"),
-                        rs.getString("relocalita"),
-                        rs.getString("revia"),
-                        rs.getString("recivico"),
-                        rs.getInt("retipoUt")
-                ),
-                new Circolo(
-                        rs.getInt(("ciid")),
-                        rs.getString("cinome"),
-                        rs.getString("ciluogo")
-                ),
-                rs.getString("ancellulare"),
-                rs.getString("anfasciaEtaRagazzi"),
-                rs.getString("anmail"),
-                rs.getString("annTessera"),
-                new Squadra(
-                        rs.getInt("sqid"),
-                        rs.getString("sqnome"),
-                        rs.getString("sqcolore")
-                ),
-                rs.getString("ancodiceFiscale"),
-                rs.getBoolean("anisResponsabileSquadra"),
-                rs.getBoolean("anisResponsabileLaboratorio")
-        );
+        Animatore animatore = IscrittoDAOMapper.commonFields(rs, new Animatore(), "an", "annTessera");
+        animatore.setCellulare(rs.getString("ancellulare"));
+        animatore.setFasciaEtaRagazzi(rs.getString("anfasciaEtaRagazzi"));
+        animatore.setMail(rs.getString("anmail"));
+        animatore.setCodiceFiscale(rs.getString("ancodiceFiscale"));
+        animatore.setResponsabileSquadra(rs.getBoolean("anisResponsabileSquadra"));
+        animatore.setResponsabileLaboratorio(rs.getBoolean("anisResponsabileLaboratorio"));
+        return animatore;
     }
 
 }

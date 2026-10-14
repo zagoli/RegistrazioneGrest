@@ -4,7 +4,6 @@ import Domain.Laboratorio;
 import Domain.LaboratorioConNumeroIscritti;
 
 import java.sql.*;
-import java.util.LinkedList;
 import java.util.List;
 
 public class LaboratorioDAOImpl implements LaboratorioDAO {
@@ -37,35 +36,22 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
     @Override
     public List<Laboratorio> findAll() throws SQLException {
         try (Connection con = DAOMan.getConnection(); PreparedStatement pst = con.prepareStatement(FIND_ALL_LABORATORIO); ResultSet rs = pst.executeQuery()) {
-            LinkedList<Laboratorio> ll = new LinkedList<>();
-            while (rs.next()) {
-                ll.add(this.mapRowToLaboratorio(rs));
-            }
-            return ll;
+            return DAORows.readAll(rs, this::mapRowToLaboratorio);
         }
     }
 
     @Override
     public List<Laboratorio> findNonRiservato() throws SQLException {
         try (Connection con = DAOMan.getConnection(); PreparedStatement pst = con.prepareStatement(FIND_NON_RISERVATO); ResultSet rs = pst.executeQuery()) {
-            LinkedList<Laboratorio> ll = new LinkedList<>();
-            while (rs.next()) {
-                ll.add(this.mapRowToLaboratorio(rs));
-            }
-            return ll;
+            return DAORows.readAll(rs, this::mapRowToLaboratorio);
         }
     }
 
     @Override
     public List<LaboratorioConNumeroIscritti> findAllConNumeroIscritti() throws SQLException {
         try (Connection con = DAOMan.getConnection(); PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_NUMERO_ISCRITTI); ResultSet rs = pst.executeQuery()) {
-            LinkedList<LaboratorioConNumeroIscritti> laboratoriNumIscritti = new LinkedList<>();
-            while (rs.next()) {
-                Laboratorio laboratorio = this.mapRowToLaboratorio(rs);
-                int numeroIscritti = rs.getInt("numeroIscritti");
-                laboratoriNumIscritti.add(new LaboratorioConNumeroIscritti(laboratorio, numeroIscritti));
-            }
-            return laboratoriNumIscritti;
+            return DAORows.readAll(rs, row ->
+                    new LaboratorioConNumeroIscritti(mapRowToLaboratorio(row), row.getInt("numeroIscritti")));
         }
     }
 

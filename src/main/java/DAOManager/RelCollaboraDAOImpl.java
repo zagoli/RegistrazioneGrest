@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RelCollaboraDAOImpl implements RelCollaboraDAO {
@@ -42,11 +41,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
              PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<RelCollabora> lrc = new LinkedList<>();
-                while (rs.next()) {
-                    lrc.add(this.mapRowToRelCollabora(rs));
-                }
-                return lrc;
+                return DAORows.readAll(rs, this::mapRowToRelCollabora);
             }
         }
     }
@@ -67,11 +62,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_RELCOLLABORA);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<RelCollabora> lrc = new LinkedList<>();
-            while (rs.next()) {
-                lrc.add(this.mapRowToRelCollabora(rs));
-            }
-            return lrc;
+            return DAORows.readAll(rs, this::mapRowToRelCollabora);
         }
     }
 

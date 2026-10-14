@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AttivitaGenDAOImpl implements AttivitaGenDAO {
@@ -30,11 +29,7 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_ATTIVITAGEN);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<AttivitaGen> la = new LinkedList<>();
-            while (rs.next()) {
-                la.add(this.mapRowToAttivitaGen(rs));
-            }
-            return la;
+            return DAORows.readAll(rs, this::mapRowToAttivitaGen);
         }
     }
 
@@ -44,11 +39,7 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO {
              PreparedStatement pst = con.prepareStatement(FIND_ATTIVITAGEN_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<AttivitaGen> la = new LinkedList<>();
-                while (rs.next()) {
-                    la.add(this.mapRowToAttivitaGen(rs));
-                }
-                return la;
+                return DAORows.readAll(rs, this::mapRowToAttivitaGen);
             }
         }
     }

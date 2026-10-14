@@ -1,207 +1,36 @@
 <#import "annotazioni.html.ftl" as note>
 <#import "../struct/macros.html.ftl" as ui>
-<#include "../struct/header.html.ftl">
+<@ui.page navbar=false>
 <div class="container mt-3 content">
     <div class="shadow py-2 pl-3 pr-3 bg-white">
-        <div class="row">
-            <div class="col-sm">
-                <strong>Id Terza media</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.id?c}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Nome</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.nome?capitalize}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Cognome</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.cognome?capitalize}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Data di nascita</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.dataNascita?string["dd/MM/yyyy"]}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Presenza giornaliera</strong>
-            </div>
-            <div class="col-sm">
-                <p>
-                    <#if terzamedia.presenza == "M">
-                        Mattina
-                    <#elseif terzamedia.presenza == "P">
-                        Pomeriggio
-                    <#elseif terzamedia.presenza == "C">
-                        Completo
-                    </#if>
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Laboratorio</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.laboratorio.descrizione}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Parrocchia</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.parrocchia.nome+" - "+terzamedia.parrocchia.luogo}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Circolo NOI</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.circolo.nome+" - "+terzamedia.circolo.luogo}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Scuola</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.scuola.descrizione+" - "+terzamedia.scuola.grado}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Sezione</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.sezione}</p>
-            </div>
-        </div>
-        <#if terzamedia.NTessera??>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Numero tessera Circolo NOI</strong>
-                </div>
-                <div class="col-sm">
-                    <p>${terzamedia.NTessera}</p>
-                </div>
-            </div>
-        </#if>
+        <@ui.displayRow label="Id Terza media"><p>${terzamedia.id?c}</p></@ui.displayRow>
+        <@ui.identityRows person=terzamedia capitalize=true/>
+        <@ui.presenzaRow presenza=terzamedia.presenza label="Presenza giornaliera"/>
+        <@ui.displayRow label="Laboratorio"><p>${terzamedia.laboratorio.descrizione}</p></@ui.displayRow>
+        <@ui.parrocchiaCircoloRows person=terzamedia/>
+        <@ui.schoolRows person=terzamedia label="Sezione" value=terzamedia.sezione/>
+        <@ui.tesseraRow person=terzamedia/>
 
         <@ui.presenzaSettimanale calendari=calendari/>
 
-        <div class="row">
-            <div class="col-sm">
-                <strong>E-mail</strong>
-            </div>
-            <div class="col-sm">
-                <p>${terzamedia.mail}</p>
-            </div>
-        </div>
+        <@ui.displayRow label="E-mail"><p>${terzamedia.mail}</p></@ui.displayRow>
         <#if terzamedia.cellulare??>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Numero di cellulare</strong>
-                </div>
-                <div class="col-sm">
-                    <p>${terzamedia.cellulare}</p>
-                </div>
-            </div>
+            <@ui.displayRow label="Numero di cellulare"><p>${terzamedia.cellulare}</p></@ui.displayRow>
         </#if>
-        <#if terzamedia.richieste??>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Richieste</strong>
-                </div>
-                <div class="col-sm">
-                    <p>${terzamedia.richieste?lower_case}</p>
-                </div>
-            </div>
-        </#if>
-        <#if terzamedia.noteAlimentari??>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Note Alimentari</strong>
-                </div>
-                <div class="col-sm">
-                    <p>${terzamedia.noteAlimentari?lower_case}</p>
-                </div>
-            </div>
-        </#if>
+        <@ui.noteRows person=terzamedia lowerCase=true/>
         <#if terzamedia.squadra.id!=0>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Squadra</strong>
-                </div>
-                <div class="col-sm">
-                    <p>${terzamedia.squadra.nome}</p>
-                </div>
-            </div>
+            <@ui.displayRow label="Squadra"><p>${terzamedia.squadra.nome}</p></@ui.displayRow>
         </#if>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Sa nuotare</strong>
-            </div>
-            <div class="col-sm">
-                <p><#if terzamedia.saNuotare>Sì<#else>No</#if></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Ha partecipato alla festa del passaggio a Balconi</strong>
-            </div>
-            <div class="col-sm">
-                <p><#if terzamedia.festaPassaggio>Sì<#else>No</#if></p>
-            </div>
-        </div>
+        <@ui.yesNoRow label="Sa nuotare" value=terzamedia.saNuotare/>
+        <@ui.yesNoRow label="Ha partecipato alla festa del passaggio a Balconi" value=terzamedia.festaPassaggio/>
         <#if pagamento??>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Quota pagamento</strong>
-                </div>
-                <div class="col-sm">
-                    <p>${pagamento.quota}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Evaso da</strong>
-                </div>
-                <div class="col-sm">
-                    <p>${pagamento.registrato.nome+" "+pagamento.registrato.cognome}</p>
-                </div>
-            </div>
+            <@ui.paymentDetails pagamento=pagamento/>
         </#if>
     </div>
 
-    <#--contatti urgenze-->
-    <#if cu??>
-        <@ui.contattiUrgenze contatti=cu/>
-    </#if>
-
-    <#--accompagnatori-->
-    <#if accompagnatori??>
-        <@ui.accompagnatoriAutorizzati accompagnatori=accompagnatori/>
-    </#if>
-
-    <#--info registrato-->
-    <@ui.informazioniRegistrato registrato=terzamedia.registrato attgen=attgen/>
+    <@ui.detailContacts registrato=terzamedia.registrato contatti=(cu)!false accompagnatori=(accompagnatori)!false attgen=attgen/>
 
     <#-- Annotazioni segreteria -->
     <@note.pannelloInfoDettaglio annotazioni=annotazioni/>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>

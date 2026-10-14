@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RagazzoExportDAOImpl implements RagazzoExportDAO {
@@ -47,11 +46,7 @@ public class RagazzoExportDAOImpl implements RagazzoExportDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL);
              ResultSet rs = pst.executeQuery()) {
-            List<RagazzoExport> ragazzi = new LinkedList<>();
-            while (rs.next()) {
-                ragazzi.add(mapRow(rs));
-            }
-            return ragazzi;
+            return DAORows.readAll(rs, this::mapRow);
         }
     }
 

@@ -1,127 +1,24 @@
 <#import "../struct/macros.html.ftl" as ui>
-<#include "../struct/header.html.ftl">
+<@ui.page navbar=false>
 <div class="container content" onclick="window.print();">
     <div class="mt-3">
         <p class="font-weight-bold text-uppercase text-center"> da consegnare al parroco </p>
     </div>
     <div class="shadow pt-2 pl-3 pr-3">
-        <div class="row">
-            <div class="col-sm">
-                <strong>Nome</strong>
-            </div>
-            <div class="col-sm">
-                <p>${animatore.nome}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Cognome</strong>
-            </div>
-            <div class="col-sm">
-                <p>${animatore.cognome}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Data di nascita</strong>
-            </div>
-            <div class="col-sm">
-                <p>${animatore.dataNascita?string["dd/MM/yyyy"]}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Codice fiscale</strong>
-            </div>
-            <div class="col-sm">
-                <p>${animatore.codiceFiscale}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Presenza giornaliera al Grest</strong>
-            </div>
-            <div class="col-sm">
-                <p>
-                    <#if animatore.presenza == "M">
-                        Mattina
-                    <#elseif animatore.presenza == "P">
-                        Pomeriggio
-                    <#elseif animatore.presenza == "C">
-                        Completo
-                    </#if>
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Laboratorio</strong>
-            </div>
-            <div class="col-sm">
-                <p>${animatore.laboratorio.descrizione}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Preferenza fascia d'età ragazzi</strong>
-            </div>
-            <div class="col-sm">
-                <p>
-                    <#if animatore.fasciaEtaRagazzi == "PIC">
-                        Piccoli
-                    <#elseif animatore.fasciaEtaRagazzi == "GRA">
-                        Grandi
-                    <#elseif animatore.fasciaEtaRagazzi == "TER">
-                        3 Media
-                    </#if>
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Parrocchia</strong>
-            </div>
-            <div class="col-sm">
-                <p>${animatore.parrocchia.nome+" - "+animatore.parrocchia.luogo}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Circolo NOI</strong>
-            </div>
-            <div class="col-sm">
-                <p>${animatore.circolo.nome+" - "+animatore.circolo.luogo}</p>
-            </div>
-        </div>
-        <#if animatore.NTessera??>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>Numero tessera Circolo NOI</strong>
-                </div>
-                <div class="col-sm">
-                    <p>${animatore.NTessera}</p>
-                </div>
-            </div>
-        </#if>
+        <@ui.identityRows person=animatore capitalize=false/>
+        <@ui.displayRow label="Codice fiscale"><p>${animatore.codiceFiscale}</p></@ui.displayRow>
+        <@ui.presenzaRow presenza=animatore.presenza label="Presenza giornaliera al Grest"/>
+        <@ui.displayRow label="Laboratorio"><p>${animatore.laboratorio.descrizione}</p></@ui.displayRow>
+        <@ui.displayRow label="Preferenza fascia d'età ragazzi"><p>
+                    <@ui.fasciaEtaDescription fascia=animatore.fasciaEtaRagazzi/>
+                </p></@ui.displayRow>
+        <@ui.parrocchiaCircoloRows person=animatore/>
+        <@ui.tesseraRow person=animatore/>
 
         <@ui.presenzaSettimanale calendari=calendari/>
 
-        <div class="row">
-            <div class="col-sm">
-                <strong>E-mail</strong>
-            </div>
-            <div class="col-sm">
-                <p>${animatore.mail}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <strong>Cellulare</strong>
-            </div>
-            <div class="col-sm">
-                <p>${animatore.cellulare}</p>
-            </div>
-        </div>
+        <@ui.displayRow label="E-mail"><p>${animatore.mail}</p></@ui.displayRow>
+        <@ui.displayRow label="Cellulare"><p>${animatore.cellulare}</p></@ui.displayRow>
         <strong> Sono inoltre disponibile a:</strong>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio multimediale e amplificazione</label>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio di manutenzione</label>
@@ -146,4 +43,4 @@
     </div>
 </div>
 <script>window.print();</script>
-<#include "../struct/footer.html.ftl">
+</@ui.page>

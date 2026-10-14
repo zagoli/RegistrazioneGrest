@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class TerzamediaExportDAOImpl implements TerzamediaExportDAO {
@@ -47,11 +46,7 @@ public class TerzamediaExportDAOImpl implements TerzamediaExportDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL);
              ResultSet rs = pst.executeQuery()) {
-            List<TerzaMediaExport> terzamedia = new LinkedList<>();
-            while (rs.next()) {
-                terzamedia.add(mapRow(rs));
-            }
-            return terzamedia;
+            return DAORows.readAll(rs, this::mapRow);
         }
     }
 

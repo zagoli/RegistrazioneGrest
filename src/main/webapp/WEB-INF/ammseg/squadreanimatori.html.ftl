@@ -1,46 +1,28 @@
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
-<div class="container-fluid mt-5 content">
-    <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=true>
+<@ui.contentPanel panelClass="container shadow pt-2 pl-3 pr-3 pb-2 bg-white" responsive=false>
         <#if animatori??>
             <form action="/RegistrazioneGrest/App/Squadre?target=an" method="POST">
                 <#-- l'input nascosto indica che abbiamo usato la pagina per impostare le squadre-->
                 <input type="hidden" name="submitted"/>
                 <input type="submit" class="btn btn-primary" value="Salva"/>
                 <table class="table table-striped" id="t_squadreani">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Cognome</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Squadra</th>
-                        <th scope="col">Responsabile</th>
-                    </tr>
-                    </thead>
+                    <@ui.tableHead columns=[
+                {"label": "Cognome", "attributes": {"scope": "col"}},
+                {"label": "Nome", "attributes": {"scope": "col"}},
+                {"label": "Squadra", "attributes": {"scope": "col"}},
+                {"label": "Responsabile", "attributes": {"scope": "col"}}
+            ] class="thead-dark"/>
                     <tbody class="list">
                     <#list animatori as ani>
                         <tr>
                             <td>${ani.cognome?capitalize}</td>
                             <td>${ani.nome?capitalize}</td>
                             <td>
-                                <label class="sr-only" for="${ani.id?c}squadra">Squadra</label>
-                                <select class="custom-select mr-sm-2" id="${ani.id?c}squadra"
-                                        name="${ani.id?c}">
-                                    <option <#if ani.squadra.id==0>selected</#if>></option>
-                                    <#list squadre as sq>
-                                        <option value="${sq.id?c}"
-                                                <#if ani.squadra.id! == sq.id>selected</#if>>${sq.nome}</option>
-                                    </#list>
-                                </select>
+                                <@ui.assignmentSelect id="${ani.id?c}squadra" name="${ani.id?c}" label="Squadra" options=squadre selected=ani.squadra.id labelProperty="nome" emptyOption=true/>
                             </td>
                             <td class="text-center">
-                                <div class="checkbox">
-                                    <label class="sr-only" for="${ani.id?c}responsabileSquadra">Responsabile
-                                        squadra</label>
-                                    <input id="${ani.id?c}responsabileSquadra" name="${ani.id?c}"
-                                           type="checkbox"
-                                           data-toggle="toggle" data-off="No" data-on="Sì"
-                                           <#if ani.responsabileSquadra>checked</#if>>
-                                </div>
+                                <@ui.responsabileToggle id="${ani.id?c}responsabileSquadra" name="${ani.id?c}" label="Responsabile squadra" checked=ani.responsabileSquadra/>
                             </td>
                         </tr>
                     </#list>
@@ -48,21 +30,6 @@
                 </table>
             </form>
         </#if>
-    </div>
-</div>
-<script>
-    $(document).ready(function () {
-        $('#t_squadreani').DataTable({
-            paging: false,
-            columnDefs: [
-                {orderable: false, targets: [2, 3]},
-                {searchable: false, targets: [2, 3]},
-                {width: "10%", targets: 3}
-            ],
-            info: false
-        });
-    });
-</script>
-<#-- questo script permette di salvare solo le modifiche effettuate, invece che di salvare tutti gli animatori compresi quelli che sono rimasti uguali-->
-<script src="../js/salvasolomodificatoanimatori.js"></script>
-<#include "../struct/footer.html.ftl">
+</@ui.contentPanel>
+<@ui.assignmentScripts id="t_squadreani" responsible=true column=2/>
+</@ui.page>

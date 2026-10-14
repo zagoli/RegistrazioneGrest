@@ -1,21 +1,18 @@
 <#ftl strip_whitespace = true>
-<#include "../struct/header.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=false>
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center">Elenco sintesi terzamedia</h2>
-    <div class="container-block">
-        <div class="mr-2 ml-2">
-            <table class="table table-bordered pl-2 pr-2 table-sm">
-                <thead>
-                <tr>
-                    <th>Cognome</th>
-                    <th>Nome</th>
-                    <th>Periodo</th>
-                    <th>Squadra</th>
-                    <th>Laboratorio</th>
-                    <th>Cellulare</th>
-                    <th>Telefoni urgenze</th>
-                </tr>
-                </thead>
+    <@ui.reportTable wide=true>
+                <@ui.tableHead columns=[
+                {"label": "Cognome", "attributes": {}},
+                {"label": "Nome", "attributes": {}},
+                {"label": "Periodo", "attributes": {}},
+                {"label": "Squadra", "attributes": {}},
+                {"label": "Laboratorio", "attributes": {}},
+                {"label": "Cellulare", "attributes": {}},
+                {"label": "Telefoni urgenze", "attributes": {}}
+            ]/>
                 <tbody>
                 <#list terzamedia as ter>
                     <tr>
@@ -26,18 +23,12 @@
                         <td> ${ter[0].laboratorio.descrizione[0..*15]}...</td>
                         <td> <#if ter[0].cellulare??> ${ter[0].cellulare} </#if> </td>
                         <td>
-                            <i>R </i><b>${ter[0].registrato.telefono}</b> -
-                            <#list ter[2][0..*4] as cu>
-                                <i>${cu.relazione?capitalize+" "}</i>
-                                <b>${(cu.cellulare!)+" "+(cu.fisso!)}</b> -
-                            </#list>
+                            <@ui.reportEmergencyPhones registrato=ter[0].registrato contatti=ter[2]/>
                         </td>
                     </tr>
                 </#list>
                 </tbody>
-            </table>
-        </div>
-    </div>
+            </@ui.reportTable>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>
 <script> window.print() </script>

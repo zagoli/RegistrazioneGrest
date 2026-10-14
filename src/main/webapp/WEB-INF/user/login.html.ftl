@@ -1,5 +1,5 @@
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=true>
 <div class="container">
     <div class="row vertical-center">
         <div class="container col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
@@ -28,4 +28,4 @@
         </div>
     </div>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>

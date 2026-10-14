@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ControllerStampe implements ControllerInterface {
 
@@ -25,32 +26,12 @@ public class ControllerStampe implements ControllerInterface {
                     int squadraId = Integer.parseInt(request.getParameter("squadra"));
                     List<Ragazzo> allRagazzi = DAOMan.ragazzoDAO.findByCalendarioId(idset);
                     List<Animatore> allAnimatori = DAOMan.animatoreDAO.findByCalendarioId(idset);
-                    List<Object[]> ragGiusti = new LinkedList<>();
-                    allRagazzi.stream().filter((rag) -> (rag.getSquadra().getId() != 0 && rag.getSquadra().getId() == squadraId)).forEachOrdered((Ragazzo rag) -> {
-                        String periodoString = "";
-                        List<RelPresenzaRag> periodo;
-                        try {
-                            periodo = DAOMan.relPresenzaRagDAO.findByRagazzoId(rag.getId());
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-                        periodoString = periodo.stream().map((relPresenzaRag) -> relPresenzaRag.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                        Object[] o = {rag, periodoString};
-                        ragGiusti.add(o);
-                    });
-                    List<Object[]> anGiusti = new LinkedList<>();
-                    allAnimatori.stream().filter((an) -> (an.getSquadra().getId() != 0 && an.getSquadra().getId() == squadraId)).forEachOrdered((an) -> {
-                        String periodoString = "";
-                        List<RelPresenzaAn> periodo;
-                        try {
-                            periodo = DAOMan.relPresenzaAnDAO.findByAnimatoreId(an.getId());
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-                        periodoString = periodo.stream().map((RelPresenzaAn) -> RelPresenzaAn.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                        Object[] o = {an, periodoString};
-                        anGiusti.add(o);
-                    });
+                    List<Object[]> ragGiusti = PresenzeSupport.printRows(
+                            allRagazzi.stream().filter(rag -> rag.getSquadra().getId() != 0 && rag.getSquadra().getId() == squadraId).collect(Collectors.toList()),
+                            DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, false);
+                    List<Object[]> anGiusti = PresenzeSupport.printRows(
+                            allAnimatori.stream().filter(an -> an.getSquadra().getId() != 0 && an.getSquadra().getId() == squadraId).collect(Collectors.toList()),
+                            DAOMan.relPresenzaAnDAO::findByAnimatoreId, RelPresenzaAn::getCalendarioId, false);
                     template.addObject("TITOLOPAGINA", "Presenze settimanali squadre");
                     template.setView("stampe/pressetsqu.html");
                     template.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
@@ -61,16 +42,8 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "elesintrag": {
                     List<Ragazzo> allRagazzi = DAOMan.ragazzoDAO.findAll();
-                    List<Object[]> dati = new LinkedList<>();
-                    for (Ragazzo rag : allRagazzi) {
-                        String periodoString = "";
-                        List<RelPresenzaRag> periodo = DAOMan.relPresenzaRagDAO.findByRagazzoId(rag.getId());
-                        periodoString = periodo.stream().map((relPresenzaRag) -> relPresenzaRag.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                        int idreg = rag.getRegistrato().getId();
-                        List<ContattoUrgenze> cu = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idreg);
-                        Object[] o = {rag, periodoString, cu};
-                        dati.add(o);
-                    }
+                    List<Object[]> dati = PresenzeSupport.printRows(allRagazzi,
+                            DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, true);
                     template.addObject("ragazzi", dati);
                     template.addObject("TITOLOPAGINA", "Elenco sintesi ragazzi");
                     template.setView("stampe/elesintrag.html");
@@ -112,17 +85,9 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "mensa": {
                     List<Ragazzo> lrag = DAOMan.ragazzoDAO.findByCalendarioId(Integer.parseInt(request.getParameter("idSet")));
-                    List<Object[]> lob = new LinkedList<>();
-                    for (Ragazzo rag : lrag) {
-                        if (rag.getMensa()) {
-                            String periodoString = "";
-                            List<RelPresenzaRag> periodo = DAOMan.relPresenzaRagDAO.findByRagazzoId(rag.getId());
-                            periodoString = periodo.stream().map((relPresenzaRag) -> relPresenzaRag.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                            List<ContattoUrgenze> cu = DAOMan.contattoUrgenzeDAO.findByRegistratoId(rag.getRegistrato().getId());
-                            Object[] o = {rag, periodoString, cu};
-                            lob.add(o);
-                        }
-                    }
+                    List<Object[]> lob = PresenzeSupport.printRows(
+                            lrag.stream().filter(Ragazzo::getMensa).collect(Collectors.toList()),
+                            DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, true);
                     template.addObject("set", DAOMan.calendarioDAO.findById(Integer.parseInt(request.getParameter("idSet"))));
                     template.addObject("dati", lob);
                     template.addObject("TITOLOPAGINA", "Mensa");
@@ -131,17 +96,9 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "anticipo": {
                     List<Ragazzo> lrag = DAOMan.ragazzoDAO.findAll();
-                    List<Object[]> lob = new LinkedList<>();
-                    for (Ragazzo rag : lrag) {
-                        if (rag.getEntrataAnticipata()) {
-                            String periodoString = "";
-                            List<RelPresenzaRag> periodo = DAOMan.relPresenzaRagDAO.findByRagazzoId(rag.getId());
-                            periodoString = periodo.stream().map((relPresenzaRag) -> relPresenzaRag.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                            List<ContattoUrgenze> cu = DAOMan.contattoUrgenzeDAO.findByRegistratoId(rag.getRegistrato().getId());
-                            Object[] o = {rag, periodoString, cu};
-                            lob.add(o);
-                        }
-                    }
+                    List<Object[]> lob = PresenzeSupport.printRows(
+                            lrag.stream().filter(Ragazzo::getEntrataAnticipata).collect(Collectors.toList()),
+                            DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, true);
                     template.addObject("dati", lob);
                     template.addObject("TITOLOPAGINA", "Anticipo");
                     template.setView("stampe/anticipo.html");
@@ -149,14 +106,8 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "presgiornani": {
                     List<Animatore> allAnimatore = DAOMan.animatoreDAO.findByCalendarioId(Integer.parseInt(request.getParameter("idSet")));
-                    List<Object[]> lob = new LinkedList<>();
-                    for (Animatore ani : allAnimatore) {
-                        String periodoString = "";
-                        List<RelPresenzaAn> periodo = DAOMan.relPresenzaAnDAO.findByAnimatoreId(ani.getId());
-                        periodoString = periodo.stream().map((RelPresenzaAn) -> RelPresenzaAn.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                        Object[] o = {ani, periodoString};
-                        lob.add(o);
-                    }
+                    List<Object[]> lob = PresenzeSupport.printRows(allAnimatore,
+                            DAOMan.relPresenzaAnDAO::findByAnimatoreId, RelPresenzaAn::getCalendarioId, false);
                     template.addObject("animatori", lob);
                     template.addObject("TITOLOPAGINA", "Presenza giornaliera animatori");
                     template.setView("stampe/presgiornani.html");
@@ -164,14 +115,8 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "elesintan": {
                     List<Animatore> allAnimatore = DAOMan.animatoreDAO.findAll();
-                    List<Object[]> lob = new LinkedList<>();
-                    for (Animatore ani : allAnimatore) {
-                        String periodoString = "";
-                        List<RelPresenzaAn> periodo = DAOMan.relPresenzaAnDAO.findByAnimatoreId(ani.getId());
-                        periodoString = periodo.stream().map((RelPresenzaAn) -> RelPresenzaAn.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                        Object[] o = {ani, periodoString};
-                        lob.add(o);
-                    }
+                    List<Object[]> lob = PresenzeSupport.printRows(allAnimatore,
+                            DAOMan.relPresenzaAnDAO::findByAnimatoreId, RelPresenzaAn::getCalendarioId, false);
                     template.addObject("animatori", lob);
                     template.addObject("TITOLOPAGINA", "Elenco sintesi animatori");
                     template.setView("stampe/elesintan.html");
@@ -179,16 +124,8 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "elesintter": {
                     List<TerzaMedia> allTerzaMedia = DAOMan.terzamediaDAO.findAll();
-                    List<Object[]> dati = new LinkedList<>();
-                    for (TerzaMedia ter : allTerzaMedia) {
-                        String periodoString = "";
-                        List<RelPresenzaTer> periodo = DAOMan.relPresenzaTerDAO.findByTerzamediaId(ter.getId());
-                        periodoString = periodo.stream().map((relPresenzaTer) -> relPresenzaTer.getCalendarioId() + " ").reduce(periodoString, String::concat);
-                        int idreg = ter.getRegistrato().getId();
-                        List<ContattoUrgenze> cu = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idreg);
-                        Object[] o = {ter, periodoString, cu};
-                        dati.add(o);
-                    }
+                    List<Object[]> dati = PresenzeSupport.printRows(allTerzaMedia,
+                            DAOMan.relPresenzaTerDAO::findByTerzamediaId, RelPresenzaTer::getCalendarioId, true);
                     template.addObject("terzamedia", dati);
                     template.addObject("TITOLOPAGINA", "Elenco sintesi terzamedia");
                     template.setView("stampe/elesintter.html");

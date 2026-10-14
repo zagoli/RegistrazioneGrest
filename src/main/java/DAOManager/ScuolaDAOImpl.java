@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ScuolaDAOImpl implements ScuolaDAO {
@@ -29,11 +28,7 @@ public class ScuolaDAOImpl implements ScuolaDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_SCUOLA);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Scuola> ls = new LinkedList<>();
-            while (rs.next()) {
-                ls.add(mapRowToScuola(rs));
-            }
-            return ls;
+            return DAORows.readAll(rs, this::mapRowToScuola);
         }
     }
 

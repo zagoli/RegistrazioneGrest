@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class ParrocchiaDAOImpl implements ParrocchiaDAO {
@@ -64,11 +63,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_PARROCCHIA);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Parrocchia> lp = new LinkedList<>();
-            while (rs.next()) {
-                lp.add(this.mapRowToParrocchia(rs));
-            }
-            return lp;
+            return DAORows.readAll(rs, this::mapRowToParrocchia);
         }
     }
 
@@ -78,11 +73,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
              PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_NOME)) {
             pst.setString(1, name);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Parrocchia> lp = new LinkedList<>();
-                while (rs.next()) {
-                    lp.add(this.mapRowToParrocchia(rs));
-                }
-                return lp;
+                return DAORows.readAll(rs, this::mapRowToParrocchia);
             }
         }
     }

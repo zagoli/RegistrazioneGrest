@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RelPresenzaRagDAOImpl implements RelPresenzaRagDAO {
@@ -16,22 +15,12 @@ public class RelPresenzaRagDAOImpl implements RelPresenzaRagDAO {
 
     @Override
     public void insert(RelPresenzaRag rpr) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(INSERT_RELPRESENZARAG)) {
-            pst.setInt(1, rpr.getRagazzoId());
-            pst.setInt(2, rpr.getCalendarioId());
-            pst.executeUpdate();
-        }
+        RelazioneDAOOperations.updateIds(INSERT_RELPRESENZARAG, rpr.getRagazzoId(), rpr.getCalendarioId());
     }
 
     @Override
     public void delete(RelPresenzaRag rpr) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(DELETE_RELPRESENZARAG)) {
-            pst.setInt(1, rpr.getCalendarioId());
-            pst.setInt(2, rpr.getRagazzoId());
-            pst.executeUpdate();
-        }
+        RelazioneDAOOperations.updateIds(DELETE_RELPRESENZARAG, rpr.getCalendarioId(), rpr.getRagazzoId());
     }
 
     @Override
@@ -40,11 +29,7 @@ public class RelPresenzaRagDAOImpl implements RelPresenzaRagDAO {
              PreparedStatement pst = con.prepareStatement(FIND_RELPRESENZARAG_RAGAZZO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<RelPresenzaRag> lrpr = new LinkedList<>();
-                while (rs.next()) {
-                    lrpr.add(this.mapRowToRelPresenzaRag(rs));
-                }
-                return lrpr;
+                return DAORows.readAll(rs, this::mapRowToRelPresenzaRag);
             }
         }
     }

@@ -6,9 +6,9 @@ import Response.FreemarkerTemplate;
 import Response.RedirectResult;
 import Response.Response;
 import Utility.Utils;
+import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
 
@@ -26,15 +26,7 @@ public class ControllerInserisciCU implements ControllerInterface {
             } else {
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 ContattoUrgenze cu = new ContattoUrgenze();
-                cu.setNome(request.getParameter("nome"));
-                cu.setCognome(request.getParameter("cognome"));
-                cu.setRelazione(request.getParameter("relazione"));
-                final String cellulare = request.getParameter("cellulare");
-                final String fisso = request.getParameter("fisso");
-                if (StringUtils.isNotBlank(cellulare))
-                    cu.setCellulare(cellulare);
-                if (StringUtils.isNotBlank(fisso))
-                    cu.setFisso(fisso);
+                RequestFields.contatto(request, cu);
                 cu.setRegistrato(DAOMan.registratoDAO.findById(idUt));
                 DAOMan.contattoUrgenzeDAO.insert(cu);
                 return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");

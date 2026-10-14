@@ -20,16 +20,8 @@ public class ControllerStatoIscrizioni implements ControllerInterface {
         try {
             String state = request.getParameter("state");
             success = switch (request.getParameter("target")) {
-                case "ISCRRAG" -> {
-                    ConfigProperties.setProperty("ISCRRAG", state);
-                    yield true;
-                }
-                case "ISCRAN" -> {
-                    ConfigProperties.setProperty("ISCRAN", state);
-                    yield true;
-                }
-                case "ISCRTER" -> {
-                    ConfigProperties.setProperty("ISCRTER", state);
+                case "ISCRRAG", "ISCRAN", "ISCRTER" -> {
+                    ConfigProperties.setProperty(request.getParameter("target"), state);
                     yield true;
                 }
                 default -> false;

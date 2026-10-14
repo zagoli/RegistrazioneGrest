@@ -1,5 +1,5 @@
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=true>
 <#if !DONE>
     <div class="container mt-4 content">
         <div class="shadow pt-2 pl-3 pr-3 bg-white vertical-center">
@@ -8,37 +8,13 @@
                     <h5>Registrazione nuovo segretario</h5>
                 </div>
                 <form action="/RegistrazioneGrest/App/RegistraUtente" method="POST" data-parsley-validate>
-                    <div class="form-group">
-                        <label for="nome"> Nome </label>
-                        <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome"
-                               autofocus data-parsley-length="[2, 50]">
-                    </div>
-                    <div class="form-group">
-                        <label for="cognome"> Cognome </label>
-                        <input class="form-control" type="text" required id="cognome" name="cognome"
-                               placeholder="Cognome" data-parsley-length="[2, 50]">
-                    </div>
-                    <div class="form-group">
-                        <label for="email"> E-Mail </label>
-                        <input class="form-control" type="email" required id="email" name="mail" placeholder="E-Mail">
-                    </div>
-                    <div class="form-group">
-                        <label for="pswd"> Password </label>
-                        <input class="form-control" type="password" required id="pswd" name="password"
-                               placeholder="Password" data-parsley-length="[6, 100]">
-                    </div>
-                    <div class="form-group">
-                        <label for="confpswd"> Conferma la password </label>
-                        <input class="form-control" type="password" required id="confpswd" name="password"
-                               placeholder="Password" data-parsley-equalto="#pswd">
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="consentiModifica" name="consentiModifica">
-                        <label class="form-check-label" for="consentiModifica"> Consenti la modifica </label>
-                    </div>
-                    <div class="pt-3 form-group">
-                        <input class="form-control btn btn-primary" type="submit" value="Registra">
-                    </div>
+                    <@ui.inputField id="nome" label="Nome" required=true autofocus=true placeholder="Nome" length="[2, 50]"/>
+                    <@ui.inputField id="cognome" label="Cognome" required=true placeholder="Cognome" length="[2, 50]"/>
+                    <@ui.inputField id="email" label="E-Mail" type="email" name="mail" required=true placeholder="E-Mail"/>
+                    <@ui.inputField id="pswd" label="Password" type="password" name="password" required=true placeholder="Password" length="[6, 100]"/>
+                    <@ui.inputField id="confpswd" label="Conferma la password" type="password" name="password" required=true placeholder="Password" attributes={"data-parsley-equalto": "#pswd"}/>
+                    <@ui.checkboxField id="consentiModifica" label="Consenti la modifica" labelClass="form-check-label"/>
+                    <@ui.submitButton label="Registra"/>
                 </form>
             </div>
         </div>
@@ -59,4 +35,4 @@
         </div>
     </div>
 </#if>
-<#include "../struct/footer.html.ftl">
+</@ui.page>

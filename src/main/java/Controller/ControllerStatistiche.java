@@ -41,14 +41,8 @@ public class ControllerStatistiche implements ControllerInterface {
             Map<String, Integer> mapraglab = new HashMap<>();
             List<Ragazzo> lrag = DAOMan.ragazzoDAO.findAll();
             lrag.forEach((Ragazzo rag) -> {
-                Integer nragazzi = mapragclassi.putIfAbsent(rag.getClasse() + rag.getScuola().getGrado().substring(0, 1).toUpperCase(), 1);
-                if (nragazzi != null) {
-                    mapragclassi.put(rag.getClasse() + rag.getScuola().getGrado().substring(0, 1).toUpperCase(), nragazzi + 1);
-                }
-                Integer nragazzilab = mapraglab.putIfAbsent(rag.getLaboratorio().getDescrizione(), 1);
-                if (nragazzilab != null) {
-                    mapraglab.put(rag.getLaboratorio().getDescrizione(), nragazzilab + 1);
-                }
+                mapragclassi.merge(rag.getClasse() + rag.getScuola().getGrado().substring(0, 1).toUpperCase(), 1, Integer::sum);
+                mapraglab.merge(rag.getLaboratorio().getDescrizione(), 1, Integer::sum);
             });
             template.addObject("mapragclassi", mapragclassi);
             template.addObject("mapraglab", mapraglab);
@@ -62,16 +56,10 @@ public class ControllerStatistiche implements ControllerInterface {
                 cal.setTime(ani.getDataNascita());
                 return cal;
             }).forEachOrdered((cal) -> {
-                Integer nanimatori = mapanieta.putIfAbsent(cal.get(Calendar.YEAR), 1);
-                if (nanimatori != null) {
-                    mapanieta.put(cal.get(Calendar.YEAR), nanimatori + 1);
-                }
+                mapanieta.merge(cal.get(Calendar.YEAR), 1, Integer::sum);
             });
             lani.forEach((ani) -> {
-                Integer nanilab = mapanilab.putIfAbsent(ani.getLaboratorio().getDescrizione(), 1);
-                if (nanilab != null) {
-                    mapanilab.put(ani.getLaboratorio().getDescrizione(), nanilab + 1);
-                }
+                mapanilab.merge(ani.getLaboratorio().getDescrizione(), 1, Integer::sum);
             });
             template.addObject("mapanieta", mapanieta);
             template.addObject("mapanilab", mapanilab);

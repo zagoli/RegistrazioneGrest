@@ -6,6 +6,7 @@ import Response.FreemarkerTemplate;
 import Response.RedirectResult;
 import Response.Response;
 import Utility.Utils;
+import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -26,11 +27,7 @@ public class ControllerModificaCU implements ControllerInterface {
                 template.addObject("contatto", cu);
             } else {
                 ContattoUrgenze cu = DAOMan.contattoUrgenzeDAO.findById(idCU);
-                cu.setNome(request.getParameter("nome"));
-                cu.setCognome(request.getParameter("cognome"));
-                cu.setCellulare(request.getParameter("cellulare"));
-                cu.setFisso(request.getParameter("fisso"));
-                cu.setRelazione(request.getParameter("relazione"));
+                RequestFields.contatto(request, cu);
                 DAOMan.contattoUrgenzeDAO.update(cu);
                 return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }

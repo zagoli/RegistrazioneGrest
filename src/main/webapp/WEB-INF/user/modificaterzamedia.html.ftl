@@ -1,13 +1,7 @@
 <#import "../ammseg/annotazioni.html.ftl" as note>
 <#import "../struct/macros.html.ftl" as ui>
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
-<div class="container mt-4 content">
-    <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
-        <div class="container">
-            <div class="title text-center">
-                <h5>Modifica terza media</h5>
-            </div>
+<@ui.page navbar=true>
+<@ui.formPanel title="Modifica terza media" containerClass="container mt-4 content" inlineTitle=false>
             <#if INVALIDMAIL??>
                 <@ui.avvisoMailNonValida/>
             </#if>
@@ -15,162 +9,47 @@
 
                 <input type="hidden" value="${terzamedia.id?c}" name="id"></input>
 
-                <div class="form-group">
-                    <label for="cognome"> Cognome </label>
-                    <input class="form-control" type="text" required id="cognome" name="cognome"
-                           placeholder="Cognome" data-parsley-length="[2, 50]" value="${terzamedia.cognome}">
-                </div>
+                <@ui.identityFields cognome="${terzamedia.cognome}" nome="${terzamedia.nome}" dataNascita="${dataNascita}"/>
 
-                <div class="form-group">
-                    <label for="nome"> Nome </label>
-                    <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome"
-                           autofocus data-parsley-length="[2, 50]" value="${terzamedia.nome}">
-                </div>
+                <@ui.presenzaField selected=terzamedia.presenza label="Presenza giornaliera" completo="Mattina e pomeriggio"/>
 
-                <div class="form-group">
-                    <label for="dataNascita"> Data di nascita </label>
-                    <input class="form-control" type="date" required id="dataNascita" name="dataNascita"
-                           value="${dataNascita}">
-                </div>
+                <@ui.partecipazioneField calendari=calendari label="Partecipazione" editing=true lineBreak=true quoteTarget="terzamedia" popupHeight=600/>
 
-                <div class="form-group">
-                    <label> Presenza giornaliera </label> <br/>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="presenza" id="completo" value="C"
-                               <#if terzamedia.presenza == "C">checked</#if>>
-                        <label class="form-check-label" for="completo">Mattina e pomeriggio</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M"
-                               <#if terzamedia.presenza == "M">checked</#if>>
-                        <label class="form-check-label" for="mattina">Solo mattina</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P"
-                               <#if terzamedia.presenza == "P">checked</#if>>
-                        <label class="form-check-label" for="pomeriggio">Solo pomeriggio</label>
-                    </div>
-                </div>
+                <@ui.selectField id="laboratorio" label="Laboratorio">
+                    <@ui.laboratorioOptions options=laboratori selected=terzamedia.laboratorio.id/>
+                </@ui.selectField>
 
-                <div class="form-group">
-                    <label> Partecipazione </label> <br/>
-                    <#list calendari as cal, partecipa>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
-                                   id="cal${cal.idSettimana?c}" name="cal" <#if partecipa>checked</#if>>
-                            <label class="form-check-label" for="cal${cal.idSettimana?c}"> Settimana
-                                dal ${cal.daQuando} al ${cal.AQuando} </label>
-                        </div>
-                    </#list>
-                    <a class="btn btn-secondary btn-sm mt-1" href="javascript:;"
-                       onClick="window.open('/RegistrazioneGrest/App/VisualizzaQuote?terzamedia', '_blank', 'width=1000, height=600, status=yes, scrollbars=no, location=yes');">clicca
-                        qui per consultare le quote d'iscrizione</a>
-                </div>
+                <@ui.selectField id="parrocchia" label="Parrocchia di appartenenza">
+                    <@ui.parrocchiaOptions options=parrocchie selected=terzamedia.parrocchia.id/>
+                </@ui.selectField>
 
-                <div class="form-group">
-                    <label for="laboratorio"> Laboratorio </label>
-                    <select id="laboratorio" class="form-control" name="laboratorio">
-                        <#list laboratori as lab>
-                            <option value="${lab.id?c}"
-                                    <#if lab.id == terzamedia.laboratorio.id>selected</#if>>${lab.descrizione}</option>
-                        </#list>
-                    </select>
-                </div>
+                <@ui.selectField id="circolo" label="Circolo di tesseramento">
+                    <@ui.circoloOptions options=circoli selected=terzamedia.circolo.id/>
+                </@ui.selectField>
 
-                <div class="form-group">
-                    <label for="parrocchia"> Parrocchia di appartenenza </label>
-                    <select id="parrocchia" class="form-control" name="parrocchia">
-                        <#list parrocchie as par>
-                            <option value="${par.id?c}" <#if par.id == terzamedia.parrocchia.id>selected</#if>>
-                                Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
-                        </#list>
-                    </select>
-                </div>
+                <@ui.tesseraField label="Numero tessera Circolo Noi" year=true yearIndent=32 help="Inserire il numero di tessera del Circolo Noi se non si è iscritti al Circolo Noi di Balconi." value=(terzamedia.NTessera)![]/>
 
-                <div class="form-group">
-                    <label for="circolo"> Circolo di tesseramento </label>
-                    <select id="circolo" class="form-control" name="circolo">
-                        <#list circoli as cir>
-                            <option value="${cir.id?c}"
-                                    <#if cir.id == terzamedia.circolo.id>selected</#if>>${cir.nome}
-                                (${cir.luogo})
-                            </option>
-                        </#list>
-                    </select>
-                </div>
+                <@ui.selectField id="scuola" label="Scuola">
+                    <@ui.scuolaOptions options=scuole selected=terzamedia.scuola.id/>
+                </@ui.selectField>
 
-                <div class="form-group">
-                    <label for="nTessera"> Numero tessera Circolo Noi <b>
-                            <script type="text/javascript">var theDate = new Date();
-                                document.write(theDate.getFullYear());</script>
-                        </b></label>
-                    <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control"
-                           data-parsley-length="[11, 11]" aria-describedby="helpNTessera"
-                           <#if terzamedia.NTessera??>value="${terzamedia.NTessera}"</#if>/>
-                    <small id="helpNTessera" class="form-text text-muted">
-                        Inserire il numero di tessera del Circolo Noi se non si è iscritti al Circolo Noi di Balconi.
-                    </small>
-                </div>
+                <@ui.inputField id="sezione" label="Sezione" required=true placeholder="A" length="[1, 1]" value="${terzamedia.sezione}"/>
 
-                <div class="form-group">
-                    <label for="scuola"> Scuola </label>
-                    <select id="scuola" class="form-control" name="scuola">
-                        <#list scuole as scu>
-                            <option value="${scu.id?c}" <#if scu.id == terzamedia.scuola.id>selected</#if>>
-                                Scuola ${scu.grado} di ${scu.descrizione}</option>
-                        </#list>
-                    </select>
-                </div>
+                <@ui.inputField id="cellulare" label="Eventuale numero di cellulare" placeholder="cellulare" length="[10, 10]" value=(terzamedia.cellulare)![]/>
 
-                <div class="form-group">
-                    <label for="sezione"> Sezione </label>
-                    <input class="form-control" type="text" required id="sezione" name="sezione"
-                           data-parsley-length="[1, 1]" placeholder="A" value="${terzamedia.sezione}">
-                </div>
+                <@ui.inputField id="mail" label="Indirizzo E-Mail del ragazzo o della famiglia" type="email" required=true placeholder="E-Mail" value="${terzamedia.mail}"/>
 
-                <div class="form-group">
-                    <label for="cellulare"> Eventuale numero di cellulare </label>
-                    <input class="form-control" type="text" id="cellulare" name="cellulare"
-                           data-parsley-length="[10, 10]" placeholder="cellulare"
-                           <#if terzamedia.cellulare??>value="${terzamedia.cellulare}"</#if>>
-                </div>
+                <@ui.textareaField id="richieste" label="Eventuali richieste o proposte:" value=(terzamedia.richieste)!""/>
 
-                <div class="form-group">
-                    <label for="mail"> Indirizzo E-Mail del ragazzo o della famiglia </label>
-                    <input class="form-control" type="email" required id="mail" name="mail" placeholder="E-Mail"
-                           value="${terzamedia.mail}">
-                </div>
+                <@ui.textareaField id="noteAlimentari" label="Allergie o intolleranze alimentari o terapie in corso:" value=(terzamedia.noteAlimentari)!""/>
 
-                <div class="form-group">
-                    <label for="richieste">Eventuali richieste o proposte:</label>
-                    <textarea class="form-control" rows="5" id="richieste"
-                              name="richieste"><#if terzamedia.richieste??>${terzamedia.richieste}</#if></textarea>
-                </div>
+                <@ui.checkboxField id="saNuotare" label="Sa nuotare?" checked=terzamedia.saNuotare labelClass="form-check-label"/>
 
-                <div class="form-group">
-                    <label for="noteAlimentari">Allergie o intolleranze alimentari o terapie in corso:</label>
-                    <textarea class="form-control" rows="5" id="noteAlimentari"
-                              name="noteAlimentari"><#if terzamedia.noteAlimentari??>${terzamedia.noteAlimentari}</#if></textarea>
-                </div>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare"
-                           <#if terzamedia.saNuotare>checked</#if>>
-                    <label class="form-check-label" for="saNuotare"> Sa nuotare? </label>
-                </div>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="festaPassaggio" name="festaPassaggio"
-                           <#if terzamedia.festaPassaggio>checked</#if>>
-                    <label class="form-check-label" for="festaPassaggio"> Si dichiara che il/la proprio/a figlio/a ha
-                        partecipato alla festa del passaggio a Balconi.</label>
-                </div>
+                <@ui.checkboxField id="festaPassaggio" label="Si dichiara che il/la proprio/a figlio/a ha partecipato alla festa del passaggio a Balconi." checked=terzamedia.festaPassaggio labelClass="form-check-label"/>
 
                 <br/>
 
-                <div class="pt-3 form-group">
-                    <input class="form-control btn btn-primary" type="submit" value="Modifica">
-                </div>
+                <@ui.submitButton label="Modifica"/>
             </form>
 
             <#-- Annotazioni segreteria -->
@@ -178,7 +57,5 @@
                 <hr class="mt-4"/>
                 <@note.modificaAnnotazioni tipoIscritto="ter" id=terzamedia.id annotazioni=annotazioni/>
             </#if>
-        </div>
-    </div>
-</div>
-<#include "../struct/footer.html.ftl">
+</@ui.formPanel>
+</@ui.page>

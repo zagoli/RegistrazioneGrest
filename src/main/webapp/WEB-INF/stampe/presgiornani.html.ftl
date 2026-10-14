@@ -1,22 +1,20 @@
 <#ftl strip_whitespace = true>
-<#include "../struct/header.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=false>
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center">presenze giornaliere animatori</h2>
-    <div class="container">
-        <table class="table table-bordered table-sm">
-            <thead>
-            <tr>
-                <th style="width:5%;">Anno</th>
-                <th>Cognome</th>
-                <th>Nome</th>
-                <th>Periodo</th>
-                <th colspan="2">Lunedì</th>
-                <th colspan="2">Martedì</th>
-                <th colspan="2">Mercoledì</th>
-                <th colspan="2">Giovedì</th>
-                <th colspan="2">Venerdì</th>
-            </tr>
-            </thead>
+    <@ui.reportTable>
+            <@ui.tableHead columns=[
+                {"label": "Anno", "attributes": {"style": "width:5%;"}},
+                {"label": "Cognome", "attributes": {}},
+                {"label": "Nome", "attributes": {}},
+                {"label": "Periodo", "attributes": {}},
+                {"label": "Lunedì", "attributes": {"colspan": "2"}},
+                {"label": "Martedì", "attributes": {"colspan": "2"}},
+                {"label": "Mercoledì", "attributes": {"colspan": "2"}},
+                {"label": "Giovedì", "attributes": {"colspan": "2"}},
+                {"label": "Venerdì", "attributes": {"colspan": "2"}}
+            ]/>
             <tbody>
             <#list animatori as ani>
                 <tr>
@@ -24,21 +22,11 @@
                     <td class="text-capitalize">${ani[0].cognome}</td>
                     <td class="text-capitalize">${ani[0].nome}</td>
                     <td>${ani[1]?trim}</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
+                    <@ui.presenceWeekCells/>
                 </tr>
             </#list>
             </tbody>
-        </table>
-    </div>
+        </@ui.reportTable>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>
 <script> window.print() </script>

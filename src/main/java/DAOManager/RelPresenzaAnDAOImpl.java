@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RelPresenzaAnDAOImpl implements RelPresenzaAnDAO {
@@ -16,22 +15,12 @@ public class RelPresenzaAnDAOImpl implements RelPresenzaAnDAO {
 
     @Override
     public void insert(RelPresenzaAn rpa) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(INSERT_RELPRESENZAAN)) {
-            pst.setInt(1, rpa.getAnimatoreId());
-            pst.setInt(2, rpa.getCalendarioId());
-            pst.executeUpdate();
-        }
+        RelazioneDAOOperations.updateIds(INSERT_RELPRESENZAAN, rpa.getAnimatoreId(), rpa.getCalendarioId());
     }
 
     @Override
     public void delete(RelPresenzaAn rpa) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(DELETE_RELPRESENZAAN)) {
-            pst.setInt(1, rpa.getCalendarioId());
-            pst.setInt(2, rpa.getAnimatoreId());
-            pst.executeUpdate();
-        }
+        RelazioneDAOOperations.updateIds(DELETE_RELPRESENZAAN, rpa.getCalendarioId(), rpa.getAnimatoreId());
     }
 
     @Override
@@ -40,11 +29,7 @@ public class RelPresenzaAnDAOImpl implements RelPresenzaAnDAO {
              PreparedStatement pst = con.prepareStatement(FIND_RELPRESENZAAN_ANIMATORE_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<RelPresenzaAn> lrpa = new LinkedList<>();
-                while (rs.next()) {
-                    lrpa.add(this.mapRowToRelPresenzaAn(rs));
-                }
-                return lrpa;
+                return DAORows.readAll(rs, this::mapRowToRelPresenzaAn);
             }
         }
     }

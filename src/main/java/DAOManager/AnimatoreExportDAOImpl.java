@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AnimatoreExportDAOImpl implements AnimatoreExportDAO {
@@ -43,11 +42,7 @@ public class AnimatoreExportDAOImpl implements AnimatoreExportDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL);
              ResultSet rs = pst.executeQuery()) {
-            List<AnimatoreExport> animatori = new LinkedList<>();
-            while (rs.next()) {
-                animatori.add(mapRow(rs));
-            }
-            return animatori;
+            return DAORows.readAll(rs, this::mapRow);
         }
     }
 

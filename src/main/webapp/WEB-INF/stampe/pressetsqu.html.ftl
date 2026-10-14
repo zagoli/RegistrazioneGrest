@@ -1,26 +1,24 @@
 <#ftl strip_whitespace = true>
-<#include "../struct/header.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=false>
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center"> presenze settimanali <span
                 style="color:${squadra.colore}; ">${squadra.nome}</span></h2>
     <h5 class="text-uppercase text-center font-italic">settimana numero ${settimana.idSettimana?c}
         <small>(dal ${settimana.daQuando} al ${settimana.AQuando})</small></h5>
-    <div class="container">
-        <table class="table table-bordered table-sm">
-            <thead>
-            <tr>
-                <th>Ragazzo</th>
-                <th style="width:5%;">Classe</th>
-                <th> Laboratorio</th>
-                <th> Periodo</th>
-                <th style="width:5%;">Mensa</th>
-                <th colspan="2">Lunedì</th>
-                <th colspan="2">Martedì</th>
-                <th colspan="2">Mercoledì</th>
-                <th colspan="2">Giovedì</th>
-                <th colspan="2">Venerdì</th>
-            </tr>
-            </thead>
+    <@ui.reportTable>
+            <@ui.tableHead columns=[
+                {"label": "Ragazzo", "attributes": {}},
+                {"label": "Classe", "attributes": {"style": "width:5%;"}},
+                {"label": "Laboratorio", "attributes": {}},
+                {"label": "Periodo", "attributes": {}},
+                {"label": "Mensa", "attributes": {"style": "width:5%;"}},
+                {"label": "Lunedì", "attributes": {"colspan": "2"}},
+                {"label": "Martedì", "attributes": {"colspan": "2"}},
+                {"label": "Mercoledì", "attributes": {"colspan": "2"}},
+                {"label": "Giovedì", "attributes": {"colspan": "2"}},
+                {"label": "Venerdì", "attributes": {"colspan": "2"}}
+            ]/>
             <tbody>
             <#list ragazzi as rag>
                 <tr>
@@ -29,16 +27,7 @@
                     <td> ${rag[0].laboratorio.descrizione[0..*15]}...</td>
                     <td> ${rag[1]?trim} </td>
                     <td><#if rag[0].mensa><img src="../img/octicons/check.svg"></#if></td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
+                    <@ui.presenceWeekCells/>
                 </tr>
             </#list>
             <#--riga vuota-->
@@ -62,21 +51,11 @@
                     <td></td>
                     <td>${an[1]?trim}</td>
                     <td>${an[0].cellulare}</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
-                    <td>M</td>
-                    <td>P</td>
+                    <@ui.presenceWeekCells/>
                 </tr>
             </#list>
             </tbody>
-        </table>
-    </div>
+        </@ui.reportTable>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>
 <script> window.print() </script>

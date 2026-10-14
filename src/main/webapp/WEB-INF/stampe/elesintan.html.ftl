@@ -1,20 +1,18 @@
 <#ftl strip_whitespace = true>
-<#include "../struct/header.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=false>
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center">elenco sintesi animatori</h2>
-    <div class="container">
-        <table class="table table-bordered table-sm">
-            <thead>
-            <tr>
-                <th style="width:5%;">Anno</th>
-                <th>Cognome</th>
-                <th>Nome</th>
-                <th>Laboratorio</th>
-                <th>Periodo</th>
-                <th>Squadra</th>
-                <th>Cellulare</th>
-            </tr>
-            </thead>
+    <@ui.reportTable>
+            <@ui.tableHead columns=[
+                {"label": "Anno", "attributes": {"style": "width:5%;"}},
+                {"label": "Cognome", "attributes": {}},
+                {"label": "Nome", "attributes": {}},
+                {"label": "Laboratorio", "attributes": {}},
+                {"label": "Periodo", "attributes": {}},
+                {"label": "Squadra", "attributes": {}},
+                {"label": "Cellulare", "attributes": {}}
+            ]/>
             <tbody>
             <#list animatori as ani>
                 <tr>
@@ -30,8 +28,7 @@
                 </tr>
             </#list>
             </tbody>
-        </table>
-    </div>
+        </@ui.reportTable>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>
 <script> window.print() </script>

@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -33,11 +32,7 @@ public class SquadraDAOImpl implements SquadraDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Squadra> ls = new LinkedList<>();
-            while (rs.next()) {
-                ls.add(this.mapRowToSquadra(rs));
-            }
-            return ls;
+            return DAORows.readAll(rs, this::mapRowToSquadra);
         }
     }
 

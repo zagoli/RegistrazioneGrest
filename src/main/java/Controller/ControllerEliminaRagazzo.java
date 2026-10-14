@@ -2,7 +2,6 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Response.FreemarkerTemplate;
-import Response.RedirectResult;
 import Response.Response;
 import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,11 +17,7 @@ public class ControllerEliminaRagazzo implements ControllerInterface {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             DAOMan.ragazzoDAO.delete(id);
-            if (request.getSession().getAttribute("tipoUtente").equals(3)) {
-                return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
-            } else {
-                return new RedirectResult("/RegistrazioneGrest/App/VisualizzaIscritti?target=rag");
-            }
+            return IscrizioneSupport.afterChange(request, "rag");
         } catch (final RuntimeException | SQLException e) {
             template = Utils.getErrorPageAndLogException(e, ControllerEliminaRagazzo.class.getName());
         }

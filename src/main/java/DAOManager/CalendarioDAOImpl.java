@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CalendarioDAOImpl implements CalendarioDAO {
@@ -33,55 +32,31 @@ public class CalendarioDAOImpl implements CalendarioDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_CAL);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Calendario> lc = new LinkedList<>();
-            while (rs.next()) {
-                lc.add(this.mapRowToCalendario(rs));
-            }
-            return lc;
+            return DAORows.readAll(rs, this::mapRowToCalendario);
         }
     }
 
     @Override
     public List<Calendario> findByRagazzoId(int id) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_CAL_RAGAZZO)) {
-            pst.setInt(1, id);
-            try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Calendario> lc = new LinkedList<>();
-                while (rs.next()) {
-                    lc.add(this.mapRowToCalendario(rs));
-                }
-                return lc;
-            }
-        }
+        return findByIscrittoId(FIND_CAL_RAGAZZO, id);
     }
 
     @Override
     public List<Calendario> findByTerzamediaId(int id) throws SQLException {
-        try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_CAL_TERZAMEDIA)) {
-            pst.setInt(1, id);
-            try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Calendario> lc = new LinkedList<>();
-                while (rs.next()) {
-                    lc.add(this.mapRowToCalendario(rs));
-                }
-                return lc;
-            }
-        }
+        return findByIscrittoId(FIND_CAL_TERZAMEDIA, id);
     }
 
     @Override
     public List<Calendario> findByAnimatoreId(int id) throws SQLException {
+        return findByIscrittoId(FIND_CAL_ANIMATORE, id);
+    }
+
+    private List<Calendario> findByIscrittoId(String query, int id) throws SQLException {
         try (Connection con = DAOMan.getConnection();
-             PreparedStatement pst = con.prepareStatement(FIND_CAL_ANIMATORE)) {
+             PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                LinkedList<Calendario> lc = new LinkedList<>();
-                while (rs.next()) {
-                    lc.add(this.mapRowToCalendario(rs));
-                }
-                return lc;
+                return DAORows.readAll(rs, this::mapRowToCalendario);
             }
         }
     }

@@ -8,6 +8,7 @@ import Response.Response;
 import Utility.Checker;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
+import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -25,13 +26,7 @@ public class ControllerModificaUtente implements ControllerInterface {
             template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
-                r.setMail(request.getParameter("mail"));
-                r.setNome(request.getParameter("nome"));
-                r.setCognome(request.getParameter("cognome"));
-                r.setTelefono(request.getParameter("telefono"));
-                r.setLocalita(request.getParameter("localita"));
-                r.setVia(request.getParameter("via"));
-                r.setCivico(request.getParameter("civico"));
+                RequestFields.account(request, r);
                 DAOMan.registratoDAO.update(r);
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {

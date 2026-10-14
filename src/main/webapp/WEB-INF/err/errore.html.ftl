@@ -1,4 +1,5 @@
-<#include "../struct/header.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=false>
 <div class="container pt-2 content">
     <div class="title">
         <h2>Errore! Qualcosa non va...</h2>
@@ -14,4 +15,4 @@
         <p>Errore sconosciuto.</p>
     </#if>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>

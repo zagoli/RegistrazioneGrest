@@ -12,9 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ControllerInfoDettaglio implements ControllerInterface {
 
@@ -32,22 +30,10 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Ragazzo r = DAOMan.ragazzoDAO.findById(id);
                     template.addObject("ragazzo", r);
                     int idRegistrato = r.getRegistrato().getId();
-                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
-                    if (!listCU.isEmpty()) {
-                        template.addObject("cu", listCU);
-                    }
-                    List<Accompagnatore> listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idRegistrato);
-                    if (!listAccompagnatore.isEmpty()) {
-                        template.addObject("accompagnatori", listAccompagnatore);
-                    }
-                    List<RelPresenzaRag> listRelPresenzaRag = DAOMan.relPresenzaRagDAO.findByRagazzoId(id);
-                    List<Calendario> listCalendario = new LinkedList<>();
-                    for (RelPresenzaRag rpr : listRelPresenzaRag) {
-                        Calendario c = DAOMan.calendarioDAO.findById(rpr.getCalendarioId());
-                        listCalendario.add(c);
-                    }
-                    List<AttivitaGen> listAttivitaGen = DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato);
-                    template.addObject("attgen", listAttivitaGen);
+                    DettaglioSupport.contacts(template, idRegistrato, true);
+                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                            DAOMan.relPresenzaRagDAO.findByRagazzoId(id), RelPresenzaRag::getCalendarioId);
+                    DettaglioSupport.activities(template, idRegistrato, false);
                     template.addObject("calendari", listCalendario);
                     Pagamento pagamento = DAOMan.pagamentoDAO.findByRagazzoId(id);
                     template.addObject("pagamento", pagamento);
@@ -61,18 +47,10 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
                     template.addObject("terzamedia", t);
                     int idRegistrato = t.getRegistrato().getId();
-                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
-                    if (!listCU.isEmpty()) {
-                        template.addObject("cu", listCU);
-                    }
-                    List<RelPresenzaTer> listRelPresenzaTer = DAOMan.relPresenzaTerDAO.findByTerzamediaId(id);
-                    List<Calendario> listCalendario = new LinkedList<>();
-                    for (RelPresenzaTer rpt : listRelPresenzaTer) {
-                        Calendario c = DAOMan.calendarioDAO.findById(rpt.getCalendarioId());
-                        listCalendario.add(c);
-                    }
-                    List<AttivitaGen> listAttivitaGen = DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato);
-                    template.addObject("attgen", listAttivitaGen);
+                    DettaglioSupport.contacts(template, idRegistrato, false);
+                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                            DAOMan.relPresenzaTerDAO.findByTerzamediaId(id), RelPresenzaTer::getCalendarioId);
+                    DettaglioSupport.activities(template, idRegistrato, false);
                     template.addObject("calendari", listCalendario);
                     PagamentoTerzamedia pt = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(id);
                     template.addObject("pagamento", pt);
@@ -85,20 +63,9 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Animatore a = DAOMan.animatoreDAO.findById(id);
                     template.addObject("animatore", a);
                     int idRegistrato = a.getRegistrato().getId();
-                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
-                    if (!listCU.isEmpty()) {
-                        template.addObject("cu", listCU);
-                    }
-                    List<Accompagnatore> listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idRegistrato);
-                    if (!listAccompagnatore.isEmpty()) {
-                        template.addObject("accompagnatori", listAccompagnatore);
-                    }
-                    List<RelPresenzaAn> listRelPresenzaAn = DAOMan.relPresenzaAnDAO.findByAnimatoreId(id);
-                    List<Calendario> listCalendario = new LinkedList<>();
-                    for (RelPresenzaAn rpa : listRelPresenzaAn) {
-                        Calendario c = DAOMan.calendarioDAO.findById(rpa.getCalendarioId());
-                        listCalendario.add(c);
-                    }
+                    DettaglioSupport.contacts(template, idRegistrato, true);
+                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                            DAOMan.relPresenzaAnDAO.findByAnimatoreId(id), RelPresenzaAn::getCalendarioId);
                     template.addObject("calendari", listCalendario);
                     List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByAnimatoreId(id);
                     template.addObject("annotazioni", annotazioni);
@@ -109,23 +76,10 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Ragazzo r = DAOMan.ragazzoDAO.findById(id);
                     template.addObject("ragazzo", r);
                     int idRegistrato = r.getRegistrato().getId();
-                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
-                    if (!listCU.isEmpty()) {
-                        template.addObject("cu", listCU);
-                    }
-                    List<Accompagnatore> listAccompagnatore = DAOMan.accompagnatoreDAO.findByRegistratoId(idRegistrato);
-                    if (!listAccompagnatore.isEmpty()) {
-                        template.addObject("accompagnatori", listAccompagnatore);
-                    }
-                    List<RelPresenzaRag> listRelPresenzaRag = DAOMan.relPresenzaRagDAO.findByRagazzoId(id);
-                    List<Calendario> listCalendario = new LinkedList<>();
-                    for (RelPresenzaRag rpr : listRelPresenzaRag) {
-                        Calendario c = DAOMan.calendarioDAO.findById(rpr.getCalendarioId());
-                        listCalendario.add(c);
-                    }
-                    List<AttivitaGen> listAttivitaGenComp = DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato);
-                    List<AttivitaGen> listAttivitaGen = listAttivitaGenComp.stream().distinct().collect(Collectors.toList());
-                    template.addObject("attgen", listAttivitaGen);
+                    DettaglioSupport.contacts(template, idRegistrato, true);
+                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                            DAOMan.relPresenzaRagDAO.findByRagazzoId(id), RelPresenzaRag::getCalendarioId);
+                    DettaglioSupport.activities(template, idRegistrato, true);
                     template.addObject("calendari", listCalendario);
                     template.addObject("quotaIscrizione", ControllerPagamentiRagazzi.calcolaQuota(r));
                     template.setView("stampe/schedaragazzo.html");
@@ -135,19 +89,10 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
                     template.addObject("terzamedia", t);
                     int idRegistrato = t.getRegistrato().getId();
-                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
-                    if (!listCU.isEmpty()) {
-                        template.addObject("cu", listCU);
-                    }
-                    List<RelPresenzaTer> listRelPresenzaTer = DAOMan.relPresenzaTerDAO.findByTerzamediaId(id);
-                    List<Calendario> listCalendario = new LinkedList<>();
-                    for (RelPresenzaTer rpt : listRelPresenzaTer) {
-                        Calendario c = DAOMan.calendarioDAO.findById(rpt.getCalendarioId());
-                        listCalendario.add(c);
-                    }
-                    List<AttivitaGen> listAttivitaGenComp = DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato);
-                    List<AttivitaGen> listAttivitaGen = listAttivitaGenComp.stream().distinct().collect(Collectors.toList());
-                    template.addObject("attgen", listAttivitaGen);
+                    DettaglioSupport.contacts(template, idRegistrato, false);
+                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                            DAOMan.relPresenzaTerDAO.findByTerzamediaId(id), RelPresenzaTer::getCalendarioId);
+                    DettaglioSupport.activities(template, idRegistrato, true);
                     template.addObject("calendari", listCalendario);
                     template.addObject("quotaIscrizione", ControllerPagamentiTerzamedia.calcolaQuota(t));
                     template.setView("stampe/schedaterzamedia.html");
@@ -157,16 +102,9 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Animatore a = DAOMan.animatoreDAO.findById(id);
                     template.addObject("animatore", a);
                     int idRegistrato = a.getRegistrato().getId();
-                    List<ContattoUrgenze> listCU = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idRegistrato);
-                    if (!listCU.isEmpty()) {
-                        template.addObject("cu", listCU);
-                    }
-                    List<RelPresenzaAn> listRelPresenzaAn = DAOMan.relPresenzaAnDAO.findByAnimatoreId(id);
-                    List<Calendario> listCalendario = new LinkedList<>();
-                    for (RelPresenzaAn rpa : listRelPresenzaAn) {
-                        Calendario c = DAOMan.calendarioDAO.findById(rpa.getCalendarioId());
-                        listCalendario.add(c);
-                    }
+                    DettaglioSupport.contacts(template, idRegistrato, false);
+                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                            DAOMan.relPresenzaAnDAO.findByAnimatoreId(id), RelPresenzaAn::getCalendarioId);
                     template.addObject("calendari", listCalendario);
                     template.setView("stampe/schedaanimatore.html");
                     break;

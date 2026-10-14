@@ -8,6 +8,7 @@ import Response.Response;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
+import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -16,8 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class ControllerRegistraRagazzo implements ControllerInterface {
@@ -37,14 +36,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
             if (!request.getParameterMap().containsKey("nome")) {
                 template.setView("user/registraragazzo.html");
                 //Recupera dati per la registrazione
-                List<Laboratorio> listLabGiusti = DAOMan.laboratorioDAO.findNonRiservato();
-                template.addObject("laboratori", listLabGiusti);
-                List<Parrocchia> listParrocchia = DAOMan.parrocchiaDAO.findAll();
-                template.addObject("parrocchie", listParrocchia);
-                List<Circolo> listCircolo = DAOMan.circoloDAO.findAll();
-                template.addObject("circoli", listCircolo);
-                List<Scuola> listScuola = DAOMan.scuolaDAO.findAll();
-                template.addObject("scuole", listScuola);
+                IscrizioneSupport.catalogs(template, DAOMan.laboratorioDAO.findNonRiservato(), true);
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
                 template.addObject("calendari", listaCalendario);
                 //iscrizioni aperte o chiuse
@@ -52,24 +44,11 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 template.addObject("haAltroRagazzoIscritto", haAltroRagazzoIscritto);
             } else {
                 Ragazzo ragazzo = new Ragazzo();
-                ragazzo.setNome(request.getParameter("nome"));
-                ragazzo.setCognome(request.getParameter("cognome"));
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date dataNascita = sdf.parse(request.getParameter("dataNascita"));
-                ragazzo.setDataNascita(dataNascita);
-                ragazzo.setPresenza(request.getParameter("presenza"));
-                ragazzo.setLaboratorio(DAOMan.laboratorioDAO.findById(Integer.parseInt(request.getParameter("laboratorio"))));
-                ragazzo.setParrocchia(DAOMan.parrocchiaDAO.findById(Integer.parseInt(request.getParameter("parrocchia"))));
-                ragazzo.setCircolo(DAOMan.circoloDAO.findById(Integer.parseInt(request.getParameter("circolo"))));
+                IscrizioneSupport.readIscritto(request, ragazzo);
                 ragazzo.setScuola(DAOMan.scuolaDAO.findById(Integer.parseInt(request.getParameter("scuola"))));
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
                 ragazzo.setRegistrato(DAOMan.registratoDAO.findById(idUtente));
-                ragazzo.setSezione(request.getParameter("sezione"));
-                ragazzo.setClasse(request.getParameter("classe"));
-
-                ragazzo.setEntrataAnticipata(request.getParameterMap().containsKey("entrataAnticipata"));
-                ragazzo.setMensa(request.getParameterMap().containsKey("mensa"));
-                ragazzo.setSaNuotare(request.getParameterMap().containsKey("saNuotare"));
+                RequestFields.ragazzo(request, ragazzo);
 
                 if (request.getParameterMap().containsKey("fratelloIscritto")) {
                     ragazzo.setFratelloIscritto(true);
@@ -80,28 +59,10 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                     ragazzo.setFratelloIscritto(false);
                 }
 
-                String richieste = request.getParameter("richieste");
-                if (!richieste.isEmpty()) {
-                    ragazzo.setRichieste(richieste);
-                }
-
-                String noteAlimentari = request.getParameter("noteAlimentari");
-                if (!noteAlimentari.isEmpty()) {
-                    ragazzo.setNoteAlimentari(noteAlimentari);
-                }
-
-                String nTessera = request.getParameter("nTessera");
-                if (!nTessera.isEmpty()) {
-                    ragazzo.setNTessera(nTessera);
-                }
-
                 DAOMan.ragazzoDAO.insert(ragazzo);
 
-                String[] cal = request.getParameterValues("cal");
-                for (String calId : cal) {
-                    RelPresenzaRag rpr = new RelPresenzaRag(Integer.parseInt(calId), ragazzo.getId());
-                    DAOMan.relPresenzaRagDAO.insert(rpr);
-                }
+                PresenzeSupport.insert(request, calId -> new RelPresenzaRag(calId, ragazzo.getId()),
+                        DAOMan.relPresenzaRagDAO::insert);
 
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             }

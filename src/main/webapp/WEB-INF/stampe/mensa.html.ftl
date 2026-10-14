@@ -1,23 +1,20 @@
 <#ftl strip_whitespace = true>
-<#include "../struct/header.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=false>
 <div class="mt-4 content">
     <h2 class="text-uppercase text-center">Elenco mensa ${set.idSettimana?c} settimana</h2>
     <h5 class="text-uppercase text-center">Settimana dal ${set.daQuando} al ${set.AQuando} </h5>
-    <div class="container-block">
-        <div class="mr-2 ml-2">
-            <table class="table table-bordered pl-2 pr-2 table-sm">
-                <thead>
-                <tr>
-                    <th>Cognome</th>
-                    <th>Nome</th>
-                    <th style="width:5%;">Classe</th>
-                    <th>Periodo</th>
-                    <th style="width:25%;">Allergia</th>
-                    <th>Squadra</th>
-                    <th>Laboratorio</th>
-                    <th>Telefoni urgenze</th>
-                </tr>
-                </thead>
+    <@ui.reportTable wide=true>
+                <@ui.tableHead columns=[
+                {"label": "Cognome", "attributes": {}},
+                {"label": "Nome", "attributes": {}},
+                {"label": "Classe", "attributes": {"style": "width:5%;"}},
+                {"label": "Periodo", "attributes": {}},
+                {"label": "Allergia", "attributes": {"style": "width:25%;"}},
+                {"label": "Squadra", "attributes": {}},
+                {"label": "Laboratorio", "attributes": {}},
+                {"label": "Telefoni urgenze", "attributes": {}}
+            ]/>
                 <tbody>
                 <#list dati as rag>
                     <tr>
@@ -29,18 +26,12 @@
                         <td> <#if rag[0].squadra.id!=0> ${rag[0].squadra.nome} </#if> </td>
                         <td> ${rag[0].laboratorio.descrizione[0..*15]}...</td>
                         <td>
-                            <i>R </i><b>${rag[0].registrato.telefono}</b> -
-                            <#list rag[2][0..*4] as cu>
-                                <i>${cu.relazione?capitalize+" "}</i>
-                                <b>${(cu.cellulare!)+" "+(cu.fisso!)}</b> -
-                            </#list>
+                            <@ui.reportEmergencyPhones registrato=rag[0].registrato contatti=rag[2]/>
                         </td>
                     </tr>
                 </#list>
                 </tbody>
-            </table>
-        </div>
-    </div>
+            </@ui.reportTable>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>
 <script> window.print() </script>

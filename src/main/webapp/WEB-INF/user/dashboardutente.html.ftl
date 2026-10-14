@@ -1,5 +1,5 @@
-<#include "../struct/header.html.ftl">
-<#include "../struct/navbar.html.ftl">
+<#import "../struct/macros.html.ftl" as ui>
+<@ui.page navbar=true>
 <div class="container mt-4 content">
     <#if NOCU??>
         <div class="border border-danger pt-2 pl-3 pr-3 mb-3">
@@ -10,75 +10,25 @@
     </#if>
     <div class="shadow p-2">
         <h4 class="text-center">Menu iscrizioni</h4>
-        <div class="row">
-            <div class="col-sm">
-                <a href="/RegistrazioneGrest/App/RegistraRagazzo" class="btn btn-primary btn-block">Iscrivi un
-                    ragazzo</a>
-            </div>
-            <div class="col-sm">
-                <a href="/RegistrazioneGrest/App/RegistraAnimatore" class="btn btn-primary btn-block">Iscrivi un
-                    animatore</a>
-            </div>
-            <div class="col-sm">
-                <a href="/RegistrazioneGrest/App/RegistraTerzamedia" class="btn btn-primary btn-block">Iscrivi un
-                    ragazzo di
-                    terza media</a>
-            </div>
-        </div>
+        <@ui.dashboardLink href="/RegistrazioneGrest/App/RegistraRagazzo" label="Iscrivi un ragazzo</a> </div> <div class=\"col-sm\"> <a href=\"/RegistrazioneGrest/App/RegistraAnimatore\" class=\"btn btn-primary btn-block\">Iscrivi un animatore</a> </div> <div class=\"col-sm\"> <a href=\"/RegistrazioneGrest/App/RegistraTerzamedia\" class=\"btn btn-primary btn-block\">Iscrivi un ragazzo di terza media" rowClass="row" columnClass="col-sm" buttonClass="btn btn-primary btn-block"/>
     </div>
     <#if ragazzi??>
         <div class="shadow bg-white pt-2 pl-3 pr-3 pb-2">
             <p class="text-center font-weight-bold">Ragazzi</p>
             <div class="table-responsive">
                 <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col" style="width: 2%;"></th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Cognome</th>
-                        <th scope="col" style="width: 15%;">Stampa scheda</th>
-                        <th scope="col" style="width: 2%;">Pagato</th>
-                        <th scope="col" style="width: 2%;">Modifica</th>
-                        <th scope="col" style="width: 2%;">Elimina</th>
-                    </tr>
-                    </thead>
+                    <@ui.tableHead columns=[
+                {"label": "", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Nome", "attributes": {"scope": "col"}},
+                {"label": "Cognome", "attributes": {"scope": "col"}},
+                {"label": "Stampa scheda", "attributes": {"scope": "col", "style": "width: 15%;"}},
+                {"label": "Pagato", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Modifica", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Elimina", "attributes": {"scope": "col", "style": "width: 2%;"}}
+            ]/>
                     <tbody>
                     <#list ragazzi as rag, pagato>
-                        <tr>
-                            <th scope="row">
-                                <#if rag.squadra.id != 0>
-                                    <div class="badge-squadra" style="background-color:${rag.squadra.colore}; "></div>
-                                </#if>
-                            </th>
-                            <td>${rag.nome}</td>
-                            <td>${rag.cognome}</td>
-                            <td class="text-center">
-                                <a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${rag.id?c}">
-                                    <img src="../img/octicons/file.svg">
-                                </a>
-                            </td>
-                            <td class="text-center">
-                                <#if pagato>
-                                    <img src="../img/octicons/check.svg" alt="spunta">
-                                <#else>
-                                    <img src="../img/octicons/x.svg" alt="croce">
-                                </#if>
-                            </td>
-                            <td class="text-center">
-                                <#if !pagato>
-                                    <a href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag.id?c}">
-                                        <img src="../img/octicons/pencil.svg" alt="modifica">
-                                    </a>
-                                </#if>
-                            </td>
-                            <td class="text-center">
-                                <#if !pagato>
-                                <a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag.id?c}">
-                                        <img src="../img/octicons/trashcan.svg" alt="elimina">
-                                    </a>
-                                </#if>
-                            </td>
-                        </tr>
+                        <@ui.dashboardIscrittoRow person=rag sheetTarget="schedarag" action="Ragazzo" editable=(!pagato) paid=pagato paidAlts=true/>
                     </#list>
                     </tbody>
                 </table>
@@ -90,46 +40,17 @@
             <p class="text-center font-weight-bold">Animatori</p>
             <div class="table-responsive">
                 <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col" style="width: 2%;"></th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Cognome</th>
-                        <th scope="col" style="width: 15%;">Stampa scheda</th>
-                        <th scope="col" style="width: 2%;">Modifica</th>
-                        <th scope="col" style="width: 2%;">Elimina</th>
-                    </tr>
-                    </thead>
+                    <@ui.tableHead columns=[
+                {"label": "", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Nome", "attributes": {"scope": "col"}},
+                {"label": "Cognome", "attributes": {"scope": "col"}},
+                {"label": "Stampa scheda", "attributes": {"scope": "col", "style": "width: 15%;"}},
+                {"label": "Modifica", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Elimina", "attributes": {"scope": "col", "style": "width: 2%;"}}
+            ]/>
                     <tbody>
                     <#list animatori as ani>
-                        <tr>
-                            <th scope="row">
-                                <#if ani.squadra.id != 0>
-                                    <div class="badge-squadra" style="background-color:${ani.squadra.colore}; "></div>
-                                </#if>
-                            </th>
-                            <td>${ani.nome}</td>
-                            <td>${ani.cognome}</td>
-                            <td class="text-center">
-                                <a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedaani&id=${ani.id?c}">
-                                    <img src="../img/octicons/file.svg" alt="stampa">
-                                </a>
-                            </td>
-                            <td class="text-center">
-                                <#if ISCRAN>
-                                    <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id?c}">
-                                        <img src="../img/octicons/pencil.svg" alt="modifica">
-                                    </a>
-                                </#if>
-                            </td>
-                            <td class="text-center">
-                                <#if ISCRAN>
-                                    <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id?c}">
-                                        <img alt="elimina" src="../img/octicons/trashcan.svg">
-                                    </a>
-                                </#if>
-                            </td>
-                        </tr>
+                        <@ui.dashboardIscrittoRow person=ani sheetTarget="schedaani" action="Animatore" editable=(ISCRAN) printAlt="stampa"/>
                     </#list>
                     </tbody>
                 </table>
@@ -141,51 +62,18 @@
             <p class="text-center font-weight-bold">Ragazzi di terza media</p>
             <div class="table-responsive">
                 <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col" style="width: 2%;"></th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Cognome</th>
-                        <th scope="col" style="width: 15%;">Stampa scheda</th>
-                        <th scope="col" style="width: 2%;">Pagato</th>
-                        <th scope="col" style="width: 2%;">Modifica</th>
-                        <th scope="col" style="width: 2%;">Elimina</th>
-                    </tr>
-                    </thead>
+                    <@ui.tableHead columns=[
+                {"label": "", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Nome", "attributes": {"scope": "col"}},
+                {"label": "Cognome", "attributes": {"scope": "col"}},
+                {"label": "Stampa scheda", "attributes": {"scope": "col", "style": "width: 15%;"}},
+                {"label": "Pagato", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Modifica", "attributes": {"scope": "col", "style": "width: 2%;"}},
+                {"label": "Elimina", "attributes": {"scope": "col", "style": "width: 2%;"}}
+            ]/>
                     <tbody>
                     <#list terzamedia as ter, pagato>
-                        <tr>
-                            <th scope="row">
-                                <#if ter.squadra.id != 0>
-                                    <div class="badge-squadra" style="background-color:${ter.squadra.colore}; "></div>
-                                </#if>
-                            </th>
-                            <td>${ter.nome}</td>
-                            <td>${ter.cognome}</td>
-                            <td class="text-center"><a
-                                        href="/RegistrazioneGrest/App/InfoDettaglio?target=schedater&id=${ter.id?c}"><img
-                                            src="../img/octicons/file.svg"></a></td>
-                            <td class="text-center">
-                                <#if pagato>
-                                    <img src="../img/octicons/check.svg">
-                                <#else>
-                                    <img src="../img/octicons/x.svg">
-                                </#if>
-                            </td>
-                            <td class="text-center">
-                                <#if !pagato>
-                                    <a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter.id?c}">
-                                        <img src="../img/octicons/pencil.svg" alt="modifica">
-                                    </a>
-                                </#if>
-                            </td>
-                            <td class="text-center">
-                                <#if !pagato>
-                                    <a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter.id?c}">
-                                        <img src="../img/octicons/trashcan.svg" alt="elimina"></a>
-                                </#if>
-                            </td>
-                        </tr>
+                        <@ui.dashboardIscrittoRow person=ter sheetTarget="schedater" action="Terzamedia" editable=(!pagato) paid=pagato/>
                     </#list>
                     </tbody>
                 </table>
@@ -193,4 +81,4 @@
         </div>
     </#if>
 </div>
-<#include "../struct/footer.html.ftl">
+</@ui.page>

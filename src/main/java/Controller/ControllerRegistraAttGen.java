@@ -6,6 +6,7 @@ import Response.FreemarkerTemplate;
 import Response.RedirectResult;
 import Response.Response;
 import Utility.Utils;
+import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -22,10 +23,7 @@ public class ControllerRegistraAttGen implements ControllerInterface {
             RelCollabora rc = new RelCollabora();
             int idUt = (int) request.getSession().getAttribute("idUtente");
             int idAttivita = Integer.parseInt(request.getParameter("attivita"));
-            String data = request.getParameter("data");
-            if (data != null) {
-                rc.setData(data);
-            }
+            RequestFields.optionalText(request, "data", rc::setData);
             rc.setRegistratoId(idUt);
             rc.setAttivitaGenId(idAttivita);
             DAOMan.relCollaboraDAO.insert(rc);

@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 public class RegistratoDAOImpl implements RegistratoDAO {
@@ -22,19 +21,23 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     private static final String FIND_REGISTRATO_MAIL = "select * from Registrato where mail = ?;";
     private static final String FIND_REGISTRATO_NOMINATIVO = "select * from Registrato where nome = ? and cognome = ?;";
 
+    static void bindDatiPersonali(PreparedStatement pst, Registrato r, int start) throws SQLException {
+        pst.setString(start, r.getNome());
+        pst.setString(start + 1, r.getCognome());
+        pst.setString(start + 2, r.getTelefono());
+        pst.setString(start + 3, r.getLocalita());
+        pst.setString(start + 4, r.getVia());
+        pst.setString(start + 5, r.getCivico());
+        pst.setInt(start + 6, r.getTipoUt());
+    }
+
     @Override
     public void insert(Registrato r) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(INSERT_REGISTRATO)) {
             pst.setString(1, r.getMail());
             pst.setString(2, r.getPassword());
-            pst.setString(3, r.getNome());
-            pst.setString(4, r.getCognome());
-            pst.setString(5, r.getTelefono());
-            pst.setString(6, r.getLocalita());
-            pst.setString(7, r.getVia());
-            pst.setString(8, r.getCivico());
-            pst.setInt(9, r.getTipoUt());
+            bindDatiPersonali(pst, r, 3);
             pst.executeUpdate();
         }
     }
@@ -44,13 +47,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(UPDATE_REGISTRATO)) {
             pst.setString(1, r.getMail());
-            pst.setString(2, r.getNome());
-            pst.setString(3, r.getCognome());
-            pst.setString(4, r.getTelefono());
-            pst.setString(5, r.getLocalita());
-            pst.setString(6, r.getVia());
-            pst.setString(7, r.getCivico());
-            pst.setInt(8, r.getTipoUt());
+            bindDatiPersonali(pst, r, 2);
             pst.setInt(9, r.getId());
             pst.executeUpdate();
         }
@@ -81,11 +78,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_REGISTRATO);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Registrato> lr = new LinkedList<>();
-            while (rs.next()) {
-                lr.add(this.mapRowToRegistrato(rs));
-            }
-            return lr;
+            return DAORows.readAll(rs, this::mapRowToRegistrato);
         }
     }
 
@@ -94,11 +87,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_SEGRETARI);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Registrato> lr = new LinkedList<>();
-            while (rs.next()) {
-                lr.add(this.mapRowToRegistrato(rs));
-            }
-            return lr;
+            return DAORows.readAll(rs, this::mapRowToRegistrato);
         }
     }
 
@@ -107,11 +96,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_AMMINISTRATORI);
              ResultSet rs = pst.executeQuery()) {
-            LinkedList<Registrato> lr = new LinkedList<>();
-            while (rs.next()) {
-                lr.add(this.mapRowToRegistrato(rs));
-            }
-            return lr;
+            return DAORows.readAll(rs, this::mapRowToRegistrato);
         }
     }
 
@@ -159,18 +144,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     }
 
     public Registrato mapRowToRegistrato(ResultSet rs) throws SQLException {
-        return new Registrato(
-                rs.getInt("id"),
-                rs.getString("mail"),
-                rs.getString("password"),
-                rs.getString("nome"),
-                rs.getString("cognome"),
-                rs.getString("telefono"),
-                rs.getString("localita"),
-                rs.getString("via"),
-                rs.getString("civico"),
-                rs.getInt("tipoUt")
-        );
+        return IscrittoDAOMapper.registrato(rs, "");
     }
 
 }
