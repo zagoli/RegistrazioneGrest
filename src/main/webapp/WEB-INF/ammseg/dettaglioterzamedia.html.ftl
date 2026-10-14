@@ -328,15 +328,17 @@
                     <p>${terzamedia.registrato.via+" "+terzamedia.registrato.civico+" "+terzamedia.registrato.localita}</p>
                 </div>
             </div>
-            <hr>
-            <strong> Attività genitore </strong>
-            <#list attgen as attgen>
-                <div class="row">
-                    <div class="col-sm">
-                        <p>${attgen.descrizione}</p>
+            <#if attgen?size!=0>
+                <hr>
+                <strong> Attività genitore </strong>
+                <#list attgen as attgen>
+                    <div class="row">
+                        <div class="col-sm">
+                            <p>${attgen.descrizione}</p>
+                        </div>
                     </div>
-                </div>
-            </#list>
+                </#list>
+            </#if>
         </div>
 
         <#-- Annotazioni segreteria -->

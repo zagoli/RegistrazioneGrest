@@ -331,15 +331,17 @@
                     <p>${ragazzo.registrato.via+" "+ragazzo.registrato.civico+" "+ragazzo.registrato.localita}</p>
                 </div>
             </div>
-            <hr>
-            <strong> Attività genitore </strong>
-            <#list attgen as attgen>
-                <div class="row">
-                    <div class="col-sm">
-                        <p>${attgen.descrizione}</p>
+            <#if attgen?size != 0>
+                <hr>
+                <strong> Attività genitore </strong>
+                <#list attgen as attgen>
+                    <div class="row">
+                        <div class="col-sm">
+                            <p>${attgen.descrizione}</p>
+                        </div>
                     </div>
-                </div>
-            </#list>
+                </#list>
+            </#if>
         </div>
     </div>
 
