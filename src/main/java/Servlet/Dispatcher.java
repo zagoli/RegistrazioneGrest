@@ -123,23 +123,23 @@ public class Dispatcher extends HttpServlet {
             case "/DashboardAttGen" -> new ControllerDashboardAttGen();
             case "/RegistraAttGen" -> new ControllerRegistraAttGen();
             case "/EliminaPrenotazioneAttGen" -> new ControllerEliminaPrenotazioneAttGen();
-            case "/GestisciPagamenti" -> (tipoUtente <= 1)
+            case "/GestisciPagamenti" -> tipoUtente <= 1
                     ? new ControllerPagamentiRagazzi()
                     : new Controller403();
-            case "/GestisciPagamentiTerzamedia" -> (tipoUtente <= 1)
+            case "/GestisciPagamentiTerzamedia" -> tipoUtente <= 1
                     ? new ControllerPagamentiTerzamedia()
                     : new Controller403();
-            case "/Squadre" -> (tipoUtente <= 1)
+            case "/Squadre" -> tipoUtente <= 1
                     ? new ControllerSquadre()
                     : new Controller403();
-            case "/Laboratori" -> (tipoUtente <= 1)
+            case "/Laboratori" -> tipoUtente <= 1
                     ? new ControllerLaboratori()
                     : new Controller403();
             case "/InfoDettaglio" -> new ControllerInfoDettaglio();
-            case "/VisualizzaIscritti" -> (tipoUtente <= 2)
+            case "/VisualizzaIscritti" -> tipoUtente <= 2
                     ? new ControllerVisualizzaIscritti()
                     : new Controller403();
-            case "/VisualizzaAttGen" -> (tipoUtente <= 2)
+            case "/VisualizzaAttGen" -> tipoUtente <= 2
                     ? new ControllerVisualizzaAttGen()
                     : new Controller403();
             case "/GestisciSegretari" -> tipoUtente == 0
@@ -151,7 +151,7 @@ public class Dispatcher extends HttpServlet {
             case "/Statistiche" -> tipoUtente == 0
                     ? new ControllerStatistiche()
                     : new Controller403();
-            case "/Stampa" -> (tipoUtente <= 2)
+            case "/Stampa" -> tipoUtente <= 2
                     ? new ControllerStampe()
                     : new Controller403();
             case "/StatoIscrizioni" -> tipoUtente == 0
@@ -162,6 +162,9 @@ public class Dispatcher extends HttpServlet {
                     : new Controller403();
             case "/SbloccaIscrizioni" -> new ControllerCodice();
             case "/VisualizzaQuote" -> new ControllerVisualizzaQuote();
+            case "/ModificaAnnotazioni" -> tipoUtente <= 1
+                    ? new ControllerModificaAnnotazioni()
+                    : new Controller403();
             default -> new Controller404();
         };
     }
