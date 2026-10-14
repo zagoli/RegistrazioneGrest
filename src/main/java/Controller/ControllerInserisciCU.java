@@ -8,6 +8,7 @@ import Response.Response;
 import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.SQLException;
 
@@ -28,8 +29,12 @@ public class ControllerInserisciCU implements ControllerInterface {
                 cu.setNome(request.getParameter("nome"));
                 cu.setCognome(request.getParameter("cognome"));
                 cu.setRelazione(request.getParameter("relazione"));
-                cu.setCellulare(request.getParameter("cellulare"));
-                cu.setFisso(request.getParameter("fisso"));
+                final String cellulare = request.getParameter("cellulare");
+                final String fisso = request.getParameter("fisso");
+                if (StringUtils.isNotBlank(cellulare))
+                    cu.setCellulare(cellulare);
+                if (StringUtils.isNotBlank(fisso))
+                    cu.setFisso(fisso);
                 cu.setRegistrato(DAOMan.registratoDAO.findById(idUt));
                 DAOMan.contattoUrgenzeDAO.insert(cu);
                 return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");

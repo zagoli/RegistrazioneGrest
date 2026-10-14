@@ -26,12 +26,12 @@
                 <div class="form-group">
                     <label for="cellulare"> Telefono cellulare </label>
                     <input class="form-control" type="text" id="cellulare" name="cellulare" placeholder="Cellulare"
-                           data-parsley-length="[10, 10]" value="${contatto.cellulare}">
+                           data-parsley-length="[10, 10]" value="${contatto.cellulare!}">
                 </div>
                 <div class="form-group">
                     <label for="fisso"> Telefono fisso </label>
                     <input class="form-control" type="text" id="fisso" name="fisso" placeholder="Fisso"
-                           data-parsley-length="[10, 10]" value="${contatto.fisso}">
+                           data-parsley-length="[10, 10]" value="${contatto.fisso!}">
                 </div>
                 <div class="pt-3 form-group">
                     <input class="form-control" type="submit" value="Modifica">
