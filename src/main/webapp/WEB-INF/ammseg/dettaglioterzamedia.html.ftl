@@ -199,9 +199,6 @@
         </#if>
     </div>
 
-    <#-- Annotazioni segreteria -->
-    <@note.pannelloInfoDettaglio annotazioni=annotazioni/>
-
     <#--contatti urgenze-->
     <#if cu??>
         <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
@@ -341,6 +338,9 @@
                 </div>
             </#list>
         </div>
+
+        <#-- Annotazioni segreteria -->
+        <@note.pannelloInfoDettaglio annotazioni=annotazioni/>
     </div>
 </div>
 <#include "../struct/footer.html.ftl">

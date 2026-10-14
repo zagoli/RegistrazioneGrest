@@ -31,7 +31,7 @@
                                     </#list>
                                 </select>
                             </td>
-                            <td align="center">
+                            <td class="text-center">
                                 <div class="checkbox">
                                     <label class="sr-only" for="${an.id?c}responsabileLaboratorio">Responsabile
                                         laboratorio</label>
