@@ -29,135 +29,159 @@
     <#if ragazzi??>
         <div class="shadow bg-white pt-2 pl-3 pr-3 pb-2">
             <p class="text-center font-weight-bold">Ragazzi</p>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col" style="width: 2%;"></th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Cognome</th>
-                    <th scope="col" style="width: 15%;">Stampa scheda</th>
-                    <th scope="col" style="width: 2%;">Pagato</th>
-                    <th scope="col" style="width: 2%;">Modifica</th>
-                    <th scope="col" style="width: 2%;">Elimina</th>
-                </tr>
-                </thead>
-                <tbody>
-                <#list ragazzi as rag, pagato>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th scope="row">
-                            <#if rag.squadra.id != 0>
-                                <div class="badge-squadra" style="background-color:${rag.squadra.colore}; "></div>
-                            </#if>
-                        </th>
-                        <td>${rag.nome}</td>
-                        <td>${rag.cognome}</td>
-                        <td align="center">
-                            <a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${rag.id?c}">
-                                <img src="../img/octicons/file.svg">
-                            </a>
-                        </td>
-                        <td align="center">
-                            <#if pagato>
-                                <img src="../img/octicons/check.svg">
-                            <#else>
-                                <img src="../img/octicons/x.svg">
-                            </#if>
-                        </td>
-                        <td align="center"><#if !pagato><a
-                                href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag.id?c}">
-                                    <img src="../img/octicons/pencil.svg"></a></#if></td>
-                        <td align="center"><#if !pagato><a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag.id?c}">
-                                    <img src="../img/octicons/trashcan.svg"></a></#if></td>
+                        <th scope="col" style="width: 2%;"></th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col" style="width: 15%;">Stampa scheda</th>
+                        <th scope="col" style="width: 2%;">Pagato</th>
+                        <th scope="col" style="width: 2%;">Modifica</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
                     </tr>
-                </#list>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <#list ragazzi as rag, pagato>
+                        <tr>
+                            <th scope="row">
+                                <#if rag.squadra.id != 0>
+                                    <div class="badge-squadra" style="background-color:${rag.squadra.colore}; "></div>
+                                </#if>
+                            </th>
+                            <td>${rag.nome}</td>
+                            <td>${rag.cognome}</td>
+                            <td class="text-center">
+                                <a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${rag.id?c}">
+                                    <img src="../img/octicons/file.svg">
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <#if pagato>
+                                    <img src="../img/octicons/check.svg">
+                                <#else>
+                                    <img src="../img/octicons/x.svg">
+                                </#if>
+                            </td>
+                            <td class="text-center"><#if !pagato><a
+                                    href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag.id?c}">
+                                        <img src="../img/octicons/pencil.svg"></a></#if></td>
+                            <td class="text-center"><#if !pagato><a
+                                    href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag.id?c}">
+                                        <img src="../img/octicons/trashcan.svg"></a></#if></td>
+                        </tr>
+                    </#list>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </#if>
     <#if animatori??>
         <div class="shadow bg-white pt-2 pl-3 pr-3 pb-2 mt-4">
             <p class="text-center font-weight-bold">Animatori</p>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col" style="width: 2%;"></th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Cognome</th>
-                    <th scope="col" style="width: 15%;">Stampa scheda</th>
-                    <th scope="col" style="width: 2%;">Modifica</th>
-                    <th scope="col" style="width: 2%;">Elimina</th>
-                </tr>
-                </thead>
-                <tbody>
-                <#list animatori as ani>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th scope="row">
-                            <#if ani.squadra.id != 0>
-                                <div class="badge-squadra" style="background-color:${ani.squadra.colore}; "></div>
-                            </#if>
-                        </th>
-                        <td>${ani.nome}</td>
-                        <td>${ani.cognome}</td>
-                        <td align="center"><a
-                                    href="/RegistrazioneGrest/App/InfoDettaglio?target=schedaani&id=${ani.id?c}"><img
-                                        src="../img/octicons/file.svg"></a></td>
-                        <td align="center"><#if ISCRAN><a
-                                href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id?c}"><img
-                                            src="../img/octicons/pencil.svg"></a></#if></td>
-                        <td align="center"><#if ISCRAN><a
-                                href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id?c}"><img
-                                            src="../img/octicons/trashcan.svg"></a></#if></td>
+                        <th scope="col" style="width: 2%;"></th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col" style="width: 15%;">Stampa scheda</th>
+                        <th scope="col" style="width: 2%;">Modifica</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
                     </tr>
-                </#list>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <#list animatori as ani>
+                        <tr>
+                            <th scope="row">
+                                <#if ani.squadra.id != 0>
+                                    <div class="badge-squadra" style="background-color:${ani.squadra.colore}; "></div>
+                                </#if>
+                            </th>
+                            <td>${ani.nome}</td>
+                            <td>${ani.cognome}</td>
+                            <td class="text-center">
+                                <a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedaani&id=${ani.id?c}">
+                                    <img src="../img/octicons/file.svg" alt="stampa">
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <#if ISCRAN>
+                                    <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id?c}">
+                                        <img src="../img/octicons/pencil.svg" alt="modifica">
+                                    </a>
+                                </#if>
+                            </td>
+                            <td class="text-center">
+                                <#if ISCRAN>
+                                    <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id?c}">
+                                        <img alt="elimina" src="../img/octicons/trashcan.svg">
+                                    </a>
+                                </#if>
+                            </td>
+                        </tr>
+                    </#list>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </#if>
     <#if terzamedia??>
         <div class="shadow bg-white pt-2 pl-3 pr-3 pb-2 mt-4">
             <p class="text-center font-weight-bold">Ragazzi di terza media</p>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col" style="width: 2%;"></th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Cognome</th>
-                    <th scope="col" style="width: 15%;">Stampa scheda</th>
-                    <th scope="col" style="width: 2%;">Pagato</th>
-                    <th scope="col" style="width: 2%;">Modifica</th>
-                    <th scope="col" style="width: 2%;">Elimina</th>
-                </tr>
-                </thead>
-                <tbody>
-                <#list terzamedia as ter, pagato>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th scope="row">
-                            <#if ter.squadra.id != 0>
-                                <div class="badge-squadra" style="background-color:${ter.squadra.colore}; "></div>
-                            </#if>
-                        </th>
-                        <td>${ter.nome}</td>
-                        <td>${ter.cognome}</td>
-                        <td align="center"><a
-                                    href="/RegistrazioneGrest/App/InfoDettaglio?target=schedater&id=${ter.id?c}"><img
-                                        src="../img/octicons/file.svg"></a></td>
-                        <td align="center">
-                            <#if pagato>
-                                <img src="../img/octicons/check.svg">
-                            <#else>
-                                <img src="../img/octicons/x.svg">
-                            </#if>
-                        </td>
-                        <td align="center"><#if !pagato><a
-                                href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter.id?c}"><img
-                                            src="../img/octicons/pencil.svg"></a></#if></td>
-                        <td align="center"><#if !pagato><a
-                                href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter.id?c}"><img
-                                            src="../img/octicons/trashcan.svg"></a></#if></td>
+                        <th scope="col" style="width: 2%;"></th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Cognome</th>
+                        <th scope="col" style="width: 15%;">Stampa scheda</th>
+                        <th scope="col" style="width: 2%;">Pagato</th>
+                        <th scope="col" style="width: 2%;">Modifica</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
                     </tr>
-                </#list>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <#list terzamedia as ter, pagato>
+                        <tr>
+                            <th scope="row">
+                                <#if ter.squadra.id != 0>
+                                    <div class="badge-squadra" style="background-color:${ter.squadra.colore}; "></div>
+                                </#if>
+                            </th>
+                            <td>${ter.nome}</td>
+                            <td>${ter.cognome}</td>
+                            <td class="text-center"><a
+                                        href="/RegistrazioneGrest/App/InfoDettaglio?target=schedater&id=${ter.id?c}"><img
+                                            src="../img/octicons/file.svg"></a></td>
+                            <td class="text-center">
+                                <#if pagato>
+                                    <img src="../img/octicons/check.svg">
+                                <#else>
+                                    <img src="../img/octicons/x.svg">
+                                </#if>
+                            </td>
+                            <td class="text-center">
+                                <#if !pagato>
+                                    <a href="/RegistrazioneGrest/App/ModificaTerzamedia?id=${ter.id?c}">
+                                        <img src="../img/octicons/pencil.svg" alt="modifica">
+                                    </a>
+                                </#if>
+                            </td>
+                            <td class="text-center">
+                                <#if !pagato>
+                                    <a href="/RegistrazioneGrest/App/EliminaTerzamedia?id=${ter.id?c}">
+                                        <img src="../img/octicons/trashcan.svg" alt="elimina"></a>
+                                </#if>
+                            </td>
+                        </tr>
+                    </#list>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </#if>
 </div>
