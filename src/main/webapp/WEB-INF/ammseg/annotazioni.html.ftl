@@ -30,15 +30,30 @@
         </div>
     </form>
     <#list annotazioni as annotazione>
-        <@nota annotazione=annotazione/>
+        <@nota
+        annotazione=annotazione
+        puoEliminare=(tipoUt == 0 || annotazione.segretario.id == idUtente)
+        tipoIscritto=tipoIscritto
+        idIscritto=id
+        />
     </#list>
 </#macro>
 
-<#macro nota annotazione>
+<#macro nota annotazione puoEliminare=false tipoIscritto="" idIscritto=0>
     <article class="card mb-3">
         <div class="card-header d-flex flex-wrap justify-content-between align-items-center">
             <strong class="mr-3">${annotazione.segretario.nome?capitalize} ${annotazione.segretario.cognome?capitalize}</strong>
-            <time class="text-muted" title="Data creazione">${annotazione.dataCreazione?string["dd/MM/yyyy HH:mm"]}</time>
+            <span class="d-inline-flex align-items-center">
+                <time class="text-muted"
+                      title="Data creazione">${annotazione.dataCreazione?string["dd/MM/yyyy HH:mm"]}</time>
+                <#if puoEliminare>
+                    <a href="/RegistrazioneGrest/App/ModificaAnnotazioni?del&id=${annotazione.id?c}&tipoIscritto=${tipoIscritto}&idIscritto=${idIscritto?c}"
+                       class="d-inline-flex align-items-center ml-2"
+                       title="Elimina">
+                        <img src="../img/octicons/trashcan.svg" alt="elimina" style="width: 16px; height: 16px;"/>
+                    </a>
+                </#if>
+            </span>
         </div>
         <div class="card-body">
             <p class="card-text" style="white-space: pre-wrap; overflow-wrap: anywhere;">${annotazione.annotazione}</p>

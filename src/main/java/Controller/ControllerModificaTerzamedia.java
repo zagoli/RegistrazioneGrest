@@ -29,6 +29,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
             template.addObject("TITOLOPAGINA", "Modifica terza media");
             var tipoUt = (int) request.getSession().getAttribute("tipoUtente");
             template.addObject("tipoUt", tipoUt);
+            template.addObject("idUtente", request.getSession().getAttribute("idUtente"));
             int idTerzamedia = Integer.parseInt(request.getParameter("id"));
             TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
@@ -88,7 +89,6 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 template.addObject("circoli", listCircolo);
                 List<Scuola> listScuola = DAOMan.scuolaDAO.findAll();
                 template.addObject("scuole", listScuola);
-                //
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String dataNascita = sdf.format(t.getDataNascita());
                 template.addObject("dataNascita", dataNascita);

@@ -131,7 +131,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
              PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? this.mapRowToAnimatore(rs) : null;
+                return rs.next() ? mapRowToAnimatore(rs) : null;
             }
         }
     }
@@ -143,7 +143,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
              ResultSet rs = pst.executeQuery()) {
             LinkedList<Animatore> la = new LinkedList<>();
             while (rs.next()) {
-                la.add(this.mapRowToAnimatore(rs));
+                la.add(mapRowToAnimatore(rs));
             }
             return la;
         }
@@ -167,7 +167,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
             try (ResultSet rs = pst.executeQuery()) {
                 LinkedList<Animatore> la = new LinkedList<>();
                 while (rs.next()) {
-                    la.add(this.mapRowToAnimatore(rs));
+                    la.add(mapRowToAnimatore(rs));
                 }
                 return la;
             }
@@ -182,7 +182,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
             try (ResultSet rs = pst.executeQuery()) {
                 LinkedList<Animatore> la = new LinkedList<>();
                 while (rs.next()) {
-                    la.add(this.mapRowToAnimatore(rs));
+                    la.add(mapRowToAnimatore(rs));
                 }
                 return la;
             }
@@ -203,7 +203,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         }
     }
 
-    public Animatore mapRowToAnimatore(ResultSet rs) throws SQLException {
+    public static Animatore mapRowToAnimatore(ResultSet rs) throws SQLException {
         return new Animatore(
                 rs.getInt("anid"),
                 rs.getString("annome"),

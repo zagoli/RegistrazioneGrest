@@ -28,6 +28,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
         try {
             var idAnimatore = Integer.parseInt(request.getParameter("id"));
             var tipoUt = (int) request.getSession().getAttribute("tipoUtente");
+            template.addObject("idUtente", request.getSession().getAttribute("idUtente"));
             template.addObject("TITOLOPAGINA", "Modifica animatore");
             template.addObject("tipoUt", tipoUt);
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);

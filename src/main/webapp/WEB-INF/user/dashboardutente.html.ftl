@@ -59,17 +59,25 @@
                             </td>
                             <td class="text-center">
                                 <#if pagato>
-                                    <img src="../img/octicons/check.svg">
+                                    <img src="../img/octicons/check.svg" alt="spunta">
                                 <#else>
-                                    <img src="../img/octicons/x.svg">
+                                    <img src="../img/octicons/x.svg" alt="croce">
                                 </#if>
                             </td>
-                            <td class="text-center"><#if !pagato><a
-                                    href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag.id?c}">
-                                        <img src="../img/octicons/pencil.svg"></a></#if></td>
-                            <td class="text-center"><#if !pagato><a
-                                    href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag.id?c}">
-                                        <img src="../img/octicons/trashcan.svg"></a></#if></td>
+                            <td class="text-center">
+                                <#if !pagato>
+                                    <a href="/RegistrazioneGrest/App/ModificaRagazzo?id=${rag.id?c}">
+                                        <img src="../img/octicons/pencil.svg" alt="modifica">
+                                    </a>
+                                </#if>
+                            </td>
+                            <td class="text-center">
+                                <#if !pagato>
+                                <a href="/RegistrazioneGrest/App/EliminaRagazzo?id=${rag.id?c}">
+                                        <img src="../img/octicons/trashcan.svg" alt="elimina">
+                                    </a>
+                                </#if>
+                            </td>
                         </tr>
                     </#list>
                     </tbody>
