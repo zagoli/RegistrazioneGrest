@@ -150,6 +150,9 @@
         </#list>
     </div>
 
+    <#-- Annotazioni segreteria -->
+    <@note.pannelloInfoDettaglio annotazioni=annotazioni/>
+
     <#--contatti urgenze-->
     <#if cu??>
         <div class="shadow pt-2 pl-3 pr-3 mt-3 bg-white">
@@ -230,8 +233,6 @@
             </#list>
         </div>
     </#if>
-
-    <@note.pannello/>
 
     <#--info registrato-->
     <div class="shadow pt-2 pl-3 pr-3 mt-3">
