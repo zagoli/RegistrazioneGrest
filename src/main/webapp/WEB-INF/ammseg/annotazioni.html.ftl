@@ -11,23 +11,22 @@
     </#if>
 </#macro>
 
-<#macro modificaAnnotazioni target id annotazioni=[]>
+<#macro modificaAnnotazioni tipoIscritto id annotazioni=[]>
     <h5 class="mb-3 title text-center">Annotazioni della segreteria</h5>
-    <form action="/RegistrazioneGrest/App/ModificaAnnotazioni" method="POST" class="card mb-3"
-          data-parsley-validate>
-        <input type="hidden" name="target" value="${target}"/>
-        <input type="hidden" name="id" value="${id?c}"/>
-        <input type="hidden" name="azione" value="aggiungi"/>
-        <div class="card-body">
-            <label for="nuova-annotazione-${target}-${id?c}" class="sr-only">Nuova annotazione</label>
-            <textarea class="form-control" id="nuova-annotazione-${target}-${id?c}" name="annotazione"
-                      rows="5" maxlength="5000" required data-parsley-maxlength="5000"
-                      placeholder="Scrivi la tua annotazione..."
-                      aria-describedby="limite-annotazione-${target}-${id?c}"></textarea>
-            <small id="limite-annotazione-${target}-${id?c}" class="form-text text-muted">Massimo 5000 caratteri.</small>
+    <form action="/RegistrazioneGrest/App/ModificaAnnotazioni" method="POST" class="card mb-3">
+        <input type="hidden" name="tipoIscritto" value="${tipoIscritto}"/>
+        <input type="hidden" name="idIscritto" value="${id?c}"/>
+        <input type="hidden" name="add"/>
+        <div class="card-body" style="padding: 0;">
+            <label for="nuova-annotazione" class="sr-only">Nuova annotazione</label>
+            <textarea
+                    style="width: 100%; border: none; border-bottom-left-radius: 0; border-bottom-right-radius: 0;"
+                    class="form-control" id="nuova-annotazione" name="annotazione"
+                    rows="5" maxlength="5000" required
+                    placeholder="Scrivi la tua annotazione. Massimo 5000 caratteri."></textarea>
         </div>
-        <div class="card-footer text-right">
-            <button type="submit" class="btn btn-primary">Salva</button>
+        <div class="card-footer text-right" style="padding-top: .25rem; padding-bottom: .25rem;">
+            <button type="submit" class="btn btn-primary">Aggiungi</button>
         </div>
     </form>
     <#list annotazioni as annotazione>
