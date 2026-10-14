@@ -26,9 +26,10 @@ public class ControllerModificaAnimatore implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            int idAnimatore = Integer.parseInt(request.getParameter("id"));
+            var idAnimatore = Integer.parseInt(request.getParameter("id"));
+            var tipoUt = (int) request.getSession().getAttribute("tipoUtente");
             template.addObject("TITOLOPAGINA", "Modifica animatore");
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("tipoUt", tipoUt);
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO ANIMATORE E FACCIO UNA REDIRECT
@@ -84,6 +85,9 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 template.addObject("calendari", calendari);
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
                     template.addObject("INVALIDMAIL", true);
+                }
+                if (tipoUt < 3) {
+                    template.addObject("annotazioni", DAOMan.annotazioneSegreteriaDAO.findByAnimatoreId(idAnimatore));
                 }
                 template.setView("user/modificaanimatore.html");
             }

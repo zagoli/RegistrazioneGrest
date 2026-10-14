@@ -1,11 +1,10 @@
+<#import "../ammseg/annotazioni.html.ftl" as note>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
     <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
         <div class="container">
-            <div class="title text-center">
-                <h5>Modifica l'iscrizione come animatore</h5>
-            </div>
+            <h5 class="title text-center">Modifica l'iscrizione come animatore</h5>
             <#if INVALIDMAIL??>
                 <div class="container border border-danger rounded pt-2 pl-3 pr-3 mb-2 bg-warning">
                     <p class="text-danger text-center font-weight-bold">La mail non esiste, non è scritta correttamente
@@ -14,7 +13,7 @@
             </#if>
             <form action="/RegistrazioneGrest/App/ModificaAnimatore" method="POST" data-parsley-validate>
 
-                <input type="hidden" value="${animatore.id?c}" name="id"></input>
+                <input type="hidden" value="${animatore.id?c}" name="id"/>
 
                 <div class="form-group">
                     <label for="nome"> Nome </label>
@@ -154,6 +153,12 @@
                 </div>
 
             </form>
+
+            <#-- Annotazioni segreteria -->
+            <#if tipoUt < 3>
+                <hr class="mt-4"/>
+                <@note.modificaAnnotazioni annotazioni=annotazioni/>
+            </#if>
         </div>
     </div>
 </div>
