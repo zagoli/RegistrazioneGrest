@@ -157,7 +157,7 @@
             <#-- Annotazioni segreteria -->
             <#if tipoUt < 3>
                 <hr class="mt-4"/>
-                <@note.modificaAnnotazioni annotazioni=annotazioni/>
+                <@note.modificaAnnotazioni target="an" id=animatore.id annotazioni=annotazioni/>
             </#if>
         </div>
     </div>
