@@ -27,7 +27,8 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             template.addObject("TITOLOPAGINA", "Modifica terza media");
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            var tipoUt = (int) request.getSession().getAttribute("tipoUtente");
+            template.addObject("tipoUt", tipoUt);
             int idTerzamedia = Integer.parseInt(request.getParameter("id"));
             TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
@@ -99,6 +100,9 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 template.addObject("calendari", calendari);
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
                     template.addObject("INVALIDMAIL", true);
+                }
+                if (tipoUt < 3) {
+                    template.addObject("annotazioni", DAOMan.annotazioneSegreteriaDAO.findByTerzamediaId(idTerzamedia));
                 }
                 template.setView("user/modificaterzamedia.html");
             }

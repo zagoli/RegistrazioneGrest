@@ -1,3 +1,4 @@
+<#import "../ammseg/annotazioni.html.ftl" as note>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
@@ -178,6 +179,12 @@
                     <input class="form-control btn btn-primary" type="submit" value="Modifica l'iscrizione">
                 </div>
             </form>
+
+            <#-- Annotazioni segreteria -->
+            <#if tipoUt < 3>
+                <hr class="mt-4"/>
+                <@note.modificaAnnotazioni tipoIscritto="rag" id=ragazzo.id annotazioni=annotazioni/>
+            </#if>
         </div>
     </div>
 </div>

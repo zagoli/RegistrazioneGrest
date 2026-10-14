@@ -24,7 +24,8 @@ public class ControllerModificaRagazzo implements ControllerInterface {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             template.addObject("TITOLOPAGINA", "Modifica ragazzo");
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            var tipoUt = (int) request.getSession().getAttribute("tipoUtente");
+            template.addObject("tipoUt", tipoUt);
             int idRagazzo = Integer.parseInt(request.getParameter("id"));
             Ragazzo r = DAOMan.ragazzoDAO.findById(idRagazzo);
             if (!request.getParameterMap().containsKey("nome")) {
@@ -46,6 +47,9 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                 Map<Calendario, Boolean> calendari = new TreeMap<>();
                 listaCalendari.forEach((calendario) -> calendari.put(calendario, listaCalendariRagazzo.contains(calendario)));
                 template.addObject("calendari", calendari);
+                if (tipoUt < 3) {
+                    template.addObject("annotazioni", DAOMan.annotazioneSegreteriaDAO.findByRagazzoId(idRagazzo));
+                }
                 template.setView("user/modificaragazzo.html");
             } else {
                 //INSERISCO IL RAGAZZO E FACCIO UNA REDIRECT
@@ -64,11 +68,8 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                 r.setClasse(request.getParameter("classe"));
 
                 r.setEntrataAnticipata(request.getParameterMap().containsKey("entrataAnticipata"));
-
                 r.setMensa(request.getParameterMap().containsKey("mensa"));
-
                 r.setSaNuotare(request.getParameterMap().containsKey("saNuotare"));
-
                 r.setFratelloIscritto(request.getParameterMap().containsKey("fratelloIscritto"));
 
                 String richieste = request.getParameter("richieste");
