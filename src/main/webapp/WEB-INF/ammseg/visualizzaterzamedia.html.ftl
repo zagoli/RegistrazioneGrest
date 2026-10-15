@@ -1,7 +1,7 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container-fluid mt-5 content">
-    <div class="pt-2 pl-3 pr-3 pb-2">
+    <div class="py-2 px-3">
         <div class="table-responsive">
             <table class="table table-hover nowrap" id="t_ter">
             <thead class="thead-dark">

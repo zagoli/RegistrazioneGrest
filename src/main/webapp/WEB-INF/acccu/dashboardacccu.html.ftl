@@ -2,7 +2,7 @@
 <#include "../struct/navbar.html.ftl">
 <div class="container-fluid mt-5 content">
     <#--TABELLE ACCOMPAGNATORI CONTATTI-->
-    <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
+    <div class="container shadow py-2 px-3 bg-white">
         <#if accompagnatori??>
             <h5 class="text-center pb-1"> Accompagnatori autorizzati </h5>
             <#assign count = 0>
@@ -39,7 +39,7 @@
         </a>
     </div>
 
-    <div class="container shadow pt-2 pl-3 pr-3 pb-2 mt-4 bg-white">
+    <div class="container shadow py-2 px-3 mt-4 bg-white">
         <#if cu??>
             <h5 class="text-center pb-1"> Contatti telefonici urgenze </h5>
             <#assign count = 0>

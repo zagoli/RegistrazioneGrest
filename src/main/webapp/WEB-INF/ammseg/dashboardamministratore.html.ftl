@@ -2,13 +2,13 @@
 <#include "../struct/navbar.html.ftl">
     <div class="container-fluid mt-5 content">
     <div class="container">
-        <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white">
+        <div class="shadow py-2 px-3 bg-white">
             <div class="text-center pb-2">
                 <h3> Azioni segretario </h3>
             </div>
             <#include "dashboardsegretariointernal.html.ftl">
         </div>
-        <div class="shadow pt-2 pl-3 pr-3 pb-2 mt-3 bg-white">
+        <div class="shadow py-2 px-3 mt-3 bg-white">
             <div class="text-center">
                 <h3> Azioni amministratore </h3>
             </div>

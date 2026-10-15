@@ -2,7 +2,7 @@
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
     <#if NOCU??>
-        <div class="border border-danger pt-2 pl-3 pr-3 mb-3">
+        <div class="border border-danger pt-2 px-3 mb-3">
             <p class="text-danger text-center">Non sono ancora stati inseriti i contatti telefonici per
                 le urgenze! Si prega di inserire <i>almeno</i> un contatto tramite la voce nel menu "Accompagnatori e
                 Contatti telefonici Urgenze"!</p>
@@ -27,7 +27,7 @@
         </div>
     </div>
     <#if ragazzi??>
-        <div class="shadow bg-white pt-2 pl-3 pr-3 pb-2">
+        <div class="shadow bg-white py-2 px-3">
             <p class="text-center font-weight-bold">Ragazzi</p>
             <div class="table-responsive">
                 <table class="table">
@@ -86,7 +86,7 @@
         </div>
     </#if>
     <#if animatori??>
-        <div class="shadow bg-white pt-2 pl-3 pr-3 pb-2 mt-4">
+        <div class="shadow bg-white py-2 px-3 mt-4">
             <p class="text-center font-weight-bold">Animatori</p>
             <div class="table-responsive">
                 <table class="table">
@@ -137,7 +137,7 @@
         </div>
     </#if>
     <#if terzamedia??>
-        <div class="shadow bg-white pt-2 pl-3 pr-3 pb-2 mt-4">
+        <div class="shadow bg-white py-2 px-3 mt-4">
             <p class="text-center font-weight-bold">Ragazzi di terza media</p>
             <div class="table-responsive">
                 <table class="table">

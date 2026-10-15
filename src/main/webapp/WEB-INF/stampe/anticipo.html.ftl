@@ -4,7 +4,7 @@
     <h2 class="text-uppercase text-center">Elenco entrata anticipata</h2>
     <div class="container-block">
         <div class="mr-2 ml-2">
-            <table class="table table-bordered pl-2 pr-2 table-sm">
+            <table class="table table-bordered px-2 table-sm">
                 <thead>
                 <tr>
                     <th>Cognome</th>

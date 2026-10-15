@@ -4,7 +4,7 @@
 <#include "../struct/navbar.html.ftl">
 <#if !DONE>
     <div class="container mt-4 content">
-        <div class="shadow pt-2 pl-3 pr-3 bg-white vertical-center">
+        <div class="shadow pt-2 px-3 bg-white vertical-center">
             <div class="container">
                 <div class="title text-center">
                     <h5>Registrazione nuovo utente</h5>

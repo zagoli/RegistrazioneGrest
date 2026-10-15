@@ -5,7 +5,7 @@
     <h5 class="text-uppercase text-center">Settimana dal ${set.daQuando} al ${set.AQuando} </h5>
     <div class="container-block">
         <div class="mr-2 ml-2">
-            <table class="table table-bordered pl-2 pr-2 table-sm">
+            <table class="table table-bordered px-2 table-sm">
                 <thead>
                 <tr>
                     <th>Cognome</th>

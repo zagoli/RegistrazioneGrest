@@ -1,7 +1,7 @@
 ﻿<#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container-fluid mt-5 content">
-    <div class="container shadow pt-2 pb-2 bg-white">
+    <div class="container shadow py-2 bg-white">
         <#if errorePagamento??>
             <div class="alert alert-danger" role="alert">${errorePagamento}</div>
         </#if>

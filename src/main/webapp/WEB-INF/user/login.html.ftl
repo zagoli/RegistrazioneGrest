@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row vertical-center">
         <div class="container col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
-            <div class="shadow pt-2 pb-2 pl-3 pr-3 bg-white">
+            <div class="shadow py-2 px-3 bg-white">
                 <div class="title mb-2 mt-1">
                     <h4 class="text-center">Accedi al portale</h4>
                 </div>

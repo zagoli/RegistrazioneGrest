@@ -12,7 +12,7 @@
                     <a href="/RegistrazioneGrest/App/Login" class="btn btn-large btn-primary">Accedi</a>
                 </div>
             <#else>
-                <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white">
+                <div class="shadow py-2 px-3 bg-white">
                     <div class="title pb-1">
                         <h4>Ripristina la password</h4>
                     </div>

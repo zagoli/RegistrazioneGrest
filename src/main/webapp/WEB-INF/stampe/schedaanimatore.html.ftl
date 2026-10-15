@@ -4,7 +4,7 @@
     <div class="mt-3">
         <p class="font-weight-bold text-uppercase text-center"> da consegnare al parroco </p>
     </div>
-    <div class="shadow pt-2 pl-3 pr-3">
+    <div class="shadow pt-2 px-3">
         <@dettaglioIscritto.anagraficaIscritto iscritto=animatore/>
         <div class="row">
             <div class="col-sm">
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <div class="shadow mt-5 pt-2 pl-3 pr-3">
+    <div class="shadow mt-5 pt-2 px-3">
         <p class="text-center font-weight-light font-italic mt-4 mb-4"> Firma di chi richiede di fare l'animatore </p>
         <hr class="pb-2 border-dark"/>
         <p class="text-center font-weight-light font-italic mb-4"> Firme di entrambi i genitori (per i minorenni) </p>

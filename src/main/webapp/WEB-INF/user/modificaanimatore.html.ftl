@@ -4,7 +4,7 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
-    <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
+    <div class="shadow py-2 px-3 bg-white vertical-center">
         <div class="container">
             <h5 class="title text-center">Modifica l'iscrizione come animatore</h5>
             <#if INVALIDMAIL??>

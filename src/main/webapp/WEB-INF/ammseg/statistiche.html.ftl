@@ -35,13 +35,13 @@
                 </li>
             </ul>
             <h3 class="mt-3 font-weight-bold">STATISTICHE ANIMATORI</h3>
-            <div class="container border pt-2 pb-2 mt-3">
+            <div class="container border py-2 mt-3">
                 <canvas id="graficoAniEta"></canvas>
             </div>
-            <div class="container border pt-2 pb-2 mt-3">
+            <div class="container border py-2 mt-3">
                 <canvas id="graficoAniLab"></canvas>
             </div>
-            <div class="container border pt-2 pb-2 mt-3">
+            <div class="container border py-2 mt-3">
                 <canvas id="graficoAniSett"></canvas>
             </div>
         </div>
@@ -50,19 +50,19 @@
         <#--colonna destra-->
         <h3 class="mt-3 font-weight-bold">STATISTICHE RAGAZZI</h3>
         <div class="container-fluid">
-            <div class="container border pt-2 pb-2 mt-1">
+            <div class="container border py-2 mt-1">
                 <canvas id="graficoLaboratori"></canvas>
             </div>
-            <div class="container border pt-2 pb-2 mt-1">
+            <div class="container border py-2 mt-1">
                 <canvas id="graficoRagClassi"></canvas>
             </div>
-            <div class="container border pt-2 pb-2 mt-1">
+            <div class="container border py-2 mt-1">
                 <canvas id="graficoMensaSett"></canvas>
             </div>
-            <div class="container border pt-2 pb-2 mt-1">
+            <div class="container border py-2 mt-1">
                 <canvas id="graficoRagSett"></canvas>
             </div>
-            <div class="container border pt-2 pb-2 mt-1">
+            <div class="container border py-2 mt-1">
                 <canvas id="graficoEaSett"></canvas>
             </div>
         </div>

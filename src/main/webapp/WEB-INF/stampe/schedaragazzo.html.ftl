@@ -6,7 +6,7 @@
         <p class="font-weight-bold text-uppercase text-center"> da consegnare alla segreteria del grest al momento
             dell'iscrizione </p>
     </div>
-    <div class="shadow pt-2 pl-3 pr-3">
+    <div class="shadow pt-2 px-3">
         <@dettaglioIscritto.anagraficaIscritto iscritto=ragazzo/>
         <@dettaglioIscritto.presenzaIscritto iscritto=ragazzo/>
         <@dettaglioIscritto.laboratorioIscritto iscritto=ragazzo/>
@@ -93,7 +93,7 @@
         </div>
         <@riferimentiIscritto.attivitaGenitore attivita=attgen/>
     </div>
-    <div class="mt-3 shadow pt-2 pl-3 pr-3">
+    <div class="mt-3 shadow pt-2 px-3">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id='priv'/>
             <label for='priv' class="form-check-label">

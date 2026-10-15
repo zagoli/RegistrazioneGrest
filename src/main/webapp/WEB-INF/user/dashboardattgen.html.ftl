@@ -1,7 +1,7 @@
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container-fluid mt-5 content">
-    <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
+    <div class="container shadow py-2 px-3 bg-white">
         <#if attivita??>
             <h5 class="text-center mb-3">Collaboro alla buona riuscita del Grest nei seguenti modi</h5>
             <#assign count = 0>

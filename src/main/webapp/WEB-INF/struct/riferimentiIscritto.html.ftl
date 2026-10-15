@@ -1,5 +1,5 @@
 <#macro contattiUrgenze contatti>
-    <div class="shadow py-2 pl-3 pr-3 mt-3 bg-white">
+    <div class="shadow py-2 px-3 mt-3 bg-white">
         <div class="row">
             <div class="col-sm">
                 <strong class="text-danger">Contatti telefonici Urgenze</strong>
@@ -59,7 +59,7 @@
 </#macro>
 
 <#macro accompagnatoriAutorizzati accompagnatori>
-    <div class="shadow py-2 pl-3 pr-3 mt-3 bg-white">
+    <div class="shadow py-2 px-3 mt-3 bg-white">
         <div class="row mb-3">
             <div class="col-sm">
                 <strong>Accompagnatori autorizzati</strong>
@@ -78,7 +78,7 @@
 </#macro>
 
 <#macro informazioniRegistrato registrato attgen=[]>
-    <div class="shadow py-2 pl-3 pr-3 mt-3">
+    <div class="shadow py-2 px-3 mt-3">
         <div class="text-secondary">
             <div class="row">
                 <div class="col-sm">
