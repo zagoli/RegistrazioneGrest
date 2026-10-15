@@ -1,8 +1,8 @@
-<#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=true>
+<#include "../struct/header.html.ftl">
+<#include "../struct/navbar.html.ftl">
 <div class="container-fluid mt-5 content">
     <div class="container">
         <#include "dashboardsegretariointernal.html.ftl">
     </div>
 </div>
-</@ui.page>
+<#include "../struct/footer.html.ftl">

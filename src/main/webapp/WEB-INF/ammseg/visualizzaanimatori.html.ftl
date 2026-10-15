@@ -1,48 +1,86 @@
-<#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=true>
-<@ui.contentPanel panelClass="pt-2 pl-3 pr-3 pb-2" responsive=true>
+<#include "../struct/header.html.ftl">
+<#include "../struct/navbar.html.ftl">
+<div class="container-fluid mt-5 content">
+    <div class="pt-2 pl-3 pr-3 pb-2">
+        <div class="table-responsive">
             <table id="t_anim" class="table table-hover nowrap">
-            <@ui.tableHead columns=[
-                {"label": "Azioni", "attributes": {"scope": "col", "style": "width: 6%;"}},
-                {"label": "Cognome", "attributes": {"scope": "col"}},
-                {"label": "Nome", "attributes": {"scope": "col"}},
-                {"label": "Nascita", "attributes": {"scope": "col"}},
-                {"label": "Fiscale", "attributes": {"scope": "col"}},
-                {"label": "Indirizzo", "attributes": {"scope": "col"}},
-                {"label": "Parrocchia", "attributes": {"scope": "col"}},
-                {"label": "Cellulare", "attributes": {"scope": "col"}},
-                {"label": "Email", "attributes": {"scope": "col"}},
-                {"label": "Laboratorio", "attributes": {"scope": "col"}},
-                {"label": "Squadra", "attributes": {"scope": "col"}},
-                {"label": "F. età", "attributes": {"scope": "col"}}
-            ] class="thead-dark"/>
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" style="width: 6%;">Azioni</th>
+                <th scope="col">Cognome</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Nascita</th>
+                <th scope="col">Fiscale</th>
+                <th scope="col">Indirizzo</th>
+                <th scope="col">Parrocchia</th>
+                <th scope="col">Cellulare</th>
+                <th scope="col">Email</th>
+                <th scope="col">Laboratorio</th>
+                <th scope="col">Squadra</th>
+                <th scope="col">F. età</th>
+            </tr>
+            </thead>
             <tbody class="list">
             <#list animatori as ani>
                 <tr>
                     <td>
-                        <@ui.iscrittoActions id=ani.id infoTarget="infoani" popupTitle="Dettagli animatore" modifyAction="ModificaAnimatore" deleteAction="EliminaAnimatore" href="javascript:" detailAlt="dettagli"/>
+                        <a href="javascript:"
+                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoani&id=${ani.id?c}', 'Dettagli animatore', 'width=600, height=700, status, scrollbars=1, location');"><img
+                                    src="../img/octicons/search.svg" alt="dettagli"></a>
+                        <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id?c}"><img
+                                    src="../img/octicons/pencil.svg" alt="modifica"></a>
+                        <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id?c}"><img
+                                    src="../img/octicons/trashcan.svg" alt="elimina"></a>
                     </td>
                     <td>${ani.cognome?capitalize}</td>
                     <td>${ani.nome?capitalize}</td>
                     <td data-sort="${ani.dataNascita?string.iso}">${ani.dataNascita?string["dd/MM/yyyy"]}</td>
                     <td>${ani.codiceFiscale}</td>
-                    <td>${ui.indirizzo(ani.registrato, true)}</td>
+                    <td>${(ani.registrato.via!"")?capitalize+" "+(ani.registrato.civico!"")+" "+(ani.registrato.localita!"")?capitalize}</td>
                     <td title="${ani.parrocchia.nome}">${ani.parrocchia.luogo}</td>
                     <td>${ani.cellulare}</td>
                     <td>${ani.mail}</td>
                     <td <#if ani.responsabileLaboratorio>class="mark"</#if>>${ani.laboratorio.descrizione}</td>
                     <#-- con freemarker è molto brutto: devo aggiungere la parola mark alla lista delle classi-->
                     <td class="badge-squadra-support <#if ani.responsabileSquadra>mark</#if>">
-                        <@ui.squadraBadge squadra=ani.squadra style="list"/>
+                        <#if ani.squadra.id!=0>
+                            <div class="badge-squadra"
+                                 style="background-color: ${ani.squadra.colore}; margin-right: 5px;"></div> ${ani.squadra.nome}
+                        </#if>
                     </td>
                     <td>
-                        <@ui.fasciaEtaDescription fascia=ani.fasciaEtaRagazzi/>
+                        <#if ani.fasciaEtaRagazzi == "PIC">
+                            Piccoli
+                        <#elseif ani.fasciaEtaRagazzi == "GRA">
+                            Grandi
+                        <#elseif ani.fasciaEtaRagazzi == "TER">
+                            3 Media
+                        </#if>
                     </td>
                 </tr>
             </#list>
             </tbody>
         </table>
-</@ui.contentPanel>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/ellipsis.js"></script>
-<@ui.iscrittiDataTable id="t_anim" ellipsisTargets="[2, 3, 4, 6, 7]" searchTargets="[0]"/>
-</@ui.page>
+<script>
+    $(document).ready(function () {
+        $('#t_anim').DataTable({
+            columnDefs: [
+                {
+                    targets: [2, 3, 4, 6, 7],
+                    render: $.fn.dataTable.render.ellipsis(15, true)
+                },
+                {
+                    targets: [0],
+                    searchable: false,
+                    orderable: false
+                }
+            ],
+            info: false
+        });
+    });
+</script>
+<#include "../struct/footer.html.ftl">

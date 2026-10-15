@@ -72,7 +72,7 @@ every possible branch combination.
 
 ## Final additional checks
 
-The complete post-refactor suite has 640 passing cases, including the unchanged
+The complete post-refactor suite initially had 640 passing cases, including the unchanged
 531 preservation cases above. The remaining cases cover inherited properties,
 role policy, request mapping and optional clearing, JDBC bind contracts,
 controller helpers, Excel cells, and 13 rendered pages with cleared profile
@@ -88,3 +88,18 @@ not an accepted difference in the frozen rendering oracle.
 The final WAR build uses the same command with `package` in place of `test`.
 The user-facing database/browser checklist and complete modified-template list
 are in `TEST-MANUALI.md` at the repository root.
+
+## FreeMarker simplification
+
+Generic HTML macros have been removed. Layout, table headers, basic inputs,
+checkboxes and page scripts are explicit in the pages again. Only application
+sections are shared: participant data, registration/edit sections, account
+data, emergency contacts and authorized companions. The Java refactor is
+unchanged.
+
+The same 396 frozen renders still verify all original templates without
+updating any oracle. The new `struct/iscrizione.html.ftl` receives a parse check
+and is rendered through the six participant forms and both account forms.
+Cleared-value rendering now covers 22 pages, including all six participant
+forms and the four reports displaying the account's optional phone.
+With the added library and null cases, the suite contains 650 tests.

@@ -1,18 +1,23 @@
+<#import "../struct/iscrizione.html.ftl" as iscrizione>
 <#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=true>
-<@ui.formPanel title="Modifica account" containerClass="container pt-4 content" inlineTitle=false>
+<#include "../struct/header.html.ftl">
+<#include "../struct/navbar.html.ftl">
+<div class="container pt-4 content">
+    <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
+        <div class="container">
+            <div class="title text-center">
+                <h5>Modifica account</h5>
+            </div>
             <#if INVALIDMAIL??>
                 <@ui.avvisoMailNonValida/>
             </#if>
             <form action="/RegistrazioneGrest/App/ModificaUtente" method="POST" data-parsley-validate>
-                <@ui.inputField id="nome" label="Nome" required=true autofocus=true placeholder="Nome" length="[2, 50]" value="${registrato.nome}"/>
-                <@ui.inputField id="cognome" label="Cognome" required=true placeholder="Cognome" length="[2, 50]" value="${registrato.cognome}"/>
-                <@ui.inputField id="email" label="E-Mail" type="email" name="mail" required=true placeholder="E-Mail" value="${registrato.mail}"/>
-                <@ui.inputField id="telefono" label="Numero di telefono" type="" required=(tipoUt == 3) placeholder="Cellulare personale" length="[10,10]" value=(registrato.telefono)![] attributes={"data-parsley-type": "digits"}/>
-                <@ui.inputField id="localita" label="Localita" required=(tipoUt == 3) placeholder="Localit&agrave" value=(registrato.localita)![]/>
-                <@ui.inputField id="via" label="Via" required=(tipoUt == 3) placeholder="Via" value=(registrato.via)![]/>
-                <@ui.inputField id="civico" label="Numero civico" required=(tipoUt == 3) placeholder="Numero Civico" value=(registrato.civico)![]/>
-                <@ui.submitButton label="Conferma"/>
+                <@iscrizione.datiAccount registrato=registrato tipoUt=tipoUt/>
+                <div class="pt-3 form-group">
+                    <input class="form-control btn btn-primary" type="submit" value="Conferma">
+                </div>
             </form>
-</@ui.formPanel>
-</@ui.page>
+        </div>
+    </div>
+</div>
+<#include "../struct/footer.html.ftl">

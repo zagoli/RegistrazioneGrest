@@ -1,56 +1,76 @@
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/iscrizione.html.ftl" as iscrizione>
 <#import "../ammseg/annotazioni.html.ftl" as note>
-<@ui.page navbar=true>
-<@ui.formPanel title="Modifica l'iscrizione" containerClass="container mt-4 content" inlineTitle=false>
+<#include "../struct/header.html.ftl">
+<#include "../struct/navbar.html.ftl">
+<div class="container mt-4 content">
+    <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
+        <div class="container">
+            <div class="title text-center">
+                <h5>Modifica l'iscrizione</h5>
+            </div>
             <form action="/RegistrazioneGrest/App/ModificaRagazzo" method="POST" data-parsley-validate="">
 
                 <input type="hidden" value="${ragazzo.id?c}" name="id">
 
-                <@ui.identityFields cognome="${ragazzo.cognome}" nome="${ragazzo.nome}" dataNascita="${dataNascita}"/>
+                <@iscrizione.anagraficaIscritto tipo="ragazzo" modifica=true iscritto=ragazzo dataNascita=dataNascita/>
 
-                <@ui.presenzaField selected=ragazzo.presenza label="Presenza giornaliera" completo="Mattina e pomeriggio"/>
+                <@iscrizione.presenzaGiornaliera tipo="ragazzo" selezionata=ragazzo.presenza/>
 
-                <@ui.partecipazioneField calendari=calendari label="Partecipazione" editing=true lineBreak=true quoteTarget="ragazzi" popupHeight=900/>
+                <@iscrizione.partecipazioneGrest tipo="ragazzo" calendari=calendari modifica=true/>
 
-                <@ui.selectField id="laboratorio" label="Laboratorio">
-                    <@ui.laboratorioOptions options=laboratori selected=ragazzo.laboratorio.id/>
-                </@ui.selectField>
+                <@iscrizione.laboratorioIscritto tipo="ragazzo" modifica=true iscritto=ragazzo laboratori=laboratori/>
 
-                <@ui.selectField id="parrocchia" label="Parrocchia di appartenenza">
-                    <@ui.parrocchiaOptions options=parrocchie selected=ragazzo.parrocchia.id/>
-                </@ui.selectField>
+                <@iscrizione.parrocchiaIscritto parrocchie=parrocchie selezionata=ragazzo.parrocchia.id/>
 
-                <@ui.selectField id="circolo" label="Circolo di tesseramento">
-                    <@ui.circoloOptions options=circoli selected=ragazzo.circolo.id/>
-                </@ui.selectField>
-                <@ui.tesseraField label="Numero tessera Circolo Noi" year=true yearIndent=32 help="Inserire il numero di tessera del Circolo Noi se non si è iscritti al Circolo Noi di Balconi." value=(ragazzo.NTessera)![]/>
+                <@iscrizione.tesseramentoIscritto tipo="ragazzo" modifica=true iscritto=ragazzo circoli=circoli/>
 
 
-                <@ui.selectField id="scuola" label="Scuola">
-                    <@ui.scuolaOptions options=scuole selected=ragazzo.scuola.id/>
-                </@ui.selectField>
+                <@iscrizione.scuolaIscritto tipo="ragazzo" modifica=true iscritto=ragazzo scuole=scuole/>
 
-                <@ui.selectField id="classe" label="Classe">
-                    <@ui.classeOptions selected=ragazzo.classe/>
-                </@ui.selectField>
+                <div class="form-group">
+                    <label for="richieste">Eventuali richieste o proposte:</label>
+                    <textarea class="form-control" rows="5" id="richieste" name="richieste"
+                              placeholder="Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta, e di non richiedere cambiamenti, se non gravemente necessari."><#if ragazzo.richieste??>${ragazzo.richieste}</#if></textarea>
+                </div>
 
-                <@ui.inputField id="sezione" label="Sezione" required=true placeholder="Classe" length="[1, 5]" value="${ragazzo.sezione}"/>
+                <div class="form-group">
+                    <label for="noteAlimentari">Allergie o intolleranze alimentari o terapie in corso:</label>
+                    <textarea class="form-control" rows="5" id="noteAlimentari"
+                              name="noteAlimentari"><#if ragazzo.noteAlimentari??>${ragazzo.noteAlimentari}</#if></textarea>
+                </div>
 
-                <@ui.textareaField id="richieste" label="Eventuali richieste o proposte:" value=(ragazzo.richieste)!"" placeholder="Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili cercheranno di equilibrare le squadre anche in base a questa richiesta. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta, e di non richiedere cambiamenti, se non gravemente necessari."/>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="entrataAnticipata" name="entrataAnticipata"
+                           <#if ragazzo.entrataAnticipata>checked</#if>>
+                    <label class="form-check-label" for="entrataAnticipata"> Usufruisce dell'entrata
+                        anticipata? </label>
+                </div>
 
-                <@ui.textareaField id="noteAlimentari" label="Allergie o intolleranze alimentari o terapie in corso:" value=(ragazzo.noteAlimentari)!""/>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="mensa" name="mensa"
+                           <#if ragazzo.mensa>checked</#if>>
+                    <label class="form-check-label" for="mensa"> Usufruisce della mensa? </label>
+                </div>
 
-                <@ui.checkboxField id="entrataAnticipata" label="Usufruisce dell'entrata anticipata?" checked=ragazzo.entrataAnticipata labelClass="form-check-label"/>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="saNuotare" name="saNuotare"
+                           <#if ragazzo.saNuotare>checked</#if>>
+                    <label class="form-check-label" for="saNuotare"> Sa nuotare? </label>
+                </div>
 
-                <@ui.checkboxField id="mensa" label="Usufruisce della mensa?" checked=ragazzo.mensa labelClass="form-check-label"/>
-
-                <@ui.checkboxField id="saNuotare" label="Sa nuotare?" checked=ragazzo.saNuotare labelClass="form-check-label"/>
-
-                <@ui.checkboxField id="fratelloIscritto" label="Ha già un fratello/sorella iscritto/a al grest? <b class=\"text-danger\">Da selezionare solo dall'iscrizione del secondo ragazzo in poi!</b>" checked=ragazzo.fratelloIscritto labelClass="form-check-label"/>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="fratelloIscritto" name="fratelloIscritto"
+                           <#if ragazzo.fratelloIscritto>checked</#if>>
+                    <label class="form-check-label" for="fratelloIscritto"> Ha già un fratello/sorella
+                        iscritto/a al grest? <b class="text-danger">Da selezionare solo dall'iscrizione del
+                            secondo ragazzo in poi!</b></label>
+                </div>
 
                 <br/>
 
-                <@ui.submitButton label="Modifica l'iscrizione"/>
+                <div class="pt-3 form-group">
+                    <input class="form-control btn btn-primary" type="submit" value="Modifica l'iscrizione">
+                </div>
             </form>
 
             <#-- Annotazioni segreteria -->
@@ -58,5 +78,7 @@
                 <hr class="mt-4"/>
                 <@note.modificaAnnotazioni tipoIscritto="rag" id=ragazzo.id annotazioni=annotazioni/>
             </#if>
-</@ui.formPanel>
-</@ui.page>
+        </div>
+    </div>
+</div>
+<#include "../struct/footer.html.ftl">

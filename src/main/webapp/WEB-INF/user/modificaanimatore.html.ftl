@@ -1,7 +1,12 @@
+<#import "../struct/iscrizione.html.ftl" as iscrizione>
 <#import "../ammseg/annotazioni.html.ftl" as note>
 <#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=true>
-<@ui.formPanel title="Modifica l'iscrizione come animatore" containerClass="container mt-4 content" inlineTitle=true>
+<#include "../struct/header.html.ftl">
+<#include "../struct/navbar.html.ftl">
+<div class="container mt-4 content">
+    <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white vertical-center">
+        <div class="container">
+            <h5 class="title text-center">Modifica l'iscrizione come animatore</h5>
             <#if INVALIDMAIL??>
                 <@ui.avvisoMailNonValida/>
             </#if>
@@ -9,35 +14,42 @@
 
                 <input type="hidden" value="${animatore.id?c}" name="id"/>
 
-                <@ui.identityFields nome="${animatore.nome}" cognome="${animatore.cognome}" dataNascita="${dataNascita}" nomeFirst=true/>
+                <@iscrizione.anagraficaIscritto tipo="animatore" modifica=true iscritto=animatore dataNascita=dataNascita/>
 
-                <@ui.inputField id="codiceFiscale" label="Codice fiscale" required=true length="[16, 16]" value="${animatore.codiceFiscale}"/>
+                <div class="form-group">
+                    <label for="codiceFiscale"> Codice fiscale </label>
+                    <input class="form-control" type="text" required id="codiceFiscale" name="codiceFiscale"
+                           data-parsley-length="[16, 16]" value="${animatore.codiceFiscale}">
+                </div>
 
-                <@ui.presenzaField selected=animatore.presenza label="Presenza giornaliera al Grest" completo="Completo"/>
+                <@iscrizione.presenzaGiornaliera tipo="animatore" selezionata=animatore.presenza/>
 
-                <@ui.partecipazioneField calendari=calendari label="Periodo di partecipazione" editing=true lineBreak=true quoteTarget="" popupHeight=600/>
+                <@iscrizione.partecipazioneGrest tipo="animatore" calendari=calendari modifica=true/>
 
-                <@ui.selectField id="laboratorio" label="Laboratorio">
-                    <@ui.laboratorioOptions options=laboratori selected=animatore.laboratorio.id/>
-                </@ui.selectField>
+                <@iscrizione.laboratorioIscritto tipo="animatore" modifica=true iscritto=animatore laboratori=laboratori/>
 
-                <@ui.selectField id="parrocchia" label="Parrocchia di appartenenza">
-                    <@ui.parrocchiaOptions options=parrocchie selected=animatore.parrocchia.id/>
-                </@ui.selectField>
+                <@iscrizione.parrocchiaIscritto parrocchie=parrocchie selezionata=animatore.parrocchia.id/>
 
-                <@ui.selectField id="circolo" label="Circolo NOI di iscrizione" year=true yearIndent=32>
-                    <@ui.circoloOptions options=circoli selected=animatore.circolo.id beforeClose=" "/>
-                </@ui.selectField>
+                <@iscrizione.tesseramentoIscritto tipo="animatore" modifica=true iscritto=animatore circoli=circoli/>
 
-                <@ui.tesseraField label=" Numero tessera Circolo NOI " help="Inserire il numero di tessera del Circolo NOI se non si è iscritti al Circolo NOI di Balconi." value=(animatore.NTessera)![]/>
+                <div class="form-group">
+                    <label for="cellulare"> Numero di cellulare </label>
+                    <input class="form-control" data-parsley-type="digits" data-parsley-length="[10, 10]"
+                           required id="cellulare" name="cellulare" placeholder="Cellulare personale"
+                           value="${animatore.cellulare}">
+                </div>
 
-                <@ui.inputField id="cellulare" label="Numero di cellulare" type="" required=true placeholder="Cellulare personale" length="[10, 10]" value="${animatore.cellulare}" attributes={"data-parsley-type": "digits"}/>
+                <@iscrizione.fasciaEtaAnimatore selezionata=animatore.fasciaEtaRagazzi/>
 
-                <@ui.fasciaEtaField selected=animatore.fasciaEtaRagazzi/>
+                <div class="form-group">
+                    <label for="mail"> E-Mail personale </label>
+                    <input class="form-control" type="email" required id="mail" name="mail" placeholder="E-Mail"
+                           value="${animatore.mail}">
+                </div>
 
-                <@ui.inputField id="mail" label="E-Mail personale" type="email" required=true placeholder="E-Mail" value="${animatore.mail}"/>
-
-                <@ui.submitButton label="Modifica l'iscrizione"/>
+                <div class="pt-3 form-group">
+                    <input class="form-control btn btn-primary" type="submit" value="Modifica l'iscrizione">
+                </div>
 
             </form>
 
@@ -46,5 +58,7 @@
                 <hr class="mt-4"/>
                 <@note.modificaAnnotazioni tipoIscritto="an" id=animatore.id annotazioni=annotazioni/>
             </#if>
-</@ui.formPanel>
-</@ui.page>
+        </div>
+    </div>
+</div>
+<#include "../struct/footer.html.ftl">

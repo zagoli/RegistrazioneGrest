@@ -1,25 +1,87 @@
 <#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=false>
+<#include "../struct/header.html.ftl">
 <div class="container content" onclick="window.print();">
     <div class="mt-3">
         <p class="font-weight-bold text-uppercase text-center"> da consegnare alla segreteria del grest al momento
             dell'iscrizione </p>
     </div>
     <div class="shadow pt-2 pl-3 pr-3">
-        <@ui.identityRows person=ragazzo capitalize=false/>
-        <@ui.presenzaRow presenza=ragazzo.presenza label="Presenza giornaliera"/>
-        <@ui.displayRow label="Laboratorio"><p>${ragazzo.laboratorio.descrizione}</p></@ui.displayRow>
-        <@ui.parrocchiaCircoloRows person=ragazzo/>
-        <@ui.schoolRows person=ragazzo label="Classe e sezione" value=ragazzo.classe+ragazzo.sezione/>
-        <@ui.tesseraRow person=ragazzo/>
+        <@ui.anagraficaIscritto iscritto=ragazzo/>
+        <@ui.presenzaIscritto iscritto=ragazzo/>
+        <@ui.laboratorioIscritto iscritto=ragazzo/>
+        <@ui.appartenenzaIscritto iscritto=ragazzo/>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Scuola</strong>
+            </div>
+            <div class="col-sm">
+                <p>${ragazzo.scuola.descrizione+" - "+ragazzo.scuola.grado}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Classe e sezione</strong>
+            </div>
+            <div class="col-sm">
+                <p>${ragazzo.classe+ragazzo.sezione}</p>
+            </div>
+        </div>
+        <@ui.tesseraIscritto iscritto=ragazzo/>
 
         <@ui.presenzaSettimanale calendari=calendari/>
 
-        <@ui.noteRows person=ragazzo lowerCase=false/>
-        <@ui.yesNoRow label="Entrata anticipata" value=ragazzo.entrataAnticipata/>
-        <@ui.yesNoRow label="Usufruisce della mensa" value=ragazzo.mensa/>
-        <@ui.yesNoRow label="Sa nuotare" value=ragazzo.saNuotare/>
-        <@ui.yesNoRow label="Ha un'altro fratello/sorella iscritto/a" value=ragazzo.fratelloIscritto/>
+        <#if ragazzo.richieste??>
+            <div class="row">
+                <div class="col-sm">
+                    <strong>Richieste</strong>
+                </div>
+                <div class="col-sm">
+                    <p>${ragazzo.richieste}</p>
+                </div>
+            </div>
+        </#if>
+        <#if ragazzo.noteAlimentari??>
+            <div class="row">
+                <div class="col-sm">
+                    <strong>Note Alimentari</strong>
+                </div>
+                <div class="col-sm">
+                    <p>${ragazzo.noteAlimentari}</p>
+                </div>
+            </div>
+        </#if>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Entrata anticipata</strong>
+            </div>
+            <div class="col-sm">
+                <p><#if ragazzo.entrataAnticipata>Sì<#else>No</#if></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Usufruisce della mensa</strong>
+            </div>
+            <div class="col-sm">
+                <p><#if ragazzo.mensa>Sì<#else>No</#if></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Sa nuotare</strong>
+            </div>
+            <div class="col-sm">
+                <p><#if ragazzo.saNuotare>Sì<#else>No</#if></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Ha un'altro fratello/sorella iscritto/a</strong>
+            </div>
+            <div class="col-sm">
+                <p><#if ragazzo.fratelloIscritto>Sì<#else>No</#if></p>
+            </div>
+        </div>
         <div class="row">
             <div class="col-sm">
                 <strong>Quota d'iscrizione</strong> <br>
@@ -28,9 +90,30 @@
                 <strong>${quotaIscrizione}&euro;</strong>
             </div>
         </div>
-        <@ui.attivitaGenitore activities=attgen/>
+        <#if attgen?size != 0>
+            <hr>
+            <strong> Attività genitore </strong>
+            <#list attgen as attgen>
+                <div class="row">
+                    <div class="col-sm">
+                        <p>${attgen.descrizione}</p>
+                    </div>
+                </div>
+            </#list>
+        </#if>
     </div>
-    <@ui.parentSignature/>
+    <div class="mt-3 shadow pt-2 pl-3 pr-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id='priv'/>
+            <label for='priv' class="form-check-label">
+                I sottoscritti genitori acconsentono alle dichiarazioni presentate in fase di
+                registrazione, e dichiarano altresì che le informazioni inserite in fase di registrazione sono
+                veritiere.
+            </label>
+        </div>
+        <p class="text-center font-weight-light font-italic mb-4"> Firme di entrambi i genitori </p>
+        <hr class="pb-2 border-dark"/>
+    </div>
 </div>
 <script>window.print();</script>
-</@ui.page>
+<#include "../struct/footer.html.ftl">

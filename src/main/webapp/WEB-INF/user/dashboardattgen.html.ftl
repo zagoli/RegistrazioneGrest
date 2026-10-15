@@ -1,17 +1,20 @@
-<#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=true>
-<@ui.contentPanel panelClass="container shadow pt-2 pl-3 pr-3 pb-2 bg-white" responsive=false>
+<#include "../struct/header.html.ftl">
+<#include "../struct/navbar.html.ftl">
+<div class="container-fluid mt-5 content">
+    <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
         <#if attivita??>
             <h5 class="text-center mb-3">Collaboro alla buona riuscita del Grest nei seguenti modi</h5>
             <#assign count = 0>
             <div class="table-responsive">
                 <table class="table table-bordered">
-                    <@ui.tableHead columns=[
-                {"label": "#", "attributes": {"scope": "col", "style": "width: 2%;"}},
-                {"label": "Attività", "attributes": {"scope": "col"}},
-                {"label": "Data", "attributes": {"scope": "col"}},
-                {"label": "Elimina", "attributes": {"scope": "col", "style": "width: 2%;"}}
-            ]/>
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width: 2%;">#</th>
+                        <th scope="col">Attività</th>
+                        <th scope="col">Data</th>
+                        <th scope="col" style="width: 2%;">Elimina</th>
+                    </tr>
+                    </thead>
                     <tbody>
                     <#list attivita as att, dataid>
                         <#assign count = count + 1>
@@ -55,5 +58,6 @@
                 </div>
             </div>
         </form>
-</@ui.contentPanel>
-</@ui.page>
+    </div>
+</div>
+<#include "../struct/footer.html.ftl">

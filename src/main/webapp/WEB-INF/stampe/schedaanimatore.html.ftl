@@ -1,24 +1,58 @@
 <#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=false>
+<#include "../struct/header.html.ftl">
 <div class="container content" onclick="window.print();">
     <div class="mt-3">
         <p class="font-weight-bold text-uppercase text-center"> da consegnare al parroco </p>
     </div>
     <div class="shadow pt-2 pl-3 pr-3">
-        <@ui.identityRows person=animatore capitalize=false/>
-        <@ui.displayRow label="Codice fiscale"><p>${animatore.codiceFiscale}</p></@ui.displayRow>
-        <@ui.presenzaRow presenza=animatore.presenza label="Presenza giornaliera al Grest"/>
-        <@ui.displayRow label="Laboratorio"><p>${animatore.laboratorio.descrizione}</p></@ui.displayRow>
-        <@ui.displayRow label="Preferenza fascia d'età ragazzi"><p>
-                    <@ui.fasciaEtaDescription fascia=animatore.fasciaEtaRagazzi/>
-                </p></@ui.displayRow>
-        <@ui.parrocchiaCircoloRows person=animatore/>
-        <@ui.tesseraRow person=animatore/>
+        <@ui.anagraficaIscritto iscritto=animatore/>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Codice fiscale</strong>
+            </div>
+            <div class="col-sm">
+                <p>${animatore.codiceFiscale}</p>
+            </div>
+        </div>
+        <@ui.presenzaIscritto iscritto=animatore animatore=true/>
+        <@ui.laboratorioIscritto iscritto=animatore/>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Preferenza fascia d'età ragazzi</strong>
+            </div>
+            <div class="col-sm">
+                <p>
+                    <#if animatore.fasciaEtaRagazzi == "PIC">
+                        Piccoli
+                    <#elseif animatore.fasciaEtaRagazzi == "GRA">
+                        Grandi
+                    <#elseif animatore.fasciaEtaRagazzi == "TER">
+                        3 Media
+                    </#if>
+                </p>
+            </div>
+        </div>
+        <@ui.appartenenzaIscritto iscritto=animatore/>
+        <@ui.tesseraIscritto iscritto=animatore/>
 
         <@ui.presenzaSettimanale calendari=calendari/>
 
-        <@ui.displayRow label="E-mail"><p>${animatore.mail}</p></@ui.displayRow>
-        <@ui.displayRow label="Cellulare"><p>${animatore.cellulare}</p></@ui.displayRow>
+        <div class="row">
+            <div class="col-sm">
+                <strong>E-mail</strong>
+            </div>
+            <div class="col-sm">
+                <p>${animatore.mail}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Cellulare</strong>
+            </div>
+            <div class="col-sm">
+                <p>${animatore.cellulare}</p>
+            </div>
+        </div>
         <strong> Sono inoltre disponibile a:</strong>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio multimediale e amplificazione</label>
         <input type="checkbox"/><label class="ml-1 mr-1">servizio di manutenzione</label>
@@ -43,4 +77,4 @@
     </div>
 </div>
 <script>window.print();</script>
-</@ui.page>
+<#include "../struct/footer.html.ftl">

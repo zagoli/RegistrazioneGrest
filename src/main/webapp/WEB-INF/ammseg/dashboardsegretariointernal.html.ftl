@@ -1,38 +1,159 @@
-<#import "../struct/macros.html.ftl" as ui>
 <h5 class="text-center">Pagamenti</h5>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/GestisciPagamenti" label="GESTISCI PAGAMENTI RAGAZZI" rowClass="row" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/GestisciPagamentiTerzamedia" label="GESTISCI PAGAMENTI TERZA MEDIA" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
+<div class="row">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/GestisciPagamenti" class="btn btn-primary btn-block btn-lg"> GESTISCI PAGAMENTI
+            RAGAZZI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/GestisciPagamentiTerzamedia" class="btn btn-primary btn-block btn-lg"> GESTISCI
+            PAGAMENTI TERZA MEDIA </a>
+    </div>
+</div>
 <hr/>
 <h5 class="text-center">Visualizzazione iscritti</h5>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/VisualizzaIscritti?target=an" label="VISUALIZZA ANIMATORI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/VisualizzaIscritti?target=rag" label="VISUALIZZA RAGAZZI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/VisualizzaIscritti?target=ter" label="VISUALIZZA TERZAMEDIA" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/VisualizzaAttGen" label="VISUALIZZA COLLABORAZIONE GENITORI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/VisualizzaIscritti?target=an" class="btn btn-primary btn-block btn-lg">
+            VISUALIZZA ANIMATORI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/VisualizzaIscritti?target=rag" class="btn btn-primary btn-block btn-lg">
+            VISUALIZZA RAGAZZI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/VisualizzaIscritti?target=ter" class="btn btn-primary btn-block btn-lg">
+            VISUALIZZA TERZAMEDIA </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/VisualizzaAttGen" class="btn btn-primary btn-block btn-lg"> VISUALIZZA
+            COLLABORAZIONE GENITORI </a>
+    </div>
+</div>
 <hr/>
 <h5 class="text-center">Gestione squadre</h5>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Squadre?target=rag" label="IMPOSTA SQUADRE RAGAZZI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Squadre?target=an" label="IMPOSTA SQUADRE ANIMATORI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Squadre?target=ter" label="IMPOSTA SQUADRE TERZAMEDIA" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Squadre?target=rag" class="btn btn-primary btn-block btn-lg"> IMPOSTA SQUADRE
+            RAGAZZI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Squadre?target=an" class="btn btn-primary btn-block btn-lg"> IMPOSTA SQUADRE
+            ANIMATORI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Squadre?target=ter" class="btn btn-primary btn-block btn-lg"> IMPOSTA SQUADRE
+            TERZAMEDIA </a>
+    </div>
+</div>
 <hr/>
 <h5 class="text-center">Gestione laboratori</h5>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Laboratori?target=rag" label="IMPOSTA LABORATORI RAGAZZI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Laboratori?target=an" label="IMPOSTA LABORATORI ANIMATORI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Laboratori?target=ter" label="IMPOSTA LABORATORI TERZA MEDIA" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-primary btn-block btn-lg"/>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Laboratori?target=rag" class="btn btn-primary btn-block btn-lg"> IMPOSTA
+            LABORATORI RAGAZZI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Laboratori?target=an" class="btn btn-primary btn-block btn-lg"> IMPOSTA
+            LABORATORI ANIMATORI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Laboratori?target=ter" class="btn btn-primary btn-block btn-lg"> IMPOSTA
+            LABORATORI TERZA MEDIA </a>
+    </div>
+</div>
 <hr/>
 <#--stampe-->
 <h5 class="text-center">Stampe</h5>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Stampa?target=elesintrag" label="STAMPA ELENCO SINTESI RAGAZZI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-info btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Stampa?target=elesintan" label="STAMPA ELENCO SINTESI ANIMATORI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-info btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Stampa?target=elesintter" label="STAMPA ELENCO SINTESI RAGAZZI DI TERZA MEDIA" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-info btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Stampa?target=collaborazione" label="STAMPA ELENCO COLLABORAZIONE GENITORI" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-info btn-block btn-lg"/>
-<@ui.dashboardLink href="/RegistrazioneGrest/App/Stampa?target=anticipo" label="STAMPA ELENCO ENTRATA ANTICIPATA" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-info btn-block btn-lg"/>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Stampa?target=elesintrag" class="btn btn-info btn-block btn-lg">
+            STAMPA ELENCO SINTESI RAGAZZI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Stampa?target=elesintan" class="btn btn-info btn-block btn-lg">
+            STAMPA ELENCO SINTESI ANIMATORI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Stampa?target=elesintter" class="btn btn-info btn-block btn-lg">
+            STAMPA ELENCO SINTESI RAGAZZI DI TERZA MEDIA </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Stampa?target=collaborazione"
+           class="btn btn-info btn-block btn-lg"> STAMPA ELENCO COLLABORAZIONE GENITORI </a>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col">
+        <a href="/RegistrazioneGrest/App/Stampa?target=anticipo" class="btn btn-info btn-block btn-lg">
+            STAMPA ELENCO ENTRATA ANTICIPATA </a>
+    </div>
+</div>
 <p class="text-center mt-2"> Presenze animatori settimanali </p>
-<@ui.weeklyReportLinks settimane=settimane target="presgiornani"/>
+<div class="row mt-2">
+    <div class="col">
+        <div class="text-center">
+            <div class="btn-group btn-group-lg" role="group">
+                <#list settimane as set>
+                    <a href="/RegistrazioneGrest/App/Stampa?target=presgiornani&idSet=${set.idSettimana?c}"
+                       class="btn btn-info"> ${set.idSettimana?c} SETTIMANA </a>
+                </#list>
+            </div>
+        </div>
+    </div>
+</div>
 <p class="text-center mt-2"> Presenze mensa settimanali </p>
-<@ui.weeklyReportLinks settimane=settimane target="mensa"/>
+<div class="row mt-2">
+    <div class="col">
+        <div class="text-center">
+            <div class="btn-group btn-group-lg" role="group">
+                <#list settimane as set>
+                    <a href="/RegistrazioneGrest/App/Stampa?target=mensa&idSet=${set.idSettimana?c}"
+                       class="btn btn-info"> ${set.idSettimana?c} SETTIMANA </a>
+                </#list>
+            </div>
+        </div>
+    </div>
+</div>
 <p class="text-center mt-2"> Presenze squadre settimanali </p>
-<@ui.weeklyAccordion settimane=settimane accordionId="accordionPressetsqu" targetPrefix="pressetsqu" controlPrefix="pressetsqu"; set>
-<#--Devo dividere le squadre in due colonne: per prima cosa creo una variabile contatore-->
+<div id="accordionPressetsqu">
+    <#list settimane as set>
+    <div class="card">
+        <div class="card-header" id="headingpressetsqu${set.idSettimana?c}">
+            <h5 class="mb-0 text-center">
+                <button class="btn btn-link" data-toggle="collapse"
+                        data-target="#pressetsqu${set.idSettimana?c}" aria-expanded="false"
+                        aria-controls="pressetsqu${set.idSettimana?c}">
+                    Settimana dal ${set.daQuando} al ${set.AQuando}
+                </button>
+            </h5>
+        </div>
+        <div id="pressetsqu${set.idSettimana?c}" class="collapse"
+             aria-labelledby="headingpressetsqu${set.idSettimana?c}"
+             data-parent="#accordionPressetsqu">
+            <div class="card-body">
+                <#--Devo dividere le squadre in due colonne: per prima cosa creo una variabile contatore-->
                 <#assign cont = 0>
                 <#list squadre as sq>
                 <#--Salvo la colonna invece di ripeterla due volte-->
@@ -61,10 +182,37 @@
                 <#if cont%2 != 0>
             </div>
             </#if>
-</@ui.weeklyAccordion>
+        </div>
+    </div>
+</div>
+</#list>
+</div>
 <p class="text-center mt-2"> Schede laboratorio settimanali </p>
-<@ui.weeklyAccordion settimane=settimane accordionId="accordionPressetlab" targetPrefix="pressetlab" controlPrefix="spressetlab"; set>
-<#list laboratori as lab>
-                        <@ui.dashboardLink href="/RegistrazioneGrest/App/Stampa?target=pressetlab&idset=${set.idSettimana?c}&lab=${lab.id?c}" label="${lab.descrizione}" rowClass="row mt-2" columnClass="col" buttonClass="btn btn-block btn-lg btn-primary"/>
+<div id="accordionPressetlab">
+    <#list settimane as set>
+        <div class="card">
+            <div class="card-header" id="headingpressetlab${set.idSettimana?c}">
+                <h5 class="mb-0 text-center">
+                    <button class="btn btn-link" data-toggle="collapse"
+                            data-target="#pressetlab${set.idSettimana?c}" aria-expanded="false"
+                            aria-controls="spressetlab${set.idSettimana?c}">
+                        Settimana dal ${set.daQuando} al ${set.AQuando}
+                    </button>
+                </h5>
+            </div>
+            <div id="pressetlab${set.idSettimana?c}" class="collapse"
+                 aria-labelledby="headingpressetlab${set.idSettimana?c}" data-parent="#accordionPressetlab">
+                <div class="card-body">
+                    <#list laboratori as lab>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <a href="/RegistrazioneGrest/App/Stampa?target=pressetlab&idset=${set.idSettimana?c}&lab=${lab.id?c}"
+                                   class="btn btn-block btn-lg btn-primary"> ${lab.descrizione} </a>
+                            </div>
+                        </div>
                     </#list>
-</@ui.weeklyAccordion>
+                </div>
+            </div>
+        </div>
+    </#list>
+</div>

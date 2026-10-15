@@ -1,14 +1,17 @@
-<#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=true>
-<@ui.contentPanel panelClass="container shadow pt-2 pl-3 pr-3 pb-2 bg-white" responsive=false>
+<#include "../struct/header.html.ftl">
+<#include "../struct/navbar.html.ftl">
+<div class="container-fluid mt-5 content">
+    <div class="container shadow pt-2 pl-3 pr-3 pb-2 bg-white">
         <#--AMMINISTRATORI-->
         <h5 class="text-center pb-1"> Amministratori registrati </h5>
         <table class="table table-bordered">
-            <@ui.tableHead columns=[
-                {"label": "Nome", "attributes": {"scope": "col"}},
-                {"label": "Cognome", "attributes": {"scope": "col"}},
-                {"label": "Mail", "attributes": {"scope": "col"}}
-            ]/>
+            <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Cognome</th>
+                <th scope="col">Mail</th>
+            </tr>
+            </thead>
             <tbody>
             <#list amministratori as amm>
                 <tr>
@@ -24,14 +27,16 @@
             <h5 class="text-center pb-1"> Segretari registrati </h5>
             <#assign count = 0>
             <table class="table table-bordered">
-                <@ui.tableHead columns=[
-                {"label": "#", "attributes": {"scope": "col", "style": "width: 2%;"}},
-                {"label": "Nome", "attributes": {"scope": "col"}},
-                {"label": "Cognome", "attributes": {"scope": "col"}},
-                {"label": "Mail", "attributes": {"scope": "col"}},
-                {"label": "Modifica", "attributes": {"scope": "col"}},
-                {"label": "Elimina", "attributes": {"scope": "col", "style": "width: 2%;"}}
-            ]/>
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 2%;">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Cognome</th>
+                    <th scope="col">Mail</th>
+                    <th scope="col">Modifica</th>
+                    <th scope="col" style="width: 2%;">Elimina</th>
+                </tr>
+                </thead>
                 <tbody>
                 <#list segretari as seg>
                     <#assign count = count + 1>
@@ -53,8 +58,15 @@
         <h5>Modifica permessi utente</h5>
         <form action="/RegistrazioneGrest/App/GestisciSegretari" class="form-inline">
             <input type="hidden" name="changeUserType"/>
-            <@ui.inputField id="nome" label="Nome" labelClass="sr-only" groupClass="form-group m-2" placeholder="Nome" required=true/>
-            <@ui.inputField id="cognome" label="Cognome" labelClass="sr-only" groupClass="form-group m-2" inputClass="form-control ml-2" placeholder="Cognome" required=true/>
+            <div class="form-group m-2">
+                <label for="nome" class="sr-only">Nome</label>
+                <input type="text" placeholder="Nome" name="nome" id="nome" class="form-control" required/>
+            </div>
+            <div class="form-group m-2">
+                <label for="cognome" class="sr-only">Cognome</label>
+                <input type="text" placeholder="Cognome" name="cognome" id="cognome" class="form-control ml-2"
+                       required/>
+            </div>
             <div class="form-group m-2">
                 <label for="level" class="sr-only">Tipo di utente</label>
                 <select class="form-control ml-2" id="level" name="level">
@@ -66,5 +78,6 @@
             </div>
             <input type="submit" class="btn btn-primary m-2" value="Modifica"/>
         </form>
-</@ui.contentPanel>
-</@ui.page>
+    </div>
+</div>
+<#include "../struct/footer.html.ftl">

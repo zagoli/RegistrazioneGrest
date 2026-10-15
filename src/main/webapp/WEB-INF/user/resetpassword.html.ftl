@@ -1,5 +1,5 @@
-<#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=true>
+<#include "../struct/header.html.ftl">
+<#include "../struct/navbar.html.ftl">
 <div class="container content">
     <div class="row mt-5">
         <div class="container">
@@ -20,8 +20,16 @@
                         <p> Utente non trovato! Controlla che l'email sia corretta </p>
                     </#if>
                     <form action="/RegistrazioneGrest/App/Login?reset" method="POST" data-parsley-validate>
-                        <@ui.inputField id="mail" labelFor="pswd" label="Inserisci l'e-mail con cui ti sei registrato" name="mailtoreset" type="email" required=true placeholder="Inserisci la tua e-mail"/>
-                        <@ui.inputField id="confmail" labelFor="confpswd" label="Conferma la tua e-mail" name="mailtoreset" type="email" required=true placeholder="Conferma a tua e-mail" attributes={"data-parsley-equalto": "#mail"}/>
+                        <div class="form-group">
+                            <label for="pswd"> Inserisci l'e-mail con cui ti sei registrato</label>
+                            <input class="form-control" type="email" required id="mail" name="mailtoreset"
+                                   placeholder="Inserisci la tua e-mail">
+                        </div>
+                        <div class="form-group">
+                            <label for="confpswd"> Conferma la tua e-mail </label>
+                            <input class="form-control" type="email" required id="confmail" name="mailtoreset"
+                                   placeholder="Conferma a tua e-mail" data-parsley-equalto="#mail">
+                        </div>
                         <input class="form-control btn btn-primary" type="submit" value="Conferma">
                     </form>
                 </div>
@@ -29,4 +37,4 @@
         </div>
     </div>
 </div>
-</@ui.page>
+<#include "../struct/footer.html.ftl">

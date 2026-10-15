@@ -1,11 +1,28 @@
-<#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=true>
-<@ui.contactFormPanel title="Modifica password" titleClass="title pb-1 text-center">
-<form action="/RegistrazioneGrest/App/ModificaPassword" method="POST" name="formLogin"
+<#include "../struct/header.html.ftl">
+<#include "../struct/navbar.html.ftl">
+<div class="container content">
+    <div class="mt-5">
+        <div class="shadow pt-2 pl-3 pr-3 pb-2 bg-white">
+            <div class="title pb-1 text-center">
+                <h4>Modifica password</h4>
+            </div>
+            <form action="/RegistrazioneGrest/App/ModificaPassword" method="POST" name="formLogin"
                   data-parsley-validate>
-                <@ui.inputField id="pswd" label="Nuova password" type="password" name="password" required=true placeholder="Password" length="[6, 100]"/>
-                <@ui.inputField id="confpswd" label="Conferma la password" type="password" name="password" required=true placeholder="Password" attributes={"data-parsley-equalto": "#pswd"}/>
-                <@ui.submitButton label="Cambia la password"/>
+                <div class="form-group">
+                    <label for="pswd"> Nuova password </label>
+                    <input class="form-control" type="password" required id="pswd" name="password"
+                           placeholder="Password" data-parsley-length="[6, 100]">
+                </div>
+                <div class="form-group">
+                    <label for="confpswd"> Conferma la password </label>
+                    <input class="form-control" type="password" required id="confpswd" name="password"
+                           placeholder="Password" data-parsley-equalto="#pswd">
+                </div>
+                <div class="pt-3 form-group">
+                    <input class="form-control btn btn-primary" type="submit" value="Cambia la password">
+                </div>
             </form>
-</@ui.contactFormPanel>
-</@ui.page>
+        </div>
+    </div>
+</div>
+<#include "../struct/footer.html.ftl">

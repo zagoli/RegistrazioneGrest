@@ -107,7 +107,22 @@ del setup dell'utente.
 
 Tutti i percorsi sotto sono relativi a `src\main\webapp\WEB-INF`.
 I nomi delle pagine riportati senza estensione terminano tutti in `.html.ftl`.
-Sono stati modificati 58 template di pagina/frammento e la libreria di macro.
+La revisione FreeMarker mantiene espliciti HTML, checkbox, input, intestazioni
+di tabella, layout e script di pagina. Non ci sono macro generiche per queste
+strutture.
+
+`struct\macros.html.ftl` contiene soltanto sezioni applicative di visualizzazione
+(anagrafica e dati comuni di Iscritto, presenze, contatti, accompagnatori e
+registrato). `struct\iscrizione.html.ftl` condivide le sezioni applicative dei
+sei form degli iscritti e i dati account tra registrazione e modifica.
+Le due pagine di ogni coppia restano distinte: conservano ordine dei campi,
+testi, consensi, submit, sblocco e annotazioni propri di ciascun flusso.
+I controller e il refactoring Java non sono cambiati in questa revisione.
+
+Rispetto al precedente refactoring, sono stati rivisti i 58 template di
+pagina/frammento sotto elencati e la libreria di visualizzazione; si aggiunge
+la libreria dei form. Nelle pagine accessorie viene semplicemente rimosso
+il precedente livello di astrazione HTML, mantenendo l'output.
 
 | Cartella | Pagine e frammenti modificati |
 |---|---|
@@ -116,7 +131,7 @@ Sono stati modificati 58 template di pagina/frammento e la libreria di macro.
 | `err` | `403`, `404`, `errore`, `profilodisabilitato` |
 | `stampe` | `anticipo`, `collaborazione`, `elesintan`, `elesintrag`, `elesintter`, `mensa`, `presgiornani`, `pressetlab`, `pressetsqu`, `schedaanimatore`, `schedaragazzo`, `schedaterzamedia` |
 | `user` | `dashboardattgen`, `dashboardutente`, `login`, `modificaanimatore`, `modificapassword`, `modificaragazzo`, `modificaterzamedia`, `modificautente`, `quoteragazzi`, `quoteterzamedia`, `registraanimatore`, `registraragazzo`, `registraterzamedia`, `registrautente`, `resetpassword` |
-| `struct` | `macros.html.ftl`: libreria condivisa, verificata attraverso le pagine chiamanti |
+| `struct` | `macros.html.ftl`, `iscrizione.html.ftl`: sezioni applicative condivise, verificate attraverso le pagine chiamanti |
 
 Non modificati: `ammseg\annotazioni.html.ftl`, i due template JSON, il
 frammento `user\sbloccoiscrizione.html.ftl` e header/navbar/footer in `struct`.

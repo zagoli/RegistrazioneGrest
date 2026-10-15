@@ -22,7 +22,12 @@ class OptionalClearedRenderingTest {
                 "ammseg/dettaglioanimatore.html.ftl", "ammseg/visualizzaragazzi.html.ftl",
                 "ammseg/visualizzaterzamedia.html.ftl", "ammseg/visualizzaanimatori.html.ftl",
                 "stampe/schedaragazzo.html.ftl", "stampe/schedaterzamedia.html.ftl",
-                "stampe/schedaanimatore.html.ftl");
+                "stampe/schedaanimatore.html.ftl",
+                "user/registraragazzo.html.ftl", "user/modificaragazzo.html.ftl",
+                "user/registraterzamedia.html.ftl", "user/modificaterzamedia.html.ftl",
+                "user/modificaanimatore.html.ftl",
+                "stampe/anticipo.html.ftl", "stampe/mensa.html.ftl",
+                "stampe/elesintrag.html.ftl", "stampe/elesintter.html.ftl");
         return templates.stream().map(path -> DynamicTest.dynamicTest(path, () -> {
             Map<String, Object> model = TemplateRegressionTest.model(path, "complete-C");
             clearOptionalValues(model);

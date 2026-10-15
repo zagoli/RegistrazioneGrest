@@ -1,39 +1,141 @@
 <#import "annotazioni.html.ftl" as note>
 <#import "../struct/macros.html.ftl" as ui>
-<@ui.page navbar=false>
+<#include "../struct/header.html.ftl">
 <div class="container mt-3 content">
     <div class="shadow py-2 pl-3 pr-3 bg-white">
-        <@ui.displayRow label="Id Ragazzo"><p>${ragazzo.id?c}</p></@ui.displayRow>
-        <@ui.identityRows person=ragazzo capitalize=true/>
-        <@ui.presenzaRow presenza=ragazzo.presenza label="Presenza giornaliera"/>
-        <@ui.displayRow label="Laboratorio"><p>${ragazzo.laboratorio.descrizione}</p></@ui.displayRow>
-        <@ui.parrocchiaCircoloRows person=ragazzo/>
-        <@ui.schoolRows person=ragazzo label="Classe e sezione" value=ragazzo.classe+ragazzo.sezione/>
-        <@ui.tesseraRow person=ragazzo/>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Id Ragazzo</strong>
+            </div>
+            <div class="col-sm">
+                <p>${ragazzo.id?c}</p>
+            </div>
+        </div>
+        <@ui.anagraficaIscritto iscritto=ragazzo capitalize=true/>
+        <@ui.presenzaIscritto iscritto=ragazzo/>
+        <@ui.laboratorioIscritto iscritto=ragazzo/>
+        <@ui.appartenenzaIscritto iscritto=ragazzo/>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Scuola</strong>
+            </div>
+            <div class="col-sm">
+                <p>${ragazzo.scuola.descrizione+" - "+ragazzo.scuola.grado}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Classe e sezione</strong>
+            </div>
+            <div class="col-sm">
+                <p>${ragazzo.classe+ragazzo.sezione}</p>
+            </div>
+        </div>
+        <@ui.tesseraIscritto iscritto=ragazzo/>
 
         <@ui.presenzaSettimanale calendari=calendari/>
 
-        <@ui.noteRows person=ragazzo lowerCase=true/>
-        <#if ragazzo.squadra.id!=0>
-            <@ui.displayRow label="Squadra"><p>${ragazzo.squadra.nome}</p></@ui.displayRow>
+        <#if ragazzo.richieste??>
+            <div class="row">
+                <div class="col-sm">
+                    <strong>Richieste</strong>
+                </div>
+                <div class="col-sm">
+                    <p>${ragazzo.richieste?lower_case}</p>
+                </div>
+            </div>
         </#if>
-        <@ui.yesNoRow label="Entrata anticipata" value=ragazzo.entrataAnticipata/>
-        <@ui.yesNoRow label="Usufruisce della mensa" value=ragazzo.mensa/>
-        <@ui.yesNoRow label="Sa nuotare" value=ragazzo.saNuotare/>
-        <@ui.displayRow label="Ha un'altro fratello/sorella iscritto/a"><span><#if ragazzo.fratelloIscritto>Sì<#else>No</#if>
+        <#if ragazzo.noteAlimentari??>
+            <div class="row">
+                <div class="col-sm">
+                    <strong>Note Alimentari</strong>
+                </div>
+                <div class="col-sm">
+                    <p>${ragazzo.noteAlimentari?lower_case}</p>
+                </div>
+            </div>
+        </#if>
+        <#if ragazzo.squadra.id!=0>
+            <div class="row">
+                <div class="col-sm">
+                    <strong>Squadra</strong>
+                </div>
+                <div class="col-sm">
+                    <p>${ragazzo.squadra.nome}</p>
+                </div>
+            </div>
+        </#if>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Entrata anticipata</strong>
+            </div>
+            <div class="col-sm">
+                <p><#if ragazzo.entrataAnticipata>Sì<#else>No</#if></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Usufruisce della mensa</strong>
+            </div>
+            <div class="col-sm">
+                <p><#if ragazzo.mensa>Sì<#else>No</#if></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Sa nuotare</strong>
+            </div>
+            <div class="col-sm">
+                <p><#if ragazzo.saNuotare>Sì<#else>No</#if></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <strong>Ha un'altro fratello/sorella iscritto/a</strong>
+            </div>
+            <div class="col-sm">
+                <span><#if ragazzo.fratelloIscritto>Sì<#else>No</#if>
                     <#if altroFratelloNonTrovato>
                         <img src="../img/octicons/alert.svg" alt="attenzione"
                              title="Non sono stati trovati altri ragazzi iscritti dallo stesso utente.">
                     </#if>
-                    </span></@ui.displayRow>
+                    </span>
+            </div>
+        </div>
         <#if pagamento??>
-            <@ui.paymentDetails pagamento=pagamento/>
+            <div class="row">
+                <div class="col-sm">
+                    <strong>Quota pagamento</strong>
+                </div>
+                <div class="col-sm">
+                    <p>${pagamento.quota}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <strong>Evaso da</strong>
+                </div>
+                <div class="col-sm">
+                    <p>${pagamento.registrato.nome+" "+pagamento.registrato.cognome}</p>
+                </div>
+            </div>
         </#if>
     </div>
 
-    <@ui.detailContacts registrato=ragazzo.registrato contatti=(cu)!false accompagnatori=(accompagnatori)!false attgen=attgen/>
+    <#--contatti urgenze-->
+    <#if cu??>
+        <@ui.contattiUrgenze contatti=cu/>
+    </#if>
+
+    <#--accompagnatori-->
+    <#if accompagnatori??>
+        <@ui.accompagnatoriAutorizzati accompagnatori=accompagnatori/>
+    </#if>
+
+    <#--info registrato-->
+    <@ui.informazioniRegistrato registrato=ragazzo.registrato attgen=attgen/>
 
     <#-- Annotazioni segreteria -->
     <@note.pannelloInfoDettaglio annotazioni=annotazioni/>
 </div>
-</@ui.page>
+<#include "../struct/footer.html.ftl">
