@@ -1,5 +1,7 @@
 package DAOManager;
 
+import DAOManager.Mappers.IscrittoDAOMapper;
+
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 import regression.Baseline;
@@ -38,9 +40,9 @@ public class JdbcRowRegressionTest {
                                 };
                             });
                     Object mapped = switch (kind) {
-                        case "ragazzo" -> RagazzoDAOImpl.mapRowToRagazzo(rs);
-                        case "terzamedia" -> TerzamediaDAOImpl.mapRowToTerzamedia(rs);
-                        default -> AnimatoreDAOImpl.mapRowToAnimatore(rs);
+                        case "ragazzo" -> IscrittoDAOMapper.mapRowToRagazzo(rs);
+                        case "terzamedia" -> IscrittoDAOMapper.mapRowToTerzamedia(rs);
+                        default -> IscrittoDAOMapper.mapRowToAnimatore(rs);
                     };
                     Baseline.verify("jdbc/" + kind + "-" + nullable, DomainRegressionTest.describe(mapped));
                 })));

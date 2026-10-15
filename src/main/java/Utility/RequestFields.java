@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.function.Consumer;
 
 public final class RequestFields {
+
     private RequestFields() {
     }
 

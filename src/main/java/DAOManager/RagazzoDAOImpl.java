@@ -1,6 +1,9 @@
 package DAOManager;
 
+import DAOManager.Mappers.IscrittoDAOMapper;
+import DAOManager.Mappers.PagamentoDAOMapper;
 import Domain.*;
+import Utility.DAOUtils;
 
 import java.sql.*;
 import java.util.List;
@@ -68,24 +71,6 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     private static final String COUNT_SETTIMANALE = "select pr.Calendario_idSettimana, count(*) from presenzaRag pr group by pr.Calendario_idSettimana;";
     // </editor-fold>
 
-    static PagamentoRiepilogo mapRowToPagamentoRiepilogo(ResultSet rs) throws SQLException {
-        return PagamentoDAOMapper.riepilogo(rs);
-    }
-
-    static Ragazzo mapRowToRagazzo(ResultSet rs) throws SQLException {
-        Ragazzo ragazzo = IscrittoDAOMapper.commonFields(rs, new Ragazzo(), "ra", "ranTessera");
-        ragazzo.setEntrataAnticipata(rs.getBoolean("raentrataAnticipata"));
-        ragazzo.setRichieste(rs.getString("rarichieste"));
-        ragazzo.setNoteAlimentari(rs.getString("ranoteAlimentari"));
-        ragazzo.setMensa(rs.getBoolean("ramensa"));
-        ragazzo.setSaNuotare(rs.getBoolean("rasaNuotare"));
-        ragazzo.setFratelloIscritto(rs.getBoolean("rafratelloIscritto"));
-        ragazzo.setScuola(IscrittoDAOMapper.scuola(rs));
-        ragazzo.setSezione(rs.getString("rasezione"));
-        ragazzo.setClasse(rs.getString("raclasse"));
-        return ragazzo;
-    }
-
     static void bindRagazzo(PreparedStatement pst, Ragazzo r) throws SQLException {
         IscrittoDAOMapper.bindCommonFields(pst, r);
         pst.setBoolean(9, r.getEntrataAnticipata());
@@ -106,7 +91,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
              PreparedStatement pst = con.prepareStatement(INSERT_RAGAZZO, Statement.RETURN_GENERATED_KEYS)) {
             bindRagazzo(pst, r);
             pst.executeUpdate();
-            DAORows.assignGeneratedId(pst, r::setId);
+            DAOUtils.idGeneratoFromResultSet(pst, r::setId);
         }
     }
 
@@ -122,12 +107,22 @@ public class RagazzoDAOImpl implements RagazzoDAO {
 
     @Override
     public void updateSquadra(int id, Integer idSquadra) throws SQLException {
-        RelazioneDAOOperations.updateSquadra(UPDATE_SQUADRA_RAGAZZO, id, idSquadra);
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_RAGAZZO)) {
+            IscrittoDAOMapper.bindSquadra(pst, idSquadra);
+            pst.setInt(2, id);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void updateLaboratorio(int id, int idLaboratorio) throws SQLException {
-        RelazioneDAOOperations.updateIds(UPDATE_LABORATORIO_RAGAZZO, idLaboratorio, id);
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_LABORATORIO_RAGAZZO)) {
+            pst.setInt(1, idLaboratorio);
+            pst.setInt(2, id);
+            pst.executeUpdate();
+        }
     }
 
     @Override
@@ -145,7 +140,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
              PreparedStatement pst = con.prepareStatement(FIND_RAGAZZO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? mapRowToRagazzo(rs) : null;
+                return rs.next() ? IscrittoDAOMapper.mapRowToRagazzo(rs) : null;
             }
         }
     }
@@ -155,7 +150,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_RAGAZZO);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, RagazzoDAOImpl::mapRowToRagazzo);
+            return DAOUtils.resultSetToList(rs, IscrittoDAOMapper::mapRowToRagazzo);
         }
     }
 
@@ -164,7 +159,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_ISCRITTO_CON_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, row -> {
+            return DAOUtils.resultSetToList(rs, row -> {
                 int id = row.getInt("raid");
                 RagazzoPagamento iscritto = new RagazzoPagamento(
                         id, row.getString("ranome"), row.getString("racognome"), row.getString("relocalita"),
@@ -180,8 +175,8 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, row ->
-                    new DatiPagamento<>(PagamentoDAOMapper.riepilogo(row), mapRowToRagazzo(row)));
+            return DAOUtils.resultSetToList(rs, row ->
+                    new DatiPagamento<>(PagamentoDAOMapper.riepilogo(row), IscrittoDAOMapper.mapRowToRagazzo(row)));
         }
     }
 
@@ -226,7 +221,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
              PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, RagazzoDAOImpl::mapRowToRagazzo);
+                return DAOUtils.resultSetToList(rs, IscrittoDAOMapper::mapRowToRagazzo);
             }
         }
     }
@@ -260,7 +255,7 @@ public class RagazzoDAOImpl implements RagazzoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(query);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.weeklyCounts(rs);
+            return DAOUtils.contaSettimanaleFromResultSet(rs);
         }
     }
 

@@ -1,5 +1,7 @@
 package Controller;
 
+import Controller.Utils.InfoDettaglioUtils;
+import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
 import Domain.*;
 import Response.FreemarkerTemplate;
@@ -30,10 +32,11 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Ragazzo r = DAOMan.ragazzoDAO.findById(id);
                     template.addObject("ragazzo", r);
                     int idRegistrato = r.getRegistrato().getId();
-                    DettaglioSupport.contacts(template, idRegistrato, true);
-                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                    InfoDettaglioUtils.popolaCu(template, idRegistrato);
+                    InfoDettaglioUtils.popolaAccompagnatori(template, idRegistrato);
+                    List<Calendario> listCalendario = PresenzeUtils.calendars(
                             DAOMan.relPresenzaRagDAO.findByRagazzoId(id), RelPresenzaRag::getCalendarioId);
-                    DettaglioSupport.activities(template, idRegistrato, false);
+                    template.addObject("attgen", DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato));
                     template.addObject("calendari", listCalendario);
                     Pagamento pagamento = DAOMan.pagamentoDAO.findByRagazzoId(id);
                     template.addObject("pagamento", pagamento);
@@ -47,10 +50,10 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
                     template.addObject("terzamedia", t);
                     int idRegistrato = t.getRegistrato().getId();
-                    DettaglioSupport.contacts(template, idRegistrato, false);
-                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                    InfoDettaglioUtils.popolaCu(template, idRegistrato);
+                    List<Calendario> listCalendario = PresenzeUtils.calendars(
                             DAOMan.relPresenzaTerDAO.findByTerzamediaId(id), RelPresenzaTer::getCalendarioId);
-                    DettaglioSupport.activities(template, idRegistrato, false);
+                    template.addObject("attgen", DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato));
                     template.addObject("calendari", listCalendario);
                     PagamentoTerzamedia pt = DAOMan.pagamentoTerzamediaDAO.findByTerzamediaId(id);
                     template.addObject("pagamento", pt);
@@ -63,8 +66,9 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Animatore a = DAOMan.animatoreDAO.findById(id);
                     template.addObject("animatore", a);
                     int idRegistrato = a.getRegistrato().getId();
-                    DettaglioSupport.contacts(template, idRegistrato, true);
-                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                    InfoDettaglioUtils.popolaCu(template, idRegistrato);
+                    InfoDettaglioUtils.popolaAccompagnatori(template, idRegistrato);
+                    List<Calendario> listCalendario = PresenzeUtils.calendars(
                             DAOMan.relPresenzaAnDAO.findByAnimatoreId(id), RelPresenzaAn::getCalendarioId);
                     template.addObject("calendari", listCalendario);
                     List<AnnotazioneSegreteria> annotazioni = DAOMan.annotazioneSegreteriaDAO.findByAnimatoreId(id);
@@ -76,10 +80,11 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Ragazzo r = DAOMan.ragazzoDAO.findById(id);
                     template.addObject("ragazzo", r);
                     int idRegistrato = r.getRegistrato().getId();
-                    DettaglioSupport.contacts(template, idRegistrato, true);
-                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                    InfoDettaglioUtils.popolaCu(template, idRegistrato);
+                    InfoDettaglioUtils.popolaAccompagnatori(template, idRegistrato);
+                    List<Calendario> listCalendario = PresenzeUtils.calendars(
                             DAOMan.relPresenzaRagDAO.findByRagazzoId(id), RelPresenzaRag::getCalendarioId);
-                    DettaglioSupport.activities(template, idRegistrato, true);
+                    template.addObject("attgen", DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato));
                     template.addObject("calendari", listCalendario);
                     template.addObject("quotaIscrizione", ControllerPagamentiRagazzi.calcolaQuota(r));
                     template.setView("stampe/schedaragazzo.html");
@@ -89,10 +94,10 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
                     template.addObject("terzamedia", t);
                     int idRegistrato = t.getRegistrato().getId();
-                    DettaglioSupport.contacts(template, idRegistrato, false);
-                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                    InfoDettaglioUtils.popolaCu(template, idRegistrato);
+                    List<Calendario> listCalendario = PresenzeUtils.calendars(
                             DAOMan.relPresenzaTerDAO.findByTerzamediaId(id), RelPresenzaTer::getCalendarioId);
-                    DettaglioSupport.activities(template, idRegistrato, true);
+                    template.addObject("attgen", DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato));
                     template.addObject("calendari", listCalendario);
                     template.addObject("quotaIscrizione", ControllerPagamentiTerzamedia.calcolaQuota(t));
                     template.setView("stampe/schedaterzamedia.html");
@@ -102,8 +107,8 @@ public class ControllerInfoDettaglio implements ControllerInterface {
                     Animatore a = DAOMan.animatoreDAO.findById(id);
                     template.addObject("animatore", a);
                     int idRegistrato = a.getRegistrato().getId();
-                    DettaglioSupport.contacts(template, idRegistrato, false);
-                    List<Calendario> listCalendario = PresenzeSupport.calendars(
+                    InfoDettaglioUtils.popolaCu(template, idRegistrato);
+                    List<Calendario> listCalendario = PresenzeUtils.calendars(
                             DAOMan.relPresenzaAnDAO.findByAnimatoreId(id), RelPresenzaAn::getCalendarioId);
                     template.addObject("calendari", listCalendario);
                     template.setView("stampe/schedaanimatore.html");

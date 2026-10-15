@@ -1,6 +1,8 @@
 package DAOManager;
 
+import DAOManager.Mappers.PagamentoDAOMapper;
 import Domain.PagamentoTerzamedia;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,7 +55,7 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToPagamentoTerzamedia);
+            return DAOUtils.resultSetToList(rs, PagamentoDAOMapper::mapRowToPagamentoTerzamedia);
         }
     }
 
@@ -63,23 +65,9 @@ public class PagamentoTerzamediaDAOImpl implements PagamentoTerzamediaDAO {
              PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_TERZAMEDIA_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? this.mapRowToPagamentoTerzamedia(rs) : null;
+                return rs.next() ? PagamentoDAOMapper.mapRowToPagamentoTerzamedia(rs) : null;
             }
         }
     }
 
-    public PagamentoTerzamedia mapRowToPagamentoTerzamedia(ResultSet rs) throws SQLException {
-        return mapRowToPagamentoTerzamedia(rs, "re");
-    }
-
-    public PagamentoTerzamedia mapRowToPagamentoTerzamedia(ResultSet rs, String registratoPrefix) throws SQLException {
-        return new PagamentoTerzamedia(
-                rs.getInt("pid"),
-                rs.getDate("pdata"),
-                rs.getFloat("pquota"),
-                rs.getInt("pterid"),
-                IscrittoDAOMapper.registrato(rs, registratoPrefix),
-                rs.getInt("pordineArrivo")
-        );
-    }
 }

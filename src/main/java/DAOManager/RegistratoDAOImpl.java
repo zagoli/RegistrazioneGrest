@@ -1,6 +1,9 @@
 package DAOManager;
 
+import DAOManager.Mappers.RegistratoDAOMapper;
+
 import Domain.Registrato;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -68,7 +71,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
              PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? this.mapRowToRegistrato(rs) : null;
+                return rs.next() ? RegistratoDAOMapper.registrato(rs, "") : null;
             }
         }
     }
@@ -78,7 +81,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_REGISTRATO);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToRegistrato);
+            return DAOUtils.resultSetToList(rs, row -> RegistratoDAOMapper.registrato(row, ""));
         }
     }
 
@@ -87,7 +90,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_SEGRETARI);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToRegistrato);
+            return DAOUtils.resultSetToList(rs, row -> RegistratoDAOMapper.registrato(row, ""));
         }
     }
 
@@ -96,7 +99,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_AMMINISTRATORI);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToRegistrato);
+            return DAOUtils.resultSetToList(rs, row -> RegistratoDAOMapper.registrato(row, ""));
         }
     }
 
@@ -116,7 +119,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
              PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_MAIL)) {
             pst.setString(1, mail);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? this.mapRowToRegistrato(rs) : null;
+                return rs.next() ? RegistratoDAOMapper.registrato(rs, "") : null;
             }
         }
     }
@@ -128,7 +131,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
             pst.setString(1, nome);
             pst.setString(2, cognome);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? this.mapRowToRegistrato(rs) : null;
+                return rs.next() ? RegistratoDAOMapper.registrato(rs, "") : null;
             }
         }
     }
@@ -141,10 +144,6 @@ public class RegistratoDAOImpl implements RegistratoDAO {
             pst.setInt(2, r.getId());
             pst.executeUpdate();
         }
-    }
-
-    public Registrato mapRowToRegistrato(ResultSet rs) throws SQLException {
-        return IscrittoDAOMapper.registrato(rs, "");
     }
 
 }

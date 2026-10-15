@@ -1,5 +1,7 @@
 package Controller;
 
+import Controller.Utils.IscrizioniUtils;
+import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
 import Domain.*;
 import Response.FreemarkerTemplate;
@@ -28,18 +30,21 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
             template.addObject("TITOLOPAGINA", "Registra Animatore");
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Animatore animatore = new Animatore();
-                IscrizioneSupport.readIscritto(request, animatore);
+                IscrizioniUtils.populateIscrittoFromRequest(request, animatore);
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
                 animatore.setRegistrato(DAOMan.registratoDAO.findById(idUtente));
                 RequestFields.animatore(request, animatore);
                 DAOMan.animatoreDAO.insert(animatore);
-                PresenzeSupport.insert(request, calId -> new RelPresenzaAn(animatore.getId(), calId),
+                PresenzeUtils.insert(request, calId -> new RelPresenzaAn(animatore.getId(), calId),
                         DAOMan.relPresenzaAnDAO::insert);
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
                 template.setView("user/registraanimatore.html");
                 //preparo i dati necessari per l'iscrizione
-                IscrizioneSupport.catalogs(template, DAOMan.laboratorioDAO.findAll(), false);
+                List<Laboratorio> laboratori = DAOMan.laboratorioDAO.findAll();
+                template.addObject("laboratori", laboratori);
+                template.addObject("parrocchie", DAOMan.parrocchiaDAO.findAll());
+                template.addObject("circoli", DAOMan.circoloDAO.findAll());
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
                 template.addObject("calendari", listaCalendario);
                 Registrato reg = DAOMan.registratoDAO.findById((int) request.getSession().getAttribute("idUtente"));

@@ -1,4 +1,4 @@
-package Controller;
+package Controller.Utils;
 
 import DAOManager.DAOMan;
 import Domain.Calendario;
@@ -11,27 +11,28 @@ import java.util.List;
 import java.util.function.IntFunction;
 import java.util.function.ToIntFunction;
 
-final class PresenzeSupport {
-    private PresenzeSupport() {
+public final class PresenzeUtils {
+
+    private PresenzeUtils() {
     }
 
     @FunctionalInterface
-    interface SqlConsumer<T> {
+    public interface SqlConsumer<T> {
         void accept(T value) throws SQLException;
     }
 
     @FunctionalInterface
-    interface SqlFunction<T, R> {
+    public interface SqlFunction<T, R> {
         R apply(T value) throws SQLException;
     }
 
-    static <T> void insert(HttpServletRequest request, IntFunction<T> relation, SqlConsumer<T> insert) throws SQLException {
+    public static <T> void insert(HttpServletRequest request, IntFunction<T> relation, SqlConsumer<T> insert) throws SQLException {
         for (String calId : request.getParameterValues("cal")) {
             insert.accept(relation.apply(Integer.parseInt(calId)));
         }
     }
 
-    static <T> void replace(HttpServletRequest request, List<T> previous, SqlConsumer<T> delete,
+    public static <T> void replace(HttpServletRequest request, List<T> previous, SqlConsumer<T> delete,
                             IntFunction<T> relation, SqlConsumer<T> insert) throws SQLException {
         for (T value : previous) {
             delete.accept(value);
@@ -39,7 +40,7 @@ final class PresenzeSupport {
         insert(request, relation, insert);
     }
 
-    static <T> List<Calendario> calendars(List<T> relations, ToIntFunction<T> calendarId) throws SQLException {
+    public static <T> List<Calendario> calendars(List<T> relations, ToIntFunction<T> calendarId) throws SQLException {
         List<Calendario> calendars = new LinkedList<>();
         for (T relation : relations) {
             calendars.add(DAOMan.calendarioDAO.findById(calendarId.applyAsInt(relation)));
@@ -47,11 +48,11 @@ final class PresenzeSupport {
         return calendars;
     }
 
-    static <T> String period(List<T> relations, ToIntFunction<T> calendarId) {
+    public static <T> String period(List<T> relations, ToIntFunction<T> calendarId) {
         return relations.stream().map(relation -> calendarId.applyAsInt(relation) + " ").reduce("", String::concat);
     }
 
-    static <T extends Iscritto, R> List<Object[]> printRows(List<T> iscritti,
+    public static <T extends Iscritto, R> List<Object[]> printRows(List<T> iscritti,
             SqlFunction<Integer, List<R>> presenze, ToIntFunction<R> calendarId, boolean contacts) throws SQLException {
         List<Object[]> rows = new LinkedList<>();
         for (T iscritto : iscritti) {

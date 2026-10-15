@@ -1,5 +1,7 @@
 package Controller;
 
+import Controller.Utils.IscrizioniUtils;
+import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
 import Domain.*;
 import Response.FreemarkerTemplate;
@@ -14,6 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class ControllerModificaTerzamedia implements ControllerInterface {
 
@@ -29,19 +33,24 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
             TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO IL TERZAMEDIA E FACCIO UNA REDIRECT
-                IscrizioneSupport.readIscritto(request, t);
+                IscrizioniUtils.populateIscrittoFromRequest(request, t);
                 t.setScuola(DAOMan.scuolaDAO.findById(Integer.parseInt(request.getParameter("scuola"))));
                 RequestFields.terzaMedia(request, t);
                 DAOMan.terzamediaDAO.update(t);
-                PresenzeSupport.replace(request, DAOMan.relPresenzaTerDAO.findByTerzamediaId(idTerzamedia),
+                PresenzeUtils.replace(request, DAOMan.relPresenzaTerDAO.findByTerzamediaId(idTerzamedia),
                         DAOMan.relPresenzaTerDAO::delete, calId -> new RelPresenzaTer(calId, idTerzamedia),
                         DAOMan.relPresenzaTerDAO::insert);
-                return IscrizioneSupport.afterChange(request, "ter");
+                return IscrizioniUtils.getPaginaRedirectDopoModifica(request, "ter");
             } else {
                 //PREPARO I DATI PER LA PAGINA
-                IscrizioneSupport.catalogs(template, DAOMan.laboratorioDAO.findAll(), true);
-                IscrizioneSupport.editIdentity(template, "terzamedia", t);
-                template.addObject("calendari", IscrizioneSupport.selectedCalendars(
+                List<Laboratorio> laboratori = DAOMan.laboratorioDAO.findAll();
+                template.addObject("laboratori", laboratori);
+                template.addObject("parrocchie", DAOMan.parrocchiaDAO.findAll());
+                template.addObject("circoli", DAOMan.circoloDAO.findAll());
+                template.addObject("scuole", DAOMan.scuolaDAO.findAll());
+                template.addObject("dataNascita", new SimpleDateFormat("yyyy-MM-dd").format(t.getDataNascita()));
+                template.addObject("terzamedia", t);
+                template.addObject("calendari", IscrizioniUtils.getSettimaneSelezionate(
                         DAOMan.calendarioDAO.findAll(), DAOMan.calendarioDAO.findByTerzamediaId(idTerzamedia)));
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
                     template.addObject("INVALIDMAIL", true);

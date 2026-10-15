@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.RelCollabora;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +42,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
              PreparedStatement pst = con.prepareStatement(FIND_RELCOLLABORA_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, this::mapRowToRelCollabora);
+                return DAOUtils.resultSetToList(rs, this::mapRowToRelCollabora);
             }
         }
     }
@@ -62,7 +63,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_RELCOLLABORA);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToRelCollabora);
+            return DAOUtils.resultSetToList(rs, this::mapRowToRelCollabora);
         }
     }
 

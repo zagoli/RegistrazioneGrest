@@ -1,6 +1,8 @@
 package DAOManager;
 
+import DAOManager.Mappers.ExportDAOMapper;
 import Domain.AnimatoreExport;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,29 +44,8 @@ public class AnimatoreExportDAOImpl implements AnimatoreExportDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRow);
+            return DAOUtils.resultSetToList(rs, ExportDAOMapper::mapRowToAnimatoreExport);
         }
     }
 
-    private AnimatoreExport mapRow(ResultSet rs) throws SQLException {
-        return new AnimatoreExport(
-                ExportDAOMapper.text(rs, "nome"),
-                ExportDAOMapper.text(rs, "cognome"),
-                rs.getDate("dataNascita"),
-                ExportDAOMapper.text(rs, "codiceFiscale"),
-                ExportDAOMapper.trimmedText(rs, "cellularePersonale"),
-                ExportDAOMapper.text(rs, "mail"),
-                ExportDAOMapper.parrocchia(rs),
-                ExportDAOMapper.circolo(rs),
-                ExportDAOMapper.trimmedText(rs, "nTessera"),
-                ExportDAOMapper.settimane(rs),
-                ExportDAOMapper.presenza(rs),
-                ExportDAOMapper.fasciaEtaRagazzi(rs),
-                ExportDAOMapper.laboratorio(rs),
-                ExportDAOMapper.siNo(rs.getBoolean("isResponsabileLaboratorio")),
-                ExportDAOMapper.squadra(rs),
-                ExportDAOMapper.siNo(rs.getBoolean("isResponsabileSquadra")),
-                ExportDAOMapper.registrato(rs)
-        );
-    }
 }

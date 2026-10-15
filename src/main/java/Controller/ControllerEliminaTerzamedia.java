@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Utils.IscrizioniUtils;
 import DAOManager.DAOMan;
 import Response.FreemarkerTemplate;
 import Response.Response;
@@ -17,7 +18,7 @@ public class ControllerEliminaTerzamedia implements ControllerInterface {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             DAOMan.terzamediaDAO.delete(id);
-            return IscrizioneSupport.afterChange(request, "ter");
+            return IscrizioniUtils.getPaginaRedirectDopoModifica(request, "ter");
         } catch (final RuntimeException | SQLException e) {
             template = Utils.getErrorPageAndLogException(e, ControllerEliminaTerzamedia.class.getName());
         }

@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Utils.IscrizioniUtils;
 import DAOManager.DAOMan;
 import Response.FreemarkerTemplate;
 import Response.Response;
@@ -17,7 +18,7 @@ public class ControllerEliminaAnimatore implements ControllerInterface {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             DAOMan.animatoreDAO.delete(id);
-            return IscrizioneSupport.afterChange(request, "an");
+            return IscrizioniUtils.getPaginaRedirectDopoModifica(request, "an");
         } catch (final RuntimeException | SQLException e) {
             template = Utils.getErrorPageAndLogException(e, ControllerEliminaAnimatore.class.getName());
         }

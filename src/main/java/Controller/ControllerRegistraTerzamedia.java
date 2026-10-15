@@ -1,5 +1,7 @@
 package Controller;
 
+import Controller.Utils.IscrizioniUtils;
+import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
 import Domain.*;
 import Response.FreemarkerTemplate;
@@ -29,21 +31,25 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
                 TerzaMedia terzamedia = new TerzaMedia();
-                IscrizioneSupport.readIscritto(request, terzamedia);
+                IscrizioniUtils.populateIscrittoFromRequest(request, terzamedia);
                 terzamedia.setScuola(DAOMan.scuolaDAO.findById(Integer.parseInt(request.getParameter("scuola"))));
                 terzamedia.setRegistrato(DAOMan.registratoDAO.findById(idUtente));
                 RequestFields.terzaMedia(request, terzamedia);
 
                 DAOMan.terzamediaDAO.insert(terzamedia);
 
-                PresenzeSupport.insert(request, calId -> new RelPresenzaTer(calId, terzamedia.getId()),
+                PresenzeUtils.insert(request, calId -> new RelPresenzaTer(calId, terzamedia.getId()),
                         DAOMan.relPresenzaTerDAO::insert);
 
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
                 template.setView("user/registraterzamedia.html");
                 //Recupera dati per la registrazione
-                IscrizioneSupport.catalogs(template, DAOMan.laboratorioDAO.findAll(), true);
+                List<Laboratorio> laboratori = DAOMan.laboratorioDAO.findAll();
+                template.addObject("laboratori", laboratori);
+                template.addObject("parrocchie", DAOMan.parrocchiaDAO.findAll());
+                template.addObject("circoli", DAOMan.circoloDAO.findAll());
+                template.addObject("scuole", DAOMan.scuolaDAO.findAll());
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
                 template.addObject("calendari", listaCalendario);
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {

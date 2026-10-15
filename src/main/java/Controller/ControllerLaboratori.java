@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Utils.SalvataggioLaboratoriSquadreUtils;
 import DAOManager.DAOMan;
 import Response.FreemarkerTemplate;
 import Response.RedirectResult;
@@ -42,16 +43,16 @@ public class ControllerLaboratori implements ControllerInterface {
                 //salvo le modifiche
                 switch (request.getParameter("target")) {
                     case "rag": {
-                        AssegnazioniSupport.pairs(request.getParameterValues("laboratorio"), false, DAOMan.ragazzoDAO::updateLaboratorio);
+                        SalvataggioLaboratoriSquadreUtils.salvataggio(request.getParameterValues("laboratorio"), false, DAOMan.ragazzoDAO::updateLaboratorio);
                         return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=rag");
                     }
-                    case "an": {
-                        AssegnazioniSupport.animators(request, false, DAOMan.animatoreDAO::updateLaboratorio);
-                        return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=an");
-                    }
                     case "ter": {
-                        AssegnazioniSupport.pairs(request.getParameterValues("laboratorio"), false, DAOMan.terzamediaDAO::updateLaboratorio);
+                        SalvataggioLaboratoriSquadreUtils.salvataggio(request.getParameterValues("laboratorio"), false, DAOMan.terzamediaDAO::updateLaboratorio);
                         return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=ter");
+                    }
+                    case "an": {
+                        SalvataggioLaboratoriSquadreUtils.salvataggioAnimatori(request, false, DAOMan.animatoreDAO::updateLaboratorio);
+                        return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=an");
                     }
                 }
             }

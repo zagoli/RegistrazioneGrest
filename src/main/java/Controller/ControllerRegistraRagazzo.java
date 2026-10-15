@@ -1,5 +1,7 @@
 package Controller;
 
+import Controller.Utils.IscrizioniUtils;
+import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
 import Domain.*;
 import Response.FreemarkerTemplate;
@@ -36,7 +38,11 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
             if (!request.getParameterMap().containsKey("nome")) {
                 template.setView("user/registraragazzo.html");
                 //Recupera dati per la registrazione
-                IscrizioneSupport.catalogs(template, DAOMan.laboratorioDAO.findNonRiservato(), true);
+                List<Laboratorio> laboratori = DAOMan.laboratorioDAO.findNonRiservato();
+                template.addObject("laboratori", laboratori);
+                template.addObject("parrocchie", DAOMan.parrocchiaDAO.findAll());
+                template.addObject("circoli", DAOMan.circoloDAO.findAll());
+                template.addObject("scuole", DAOMan.scuolaDAO.findAll());
                 List<Calendario> listaCalendario = DAOMan.calendarioDAO.findAll();
                 template.addObject("calendari", listaCalendario);
                 //iscrizioni aperte o chiuse
@@ -44,7 +50,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 template.addObject("haAltroRagazzoIscritto", haAltroRagazzoIscritto);
             } else {
                 Ragazzo ragazzo = new Ragazzo();
-                IscrizioneSupport.readIscritto(request, ragazzo);
+                IscrizioniUtils.populateIscrittoFromRequest(request, ragazzo);
                 ragazzo.setScuola(DAOMan.scuolaDAO.findById(Integer.parseInt(request.getParameter("scuola"))));
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
                 ragazzo.setRegistrato(DAOMan.registratoDAO.findById(idUtente));
@@ -61,7 +67,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
 
                 DAOMan.ragazzoDAO.insert(ragazzo);
 
-                PresenzeSupport.insert(request, calId -> new RelPresenzaRag(calId, ragazzo.getId()),
+                PresenzeUtils.insert(request, calId -> new RelPresenzaRag(calId, ragazzo.getId()),
                         DAOMan.relPresenzaRagDAO::insert);
 
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");

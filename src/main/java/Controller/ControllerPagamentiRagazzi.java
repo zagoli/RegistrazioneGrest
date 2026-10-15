@@ -1,6 +1,8 @@
 package Controller;
 
 import DAOManager.DAOMan;
+import Domain.DatiPagamento;
+import Domain.PagamentoRiepilogo;
 import Domain.Ragazzo;
 import Domain.RagazzoPagamento;
 import Response.FreemarkerTemplate;
@@ -17,14 +19,25 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerPagamentiRagazzi implements ControllerInterface {
 
     private final static Logger logger = LoggerFactory.getLogger(ControllerPagamentiRagazzi.class);
 
     private static void renderPage(FreemarkerTemplate template) throws SQLException, ConfigPropertyException, IOException {
-        PagamentiSupport.render(template, DAOMan.ragazzoDAO.findAllIscrittoConPagamento(),
-                "ragazzi", "ammseg/gestiscipagamenti.html", ControllerPagamentiRagazzi::calcolaQuota);
+        List<DatiPagamento<RagazzoPagamento, PagamentoRiepilogo>> iscritti = DAOMan.ragazzoDAO.findAllIscrittoConPagamento();
+        List<Object[]> dati = new ArrayList<>(iscritti.size());
+        if (!iscritti.isEmpty()) {
+            for (DatiPagamento<RagazzoPagamento, PagamentoRiepilogo> dato : iscritti) {
+                PagamentoRiepilogo pagamento = dato.getPagamento();
+                dati.add(new Object[]{dato.getIscritto(), pagamento != null,
+                        pagamento != null ? pagamento : calcolaQuota(dato.getIscritto(), dato.getSettimane())});
+            }
+            template.addObject("ragazzi", dati);
+        }
+        template.setView("ammseg/gestiscipagamenti.html");
     }
 
     protected static float calcolaQuota(Ragazzo r) throws SQLException, ConfigPropertyException, IOException {
@@ -66,16 +79,27 @@ public class ControllerPagamentiRagazzi implements ControllerInterface {
             if (request.getParameterMap().isEmpty()) {
                 renderPage(template);
             } else if (request.getParameterMap().containsKey("addPagamento")) {
-                PagamentiSupport.PaymentRequest payment = PagamentiSupport.PaymentRequest.read(request);
-                float quota = payment.quota();
-                int idRagazzo = payment.id();
-                int ordineArrivo = payment.ordineArrivo();
+                var quota = Float.parseFloat(request.getParameter("quota").replace(',', '.'));
+                var idRagazzo = Integer.parseInt(request.getParameter("addPagamento"));
+                var idUt = (int) request.getSession().getAttribute("idUtente");
+                var ordineArrivo = Integer.parseInt(request.getParameter("ordineArrivo"));
                 logger.info("Inserimento pagamento ragazzo richiesto per ragazzo con id {}, ordine arrivo {}, quota {}", idRagazzo, ordineArrivo, quota);
-                if (PagamentiSupport.insert(template,
-                        () -> DAOMan.pagamentoDAO.insert(ordineArrivo, quota, idRagazzo, payment.userId()),
-                        "Pagamento già presente per il ragazzo, o ordine arrivo " + ordineArrivo + " già inserito.",
-                        logger, ControllerPagamentiRagazzi::renderPage)) {
-                    logger.info("Pagamento di {} euro aggiunto per il ragazzo con id {}. Ordine arrivo: {}", quota, idRagazzo, request.getParameter("ordineArrivo"));
+                boolean result = true;
+                String duplicateMessage = "Pagamento già presente per il ragazzo, o ordine arrivo " + ordineArrivo + " già inserito.";
+                try {
+                    DAOMan.pagamentoDAO.insert(ordineArrivo, quota, idRagazzo, idUt);
+                } catch (SQLException e) {
+                    if (e.getSQLState().equals("23505")) {
+                        logger.warn(duplicateMessage);
+                        template.addObject("errorePagamento", duplicateMessage);
+                        renderPage(template);
+                        result = false;
+                    } else {
+                        throw e;
+                    }
+                }
+                if (result) {
+                    logger.info("Pagamento di {} euro aggiunto per il ragazzo con id {}. Ordine arrivo: {}", quota, idRagazzo, ordineArrivo);
                     return new RedirectResult("/RegistrazioneGrest/App/GestisciPagamenti");
                 }
             } else if (request.getParameterMap().containsKey("deletePagamento")) {

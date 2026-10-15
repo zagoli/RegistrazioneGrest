@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.RelPresenzaAn;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,12 +16,22 @@ public class RelPresenzaAnDAOImpl implements RelPresenzaAnDAO {
 
     @Override
     public void insert(RelPresenzaAn rpa) throws SQLException {
-        RelazioneDAOOperations.updateIds(INSERT_RELPRESENZAAN, rpa.getAnimatoreId(), rpa.getCalendarioId());
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(INSERT_RELPRESENZAAN)) {
+            pst.setInt(1, rpa.getAnimatoreId());
+            pst.setInt(2, rpa.getCalendarioId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void delete(RelPresenzaAn rpa) throws SQLException {
-        RelazioneDAOOperations.updateIds(DELETE_RELPRESENZAAN, rpa.getCalendarioId(), rpa.getAnimatoreId());
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(DELETE_RELPRESENZAAN)) {
+            pst.setInt(1, rpa.getCalendarioId());
+            pst.setInt(2, rpa.getAnimatoreId());
+            pst.executeUpdate();
+        }
     }
 
     @Override
@@ -29,7 +40,7 @@ public class RelPresenzaAnDAOImpl implements RelPresenzaAnDAO {
              PreparedStatement pst = con.prepareStatement(FIND_RELPRESENZAAN_ANIMATORE_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, this::mapRowToRelPresenzaAn);
+                return DAOUtils.resultSetToList(rs, this::mapRowToRelPresenzaAn);
             }
         }
     }

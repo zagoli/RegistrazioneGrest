@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
 import Domain.*;
 import Response.FreemarkerTemplate;
@@ -26,10 +27,10 @@ public class ControllerStampe implements ControllerInterface {
                     int squadraId = Integer.parseInt(request.getParameter("squadra"));
                     List<Ragazzo> allRagazzi = DAOMan.ragazzoDAO.findByCalendarioId(idset);
                     List<Animatore> allAnimatori = DAOMan.animatoreDAO.findByCalendarioId(idset);
-                    List<Object[]> ragGiusti = PresenzeSupport.printRows(
+                    List<Object[]> ragGiusti = PresenzeUtils.printRows(
                             allRagazzi.stream().filter(rag -> rag.getSquadra().getId() != 0 && rag.getSquadra().getId() == squadraId).collect(Collectors.toList()),
                             DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, false);
-                    List<Object[]> anGiusti = PresenzeSupport.printRows(
+                    List<Object[]> anGiusti = PresenzeUtils.printRows(
                             allAnimatori.stream().filter(an -> an.getSquadra().getId() != 0 && an.getSquadra().getId() == squadraId).collect(Collectors.toList()),
                             DAOMan.relPresenzaAnDAO::findByAnimatoreId, RelPresenzaAn::getCalendarioId, false);
                     template.addObject("TITOLOPAGINA", "Presenze settimanali squadre");
@@ -42,7 +43,7 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "elesintrag": {
                     List<Ragazzo> allRagazzi = DAOMan.ragazzoDAO.findAll();
-                    List<Object[]> dati = PresenzeSupport.printRows(allRagazzi,
+                    List<Object[]> dati = PresenzeUtils.printRows(allRagazzi,
                             DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, true);
                     template.addObject("ragazzi", dati);
                     template.addObject("TITOLOPAGINA", "Elenco sintesi ragazzi");
@@ -85,7 +86,7 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "mensa": {
                     List<Ragazzo> lrag = DAOMan.ragazzoDAO.findByCalendarioId(Integer.parseInt(request.getParameter("idSet")));
-                    List<Object[]> lob = PresenzeSupport.printRows(
+                    List<Object[]> lob = PresenzeUtils.printRows(
                             lrag.stream().filter(Ragazzo::getMensa).collect(Collectors.toList()),
                             DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, true);
                     template.addObject("set", DAOMan.calendarioDAO.findById(Integer.parseInt(request.getParameter("idSet"))));
@@ -96,7 +97,7 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "anticipo": {
                     List<Ragazzo> lrag = DAOMan.ragazzoDAO.findAll();
-                    List<Object[]> lob = PresenzeSupport.printRows(
+                    List<Object[]> lob = PresenzeUtils.printRows(
                             lrag.stream().filter(Ragazzo::getEntrataAnticipata).collect(Collectors.toList()),
                             DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, true);
                     template.addObject("dati", lob);
@@ -106,7 +107,7 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "presgiornani": {
                     List<Animatore> allAnimatore = DAOMan.animatoreDAO.findByCalendarioId(Integer.parseInt(request.getParameter("idSet")));
-                    List<Object[]> lob = PresenzeSupport.printRows(allAnimatore,
+                    List<Object[]> lob = PresenzeUtils.printRows(allAnimatore,
                             DAOMan.relPresenzaAnDAO::findByAnimatoreId, RelPresenzaAn::getCalendarioId, false);
                     template.addObject("animatori", lob);
                     template.addObject("TITOLOPAGINA", "Presenza giornaliera animatori");
@@ -115,7 +116,7 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "elesintan": {
                     List<Animatore> allAnimatore = DAOMan.animatoreDAO.findAll();
-                    List<Object[]> lob = PresenzeSupport.printRows(allAnimatore,
+                    List<Object[]> lob = PresenzeUtils.printRows(allAnimatore,
                             DAOMan.relPresenzaAnDAO::findByAnimatoreId, RelPresenzaAn::getCalendarioId, false);
                     template.addObject("animatori", lob);
                     template.addObject("TITOLOPAGINA", "Elenco sintesi animatori");
@@ -124,7 +125,7 @@ public class ControllerStampe implements ControllerInterface {
                 break;
                 case "elesintter": {
                     List<TerzaMedia> allTerzaMedia = DAOMan.terzamediaDAO.findAll();
-                    List<Object[]> dati = PresenzeSupport.printRows(allTerzaMedia,
+                    List<Object[]> dati = PresenzeUtils.printRows(allTerzaMedia,
                             DAOMan.relPresenzaTerDAO::findByTerzamediaId, RelPresenzaTer::getCalendarioId, true);
                     template.addObject("terzamedia", dati);
                     template.addObject("TITOLOPAGINA", "Elenco sintesi terzamedia");

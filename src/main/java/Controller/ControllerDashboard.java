@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
 import Domain.*;
 import Response.FreemarkerTemplate;
@@ -13,7 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ControllerDashboard implements ControllerInterface {
 
@@ -39,13 +42,25 @@ public class ControllerDashboard implements ControllerInterface {
                 case "dashboardRegistrato":
                     int idUtente = (int) request.getSession().getAttribute("idUtente");
                     List<Ragazzo> listRagazzo = DAOMan.ragazzoDAO.findByRegistratoId(idUtente);
-                    PagamentiSupport.statuses(template, "ragazzi", listRagazzo, DAOMan.pagamentoDAO::findByRagazzoId);
+                    if (!listRagazzo.isEmpty()) {
+                        Map<Ragazzo, Boolean> ragazziConStatoPagamento = new HashMap<>();
+                        for (Ragazzo ragazzo : listRagazzo) {
+                            ragazziConStatoPagamento.put(ragazzo, ((PresenzeUtils.SqlFunction<Integer, ?>) DAOMan.pagamentoDAO::findByRagazzoId).apply(ragazzo.getId()) != null);
+                        }
+                        template.addObject("ragazzi", ragazziConStatoPagamento);
+                    }
                     List<Animatore> listAnimatore = DAOMan.animatoreDAO.findByRegistratoId(idUtente);
                     if (!listAnimatore.isEmpty()) {
                         template.addObject("animatori", listAnimatore);
                     }
                     List<TerzaMedia> listTerzaMedia = DAOMan.terzamediaDAO.findByRegistratoId(idUtente);
-                    PagamentiSupport.statuses(template, "terzamedia", listTerzaMedia, DAOMan.pagamentoTerzamediaDAO::findByTerzamediaId);
+                    if (!listTerzaMedia.isEmpty()) {
+                        Map<TerzaMedia, Boolean> terzaMediaConStatoPagamento = new HashMap<>();
+                        for (TerzaMedia terzaMedia : listTerzaMedia) {
+                            terzaMediaConStatoPagamento.put(terzaMedia, ((PresenzeUtils.SqlFunction<Integer, ?>) DAOMan.pagamentoTerzamediaDAO::findByTerzamediaId).apply(terzaMedia.getId()) != null);
+                        }
+                        template.addObject("terzamedia", terzaMediaConStatoPagamento);
+                    }
                     int nContattiUrgenze = DAOMan.contattoUrgenzeDAO.findByRegistratoId(idUtente).size();
                     if (nContattiUrgenze == 0) {
                         template.addObject("NOCU", "true");

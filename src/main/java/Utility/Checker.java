@@ -80,17 +80,17 @@ public class Checker {
     }
 
     public static Boolean checkActionRagazzo(HttpServletRequest request) {
-        return checkActionIscritto(request, id -> DAOMan.ragazzoDAO.findById(id),
+        return checkActionIscritto(request, DAOMan.ragazzoDAO::findById,
                 "Errore nella verifica dei permessi sul ragazzo");
     }
 
     public static Boolean checkActionTerzamedia(HttpServletRequest request) {
-        return checkActionIscritto(request, id -> DAOMan.terzamediaDAO.findById(id),
+        return checkActionIscritto(request, DAOMan.terzamediaDAO::findById,
                 "Errore nella verifica dei permessi sul ragazzo di terza media");
     }
 
     public static Boolean checkActionAnimatore(HttpServletRequest request) {
-        return checkActionIscritto(request, id -> DAOMan.animatoreDAO.findById(id),
+        return checkActionIscritto(request, DAOMan.animatoreDAO::findById,
                 "Errore nella verifica dei permessi sull'animatore");
     }
 

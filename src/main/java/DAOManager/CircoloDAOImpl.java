@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Circolo;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +29,7 @@ public class CircoloDAOImpl implements CircoloDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_CIRCOLO);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToCircolo);
+            return DAOUtils.resultSetToList(rs, this::mapRowToCircolo);
         }
     }
 

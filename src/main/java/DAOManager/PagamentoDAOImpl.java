@@ -1,6 +1,8 @@
 package DAOManager;
 
+import DAOManager.Mappers.PagamentoDAOMapper;
 import Domain.Pagamento;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,7 +56,7 @@ public class PagamentoDAOImpl implements PagamentoDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToPagamento);
+            return DAOUtils.resultSetToList(rs, PagamentoDAOMapper::mapRowToPagamento);
         }
     }
 
@@ -64,7 +66,7 @@ public class PagamentoDAOImpl implements PagamentoDAO {
              PreparedStatement pst = con.prepareStatement(FIND_PAGAMENTO_RAGAZZO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? this.mapRowToPagamento(rs) : null;
+                return rs.next() ? PagamentoDAOMapper.mapRowToPagamento(rs) : null;
             }
         }
     }
@@ -79,18 +81,4 @@ public class PagamentoDAOImpl implements PagamentoDAO {
         }
     }
 
-    public Pagamento mapRowToPagamento(ResultSet rs) throws SQLException {
-        return mapRowToPagamento(rs, "re");
-    }
-
-    public Pagamento mapRowToPagamento(ResultSet rs, String registratoPrefix) throws SQLException {
-        return new Pagamento(
-                rs.getInt("pid"),
-                rs.getDate("pdata"),
-                rs.getFloat("pquota"),
-                rs.getInt("pragid"),
-                IscrittoDAOMapper.registrato(rs, registratoPrefix),
-                rs.getInt("pordineArrivo")
-        );
-    }
 }

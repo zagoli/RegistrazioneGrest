@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Calendario;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +33,7 @@ public class CalendarioDAOImpl implements CalendarioDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_CAL);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToCalendario);
+            return DAOUtils.resultSetToList(rs, this::mapRowToCalendario);
         }
     }
 
@@ -56,7 +57,7 @@ public class CalendarioDAOImpl implements CalendarioDAO {
              PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, this::mapRowToCalendario);
+                return DAOUtils.resultSetToList(rs, this::mapRowToCalendario);
             }
         }
     }

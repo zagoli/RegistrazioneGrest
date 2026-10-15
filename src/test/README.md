@@ -125,3 +125,20 @@ are superseded by 12 missing/empty/blank rejection cases and one valid mapping
 case. These are an intentional requirement correction, not preservation
 failures. Secretary registration now includes the same required account fields.
 The current full suite contains 650 tests.
+
+## DAO mapper extraction
+
+`DAOManager.Mappers.IscrittoDAOMapper` now owns the complete Ragazzo,
+TerzaMedia and Animatore row mappings, not just their common fields.
+`PagamentoDAOMapper` owns both payment variants and their registration-prefix
+overloads; `ExportDAOMapper` owns the three complete export records.
+`RegistratoDAOMapper` handles ordinary account mappings for accounts, contacts,
+annotations, participants and payments. Export account normalization remains
+separate in `ExportDAOMapper`.
+
+`MapperExtractionTest` compares every component of populated and nullable export
+records and both payment variants, including default/custom account prefixes.
+It passed against the original DAO-local methods before extraction and passes
+against the extracted methods with the same assertions. Together with the six
+frozen JDBC snapshots and 17 existing DAO helper contracts, this is 25 passing
+mapping cases before and after. No live database is used.

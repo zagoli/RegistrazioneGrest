@@ -1,6 +1,8 @@
 package DAOManager;
 
+import DAOManager.Mappers.IscrittoDAOMapper;
 import Domain.*;
+import Utility.DAOUtils;
 
 import java.sql.*;
 import java.util.List;
@@ -54,7 +56,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
              PreparedStatement pst = con.prepareStatement(INSERT_ANIMATORE, Statement.RETURN_GENERATED_KEYS)) {
             bindAnimatore(pst, a);
             pst.executeUpdate();
-            DAORows.assignGeneratedId(pst, a::setId);
+            DAOUtils.idGeneratoFromResultSet(pst, a::setId);
         }
     }
 
@@ -105,7 +107,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
              PreparedStatement pst = con.prepareStatement(FIND_ANIMATORE_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? mapRowToAnimatore(rs) : null;
+                return rs.next() ? IscrittoDAOMapper.mapRowToAnimatore(rs) : null;
             }
         }
     }
@@ -115,7 +117,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_ANIMATORE);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, AnimatoreDAOImpl::mapRowToAnimatore);
+            return DAOUtils.resultSetToList(rs, IscrittoDAOMapper::mapRowToAnimatore);
         }
     }
 
@@ -144,7 +146,7 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
              PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, AnimatoreDAOImpl::mapRowToAnimatore);
+                return DAOUtils.resultSetToList(rs, IscrittoDAOMapper::mapRowToAnimatore);
             }
         }
     }
@@ -154,19 +156,8 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(COUNT_SETTIMANALE);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.weeklyCounts(rs);
+            return DAOUtils.contaSettimanaleFromResultSet(rs);
         }
-    }
-
-    public static Animatore mapRowToAnimatore(ResultSet rs) throws SQLException {
-        Animatore animatore = IscrittoDAOMapper.commonFields(rs, new Animatore(), "an", "annTessera");
-        animatore.setCellulare(rs.getString("ancellulare"));
-        animatore.setFasciaEtaRagazzi(rs.getString("anfasciaEtaRagazzi"));
-        animatore.setMail(rs.getString("anmail"));
-        animatore.setCodiceFiscale(rs.getString("ancodiceFiscale"));
-        animatore.setResponsabileSquadra(rs.getBoolean("anisResponsabileSquadra"));
-        animatore.setResponsabileLaboratorio(rs.getBoolean("anisResponsabileLaboratorio"));
-        return animatore;
     }
 
 }

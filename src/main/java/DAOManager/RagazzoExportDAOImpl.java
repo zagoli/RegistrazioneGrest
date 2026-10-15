@@ -1,6 +1,8 @@
 package DAOManager;
 
+import DAOManager.Mappers.ExportDAOMapper;
 import Domain.RagazzoExport;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -46,35 +48,8 @@ public class RagazzoExportDAOImpl implements RagazzoExportDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRow);
+            return DAOUtils.resultSetToList(rs, ExportDAOMapper::mapRowToRagazzoExport);
         }
     }
 
-    private RagazzoExport mapRow(ResultSet rs) throws SQLException {
-        boolean pagato = rs.getObject("pagamento_id") != null;
-        return new RagazzoExport(
-                ExportDAOMapper.text(rs, "nome"),
-                ExportDAOMapper.text(rs, "cognome"),
-                rs.getDate("dataNascita"),
-                ExportDAOMapper.presenza(rs),
-                ExportDAOMapper.laboratorio(rs),
-                ExportDAOMapper.parrocchia(rs),
-                ExportDAOMapper.registrato(rs),
-                ExportDAOMapper.circolo(rs),
-                ExportDAOMapper.siNo(rs.getBoolean("entrataAnticipata")),
-                ExportDAOMapper.text(rs, "richieste"),
-                ExportDAOMapper.text(rs, "noteAlimentari"),
-                ExportDAOMapper.siNo(rs.getBoolean("mensa")),
-                ExportDAOMapper.siNo(rs.getBoolean("saNuotare")),
-                ExportDAOMapper.siNo(rs.getBoolean("fratelloIscritto")),
-                ExportDAOMapper.scuola(rs),
-                ExportDAOMapper.trimmedText(rs, "nTessera"),
-                ExportDAOMapper.trimmedText(rs, "sezione"),
-                ExportDAOMapper.trimmedText(rs, "classe"),
-                ExportDAOMapper.squadra(rs),
-                ExportDAOMapper.settimane(rs),
-                ExportDAOMapper.siNo(pagato),
-                ExportDAOMapper.importoPagamento(rs)
-        );
-    }
 }

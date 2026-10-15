@@ -1,6 +1,10 @@
 package DAOManager;
 
+import DAOManager.Mappers.RegistratoDAOMapper;
+
+import DAOManager.Mappers.IscrittoDAOMapper;
 import Domain.AnnotazioneSegreteria;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,7 +89,7 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
     public List<AnnotazioneSegreteria> findByRagazzoId(int ragazzoId) throws SQLException {
         return find(FIND_ANNOTAZIONI_RAGAZZO_ID, ragazzoId, rs -> {
             AnnotazioneSegreteria annotazione = mapRowToAnnotazioneSegreteria(rs);
-            annotazione.setRagazzo(RagazzoDAOImpl.mapRowToRagazzo(rs));
+            annotazione.setRagazzo(IscrittoDAOMapper.mapRowToRagazzo(rs));
             return annotazione;
         });
     }
@@ -94,7 +98,7 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
     public List<AnnotazioneSegreteria> findByAnimatoreId(int animatoreId) throws SQLException {
         return find(FIND_ANNOTAZIONI_ANIMATORE_ID, animatoreId, rs -> {
             AnnotazioneSegreteria annotazione = mapRowToAnnotazioneSegreteria(rs);
-            annotazione.setAnimatore(AnimatoreDAOImpl.mapRowToAnimatore(rs));
+            annotazione.setAnimatore(IscrittoDAOMapper.mapRowToAnimatore(rs));
             return annotazione;
         });
     }
@@ -103,7 +107,7 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
     public List<AnnotazioneSegreteria> findByTerzamediaId(int terzamediaId) throws SQLException {
         return find(FIND_ANNOTAZIONI_TERZAMEDIA_ID, terzamediaId, rs -> {
             AnnotazioneSegreteria annotazione = mapRowToAnnotazioneSegreteria(rs);
-            annotazione.setTerzaMedia(TerzamediaDAOImpl.mapRowToTerzamedia(rs));
+            annotazione.setTerzaMedia(IscrittoDAOMapper.mapRowToTerzamedia(rs));
             return annotazione;
         });
     }
@@ -129,12 +133,12 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
         }
     }
 
-    private List<AnnotazioneSegreteria> find(String query, int id, DAORows.Mapper<AnnotazioneSegreteria> mapper) throws SQLException {
+    private List<AnnotazioneSegreteria> find(String query, int id, DAOUtils.Mapper<AnnotazioneSegreteria> mapper) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(query)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, mapper);
+                return DAOUtils.resultSetToList(rs, mapper);
             }
         }
     }
@@ -146,7 +150,7 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
                 null,
                 null,
                 null,
-                IscrittoDAOMapper.registrato(rs, "se"),
+                RegistratoDAOMapper.registrato(rs, "se"),
                 rs.getTimestamp("andataCreazione")
         );
     }

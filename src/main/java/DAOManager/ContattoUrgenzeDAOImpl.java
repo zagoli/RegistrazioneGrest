@@ -1,6 +1,9 @@
 package DAOManager;
 
+import DAOManager.Mappers.RegistratoDAOMapper;
+
 import Domain.ContattoUrgenze;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -69,7 +72,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
              PreparedStatement pst = conn.prepareStatement(FIND_CU_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, this::mapRowToContattoUrgenze);
+                return DAOUtils.resultSetToList(rs, this::mapRowToContattoUrgenze);
             }
         }
     }
@@ -82,7 +85,7 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
                 rs.getString("cunome"),
                 rs.getString("cucognome"),
                 rs.getString("curelazione"),
-                IscrittoDAOMapper.registrato(rs, "re")
+                RegistratoDAOMapper.registrato(rs, "re")
         );
     }
 

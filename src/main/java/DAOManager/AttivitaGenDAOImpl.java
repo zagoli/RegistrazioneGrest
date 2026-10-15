@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.AttivitaGen;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_ATTIVITAGEN);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToAttivitaGen);
+            return DAOUtils.resultSetToList(rs, this::mapRowToAttivitaGen);
         }
     }
 
@@ -39,7 +40,7 @@ public class AttivitaGenDAOImpl implements AttivitaGenDAO {
              PreparedStatement pst = con.prepareStatement(FIND_ATTIVITAGEN_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, this::mapRowToAttivitaGen);
+                return DAOUtils.resultSetToList(rs, this::mapRowToAttivitaGen);
             }
         }
     }

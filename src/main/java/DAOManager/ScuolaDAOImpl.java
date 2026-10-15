@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Scuola;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +29,7 @@ public class ScuolaDAOImpl implements ScuolaDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_SCUOLA);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToScuola);
+            return DAOUtils.resultSetToList(rs, this::mapRowToScuola);
         }
     }
 

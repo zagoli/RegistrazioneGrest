@@ -1,6 +1,9 @@
 package DAOManager;
 
+import DAOManager.Mappers.IscrittoDAOMapper;
+import DAOManager.Mappers.PagamentoDAOMapper;
 import Domain.*;
+import Utility.DAOUtils;
 
 import java.sql.*;
 import java.util.List;
@@ -79,7 +82,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
              PreparedStatement pst = con.prepareStatement(INSERT_TERZAMEDIA, Statement.RETURN_GENERATED_KEYS)) {
             bindTerzamedia(pst, t);
             pst.executeUpdate();
-            DAORows.assignGeneratedId(pst, t::setId);
+            DAOUtils.idGeneratoFromResultSet(pst, t::setId);
         }
     }
 
@@ -95,12 +98,22 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
 
     @Override
     public void updateSquadra(int id, Integer idSquadra) throws SQLException {
-        RelazioneDAOOperations.updateSquadra(UPDATE_SQUADRA_TERZAMEDIA, id, idSquadra);
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_SQUADRA_TERZAMEDIA)) {
+            IscrittoDAOMapper.bindSquadra(pst, idSquadra);
+            pst.setInt(2, id);
+            pst.executeUpdate();
+        }
     }
 
     @Override
     public void updateLaboratorio(int id, int idLaboratorio) throws SQLException {
-        RelazioneDAOOperations.updateIds(UPDATE_LABORATORIO_TERZAMEDIA, idLaboratorio, id);
+        try (Connection con = DAOMan.getConnection();
+             PreparedStatement pst = con.prepareStatement(UPDATE_LABORATORIO_TERZAMEDIA)) {
+            pst.setInt(1, idLaboratorio);
+            pst.setInt(2, id);
+            pst.executeUpdate();
+        }
     }
 
     @Override
@@ -118,7 +131,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
              PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return rs.next() ? mapRowToTerzamedia(rs) : null;
+                return rs.next() ? IscrittoDAOMapper.mapRowToTerzamedia(rs) : null;
             }
         }
     }
@@ -128,7 +141,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_TERZAMEDIA);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, TerzamediaDAOImpl::mapRowToTerzamedia);
+            return DAOUtils.resultSetToList(rs, IscrittoDAOMapper::mapRowToTerzamedia);
         }
     }
 
@@ -137,7 +150,7 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_ISCRITTO_CON_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, row -> {
+            return DAOUtils.resultSetToList(rs, row -> {
                 int id = row.getInt("terid");
                 IscrittoPagamento iscritto = new IscrittoPagamento(
                         id, row.getString("ternome"), row.getString("tercognome"), row.getString("relocalita"));
@@ -152,8 +165,8 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_PAGAMENTO);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, row ->
-                    new DatiPagamento<>(PagamentoDAOMapper.riepilogo(row), mapRowToTerzamedia(row)));
+            return DAOUtils.resultSetToList(rs, row ->
+                    new DatiPagamento<>(PagamentoDAOMapper.riepilogo(row), IscrittoDAOMapper.mapRowToTerzamedia(row)));
         }
     }
 
@@ -173,22 +186,9 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
              PreparedStatement pst = con.prepareStatement(FIND_TERZAMEDIA_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, TerzamediaDAOImpl::mapRowToTerzamedia);
+                return DAOUtils.resultSetToList(rs, IscrittoDAOMapper::mapRowToTerzamedia);
             }
         }
-    }
-
-    public static TerzaMedia mapRowToTerzamedia(ResultSet rs) throws SQLException {
-        TerzaMedia terzamedia = IscrittoDAOMapper.commonFields(rs, new TerzaMedia(), "ter", "terTessera");
-        terzamedia.setRichieste(rs.getString("terrichieste"));
-        terzamedia.setNoteAlimentari(rs.getString("ternoteAlimentari"));
-        terzamedia.setSaNuotare(rs.getBoolean("tersaNuotare"));
-        terzamedia.setFestaPassaggio(rs.getBoolean("terfestaPassaggio"));
-        terzamedia.setScuola(IscrittoDAOMapper.scuola(rs));
-        terzamedia.setSezione(rs.getString("tersezione"));
-        terzamedia.setCellulare(rs.getString("tercellulare"));
-        terzamedia.setMail(rs.getString("termail"));
-        return terzamedia;
     }
 
 }

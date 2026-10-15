@@ -2,6 +2,7 @@ package DAOManager;
 
 import Domain.Laboratorio;
 import Domain.LaboratorioConNumeroIscritti;
+import Utility.DAOUtils;
 
 import java.sql.*;
 import java.util.List;
@@ -36,21 +37,21 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
     @Override
     public List<Laboratorio> findAll() throws SQLException {
         try (Connection con = DAOMan.getConnection(); PreparedStatement pst = con.prepareStatement(FIND_ALL_LABORATORIO); ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToLaboratorio);
+            return DAOUtils.resultSetToList(rs, this::mapRowToLaboratorio);
         }
     }
 
     @Override
     public List<Laboratorio> findNonRiservato() throws SQLException {
         try (Connection con = DAOMan.getConnection(); PreparedStatement pst = con.prepareStatement(FIND_NON_RISERVATO); ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToLaboratorio);
+            return DAOUtils.resultSetToList(rs, this::mapRowToLaboratorio);
         }
     }
 
     @Override
     public List<LaboratorioConNumeroIscritti> findAllConNumeroIscritti() throws SQLException {
         try (Connection con = DAOMan.getConnection(); PreparedStatement pst = con.prepareStatement(FIND_ALL_CON_NUMERO_ISCRITTI); ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, row ->
+            return DAOUtils.resultSetToList(rs, row ->
                     new LaboratorioConNumeroIscritti(mapRowToLaboratorio(row), row.getInt("numeroIscritti")));
         }
     }

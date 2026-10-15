@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Squadra;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +33,7 @@ public class SquadraDAOImpl implements SquadraDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToSquadra);
+            return DAOUtils.resultSetToList(rs, this::mapRowToSquadra);
         }
     }
 

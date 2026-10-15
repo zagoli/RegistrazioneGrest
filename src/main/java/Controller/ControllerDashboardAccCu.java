@@ -1,5 +1,6 @@
 package Controller;
 
+import Controller.Utils.InfoDettaglioUtils;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.Utils;
@@ -18,8 +19,8 @@ public class ControllerDashboardAccCu implements ControllerInterface {
             template.addObject("TITOLOPAGINA", "Accompagnatori e Contatti telefonici Urgenze");
             template.setView("acccu/dashboardacccu.html");
             int idUtente = (int) request.getSession().getAttribute("idUtente");
-            DettaglioSupport.accompagnatori(template, idUtente);
-            DettaglioSupport.emergencyContacts(template, idUtente, "contatti");
+            InfoDettaglioUtils.popolaAccompagnatori(template, idUtente);
+            InfoDettaglioUtils.popolaCu(template, idUtente);
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
             template.addObject("tipoUt", tipoUt);
         } catch (final RuntimeException | SQLException e) {

@@ -1,6 +1,11 @@
 package DAOManager;
 
+import DAOManager.Mappers.RegistratoDAOMapper;
+
+import DAOManager.Mappers.IscrittoDAOMapper;
+import DAOManager.Mappers.PagamentoDAOMapper;
 import Domain.*;
+import Utility.DAOUtils;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationHandler;
@@ -36,7 +41,7 @@ class DryDAOHelpersContractTest {
         columns.put("reid", 5);
         columns.put("retipoUt", 0);
         columns.put("revia", "");
-        Ragazzo ragazzo = RagazzoDAOImpl.mapRowToRagazzo(row(columns));
+        Ragazzo ragazzo = IscrittoDAOMapper.mapRowToRagazzo(row(columns));
 
         assertEquals(17, ragazzo.getId());
         assertEquals(" Nome ", ragazzo.getNome());
@@ -60,10 +65,10 @@ class DryDAOHelpersContractTest {
 
     @Test
     void tesseraAliasAndSubtypeFieldsRemainDistinct() throws Exception {
-        TerzaMedia ter = TerzamediaDAOImpl.mapRowToTerzamedia(row(Map.of(
+        TerzaMedia ter = IscrittoDAOMapper.mapRowToTerzamedia(row(Map.of(
                 "terid", 11, "terTessera", " ter ", "tercellulare", "",
                 "terfestaPassaggio", true, "tersaNuotare", true, "scid", 31)));
-        Animatore an = AnimatoreDAOImpl.mapRowToAnimatore(row(Map.of(
+        Animatore an = IscrittoDAOMapper.mapRowToAnimatore(row(Map.of(
                 "anid", 12, "annTessera", " an ", "ancodiceFiscale", "CF",
                 "anisResponsabileSquadra", true, "anisResponsabileLaboratorio", false)));
 
@@ -81,7 +86,7 @@ class DryDAOHelpersContractTest {
     @Test
     void registratoMappingSupportsAllExistingPrefixesWithoutDisplayNormalization() throws Exception {
         for (String prefix : List.of("", "re", "se", "custom")) {
-            Registrato registrato = IscrittoDAOMapper.registrato(row(Map.of(
+            Registrato registrato = RegistratoDAOMapper.registrato(row(Map.of(
                     prefix + "id", 7, prefix + "nome", " Nome ",
                     prefix + "password", "password", prefix + "telefono", " 123 ")), prefix);
             assertEquals(7, registrato.getId());
@@ -256,7 +261,7 @@ class DryDAOHelpersContractTest {
             case "close" -> { closed.set(true); yield null; }
             default -> throw new UnsupportedOperationException(method.getName());
         });
-        assertEquals(List.of(10, 20, 30), DAORows.readAll(rs, r -> r.getInt(1)));
+        assertEquals(List.of(10, 20, 30), DAOUtils.resultSetToList(rs, r -> r.getInt(1)));
         assertFalse(closed.get());
     }
 
@@ -265,7 +270,7 @@ class DryDAOHelpersContractTest {
         SQLException failure = new SQLException("mapping failure");
         ResultSet rs = proxy(ResultSet.class, (p, method, args) -> true);
         assertSame(failure, assertThrows(SQLException.class,
-                () -> DAORows.readAll(rs, r -> { throw failure; })));
+                () -> DAOUtils.resultSetToList(rs, r -> { throw failure; })));
     }
 
     @Test
@@ -276,7 +281,7 @@ class DryDAOHelpersContractTest {
             case "getInt" -> (int) args[0] == 1 ? 9 : 0;
             default -> throw new UnsupportedOperationException(method.getName());
         });
-        List<Integer[]> counts = DAORows.weeklyCounts(rs);
+        List<Integer[]> counts = DAOUtils.contaSettimanaleFromResultSet(rs);
         assertEquals(1, counts.size());
         assertArrayEquals(new Integer[]{9, 0}, counts.get(0));
     }
@@ -296,7 +301,7 @@ class DryDAOHelpersContractTest {
                 assertEquals("getGeneratedKeys", method.getName());
                 return keys;
             });
-            DAORows.assignGeneratedId(pst, id::set);
+            DAOUtils.idGeneratoFromResultSet(pst, id::set);
             assertEquals(present ? 0 : 73, id.get());
             assertTrue(closed.get());
         }
@@ -313,7 +318,7 @@ class DryDAOHelpersContractTest {
             default -> throw new UnsupportedOperationException(method.getName());
         });
         PreparedStatement pst = proxy(PreparedStatement.class, (p, method, args) -> keys);
-        assertSame(failure, assertThrows(SQLException.class, () -> DAORows.assignGeneratedId(pst, id -> fail())));
+        assertSame(failure, assertThrows(SQLException.class, () -> DAOUtils.idGeneratoFromResultSet(pst, id -> fail())));
         assertTrue(closed.get());
     }
 

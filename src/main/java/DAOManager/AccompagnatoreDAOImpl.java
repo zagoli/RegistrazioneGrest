@@ -1,6 +1,9 @@
 package DAOManager;
 
+import DAOManager.Mappers.RegistratoDAOMapper;
+
 import Domain.Accompagnatore;
+import Utility.DAOUtils;
 
 import java.sql.*;
 import java.util.List;
@@ -21,7 +24,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
             pst.setString(2, a.getCognome());
             pst.setInt(3, a.getRegistrato().getId());
             pst.executeUpdate();
-            DAORows.assignGeneratedId(pst, a::setId);
+            DAOUtils.idGeneratoFromResultSet(pst, a::setId);
         }
     }
 
@@ -63,7 +66,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
              PreparedStatement pst = con.prepareStatement(FIND_ACCOMPAGNATORE_REGISTRATO_ID)) {
             pst.setInt(1, id);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, this::mapRowToAccompagnatore);
+                return DAOUtils.resultSetToList(rs, this::mapRowToAccompagnatore);
             }
         }
     }
@@ -73,7 +76,7 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
                 rs.getInt("aid"),
                 rs.getString("anome"),
                 rs.getString("acognome"),
-                IscrittoDAOMapper.registrato(rs, "re")
+                RegistratoDAOMapper.registrato(rs, "re")
         );
     }
 

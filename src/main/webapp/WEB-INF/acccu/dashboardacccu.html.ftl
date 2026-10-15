@@ -40,7 +40,7 @@
     </div>
 
     <div class="container shadow pt-2 pl-3 pr-3 pb-2 mt-4 bg-white">
-        <#if contatti??>
+        <#if cu??>
             <h5 class="text-center pb-1"> Contatti telefonici urgenze </h5>
             <#assign count = 0>
             <div class="table-responsive">
@@ -58,7 +58,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#list contatti as cu>
+                    <#list cu as cu>
                         <#assign count = count + 1>
                         <tr>
                             <th scope="row">${count}</th>

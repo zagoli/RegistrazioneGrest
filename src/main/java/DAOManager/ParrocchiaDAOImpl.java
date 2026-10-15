@@ -1,6 +1,7 @@
 package DAOManager;
 
 import Domain.Parrocchia;
+import Utility.DAOUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -63,7 +64,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_ALL_PARROCCHIA);
              ResultSet rs = pst.executeQuery()) {
-            return DAORows.readAll(rs, this::mapRowToParrocchia);
+            return DAOUtils.resultSetToList(rs, this::mapRowToParrocchia);
         }
     }
 
@@ -73,7 +74,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
              PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_NOME)) {
             pst.setString(1, name);
             try (ResultSet rs = pst.executeQuery()) {
-                return DAORows.readAll(rs, this::mapRowToParrocchia);
+                return DAOUtils.resultSetToList(rs, this::mapRowToParrocchia);
             }
         }
     }
