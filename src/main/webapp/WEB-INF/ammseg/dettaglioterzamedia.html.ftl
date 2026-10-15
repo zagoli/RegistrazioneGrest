@@ -12,7 +12,7 @@
                 <p>${terzamedia.id?c}</p>
             </div>
         </div>
-        <@dettaglioIscritto.anagraficaIscritto iscritto=terzamedia capitalize=true/>
+        <@dettaglioIscritto.anagraficaIscritto iscritto=terzamedia/>
         <@dettaglioIscritto.presenzaIscritto iscritto=terzamedia/>
         <@dettaglioIscritto.laboratorioIscritto iscritto=terzamedia/>
         <@dettaglioIscritto.appartenenzaIscritto iscritto=terzamedia/>

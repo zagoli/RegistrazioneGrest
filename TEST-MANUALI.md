@@ -113,7 +113,8 @@ strutture.
 
 Le sezioni applicative di visualizzazione sono divise per responsabilita:
 `struct\dettaglioIscritto.html.ftl` (anagrafica, appartenenza e presenze),
-`struct\riferimentiIscritto.html.ftl` (contatti, accompagnatori e registrato) e
+`struct\riferimentiIscritto.html.ftl` (contatti, accompagnatori, registrato e
+attivita genitore condivise anche dalle schede ragazzo/terza media) e
 `struct\avvisiValidazione.html.ftl` (avviso email).
 Le pagine importano direttamente queste librerie; `struct\macros.html.ftl`
 rimane soltanto un punto di ingresso compatibile, senza definizioni di macro.

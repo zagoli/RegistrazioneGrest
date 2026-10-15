@@ -29,7 +29,7 @@
                         <td> <#if rag[0].squadra.id!=0> ${rag[0].squadra.nome} </#if> </td>
                         <td> ${rag[0].laboratorio.descrizione[0..*15]}...</td>
                         <td>
-                            <i>R </i><b>${rag[0].registrato.telefono!""}</b> -
+                            <i>R </i><b>${rag[0].registrato.telefono}</b> -
                             <#list rag[2][0..*4] as cu>
                                 <i>${cu.relazione?capitalize+" "}</i>
                                 <b>${(cu.cellulare!)+" "+(cu.fisso!)}</b> -

@@ -12,7 +12,7 @@
                 <p>${animatore.id?c}</p>
             </div>
         </div>
-        <@dettaglioIscritto.anagraficaIscritto iscritto=animatore capitalize=true/>
+        <@dettaglioIscritto.anagraficaIscritto iscritto=animatore/>
         <div class="row">
             <div class="col-sm">
                 <strong>Codice Fiscale</strong>

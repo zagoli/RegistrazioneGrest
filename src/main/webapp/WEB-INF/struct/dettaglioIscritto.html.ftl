@@ -1,10 +1,10 @@
-<#macro anagraficaIscritto iscritto capitalize=false>
+<#macro anagraficaIscritto iscritto>
     <div class="row">
         <div class="col-sm">
             <strong>Nome</strong>
         </div>
         <div class="col-sm">
-            <p><#if capitalize>${iscritto.nome?capitalize}<#else>${iscritto.nome}</#if></p>
+            <p>${iscritto.nome?capitalize}</p>
         </div>
     </div>
     <div class="row">
@@ -12,7 +12,7 @@
             <strong>Cognome</strong>
         </div>
         <div class="col-sm">
-            <p><#if capitalize>${iscritto.cognome?capitalize}<#else>${iscritto.cognome}</#if></p>
+            <p>${iscritto.cognome?capitalize}</p>
         </div>
     </div>
     <div class="row">

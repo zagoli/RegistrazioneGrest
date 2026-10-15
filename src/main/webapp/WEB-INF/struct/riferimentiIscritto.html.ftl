@@ -114,7 +114,7 @@
                     <strong><i>Telefono</i></strong>
                 </div>
                 <div class="col-sm">
-                    <p>${registrato.telefono!""}</p>
+                    <p>${registrato.telefono}</p>
                 </div>
             </div>
             <div class="row">
@@ -125,17 +125,21 @@
                     <p>${(registrato.via!"")+" "+(registrato.civico!"")+" "+(registrato.localita!"")}</p>
                 </div>
             </div>
-            <#if attgen?size != 0>
-                <hr>
-                <strong> Attività genitore </strong>
-                <#list attgen as attivita>
-                    <div class="row">
-                        <div class="col-sm">
-                            <p>${attivita.descrizione}</p>
-                        </div>
-                    </div>
-                </#list>
-            </#if>
+            <@attivitaGenitore attivita=attgen/>
         </div>
     </div>
+</#macro>
+
+<#macro attivitaGenitore attivita>
+    <#if attivita?size != 0>
+        <hr>
+        <strong> Attività genitore </strong>
+        <#list attivita as disponibilita>
+            <div class="row">
+                <div class="col-sm">
+                    <p>${disponibilita.descrizione}</p>
+                </div>
+            </div>
+        </#list>
+    </#if>
 </#macro>

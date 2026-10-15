@@ -24,7 +24,7 @@
                         <td class="text-center">${rag[0].classe+rag[0].scuola.grado[0..0]?capitalize}</td>
                         <td> ${rag[1]?trim} </td>
                         <td>
-                            <i>R </i><b>${rag[0].registrato.telefono!""}</b> -
+                            <i>R </i><b>${rag[0].registrato.telefono}</b> -
                             <#list rag[2][0..*4] as cu>
                                 <i>${cu.relazione?capitalize+" "}</i><b>${(cu.cellulare!)+" "+(cu.fisso!)}</b> -
                             </#list>

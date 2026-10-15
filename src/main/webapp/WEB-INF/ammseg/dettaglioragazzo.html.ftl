@@ -12,7 +12,7 @@
                 <p>${ragazzo.id?c}</p>
             </div>
         </div>
-        <@dettaglioIscritto.anagraficaIscritto iscritto=ragazzo capitalize=true/>
+        <@dettaglioIscritto.anagraficaIscritto iscritto=ragazzo/>
         <@dettaglioIscritto.presenzaIscritto iscritto=ragazzo/>
         <@dettaglioIscritto.laboratorioIscritto iscritto=ragazzo/>
         <@dettaglioIscritto.appartenenzaIscritto iscritto=ragazzo/>

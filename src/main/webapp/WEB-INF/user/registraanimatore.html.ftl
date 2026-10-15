@@ -35,7 +35,7 @@
                     <label for="cellulare"> Numero di cellulare </label>
                     <input class="form-control" data-parsley-type="digits" data-parsley-length="[10, 10]" required
                            id="cellulare" name="cellulare" placeholder="Cellulare personale"
-                           value="${registrato.telefono!""}">
+                           value="${registrato.telefono}">
                 </div>
 
                 <@iscrizione.fasciaEtaAnimatore/>

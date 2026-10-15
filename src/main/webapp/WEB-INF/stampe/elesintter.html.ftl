@@ -26,7 +26,7 @@
                         <td> ${ter[0].laboratorio.descrizione[0..*15]}...</td>
                         <td> <#if ter[0].cellulare??> ${ter[0].cellulare} </#if> </td>
                         <td>
-                            <i>R </i><b>${ter[0].registrato.telefono!""}</b> -
+                            <i>R </i><b>${ter[0].registrato.telefono}</b> -
                             <#list ter[2][0..*4] as cu>
                                 <i>${cu.relazione?capitalize+" "}</i>
                                 <b>${(cu.cellulare!)+" "+(cu.fisso!)}</b> -

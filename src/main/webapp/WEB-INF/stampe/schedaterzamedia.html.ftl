@@ -1,4 +1,5 @@
 <#import "../struct/dettaglioIscritto.html.ftl" as dettaglioIscritto>
+<#import "../struct/riferimentiIscritto.html.ftl" as riferimentiIscritto>
 <#include "../struct/header.html.ftl">
 <div class="container content" onclick="window.print();">
     <div class="mt-3">
@@ -92,17 +93,7 @@
                 <strong>${quotaIscrizione}&euro;</strong>
             </div>
         </div>
-        <#if attgen?size != 0>
-            <hr>
-            <strong> Attività genitore </strong>
-            <#list attgen as attgen>
-                <div class="row">
-                    <div class="col-sm">
-                        <p>${attgen.descrizione}</p>
-                    </div>
-                </div>
-            </#list>
-        </#if>
+        <@riferimentiIscritto.attivitaGenitore attivita=attgen/>
     </div>
     <div class="mt-3 shadow pt-2 pl-3 pr-3">
         <div class="form-check">
