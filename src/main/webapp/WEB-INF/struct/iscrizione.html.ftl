@@ -1,6 +1,5 @@
 <#macro anagraficaIscritto tipo modifica=false iscritto={} registrato={} dataNascita="">
-    <#local ordine=(tipo == "animatore" && modifica)?then(["nome", "cognome"], ["cognome", "nome"])>
-    <#list ordine as campo>
+    <#list ["nome", "cognome"] as campo>
         <div class="form-group">
             <label for="${campo}">${campo?cap_first}</label>
             <input class="form-control" type="text" required id="${campo}" name="${campo}" placeholder="${campo?cap_first}"<#if campo == "nome"> autofocus</#if>
@@ -13,12 +12,12 @@
     </div>
 </#macro>
 
-<#macro presenzaGiornaliera tipo selezionata="C">
+<#macro presenzaGiornaliera selezionata="C">
     <div class="form-group">
-        <label>Presenza giornaliera<#if tipo == "animatore"> al Grest</#if></label> <br/>
+        <label>Presenza giornaliera al Grest</label> <br/>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="presenza" id="completo" value="C"<#if selezionata == "C"> checked</#if>>
-            <label class="form-check-label" for="completo"><#if tipo == "animatore">Completo<#else>Mattina e pomeriggio</#if></label>
+            <label class="form-check-label" for="completo">Mattina e pomeriggio</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M"<#if selezionata == "M"> checked</#if>>
@@ -33,7 +32,7 @@
 
 <#macro partecipazioneGrest tipo calendari modifica=false>
     <div class="form-group">
-        <label><#if tipo == "animatore">Periodo di partecipazione<#else>Partecipazione</#if></label><#if modifica || tipo == "animatore"> <br/></#if>
+        <label>Periodo di partecipazione</label>
         <#if modifica>
             <#list calendari as cal, partecipa>
                 <div class="form-check">
@@ -51,16 +50,16 @@
         </#if>
         <#if tipo != "animatore">
             <a class="btn btn-secondary btn-sm mt-1" href="javascript:;"
-               onClick="window.open('/RegistrazioneGrest/App/VisualizzaQuote?${(tipo == "ragazzo")?then("ragazzi", "terzamedia")}', '_blank', 'width=1000, height=${(tipo == "ragazzo")?then("900", "600")}, status=yes, scrollbars=no, location=yes');">clicca
+               onClick="window.open('/RegistrazioneGrest/App/VisualizzaQuote?${(tipo == "ragazzo")?then("ragazzi", "terzamedia")}', '_blank', 'width=1000, height=900, status=yes, scrollbars=no, location=yes');">clicca
                 qui per consultare le quote d'iscrizione</a>
         </#if>
     </div>
 </#macro>
 
-<#macro laboratorioIscritto tipo laboratori modifica=false iscritto={}>
+<#macro laboratorioIscritto laboratori modifica=false iscritto={}>
     <div class="form-group">
-        <label for="laboratorio"<#if !modifica && tipo != "animatore"> class="sr-only"</#if>><#if !modifica && tipo == "animatore">Selezionare un laboratorio<#else>Laboratorio</#if></label>
-        <select id="laboratorio" class="form-control" name="laboratorio"<#if !modifica && tipo != "animatore"> aria-describedby="helpLaboratorio"</#if>>
+        <label for="laboratorio">Selezionare un laboratorio</label>
+        <select id="laboratorio" class="form-control" name="laboratorio">
             <#list laboratori as lab>
                 <option value="${lab.id?c}"<#if modifica && lab.id == iscritto.laboratorio.id> selected</#if>>${lab.descrizione}</option>
             </#list>
@@ -79,23 +78,22 @@
     </div>
 </#macro>
 
-<#macro tesseramentoIscritto tipo circoli modifica=false iscritto={}>
+<#macro tesseramentoIscritto circoli modifica=false iscritto={}>
     <div class="form-group">
-        <label for="circolo"><#if tipo == "animatore"><#if modifica>Circolo NOI di iscrizione<#else>Tesseramento Circolo NOI</#if> <b><script type="text/javascript">var theDate = new Date();
-                                document.write(theDate.getFullYear());</script></b><#else>Circolo di tesseramento</#if></label>
+        <label for="circolo">Circolo di tesseramento NOI</label>
         <select id="circolo" class="form-control" name="circolo">
             <#list circoli as cir>
-                <option value="${cir.id?c}"<#if modifica && cir.id == iscritto.circolo.id> selected</#if>>${cir.nome} (${cir.luogo}<#if tipo == "animatore" && modifica> </#if>)</option>
+                <option value="${cir.id?c}"<#if modifica && cir.id == iscritto.circolo.id> selected</#if>>${cir.nome} (${cir.luogo})</option>
             </#list>
         </select>
     </div>
     <div class="form-group">
-        <label for="nTessera">Numero tessera Circolo <#if tipo == "animatore">NOI<#else>Noi <b><script type="text/javascript">var theDate = new Date();
-                                document.write(theDate.getFullYear());</script></b></#if></label>
+        <label for="nTessera">Numero tessera Circolo NOI <b><script type="text/javascript">var theDate = new Date();
+                                document.write(theDate.getFullYear());</script></b></label>
         <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control"
                data-parsley-length="[11, 11]" aria-describedby="helpNTessera"<#if modifica && iscritto.NTessera??> value="${iscritto.NTessera}"</#if>>
         <small id="helpNTessera" class="form-text text-muted">
-            Inserire il numero di tessera del Circolo <#if tipo == "animatore">NOI<#else>Noi</#if> se non si è <#if !modifica && tipo != "animatore">tesserati<#else>iscritti</#if> al Circolo <#if tipo == "animatore">NOI<#else>Noi</#if> di Balconi.
+            Inserire il numero di tessera del Circolo NOI se non si è tesserati al Circolo NOI di Balconi.
         </small>
     </div>
 </#macro>
@@ -120,9 +118,9 @@
         </div>
     </#if>
     <div class="form-group">
-        <label for="sezione"><#if tipo == "terzamedia" && !modifica>frequentante la classe terza media , sezione<#else>Sezione</#if></label>
+        <label for="sezione">Sezione</label>
         <input class="form-control" type="text" required id="sezione" name="sezione"
-               data-parsley-length="<#if tipo == "terzamedia">[1, 1]<#else>[1, 5]</#if>" placeholder="<#if tipo == "terzamedia">A<#elseif modifica>Classe<#else>sezione</#if>"<#if modifica> value="${iscritto.sezione}"</#if>>
+               data-parsley-length="<#if tipo == "terzamedia">[1, 1]<#else>[1, 5]</#if>" placeholder="A"<#if modifica> value="${iscritto.sezione}"</#if>>
     </div>
 </#macro>
 
@@ -144,7 +142,7 @@
     </div>
 </#macro>
 
-<#macro datiAccount registrato=false tipoUt=3>
+<#macro datiAccount registrato=false>
     <#local modifica=registrato?is_hash>
     <div class="form-group">
         <label for="nome">Nome</label>
@@ -162,22 +160,22 @@
     </div>
     <div class="form-group">
         <label for="telefono">Numero di telefono</label>
-        <input class="form-control" data-parsley-type="digits" data-parsley-length="<#if modifica>[10,10]<#else>[10, 10]</#if>"
-               <#if tipoUt == 3>required</#if> id="telefono" name="telefono" placeholder="Cellulare personale"<#if modifica && registrato.telefono??> value="${registrato.telefono}"</#if>>
+        <input class="form-control" data-parsley-type="digits" data-parsley-length="[10, 10]"
+               required id="telefono" name="telefono" placeholder="Cellulare personale"<#if modifica && registrato.telefono??> value="${registrato.telefono}"</#if>>
     </div>
     <div class="form-group">
-        <label for="localita"><#if modifica>Localita<#else>Località</#if></label>
-        <input class="form-control" type="text"<#if tipoUt == 3> required</#if> id="localita" name="localita"
+        <label for="localita">Località</label>
+        <input class="form-control" type="text" required id="localita" name="localita"
                placeholder="Localit&agrave"<#if modifica && registrato.localita??> value="${registrato.localita}"</#if>>
     </div>
     <div class="form-group">
         <label for="via">Via</label>
-        <input class="form-control" type="text"<#if tipoUt == 3> required</#if> id="via" name="via"
+        <input class="form-control" type="text" required id="via" name="via"
                placeholder="Via"<#if modifica && registrato.via??> value="${registrato.via}"</#if>>
     </div>
     <div class="form-group">
         <label for="civico">Numero civico</label>
-        <input class="form-control" type="text"<#if tipoUt == 3> required</#if> id="civico" name="civico"
+        <input class="form-control" type="text" required id="civico" name="civico"
                placeholder="Numero Civico"<#if modifica && registrato.civico??> value="${registrato.civico}"</#if>>
     </div>
 </#macro>

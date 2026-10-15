@@ -1,5 +1,5 @@
 <#import "../struct/iscrizione.html.ftl" as iscrizione>
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/avvisiValidazione.html.ftl" as avvisiValidazione>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
@@ -9,7 +9,7 @@
                 <h5>Iscrizione come animatore del Grest di Balconi</h5>
             </div>
             <#if INVALIDMAIL??>
-                <@ui.avvisoMailNonValida/>
+                <@avvisiValidazione.avvisoMailNonValida/>
             </#if>
             <form action="/RegistrazioneGrest/App/RegistraAnimatore" method="POST" data-parsley-validate id="mainForm">
 
@@ -21,15 +21,15 @@
                            name="codiceFiscale" data-parsley-length="[16, 16]">
                 </div>
 
-                <@iscrizione.presenzaGiornaliera tipo="animatore"/>
+                <@iscrizione.presenzaGiornaliera/>
 
                 <@iscrizione.partecipazioneGrest tipo="animatore" calendari=calendari/>
 
-                <@iscrizione.laboratorioIscritto tipo="animatore" laboratori=laboratori/>
+                <@iscrizione.laboratorioIscritto laboratori=laboratori/>
 
                 <@iscrizione.parrocchiaIscritto parrocchie=parrocchie/>
 
-                <@iscrizione.tesseramentoIscritto tipo="animatore" circoli=circoli/>
+                <@iscrizione.tesseramentoIscritto circoli=circoli/>
 
                 <div class="form-group">
                     <label for="cellulare"> Numero di cellulare </label>

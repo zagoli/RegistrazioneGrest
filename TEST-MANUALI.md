@@ -44,7 +44,7 @@ il dettaglio, la stampa e l'esportazione quando espongono quel campo.
 | F02 | Utente o segretario abilitato, Modifica terza media | Richieste, note alimentari/terapie, numero tessera NOI, cellulare facoltativo | Nessun vecchio valore ricompare. Email e gli altri dati obbligatori restano invariati. |
 | F03 | Utente o segretario abilitato, Modifica animatore | Numero tessera NOI | La tessera viene cancellata; cellulare, email, codice fiscale e responsabilita non vengono alterati. |
 | F04 | Utente, Accompagnatori e Contatti telefonici Urgenze -> Modifica contatto | Cellulare e fisso, prima uno alla volta e poi entrambi | I recapiti svuotati vengono eliminati; nome, cognome e relazione restano salvati. |
-| F05 | Amministratore/segretario, Modifica Profilo quando i campi non sono obbligatori | Telefono, localita, via e numero civico | I valori svuotati sono eliminati. Per l'utente ordinario restano invece attive le obbligatorieta della pagina. |
+| F05 | Qualsiasi ruolo, Modifica Profilo | Telefono, localita, via e numero civico | Questi campi sono NOT NULL nello schema Registrato: sono obbligatori per tutti. Il browser impedisce l'invio vuoto; anche il server rifiuta valori assenti, vuoti o solo spazi, senza salvare null. |
 | F06 | Tutti i form modificati che mostrano altri campi facoltativi | Ogni ulteriore campo facoltativo presente | Ripetere valorizzazione/salvataggio/cancellazione/rilettura. Nessun campo non presente nel form viene cancellato indirettamente. |
 | F07 | Utente, Collaborazione genitori | Data/disponibilita testuale facoltativa della nuova collaborazione | Inserire una disponibilita senza testo facoltativo: il dato e assente, senza testo spurio nel riepilogo. Questa pagina inserisce una nuova disponibilita, non modifica un valore precedente. |
 
@@ -82,7 +82,7 @@ Non e sufficiente vedere un input vuoto subito dopo il salvataggio.
 |---|---|---|---|
 | U01 | Nuovo utente di prova, Registrati; poi Modifica Profilo | Registrare account, accedere, modificare i dati; provare email non valida e validazioni password. | Campi e messaggi invariati; modifiche persistenti; password non alterata dalla modifica del profilo. |
 | U02 | Utente, Accompagnatori e Contatti telefonici Urgenze | Inserire/modificare accompagnatore e contatto; cancellare solo record di prova. | Liste, azioni e collegamenti corretti; nessun record di un altro utente coinvolto. |
-| U03 | Amministratore, gestione segretari e laboratori | Inserire/modificare record di prova e verificarne visibilita/permessi. | Form, riepiloghi e azioni corretti; eventuali eliminazioni limitate ai dati di prova. |
+| U03 | Amministratore, gestione segretari e laboratori | Inserire/modificare record di prova e verificarne visibilita/permessi. Nel nuovo segretario compilare anche telefono, localita, via e civico. | I quattro campi account sono obbligatori e vengono salvati; permessi di modifica, password e azioni restano invariati. Eventuali eliminazioni limitate ai dati di prova. |
 | S01 | Segretario, schede stampabili dei tre iscritti | Aprire le schede e anteprima di stampa; confrontare dati, settimane, testo, firme e quota. | Layout leggibile, sezioni specifiche conservate, nessun valore facoltativo eliminato ricompare. |
 | S02 | Segretario, stampe elenchi sintetici, mensa, anticipo, presenze squadre/laboratori/animatori | Stampare con settimane, squadra e laboratorio diversi. | Filtri, ordine e colonne corretti; contatti e periodi corrispondono ai record. |
 | S03 | Amministratore, esportazione massiva | Scaricare Excel e aprire i tre fogli. Controllare ordine colonne, date, settimane, importi e valori facoltativi cancellati. | Nomi e colonne invariati; importi numerici; valori cancellati assenti senza errori o testo spurio. |
@@ -111,13 +111,36 @@ La revisione FreeMarker mantiene espliciti HTML, checkbox, input, intestazioni
 di tabella, layout e script di pagina. Non ci sono macro generiche per queste
 strutture.
 
-`struct\macros.html.ftl` contiene soltanto sezioni applicative di visualizzazione
-(anagrafica e dati comuni di Iscritto, presenze, contatti, accompagnatori e
-registrato). `struct\iscrizione.html.ftl` condivide le sezioni applicative dei
+Le sezioni applicative di visualizzazione sono divise per responsabilita:
+`struct\dettaglioIscritto.html.ftl` (anagrafica, appartenenza e presenze),
+`struct\riferimentiIscritto.html.ftl` (contatti, accompagnatori e registrato) e
+`struct\avvisiValidazione.html.ftl` (avviso email).
+Le pagine importano direttamente queste librerie; `struct\macros.html.ftl`
+rimane soltanto un punto di ingresso compatibile, senza definizioni di macro.
+`struct\iscrizione.html.ftl` condivide le sezioni applicative dei
 sei form degli iscritti e i dati account tra registrazione e modifica.
-Le due pagine di ogni coppia restano distinte: conservano ordine dei campi,
-testi, consensi, submit, sblocco e annotazioni propri di ciascun flusso.
-I controller e il refactoring Java non sono cambiati in questa revisione.
+Le due pagine di ogni coppia restano distinte: conservano consensi, submit,
+sblocco e annotazioni propri di ciascun flusso. Sono invece uniformate,
+su scelta dell'utente, le seguenti presentazioni:
+
+| Sezione | Presentazione comune |
+|---|---|
+| Anagrafica iscritti | Nome prima di Cognome |
+| Presenza | "Presenza giornaliera al Grest", opzione "Mattina e pomeriggio" |
+| Settimane | "Periodo di partecipazione", senza br aggiuntivo dopo l'etichetta |
+| Quote | Popup alto 900 per ragazzi e terza media; nessun link per animatori |
+| Laboratorio | "Selezionare un laboratorio", visibile in tutti i form |
+| Circolo e tessera | "Circolo di tesseramento NOI"; "Numero tessera Circolo NOI" con anno corrente |
+| Aiuto tessera | "Inserire il numero di tessera del Circolo NOI se non si e tesserati al Circolo NOI di Balconi." (con accento nel template) |
+| Opzioni circolo | Nome (luogo), spazio prima della parentesi aperta, nessuno prima della chiusa |
+| Sezione scolastica | Etichetta "Sezione", placeholder "A" |
+| Account | "Localita" con accento; validazione telefono [10, 10]; telefono, localita, via e civico obbligatori per tutti, anche nel nuovo segretario |
+
+Restano specifiche le regole scolastiche (classe solo per ragazzi, sezione di
+1 carattere per terza media e 1-5 per ragazzi), la precompilazione animatore
+dall'account, i valori salvati in modifica e tutte le settimane selezionate in
+registrazione. Nel server cambia soltanto la validazione dei quattro campi
+account NOT NULL, che non sono piu trattati come facoltativi.
 
 Rispetto al precedente refactoring, sono stati rivisti i 58 template di
 pagina/frammento sotto elencati e la libreria di visualizzazione; si aggiunge
@@ -131,7 +154,7 @@ il precedente livello di astrazione HTML, mantenendo l'output.
 | `err` | `403`, `404`, `errore`, `profilodisabilitato` |
 | `stampe` | `anticipo`, `collaborazione`, `elesintan`, `elesintrag`, `elesintter`, `mensa`, `presgiornani`, `pressetlab`, `pressetsqu`, `schedaanimatore`, `schedaragazzo`, `schedaterzamedia` |
 | `user` | `dashboardattgen`, `dashboardutente`, `login`, `modificaanimatore`, `modificapassword`, `modificaragazzo`, `modificaterzamedia`, `modificautente`, `quoteragazzi`, `quoteterzamedia`, `registraanimatore`, `registraragazzo`, `registraterzamedia`, `registrautente`, `resetpassword` |
-| `struct` | `macros.html.ftl`, `iscrizione.html.ftl`: sezioni applicative condivise, verificate attraverso le pagine chiamanti |
+| `struct` | `dettaglioIscritto.html.ftl`, `riferimentiIscritto.html.ftl`, `avvisiValidazione.html.ftl`, `iscrizione.html.ftl`; `macros.html.ftl` e soltanto un ingresso di compatibilita |
 
 Non modificati: `ammseg\annotazioni.html.ftl`, i due template JSON, il
 frammento `user\sbloccoiscrizione.html.ftl` e header/navbar/footer in `struct`.

@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 /** Recording is deliberately opt-in and never overwrites an existing oracle. */
 public final class Baseline {
@@ -19,6 +20,10 @@ public final class Baseline {
     }
 
     public static void verify(String name, String actual) throws IOException {
+        verify(name, actual, UnaryOperator.identity());
+    }
+
+    public static void verify(String name, String actual, UnaryOperator<String> approvedChanges) throws IOException {
         String directory = System.getProperty("dry.baseline");
         Assertions.assertNotNull(directory, "Supply -Ddry.baseline=<external baseline directory>");
         Path root = Path.of(directory).toAbsolutePath().normalize();
@@ -32,6 +37,6 @@ public final class Baseline {
             Files.writeString(file, actual, StandardCharsets.UTF_8);
         }
         Assertions.assertTrue(Files.exists(file), "Missing baseline: " + file);
-        Assertions.assertEquals(Files.readString(file, StandardCharsets.UTF_8), actual, name);
+        Assertions.assertEquals(approvedChanges.apply(Files.readString(file, StandardCharsets.UTF_8)), actual, name);
     }
 }

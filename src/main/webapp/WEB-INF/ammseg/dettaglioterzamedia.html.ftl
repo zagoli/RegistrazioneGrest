@@ -1,5 +1,6 @@
 <#import "annotazioni.html.ftl" as note>
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/dettaglioIscritto.html.ftl" as dettaglioIscritto>
+<#import "../struct/riferimentiIscritto.html.ftl" as riferimentiIscritto>
 <#include "../struct/header.html.ftl">
 <div class="container mt-3 content">
     <div class="shadow py-2 pl-3 pr-3 bg-white">
@@ -11,10 +12,10 @@
                 <p>${terzamedia.id?c}</p>
             </div>
         </div>
-        <@ui.anagraficaIscritto iscritto=terzamedia capitalize=true/>
-        <@ui.presenzaIscritto iscritto=terzamedia/>
-        <@ui.laboratorioIscritto iscritto=terzamedia/>
-        <@ui.appartenenzaIscritto iscritto=terzamedia/>
+        <@dettaglioIscritto.anagraficaIscritto iscritto=terzamedia capitalize=true/>
+        <@dettaglioIscritto.presenzaIscritto iscritto=terzamedia/>
+        <@dettaglioIscritto.laboratorioIscritto iscritto=terzamedia/>
+        <@dettaglioIscritto.appartenenzaIscritto iscritto=terzamedia/>
         <div class="row">
             <div class="col-sm">
                 <strong>Scuola</strong>
@@ -31,9 +32,9 @@
                 <p>${terzamedia.sezione}</p>
             </div>
         </div>
-        <@ui.tesseraIscritto iscritto=terzamedia/>
+        <@dettaglioIscritto.tesseraIscritto iscritto=terzamedia/>
 
-        <@ui.presenzaSettimanale calendari=calendari/>
+        <@dettaglioIscritto.presenzaSettimanale calendari=calendari/>
 
         <div class="row">
             <div class="col-sm">
@@ -121,16 +122,16 @@
 
     <#--contatti urgenze-->
     <#if cu??>
-        <@ui.contattiUrgenze contatti=cu/>
+        <@riferimentiIscritto.contattiUrgenze contatti=cu/>
     </#if>
 
     <#--accompagnatori-->
     <#if accompagnatori??>
-        <@ui.accompagnatoriAutorizzati accompagnatori=accompagnatori/>
+        <@riferimentiIscritto.accompagnatoriAutorizzati accompagnatori=accompagnatori/>
     </#if>
 
     <#--info registrato-->
-    <@ui.informazioniRegistrato registrato=terzamedia.registrato attgen=attgen/>
+    <@riferimentiIscritto.informazioniRegistrato registrato=terzamedia.registrato attgen=attgen/>
 
     <#-- Annotazioni segreteria -->
     <@note.pannelloInfoDettaglio annotazioni=annotazioni/>

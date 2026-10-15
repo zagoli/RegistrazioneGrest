@@ -90,15 +90,44 @@ class RequestFieldsOptionalClearingTest {
                 cases("Contatto", ContattoUrgenze::new, RequestFields::contatto, List.of(
                         new Field<>("cellulare", ContattoUrgenze::setCellulare, ContattoUrgenze::getCellulare),
                         new Field<>("fisso", ContattoUrgenze::setFisso, ContattoUrgenze::getFisso))),
-                cases("Account", Registrato::new, RequestFields::account, List.of(
-                        new Field<>("telefono", Registrato::setTelefono, Registrato::getTelefono),
-                        new Field<>("localita", Registrato::setLocalita, Registrato::getLocalita),
-                        new Field<>("via", Registrato::setVia, Registrato::getVia),
-                        new Field<>("civico", Registrato::setCivico, Registrato::getCivico))),
                 cases("AttivitaGen", RelCollabora::new,
                         (request, bean) -> RequestFields.optionalText(request, "data", bean::setData),
                         List.of(new Field<>("data", RelCollabora::setData, RelCollabora::getData)))
         ).flatMap(Function.identity());
+    }
+
+    @TestFactory
+    Stream<DynamicTest> notNullAccountFieldsRejectMissingEmptyAndBlankValues() {
+        return Stream.of("telefono", "localita", "via", "civico").flatMap(field ->
+                Stream.of("missing", "empty", "blank").map(mode -> DynamicTest.dynamicTest(field + "." + mode, () -> {
+                    Map<String, String> parameters = requiredParameters();
+                    parameters.putAll(Map.of("telefono", "0000000000", "localita", "Balconi",
+                            "via", "Via di prova", "civico", "1"));
+                    if (mode.equals("missing")) {
+                        parameters.remove(field);
+                    } else {
+                        parameters.put(field, mode.equals("empty") ? "" : " ");
+                    }
+                    Registrato account = new Registrato();
+                    account.setNome("Saved name");
+                    IllegalArgumentException error = assertThrows(IllegalArgumentException.class,
+                            () -> RequestFields.account(request(parameters), account));
+                    assertTrue(error.getMessage().contains(field));
+                    assertEquals("Saved name", account.getNome());
+                })));
+    }
+
+    @Test
+    void notNullAccountFieldsAreSavedWhenPresent() {
+        Map<String, String> parameters = requiredParameters();
+        parameters.putAll(Map.of("telefono", "0000000000", "localita", "Balconi",
+                "via", "Via di prova", "civico", "1"));
+        Registrato account = new Registrato();
+        RequestFields.account(request(parameters), account);
+        assertEquals("0000000000", account.getTelefono());
+        assertEquals("Balconi", account.getLocalita());
+        assertEquals("Via di prova", account.getVia());
+        assertEquals("1", account.getCivico());
     }
 
     @Test

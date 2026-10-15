@@ -1,5 +1,5 @@
 <#import "../struct/iscrizione.html.ftl" as iscrizione>
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/avvisiValidazione.html.ftl" as avvisiValidazione>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
@@ -9,7 +9,7 @@
                 <h5>Iscrizione al Grest di Balconi come aiuto animatore</h5>
             </div>
             <#if INVALIDMAIL??>
-                <@ui.avvisoMailNonValida/>
+                <@avvisiValidazione.avvisoMailNonValida/>
             </#if>
             <form action="/RegistrazioneGrest/App/RegistraTerzamedia" method="POST" data-parsley-validate=""
                   id="mainForm">
@@ -20,7 +20,7 @@
 
                 <@iscrizione.parrocchiaIscritto parrocchie=parrocchie/>
 
-                <@iscrizione.tesseramentoIscritto tipo="terzamedia" circoli=circoli/>
+                <@iscrizione.tesseramentoIscritto circoli=circoli/>
 
                 <@iscrizione.scuolaIscritto tipo="terzamedia" scuole=scuole/>
 
@@ -39,14 +39,14 @@
                 <h3 class="text-center font-weight-bold text-uppercase"> 2 - partecipazione al grest nel periodo
                     segnato </h3>
 
-                <@iscrizione.presenzaGiornaliera tipo="terzamedia"/>
+                <@iscrizione.presenzaGiornaliera/>
 
                 <@iscrizione.partecipazioneGrest tipo="terzamedia" calendari=calendari/>
 
                 <h3 class="text-center font-weight-bold text-uppercase"> 3 - scelta del laboratorio</h3>
                 <p>Durante il Grest scelgo di svolgere la seguente attività</p>
 
-                <@iscrizione.laboratorioIscritto tipo="terzamedia" laboratori=laboratori/>
+                <@iscrizione.laboratorioIscritto laboratori=laboratori/>
 
                 <p>
                     In relazione al numero di ragazzi, ai laboratori scelti e al numero di  animatori iscritti,

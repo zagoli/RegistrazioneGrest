@@ -15,14 +15,14 @@
 
                 <@iscrizione.parrocchiaIscritto parrocchie=parrocchie/>
 
-                <@iscrizione.tesseramentoIscritto tipo="ragazzo" circoli=circoli/>
+                <@iscrizione.tesseramentoIscritto circoli=circoli/>
 
                 <@iscrizione.scuolaIscritto tipo="ragazzo" scuole=scuole/>
 
                 <h3 class="text-center font-weight-bold text-uppercase"> 2 - partecipazione al grest nel periodo
                     segnato </h3>
 
-                <@iscrizione.presenzaGiornaliera tipo="ragazzo"/>
+                <@iscrizione.presenzaGiornaliera/>
 
                 <@iscrizione.partecipazioneGrest tipo="ragazzo" calendari=calendari/>
 
@@ -31,7 +31,7 @@
                     al grest </h3>
                 <p>Durante il Grest scelgo di svolgere la seguente attività</p>
 
-                <@iscrizione.laboratorioIscritto tipo="ragazzo" laboratori=laboratori/>
+                <@iscrizione.laboratorioIscritto laboratori=laboratori/>
 
                 <p>
                     In relazione al numero di ragazzi, ai laboratori scelti e al numero di  animatori iscritti,

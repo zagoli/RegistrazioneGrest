@@ -1,5 +1,6 @@
 <#import "annotazioni.html.ftl" as note>
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/dettaglioIscritto.html.ftl" as dettaglioIscritto>
+<#import "../struct/riferimentiIscritto.html.ftl" as riferimentiIscritto>
 <#include "../struct/header.html.ftl">
 <div class="container mt-3 content">
     <div class="shadow py-2 pl-3 pr-3 bg-white">
@@ -11,7 +12,7 @@
                 <p>${animatore.id?c}</p>
             </div>
         </div>
-        <@ui.anagraficaIscritto iscritto=animatore capitalize=true/>
+        <@dettaglioIscritto.anagraficaIscritto iscritto=animatore capitalize=true/>
         <div class="row">
             <div class="col-sm">
                 <strong>Codice Fiscale</strong>
@@ -20,7 +21,7 @@
                 <p>${animatore.codiceFiscale}</p>
             </div>
         </div>
-        <@ui.presenzaIscritto iscritto=animatore/>
+        <@dettaglioIscritto.presenzaIscritto iscritto=animatore/>
         <div class="row">
             <div class="col-sm">
                 <strong>Cellulare personale</strong>
@@ -61,8 +62,8 @@
                 <p <#if animatore.responsabileLaboratorio>class="mark"</#if>>${animatore.laboratorio.descrizione}</p>
             </div>
         </div>
-        <@ui.appartenenzaIscritto iscritto=animatore/>
-        <@ui.tesseraIscritto iscritto=animatore/>
+        <@dettaglioIscritto.appartenenzaIscritto iscritto=animatore/>
+        <@dettaglioIscritto.tesseraIscritto iscritto=animatore/>
         <#if animatore.squadra.id!=0>
             <div class="row">
                 <div class="col-sm">
@@ -74,21 +75,21 @@
             </div>
         </#if>
 
-        <@ui.presenzaSettimanale calendari=calendari/>
+        <@dettaglioIscritto.presenzaSettimanale calendari=calendari/>
     </div>
 
     <#--contatti urgenze-->
     <#if cu??>
-        <@ui.contattiUrgenze contatti=cu/>
+        <@riferimentiIscritto.contattiUrgenze contatti=cu/>
     </#if>
 
     <#--accompagnatori-->
     <#if accompagnatori??>
-        <@ui.accompagnatoriAutorizzati accompagnatori=accompagnatori/>
+        <@riferimentiIscritto.accompagnatoriAutorizzati accompagnatori=accompagnatori/>
     </#if>
 
     <#--info registrato-->
-    <@ui.informazioniRegistrato registrato=animatore.registrato/>
+    <@riferimentiIscritto.informazioniRegistrato registrato=animatore.registrato/>
 
     <#-- Annotazioni segreteria -->
     <@note.pannelloInfoDettaglio annotazioni=annotazioni/>

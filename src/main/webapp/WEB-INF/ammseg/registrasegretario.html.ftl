@@ -1,3 +1,4 @@
+<#import "../struct/iscrizione.html.ftl" as iscrizione>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <#if !DONE>
@@ -8,20 +9,7 @@
                     <h5>Registrazione nuovo segretario</h5>
                 </div>
                 <form action="/RegistrazioneGrest/App/RegistraUtente" method="POST" data-parsley-validate>
-                    <div class="form-group">
-                        <label for="nome"> Nome </label>
-                        <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome"
-                               autofocus data-parsley-length="[2, 50]">
-                    </div>
-                    <div class="form-group">
-                        <label for="cognome"> Cognome </label>
-                        <input class="form-control" type="text" required id="cognome" name="cognome"
-                               placeholder="Cognome" data-parsley-length="[2, 50]">
-                    </div>
-                    <div class="form-group">
-                        <label for="email"> E-Mail </label>
-                        <input class="form-control" type="email" required id="email" name="mail" placeholder="E-Mail">
-                    </div>
+                    <@iscrizione.datiAccount/>
                     <div class="form-group">
                         <label for="pswd"> Password </label>
                         <input class="form-control" type="password" required id="pswd" name="password"

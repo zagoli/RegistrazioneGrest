@@ -14,15 +14,15 @@
 
                 <@iscrizione.anagraficaIscritto tipo="ragazzo" modifica=true iscritto=ragazzo dataNascita=dataNascita/>
 
-                <@iscrizione.presenzaGiornaliera tipo="ragazzo" selezionata=ragazzo.presenza/>
+                <@iscrizione.presenzaGiornaliera selezionata=ragazzo.presenza/>
 
                 <@iscrizione.partecipazioneGrest tipo="ragazzo" calendari=calendari modifica=true/>
 
-                <@iscrizione.laboratorioIscritto tipo="ragazzo" modifica=true iscritto=ragazzo laboratori=laboratori/>
+                <@iscrizione.laboratorioIscritto modifica=true iscritto=ragazzo laboratori=laboratori/>
 
                 <@iscrizione.parrocchiaIscritto parrocchie=parrocchie selezionata=ragazzo.parrocchia.id/>
 
-                <@iscrizione.tesseramentoIscritto tipo="ragazzo" modifica=true iscritto=ragazzo circoli=circoli/>
+                <@iscrizione.tesseramentoIscritto modifica=true iscritto=ragazzo circoli=circoli/>
 
 
                 <@iscrizione.scuolaIscritto tipo="ragazzo" modifica=true iscritto=ragazzo scuole=scuole/>

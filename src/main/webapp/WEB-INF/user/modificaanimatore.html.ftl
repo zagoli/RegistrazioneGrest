@@ -1,6 +1,6 @@
 <#import "../struct/iscrizione.html.ftl" as iscrizione>
 <#import "../ammseg/annotazioni.html.ftl" as note>
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/avvisiValidazione.html.ftl" as avvisiValidazione>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
@@ -8,7 +8,7 @@
         <div class="container">
             <h5 class="title text-center">Modifica l'iscrizione come animatore</h5>
             <#if INVALIDMAIL??>
-                <@ui.avvisoMailNonValida/>
+                <@avvisiValidazione.avvisoMailNonValida/>
             </#if>
             <form action="/RegistrazioneGrest/App/ModificaAnimatore" method="POST" data-parsley-validate>
 
@@ -22,15 +22,15 @@
                            data-parsley-length="[16, 16]" value="${animatore.codiceFiscale}">
                 </div>
 
-                <@iscrizione.presenzaGiornaliera tipo="animatore" selezionata=animatore.presenza/>
+                <@iscrizione.presenzaGiornaliera selezionata=animatore.presenza/>
 
                 <@iscrizione.partecipazioneGrest tipo="animatore" calendari=calendari modifica=true/>
 
-                <@iscrizione.laboratorioIscritto tipo="animatore" modifica=true iscritto=animatore laboratori=laboratori/>
+                <@iscrizione.laboratorioIscritto modifica=true iscritto=animatore laboratori=laboratori/>
 
                 <@iscrizione.parrocchiaIscritto parrocchie=parrocchie selezionata=animatore.parrocchia.id/>
 
-                <@iscrizione.tesseramentoIscritto tipo="animatore" modifica=true iscritto=animatore circoli=circoli/>
+                <@iscrizione.tesseramentoIscritto modifica=true iscritto=animatore circoli=circoli/>
 
                 <div class="form-group">
                     <label for="cellulare"> Numero di cellulare </label>

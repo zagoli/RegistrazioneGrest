@@ -1,4 +1,4 @@
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/dettaglioIscritto.html.ftl" as dettaglioIscritto>
 <#include "../struct/header.html.ftl">
 <div class="container content" onclick="window.print();">
     <div class="mt-3">
@@ -6,10 +6,10 @@
             dell'iscrizione </p>
     </div>
     <div class="shadow pt-2 pl-3 pr-3">
-        <@ui.anagraficaIscritto iscritto=ragazzo/>
-        <@ui.presenzaIscritto iscritto=ragazzo/>
-        <@ui.laboratorioIscritto iscritto=ragazzo/>
-        <@ui.appartenenzaIscritto iscritto=ragazzo/>
+        <@dettaglioIscritto.anagraficaIscritto iscritto=ragazzo/>
+        <@dettaglioIscritto.presenzaIscritto iscritto=ragazzo/>
+        <@dettaglioIscritto.laboratorioIscritto iscritto=ragazzo/>
+        <@dettaglioIscritto.appartenenzaIscritto iscritto=ragazzo/>
         <div class="row">
             <div class="col-sm">
                 <strong>Scuola</strong>
@@ -26,9 +26,9 @@
                 <p>${ragazzo.classe+ragazzo.sezione}</p>
             </div>
         </div>
-        <@ui.tesseraIscritto iscritto=ragazzo/>
+        <@dettaglioIscritto.tesseraIscritto iscritto=ragazzo/>
 
-        <@ui.presenzaSettimanale calendari=calendari/>
+        <@dettaglioIscritto.presenzaSettimanale calendari=calendari/>
 
         <#if ragazzo.richieste??>
             <div class="row">

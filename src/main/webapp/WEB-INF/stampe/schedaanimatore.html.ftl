@@ -1,11 +1,11 @@
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/dettaglioIscritto.html.ftl" as dettaglioIscritto>
 <#include "../struct/header.html.ftl">
 <div class="container content" onclick="window.print();">
     <div class="mt-3">
         <p class="font-weight-bold text-uppercase text-center"> da consegnare al parroco </p>
     </div>
     <div class="shadow pt-2 pl-3 pr-3">
-        <@ui.anagraficaIscritto iscritto=animatore/>
+        <@dettaglioIscritto.anagraficaIscritto iscritto=animatore/>
         <div class="row">
             <div class="col-sm">
                 <strong>Codice fiscale</strong>
@@ -14,8 +14,8 @@
                 <p>${animatore.codiceFiscale}</p>
             </div>
         </div>
-        <@ui.presenzaIscritto iscritto=animatore animatore=true/>
-        <@ui.laboratorioIscritto iscritto=animatore/>
+        <@dettaglioIscritto.presenzaIscritto iscritto=animatore animatore=true/>
+        <@dettaglioIscritto.laboratorioIscritto iscritto=animatore/>
         <div class="row">
             <div class="col-sm">
                 <strong>Preferenza fascia d'età ragazzi</strong>
@@ -32,10 +32,10 @@
                 </p>
             </div>
         </div>
-        <@ui.appartenenzaIscritto iscritto=animatore/>
-        <@ui.tesseraIscritto iscritto=animatore/>
+        <@dettaglioIscritto.appartenenzaIscritto iscritto=animatore/>
+        <@dettaglioIscritto.tesseraIscritto iscritto=animatore/>
 
-        <@ui.presenzaSettimanale calendari=calendari/>
+        <@dettaglioIscritto.presenzaSettimanale calendari=calendari/>
 
         <div class="row">
             <div class="col-sm">

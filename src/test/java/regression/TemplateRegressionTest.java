@@ -71,7 +71,8 @@ public class TemplateRegressionTest {
                     cfg.getTemplate(name).process(model(name, scenario), output);
                     String canonical = name.endsWith(".json.ftl") ? output.toString().trim()
                             : normalize(output.toString());
-                    Baseline.verify("templates/" + name + "/" + scenario, canonical);
+                    Baseline.verify("templates/" + name + "/" + scenario, canonical,
+                            original -> ApprovedFormChanges.apply(name, original));
                 })));
     }
 
@@ -107,7 +108,7 @@ public class TemplateRegressionTest {
         return String.join("\n", result);
     }
 
-    private static String normalizeTag(String token) {
+    static String normalizeTag(String token) {
         if (token.startsWith("</") || token.startsWith("<!") || token.equals("<")) return token.strip();
         Matcher attrs = ATTRIBUTES.matcher(token.substring(1, token.length() - 1));
         if (!attrs.find()) return token;

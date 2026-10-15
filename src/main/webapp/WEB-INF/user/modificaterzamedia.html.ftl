@@ -1,6 +1,6 @@
 <#import "../struct/iscrizione.html.ftl" as iscrizione>
 <#import "../ammseg/annotazioni.html.ftl" as note>
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/avvisiValidazione.html.ftl" as avvisiValidazione>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container mt-4 content">
@@ -10,7 +10,7 @@
                 <h5>Modifica terza media</h5>
             </div>
             <#if INVALIDMAIL??>
-                <@ui.avvisoMailNonValida/>
+                <@avvisiValidazione.avvisoMailNonValida/>
             </#if>
             <form action="/RegistrazioneGrest/App/ModificaTerzamedia" method="POST" data-parsley-validate="">
 
@@ -18,15 +18,15 @@
 
                 <@iscrizione.anagraficaIscritto tipo="terzamedia" modifica=true iscritto=terzamedia dataNascita=dataNascita/>
 
-                <@iscrizione.presenzaGiornaliera tipo="terzamedia" selezionata=terzamedia.presenza/>
+                <@iscrizione.presenzaGiornaliera selezionata=terzamedia.presenza/>
 
                 <@iscrizione.partecipazioneGrest tipo="terzamedia" calendari=calendari modifica=true/>
 
-                <@iscrizione.laboratorioIscritto tipo="terzamedia" modifica=true iscritto=terzamedia laboratori=laboratori/>
+                <@iscrizione.laboratorioIscritto modifica=true iscritto=terzamedia laboratori=laboratori/>
 
                 <@iscrizione.parrocchiaIscritto parrocchie=parrocchie selezionata=terzamedia.parrocchia.id/>
 
-                <@iscrizione.tesseramentoIscritto tipo="terzamedia" modifica=true iscritto=terzamedia circoli=circoli/>
+                <@iscrizione.tesseramentoIscritto modifica=true iscritto=terzamedia circoli=circoli/>
 
                 <@iscrizione.scuolaIscritto tipo="terzamedia" modifica=true iscritto=terzamedia scuole=scuole/>
 

@@ -1,5 +1,5 @@
 <#import "../struct/iscrizione.html.ftl" as iscrizione>
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/avvisiValidazione.html.ftl" as avvisiValidazione>
 <#include "../struct/header.html.ftl">
 <#include "../struct/navbar.html.ftl">
 <div class="container pt-4 content">
@@ -9,10 +9,10 @@
                 <h5>Modifica account</h5>
             </div>
             <#if INVALIDMAIL??>
-                <@ui.avvisoMailNonValida/>
+                <@avvisiValidazione.avvisoMailNonValida/>
             </#if>
             <form action="/RegistrazioneGrest/App/ModificaUtente" method="POST" data-parsley-validate>
-                <@iscrizione.datiAccount registrato=registrato tipoUt=tipoUt/>
+                <@iscrizione.datiAccount registrato=registrato/>
                 <div class="pt-3 form-group">
                     <input class="form-control btn btn-primary" type="submit" value="Conferma">
                 </div>

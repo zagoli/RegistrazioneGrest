@@ -52,13 +52,25 @@ public final class RequestFields {
     }
 
     public static void account(HttpServletRequest request, Registrato registrato) {
+        String telefono = requiredAccountText(request, "telefono");
+        String localita = requiredAccountText(request, "localita");
+        String via = requiredAccountText(request, "via");
+        String civico = requiredAccountText(request, "civico");
         registrato.setMail(request.getParameter("mail"));
         registrato.setNome(request.getParameter("nome"));
         registrato.setCognome(request.getParameter("cognome"));
-        optionalText(request, "telefono", registrato::setTelefono);
-        optionalText(request, "localita", registrato::setLocalita);
-        optionalText(request, "via", registrato::setVia);
-        optionalText(request, "civico", registrato::setCivico);
+        registrato.setTelefono(telefono);
+        registrato.setLocalita(localita);
+        registrato.setVia(via);
+        registrato.setCivico(civico);
+    }
+
+    private static String requiredAccountText(HttpServletRequest request, String name) {
+        String value = request.getParameter(name);
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException("Campo account obbligatorio: " + name);
+        }
+        return value;
     }
 
     public static void animatore(HttpServletRequest request, Animatore animatore) {

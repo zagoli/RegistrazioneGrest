@@ -1,5 +1,6 @@
 <#import "annotazioni.html.ftl" as note>
-<#import "../struct/macros.html.ftl" as ui>
+<#import "../struct/dettaglioIscritto.html.ftl" as dettaglioIscritto>
+<#import "../struct/riferimentiIscritto.html.ftl" as riferimentiIscritto>
 <#include "../struct/header.html.ftl">
 <div class="container mt-3 content">
     <div class="shadow py-2 pl-3 pr-3 bg-white">
@@ -11,10 +12,10 @@
                 <p>${ragazzo.id?c}</p>
             </div>
         </div>
-        <@ui.anagraficaIscritto iscritto=ragazzo capitalize=true/>
-        <@ui.presenzaIscritto iscritto=ragazzo/>
-        <@ui.laboratorioIscritto iscritto=ragazzo/>
-        <@ui.appartenenzaIscritto iscritto=ragazzo/>
+        <@dettaglioIscritto.anagraficaIscritto iscritto=ragazzo capitalize=true/>
+        <@dettaglioIscritto.presenzaIscritto iscritto=ragazzo/>
+        <@dettaglioIscritto.laboratorioIscritto iscritto=ragazzo/>
+        <@dettaglioIscritto.appartenenzaIscritto iscritto=ragazzo/>
         <div class="row">
             <div class="col-sm">
                 <strong>Scuola</strong>
@@ -31,9 +32,9 @@
                 <p>${ragazzo.classe+ragazzo.sezione}</p>
             </div>
         </div>
-        <@ui.tesseraIscritto iscritto=ragazzo/>
+        <@dettaglioIscritto.tesseraIscritto iscritto=ragazzo/>
 
-        <@ui.presenzaSettimanale calendari=calendari/>
+        <@dettaglioIscritto.presenzaSettimanale calendari=calendari/>
 
         <#if ragazzo.richieste??>
             <div class="row">
@@ -124,16 +125,16 @@
 
     <#--contatti urgenze-->
     <#if cu??>
-        <@ui.contattiUrgenze contatti=cu/>
+        <@riferimentiIscritto.contattiUrgenze contatti=cu/>
     </#if>
 
     <#--accompagnatori-->
     <#if accompagnatori??>
-        <@ui.accompagnatoriAutorizzati accompagnatori=accompagnatori/>
+        <@riferimentiIscritto.accompagnatoriAutorizzati accompagnatori=accompagnatori/>
     </#if>
 
     <#--info registrato-->
-    <@ui.informazioniRegistrato registrato=ragazzo.registrato attgen=attgen/>
+    <@riferimentiIscritto.informazioniRegistrato registrato=ragazzo.registrato attgen=attgen/>
 
     <#-- Annotazioni segreteria -->
     <@note.pannelloInfoDettaglio annotazioni=annotazioni/>

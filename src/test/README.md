@@ -97,9 +97,31 @@ sections are shared: participant data, registration/edit sections, account
 data, emergency contacts and authorized companions. The Java refactor is
 unchanged.
 
-The same 396 frozen renders still verify all original templates without
-updating any oracle. The new `struct/iscrizione.html.ftl` receives a parse check
+At this simplification stage, the same 396 frozen renders verified all original
+templates without updating any oracle. The new `struct/iscrizione.html.ftl` receives a parse check
 and is rendered through the six participant forms and both account forms.
 Cleared-value rendering now covers 22 pages, including all six participant
 forms and the four reports displaying the account's optional phone.
-With the added library and null cases, the suite contains 650 tests.
+With the added library and null cases, the suite contained 650 tests.
+Splitting the display macros into `dettaglioIscritto.html.ftl`,
+`riferimentiIscritto.html.ftl` and `avvisiValidazione.html.ftl` adds three
+parse cases (653 total). Pages import these libraries directly;
+`macros.html.ftl` only includes them for compatibility with existing callers
+and the frozen original-template inventory.
+
+## User-approved form unification
+
+The frozen files remain sealed and unchanged. `ApprovedFormChanges` applies
+only the enumerated user decisions to the **expected** output of the six
+participant forms, account edit form and secretary registration form.
+All 396 cases still compare the complete rendered output: 348 use the original
+expectation verbatim, and 48 allow exactly the approved labels, field order,
+layout, popup height, year placement and required account fields.
+Unrelated attributes, values, selections, scripts and content remain checked.
+
+The four account columns (telefono, localita, via, civico) are NOT NULL in
+`GrestDb/flyway/V7__Registrato.sql`. Their previous 16 optional-clearing cases
+are superseded by 12 missing/empty/blank rejection cases and one valid mapping
+case. These are an intentional requirement correction, not preservation
+failures. Secretary registration now includes the same required account fields.
+The current full suite contains 650 tests.
