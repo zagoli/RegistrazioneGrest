@@ -21,11 +21,10 @@ public class ControllerVisualizzaIscritti implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             switch (request.getParameter("target")) {
                 case "rag":
                     template.setView("ammseg/visualizzaragazzi.html");
-                    template.addObject("TITOLOPAGINA", "Visualizza ragazzi");
+                    template.setTitoloPagina("Visualizza ragazzi");
                     List<DatiPagamento<Ragazzo, PagamentoRiepilogo>> iscritti1 = DAOMan.ragazzoDAO.findAllConPagamento();
                     List<Object[]> rows1 = new ArrayList<>();
                     for (DatiPagamento<Ragazzo, PagamentoRiepilogo> dato1 : iscritti1) {
@@ -35,12 +34,12 @@ public class ControllerVisualizzaIscritti implements ControllerInterface {
                     break;
                 case "an":
                     template.setView("ammseg/visualizzaanimatori.html");
-                    template.addObject("TITOLOPAGINA", "Visualizza animatori");
+                    template.setTitoloPagina("Visualizza animatori");
                     template.addObject("animatori", DAOMan.animatoreDAO.findAll());
                     break;
                 case "ter":
                     template.setView("ammseg/visualizzaterzamedia.html");
-                    template.addObject("TITOLOPAGINA", "Visualizza terza media");
+                    template.setTitoloPagina("Visualizza terza media");
                     List<DatiPagamento<TerzaMedia, PagamentoRiepilogo>> iscritti = DAOMan.terzamediaDAO.findAllConPagamento();
                     List<Object[]> rows = new ArrayList<>();
                     for (DatiPagamento<TerzaMedia, PagamentoRiepilogo> dato : iscritti) {

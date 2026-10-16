@@ -2,7 +2,7 @@ package Servlet;
 
 import Controller.*;
 import Response.RenderingContext;
-import Response.Response;
+import Response.*;
 import Utility.Checker;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
@@ -47,6 +47,9 @@ public class Dispatcher extends HttpServlet {
         if (result == null) {
             logger.error("ControllerResult è null per: {}", controller.getClass().getSimpleName());
             throw new ServletException("Il controller " + controller.getClass().getName() + " ha restituito un risultato null");
+        } else if (result instanceof FreemarkerTemplate template) {
+            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.addObject("idUt", request.getSession().getAttribute("idUtente"));
         }
         result.render(response, renderingContext);
     }
@@ -56,9 +59,7 @@ public class Dispatcher extends HttpServlet {
         if (servizio == null) {
             return new ControllerLoginEPasswordReset();
         }
-
         logger.debug("Richiesto servizio {}", servizio);
-
         // Rotte pubbliche accessibili senza autenticazione
         switch (servizio) {
             case "/":

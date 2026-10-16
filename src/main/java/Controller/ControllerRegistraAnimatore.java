@@ -30,8 +30,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            template.addObject("TITOLOPAGINA", "Registra Animatore");
+            template.setTitoloPagina("Registra Animatore");
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Animatore animatore = new Animatore();
                 IscrizioniUtils.populateIscrittoFromRequest(request, animatore);

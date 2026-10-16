@@ -25,9 +25,8 @@ public class ControllerModificaUtente implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Modifica account");
+            template.setTitoloPagina("Modifica account");
             int idUt = (int) request.getSession().getAttribute("idUtente");
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
                 logger.info("Modifica utente con id {}", r.getId());

@@ -22,11 +22,9 @@ public class ControllerInserisciCU implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
             if (!request.getParameterMap().containsKey("nome")) {
                 template.setView("acccu/inseriscicu.html");
-                template.addObject("TITOLOPAGINA", "Inserisci contatto telefonico urgenze");
+                template.setTitoloPagina("Inserisci contatto telefonico urgenze");
             } else {
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 ContattoUrgenze cu = new ContattoUrgenze();

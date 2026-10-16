@@ -16,13 +16,11 @@ public class ControllerDashboardAccCu implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Accompagnatori e Contatti telefonici Urgenze");
+            template.setTitoloPagina("Accompagnatori e Contatti telefonici Urgenze");
             template.setView("acccu/dashboardacccu.html");
             int idUtente = (int) request.getSession().getAttribute("idUtente");
             InfoDettaglioUtils.popolaAccompagnatori(template, idUtente);
             InfoDettaglioUtils.popolaCu(template, idUtente);
-            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
         } catch (final RuntimeException | SQLException e) {
             template = Utils.getErrorPageAndLogException(e, ControllerDashboardAccCu.class.getName());
         }

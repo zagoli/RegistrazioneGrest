@@ -29,9 +29,8 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Modifica terza media");
+            template.setTitoloPagina("Modifica terza media");
             var tipoUt = (int) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
             template.addObject("idUtente", request.getSession().getAttribute("idUtente"));
             int idTerzamedia = Integer.parseInt(request.getParameter("id"));
             TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);

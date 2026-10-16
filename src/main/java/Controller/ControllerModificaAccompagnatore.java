@@ -21,12 +21,10 @@ public class ControllerModificaAccompagnatore implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
             int idAccompagnatore = Integer.parseInt(request.getParameter("id"));
             if (!request.getParameterMap().containsKey("nome")) {
                 template.setView("acccu/modificaaccompagnatore.html");
-                template.addObject("TITOLOPAGINA", "Modifica accompagnatore");
+                template.setTitoloPagina("Modifica accompagnatore");
                 Accompagnatore a = DAOMan.accompagnatoreDAO.findById(idAccompagnatore);
                 template.addObject("accompagnatore", a);
             } else {

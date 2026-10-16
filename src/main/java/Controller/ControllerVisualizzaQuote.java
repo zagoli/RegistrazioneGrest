@@ -23,7 +23,7 @@ public class ControllerVisualizzaQuote implements ControllerInterface {
         try {
             if (request.getParameterMap().containsKey("ragazzi")) {
                 logger.info("Visualizzazione quote ragazzi");
-                template.addObject("TITOLOPAGINA", "Quote ragazzi");
+                template.setTitoloPagina("Quote ragazzi");
                 template.addObject("supplemento_anticipo", ConfigProperties.getProperty("SUPPLEMENTO_ENTRATA_ANTICIPATA_RAGAZZI"));
                 template.addObject("supplemento_fuoricomune", ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_RAGAZZI"));
                 addWeeklyPrices(template, "", "_RAGAZZI");
@@ -33,7 +33,7 @@ public class ControllerVisualizzaQuote implements ControllerInterface {
                 template.setView("user/quoteragazzi.html");
             } else if (request.getParameterMap().containsKey("terzamedia")) {
                 logger.info("Visualizzazione quote terzamedia");
-                template.addObject("TITOLOPAGINA", "Quote ragazzi di terza media");
+                template.setTitoloPagina("Quote ragazzi di terza media");
                 template.addObject("supplemento_fuoricomune", ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_TERZAMEDIA"));
                 addWeeklyPrices(template, "", "_TERZAMEDIA");
                 template.setView("user/quoteterzamedia.html");

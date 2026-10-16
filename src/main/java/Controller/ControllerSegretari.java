@@ -22,8 +22,7 @@ public class ControllerSegretari implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Gestisci segretari");
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.setTitoloPagina("Gestisci segretari");
             if (request.getParameterMap().isEmpty()) {
                 List<Registrato> lseg = DAOMan.registratoDAO.findSegretari();
                 List<Registrato> lamm = DAOMan.registratoDAO.findAmministratori();

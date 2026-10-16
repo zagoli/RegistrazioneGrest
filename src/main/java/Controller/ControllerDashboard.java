@@ -25,7 +25,6 @@ public class ControllerDashboard implements ControllerInterface {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             var tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
 
             var dashboardRichiesta = switch (tipoUt) {
                 case 3 -> "dashboardRegistrato";
@@ -68,14 +67,14 @@ public class ControllerDashboard implements ControllerInterface {
                     //iscrizioni per animatori aperte o chiuse (per togliere bottoni modifica/elimina)
                     template.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
                     template.setView("user/dashboardutente.html");
-                    template.addObject("TITOLOPAGINA", "Dashboard utente");
+                    template.setTitoloPagina("Dashboard utente");
                     break;
                 case "dashboardSegretario":
                     template.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
                     template.addObject("settimane", DAOMan.calendarioDAO.findAll());
                     template.addObject("squadre", DAOMan.squadraDAO.findAll());
                     template.setView("ammseg/dashboardsegretario.html");
-                    template.addObject("TITOLOPAGINA", "Dashboard segretario");
+                    template.setTitoloPagina("Dashboard segretario");
                     break;
                 case "dashboardAmministratore":
                     template.addObject("laboratori", DAOMan.laboratorioDAO.findAll());
@@ -85,7 +84,7 @@ public class ControllerDashboard implements ControllerInterface {
                     template.addObject("ISCRAN", ConfigProperties.getProperty("ISCRAN").equals("true"));
                     template.addObject("ISCRTER", ConfigProperties.getProperty("ISCRTER").equals("true"));
                     template.setView("ammseg/dashboardamministratore.html");
-                    template.addObject("TITOLOPAGINA", "Dashboard amministratore");
+                    template.setTitoloPagina("Dashboard amministratore");
                     break;
             }
         } catch (final RuntimeException | IOException | SQLException | ConfigPropertyException e) {

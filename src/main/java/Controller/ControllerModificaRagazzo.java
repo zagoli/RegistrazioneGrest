@@ -26,9 +26,8 @@ public class ControllerModificaRagazzo implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Modifica ragazzo");
+            template.setTitoloPagina("Modifica ragazzo");
             var tipoUt = (int) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
             template.addObject("idUtente", request.getSession().getAttribute("idUtente"));
             int idRagazzo = Integer.parseInt(request.getParameter("id"));
             Ragazzo r = DAOMan.ragazzoDAO.findById(idRagazzo);

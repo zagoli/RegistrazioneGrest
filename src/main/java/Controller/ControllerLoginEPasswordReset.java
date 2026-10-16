@@ -39,7 +39,7 @@ public class ControllerLoginEPasswordReset implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Login");
+            template.setTitoloPagina("Login");
             if (!request.getParameterMap().containsKey("mail") && !request.getParameterMap().containsKey("password")) {
                 template.setView("user/login.html");
                 if (request.getParameterMap().containsKey("logout")) {

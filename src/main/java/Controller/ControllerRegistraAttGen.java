@@ -22,8 +22,7 @@ public class ControllerRegistraAttGen implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            template.addObject("TITOLOPAGINA", "errore");
+            template.setTitoloPagina("errore");
             RelCollabora rc = new RelCollabora();
             int idUt = (int) request.getSession().getAttribute("idUtente");
             int idAttivita = Integer.parseInt(request.getParameter("attivita"));

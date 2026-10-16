@@ -21,11 +21,9 @@ public class ControllerInserisciAccompagnatore implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
             if (!request.getParameterMap().containsKey("nome")) {
                 template.setView("acccu/inserisciaccompagnatore.html");
-                template.addObject("TITOLOPAGINA", "Inserisci accompagnatore");
+                template.setTitoloPagina("Inserisci accompagnatore");
             } else {
                 int idUt = (int) request.getSession().getAttribute("idUtente");
                 Accompagnatore a = new Accompagnatore();

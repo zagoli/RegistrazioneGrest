@@ -29,8 +29,7 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            template.addObject("TITOLOPAGINA", "Registrazione Ragazzo");
+            template.setTitoloPagina("Registrazione Ragazzo");
 
             int idRegistrato = (int) request.getSession().getAttribute("idUtente");
             boolean haAltroRagazzoIscritto = DAOMan.ragazzoDAO.countByRegistratoId(idRegistrato) > 0;

@@ -20,7 +20,7 @@ public class ControllerDashboardAttGen implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Attività genitori");
+            template.setTitoloPagina("Attività genitori");
             template.setView("user/dashboardattgen.html");
             int idUt = (int) request.getSession().getAttribute("idUtente");
             var collaborazioneGen = DAOMan.attivitaGenDAO.findCollaborazioniByRegistratoId(idUt);
@@ -29,8 +29,6 @@ public class ControllerDashboardAttGen implements ControllerInterface {
                 template.addObject("attivita", collaborazioneGen);
             }
             template.addObject("allattivita", DAOMan.attivitaGenDAO.findAll());
-            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
         } catch (final RuntimeException | SQLException e) {
             template = Utils.getErrorPageAndLogException(e, ControllerDashboardAttGen.class.getName());
         }

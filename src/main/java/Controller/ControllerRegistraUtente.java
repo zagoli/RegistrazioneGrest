@@ -25,7 +25,6 @@ public class ControllerRegistraUtente implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (request.getSession().getAttribute("tipoUtente") != null && request.getSession().getAttribute("tipoUtente").equals(0)) {
                 template.setView("ammseg/registrasegretario.html");
             } else {
@@ -47,15 +46,15 @@ public class ControllerRegistraUtente implements ControllerInterface {
                     }
                     DAOMan.registratoDAO.insert(r);
                     logger.info("Utente {} {} registrato. Tipo utente {}", r.getNome(), r.getCognome(), r.getTipoUt());
-                    template.addObject("TITOLOPAGINA", "Utente Registrato");
+                    template.setTitoloPagina("Utente Registrato");
                     template.addObject("DONE", true);
                 } else {
                     template.addObject("INVALIDMAIL", true);
-                    template.addObject("TITOLOPAGINA", "Registrazione Utente");
+                    template.setTitoloPagina("Registrazione Utente");
                     template.addObject("DONE", false);
                 }
             } else {
-                template.addObject("TITOLOPAGINA", "Registrazione Utente");
+                template.setTitoloPagina("Registrazione Utente");
                 template.addObject("DONE", false);
             }
         } catch (final RuntimeException | SQLException | ConfigPropertyException | IOException e) {

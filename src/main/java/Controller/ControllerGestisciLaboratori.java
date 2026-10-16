@@ -25,8 +25,7 @@ public class ControllerGestisciLaboratori implements ControllerInterface {
 
         try {
             if (request.getParameterMap().isEmpty()) {
-                template.addObject("TITOLOPAGINA", "Gestisci laboratori");
-                template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+                template.setTitoloPagina("Gestisci laboratori");
                 List<LaboratorioConNumeroIscritti> laboratorioConNumeroIscritti = DAOMan.laboratorioDAO.findAllConNumeroIscritti();
                 template.addObject("laboratori", laboratorioConNumeroIscritti);
             } else if (request.getParameterMap().containsKey("add")) {

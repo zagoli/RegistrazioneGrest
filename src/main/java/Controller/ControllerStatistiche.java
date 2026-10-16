@@ -22,8 +22,7 @@ public class ControllerStatistiche implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            template.addObject("TITOLOPAGINA", "Statistiche");
+            template.setTitoloPagina("Statistiche");
             template.setView("ammseg/statistiche.html");
             template.addObject("nrag", DAOMan.ragazzoDAO.count());
             template.addObject("nani", DAOMan.animatoreDAO.count());

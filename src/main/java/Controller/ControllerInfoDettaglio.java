@@ -22,9 +22,7 @@ public class ControllerInfoDettaglio implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
-            template.addObject("TITOLOPAGINA", "Info dettagliate");
+            template.setTitoloPagina("Info dettagliate");
             String target = request.getParameter("target");
             int id = Integer.parseInt(request.getParameter("id"));
             switch (target) {

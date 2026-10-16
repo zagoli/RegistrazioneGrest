@@ -21,8 +21,7 @@ public class ControllerModificaPassword implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Modifica la password");
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.setTitoloPagina("Modifica la password");
             if (!request.getParameterMap().containsKey("password")) {
                 template.setView("user/modificapassword.html");
             } else {

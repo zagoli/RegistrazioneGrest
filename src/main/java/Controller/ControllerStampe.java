@@ -33,7 +33,7 @@ public class ControllerStampe implements ControllerInterface {
                     List<Object[]> anGiusti = PresenzeUtils.printRows(
                             allAnimatori.stream().filter(an -> an.getSquadra().getId() != 0 && an.getSquadra().getId() == squadraId).collect(Collectors.toList()),
                             DAOMan.relPresenzaAnDAO::findByAnimatoreId, RelPresenzaAn::getCalendarioId, false);
-                    template.addObject("TITOLOPAGINA", "Presenze settimanali squadre");
+                    template.setTitoloPagina("Presenze settimanali squadre");
                     template.setView("stampe/pressetsqu.html");
                     template.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
                     template.addObject("squadra", DAOMan.squadraDAO.findById(squadraId));
@@ -46,7 +46,7 @@ public class ControllerStampe implements ControllerInterface {
                     List<Object[]> dati = PresenzeUtils.printRows(allRagazzi,
                             DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, true);
                     template.addObject("ragazzi", dati);
-                    template.addObject("TITOLOPAGINA", "Elenco sintesi ragazzi");
+                    template.setTitoloPagina("Elenco sintesi ragazzi");
                     template.setView("stampe/elesintrag.html");
                 }
                 break;
@@ -63,7 +63,7 @@ public class ControllerStampe implements ControllerInterface {
                     template.addObject("animatori", anGiusti);
                     template.addObject("settimana", DAOMan.calendarioDAO.findById(idset));
                     template.addObject("laboratorio", DAOMan.laboratorioDAO.findById(labid));
-                    template.addObject("TITOLOPAGINA", "Presenze settimanali laboratori");
+                    template.setTitoloPagina("Presenze settimanali laboratori");
                     template.setView("stampe/pressetlab.html");
                 }
                 break;
@@ -80,7 +80,7 @@ public class ControllerStampe implements ControllerInterface {
                         lob.add(o);
                     }
                     template.addObject("dati", lob);
-                    template.addObject("TITOLOPAGINA", "Collaborazione genitori");
+                    template.setTitoloPagina("Collaborazione genitori");
                     template.setView("stampe/collaborazione.html");
                 }
                 break;
@@ -91,7 +91,7 @@ public class ControllerStampe implements ControllerInterface {
                             DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, true);
                     template.addObject("set", DAOMan.calendarioDAO.findById(Integer.parseInt(request.getParameter("idSet"))));
                     template.addObject("dati", lob);
-                    template.addObject("TITOLOPAGINA", "Mensa");
+                    template.setTitoloPagina("Mensa");
                     template.setView("stampe/mensa.html");
                 }
                 break;
@@ -101,7 +101,7 @@ public class ControllerStampe implements ControllerInterface {
                             lrag.stream().filter(Ragazzo::getEntrataAnticipata).collect(Collectors.toList()),
                             DAOMan.relPresenzaRagDAO::findByRagazzoId, RelPresenzaRag::getCalendarioId, true);
                     template.addObject("dati", lob);
-                    template.addObject("TITOLOPAGINA", "Anticipo");
+                    template.setTitoloPagina("Anticipo");
                     template.setView("stampe/anticipo.html");
                 }
                 break;
@@ -110,7 +110,7 @@ public class ControllerStampe implements ControllerInterface {
                     List<Object[]> lob = PresenzeUtils.printRows(allAnimatore,
                             DAOMan.relPresenzaAnDAO::findByAnimatoreId, RelPresenzaAn::getCalendarioId, false);
                     template.addObject("animatori", lob);
-                    template.addObject("TITOLOPAGINA", "Presenza giornaliera animatori");
+                    template.setTitoloPagina("Presenza giornaliera animatori");
                     template.setView("stampe/presgiornani.html");
                 }
                 break;
@@ -119,7 +119,7 @@ public class ControllerStampe implements ControllerInterface {
                     List<Object[]> lob = PresenzeUtils.printRows(allAnimatore,
                             DAOMan.relPresenzaAnDAO::findByAnimatoreId, RelPresenzaAn::getCalendarioId, false);
                     template.addObject("animatori", lob);
-                    template.addObject("TITOLOPAGINA", "Elenco sintesi animatori");
+                    template.setTitoloPagina("Elenco sintesi animatori");
                     template.setView("stampe/elesintan.html");
                 }
                 break;
@@ -128,7 +128,7 @@ public class ControllerStampe implements ControllerInterface {
                     List<Object[]> dati = PresenzeUtils.printRows(allTerzaMedia,
                             DAOMan.relPresenzaTerDAO::findByTerzamediaId, RelPresenzaTer::getCalendarioId, true);
                     template.addObject("terzamedia", dati);
-                    template.addObject("TITOLOPAGINA", "Elenco sintesi terzamedia");
+                    template.setTitoloPagina("Elenco sintesi terzamedia");
                     template.setView("stampe/elesintter.html");
                 }
                 break;

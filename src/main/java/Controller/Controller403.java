@@ -11,7 +11,6 @@ public class Controller403 implements ControllerInterface {
         FreemarkerTemplate template = new FreemarkerTemplate("err/" + 403 + ".html");
         template.setTitoloPagina("403 - Non autorizzato");
         response.setStatus(403);
-        template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
         return template;
     }
 

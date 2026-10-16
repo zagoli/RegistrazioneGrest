@@ -22,8 +22,7 @@ public class ControllerModificaCU implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Modifica contatto telefonico urgenze");
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.setTitoloPagina("Modifica contatto telefonico urgenze");
             int idCU = Integer.parseInt(request.getParameter("id"));
             if (!request.getParameterMap().containsKey("nome")) {
                 template.setView("acccu/modificacu.html");

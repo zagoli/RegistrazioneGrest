@@ -21,9 +21,7 @@ public class ControllerLaboratori implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
-            template.addObject("tipoUt", tipoUt);
-            template.addObject("TITOLOPAGINA", "Assegnazione Laboratori");
+            template.setTitoloPagina("Assegnazione Laboratori");
             if (!request.getParameterMap().containsKey("submitted")) {
                 //preparo gli oggetti per la pagina
                 switch (request.getParameter("target")) {

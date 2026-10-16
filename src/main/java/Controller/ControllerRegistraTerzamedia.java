@@ -30,8 +30,7 @@ public class ControllerRegistraTerzamedia implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
-            template.addObject("TITOLOPAGINA", "Registrazione ragazzo di Terzamedia");
+            template.setTitoloPagina("Registrazione ragazzo di Terzamedia");
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
                 TerzaMedia terzamedia = new TerzaMedia();

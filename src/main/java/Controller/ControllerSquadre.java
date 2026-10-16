@@ -21,8 +21,7 @@ public class ControllerSquadre implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("TITOLOPAGINA", "Assegnazione Squadre");
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
+            template.setTitoloPagina("Assegnazione Squadre");
             if (!request.getParameterMap().containsKey("submitted")) {
                 template.addObject("squadre", DAOMan.squadraDAO.findAll());
             }

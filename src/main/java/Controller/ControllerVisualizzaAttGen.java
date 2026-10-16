@@ -20,9 +20,8 @@ public class ControllerVisualizzaAttGen implements ControllerInterface {
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
-            template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             template.setView("ammseg/visualizzaattgen.html");
-            template.addObject("TITOLOPAGINA", "Attivita genitori");
+            template.setTitoloPagina("Attivita genitori");
             List<RelCollabora> allRelCollabora = DAOMan.relCollaboraDAO.findAll();
             List<Object[]> parametri = new LinkedList<>();
             for (RelCollabora relCollabora : allRelCollabora) {

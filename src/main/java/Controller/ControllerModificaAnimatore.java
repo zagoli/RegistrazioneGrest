@@ -32,8 +32,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
             var idAnimatore = Integer.parseInt(request.getParameter("id"));
             var tipoUt = (int) request.getSession().getAttribute("tipoUtente");
             template.addObject("idUtente", request.getSession().getAttribute("idUtente"));
-            template.addObject("TITOLOPAGINA", "Modifica animatore");
-            template.addObject("tipoUt", tipoUt);
+            template.setTitoloPagina("Modifica animatore");
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO ANIMATORE E FACCIO UNA REDIRECT
