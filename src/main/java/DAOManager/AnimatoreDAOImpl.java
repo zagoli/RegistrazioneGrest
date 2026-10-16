@@ -41,11 +41,11 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
 
     static void bindAnimatore(PreparedStatement pst, Animatore a) throws SQLException {
         IscrittoDAOMapper.bindCommonFields(pst, a);
-        pst.setString(9, a.getCellulare());
-        pst.setString(10, a.getFasciaEtaRagazzi());
-        pst.setString(11, a.getMail());
-        pst.setString(12, a.getNTessera());
-        pst.setString(13, a.getCodiceFiscale());
+        DAOUtils.setNormalizedString(pst, 9, a.getCellulare());
+        DAOUtils.setNormalizedString(pst, 10, a.getFasciaEtaRagazzi());
+        DAOUtils.setNormalizedString(pst, 11, a.getMail());
+        DAOUtils.setNormalizedString(pst, 12, a.getNTessera());
+        DAOUtils.setNormalizedString(pst, 13, a.getCodiceFiscale());
         pst.setBoolean(14, a.isResponsabileSquadra());
         pst.setBoolean(15, a.isResponsabileLaboratorio());
     }

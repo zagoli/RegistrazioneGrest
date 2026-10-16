@@ -7,6 +7,7 @@ import Domain.*;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.Checker;
+import Utility.DAOUtils;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
 import Utility.RequestFields;
@@ -34,7 +35,8 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
             template.addObject("idUtente", request.getSession().getAttribute("idUtente"));
             int idTerzamedia = Integer.parseInt(request.getParameter("id"));
             TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
-            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
+            String mail = DAOUtils.normalizeText(request.getParameter("mail"));
+            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(mail)) {
                 //INSERISCO IL TERZAMEDIA E FACCIO UNA REDIRECT
                 logger.info("Modifica terza media con id {}", t.getId());
                 IscrizioniUtils.populateIscrittoFromRequest(request, t);
@@ -57,7 +59,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 template.addObject("terzamedia", t);
                 template.addObject("calendari", IscrizioniUtils.getSettimaneSelezionate(
                         DAOMan.calendarioDAO.findAll(), DAOMan.calendarioDAO.findByTerzamediaId(idTerzamedia)));
-                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
+                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(mail)) {
                     template.addObject("INVALIDMAIL", true);
                 }
                 if (tipoUt < 3) {

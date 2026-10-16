@@ -59,7 +59,7 @@ public class LaboratorioDAOImpl implements LaboratorioDAO {
     @Override
     public int insert(Laboratorio laboratorio) throws SQLException {
         try (Connection con = DAOMan.getConnection(); PreparedStatement pst = con.prepareStatement(INSERT_LABORATORIO, Statement.RETURN_GENERATED_KEYS)) {
-            pst.setString(1, laboratorio.getDescrizione());
+            DAOUtils.setNormalizedString(pst, 1, laboratorio.getDescrizione());
             pst.setBoolean(2, laboratorio.getRiservato());
             int affectedRows = pst.executeUpdate();
             if (affectedRows == 0) {

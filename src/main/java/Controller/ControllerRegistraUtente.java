@@ -5,6 +5,7 @@ import Domain.Registrato;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.Checker;
+import Utility.DAOUtils;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
 import Utility.RequestFields;
@@ -31,7 +32,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                 template.setView("user/registrautente.html");
             }
             if (request.getParameterMap().containsKey("nome")) {
-                if (Checker.checkMail(request.getParameter("mail"))) {
+                if (Checker.checkMail(DAOUtils.normalizeText(request.getParameter("mail")))) {
                     Registrato r = new Registrato();
                     r.setPassword(request.getParameter("password"));
                     RequestFields.account(request, r);

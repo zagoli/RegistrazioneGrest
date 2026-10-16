@@ -126,7 +126,7 @@ public class AnnotazioneSegreteriaDAOImpl implements AnnotazioneSegreteriaDAO {
     private void insert(String query, String annotazione, int destinatarioId, int segretarioId) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(query)) {
-            pst.setString(1, annotazione);
+            DAOUtils.setNormalizedString(pst, 1, annotazione);
             pst.setInt(2, destinatarioId);
             pst.setInt(3, segretarioId);
             pst.executeUpdate();

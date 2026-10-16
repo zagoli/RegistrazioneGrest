@@ -6,6 +6,7 @@ import Response.FreemarkerTemplate;
 import Response.RedirectResult;
 import Response.Response;
 import Utility.Checker;
+import Utility.DAOUtils;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
 import Utility.RequestFields;
@@ -27,7 +28,8 @@ public class ControllerModificaUtente implements ControllerInterface {
         try {
             template.setTitoloPagina("Modifica account");
             int idUt = (int) request.getSession().getAttribute("idUtente");
-            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
+            String mail = DAOUtils.normalizeText(request.getParameter("mail"));
+            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(mail)) {
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
                 logger.info("Modifica utente con id {}", r.getId());
                 RequestFields.account(request, r);
@@ -35,7 +37,7 @@ public class ControllerModificaUtente implements ControllerInterface {
                 logger.info("Utente con id {} modificato", r.getId());
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
-                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
+                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(mail)) {
                     template.addObject("INVALIDMAIL", true);
                 }
                 Registrato r = DAOMan.registratoDAO.findById(idUt);

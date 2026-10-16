@@ -7,6 +7,7 @@ import Domain.*;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.Checker;
+import Utility.DAOUtils;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
 import Utility.RequestFields;
@@ -34,7 +35,8 @@ public class ControllerModificaAnimatore implements ControllerInterface {
             template.addObject("idUtente", request.getSession().getAttribute("idUtente"));
             template.setTitoloPagina("Modifica animatore");
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);
-            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
+            String mail = DAOUtils.normalizeText(request.getParameter("mail"));
+            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(mail)) {
                 //INSERISCO ANIMATORE E FACCIO UNA REDIRECT
                 logger.info("Modifica animatore {} {} con id {}", a.getNome(), a.getCognome(), idAnimatore);
                 a.setId(Integer.parseInt(request.getParameter("id")));
@@ -56,7 +58,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 template.addObject("circoli", DAOMan.circoloDAO.findAll());
                 template.addObject("calendari", IscrizioniUtils.getSettimaneSelezionate(
                         DAOMan.calendarioDAO.findAll(), DAOMan.calendarioDAO.findByAnimatoreId(idAnimatore)));
-                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
+                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(mail)) {
                     template.addObject("INVALIDMAIL", true);
                 }
                 if (tipoUt < 3) {

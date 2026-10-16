@@ -22,8 +22,8 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
     public void insert(Parrocchia p) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(INSERT_PARROCCHIA)) {
-            pst.setString(1, p.getNome());
-            pst.setString(2, p.getLuogo());
+            DAOUtils.setNormalizedString(pst, 1, p.getNome());
+            DAOUtils.setNormalizedString(pst, 2, p.getLuogo());
             pst.executeUpdate();
         }
     }
@@ -32,8 +32,8 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
     public void update(Parrocchia p) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(UPDATE_PARROCCHIA)) {
-            pst.setString(1, p.getNome());
-            pst.setString(2, p.getLuogo());
+            DAOUtils.setNormalizedString(pst, 1, p.getNome());
+            DAOUtils.setNormalizedString(pst, 2, p.getLuogo());
             pst.setInt(3, p.getId());
             pst.executeUpdate();
         }
@@ -72,7 +72,7 @@ public class ParrocchiaDAOImpl implements ParrocchiaDAO {
     public List<Parrocchia> findByName(String name) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_PARROCCHIA_NOME)) {
-            pst.setString(1, name);
+            DAOUtils.setNormalizedString(pst, 1, name);
             try (ResultSet rs = pst.executeQuery()) {
                 return DAOUtils.resultSetToList(rs, this::mapRowToParrocchia);
             }

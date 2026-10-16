@@ -8,6 +8,7 @@ import Response.FreemarkerTemplate;
 import Response.RedirectResult;
 import Response.Response;
 import Utility.Checker;
+import Utility.DAOUtils;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
@@ -31,7 +32,8 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             template.setTitoloPagina("Registra Animatore");
-            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
+            String mail = DAOUtils.normalizeText(request.getParameter("mail"));
+            if (request.getParameterMap().containsKey("nome") && Checker.checkMail(mail)) {
                 Animatore animatore = new Animatore();
                 IscrizioniUtils.populateIscrittoFromRequest(request, animatore);
                 int idUtente = (int) request.getSession().getAttribute("idUtente");
@@ -53,7 +55,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
                 template.addObject("calendari", listaCalendario);
                 Registrato reg = DAOMan.registratoDAO.findById((int) request.getSession().getAttribute("idUtente"));
                 template.addObject("registrato", reg);
-                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {
+                if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(mail)) {
                     template.addObject("INVALIDMAIL", true);
                 }
                 //iscrizioni aperte o chiuse

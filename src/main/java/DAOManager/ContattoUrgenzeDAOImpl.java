@@ -19,11 +19,11 @@ public class ContattoUrgenzeDAOImpl implements ContattoUrgenzeDAO {
     private static final String FIND_CU_REGISTRATO_ID = "select cu.id as cuid, cu.fisso as cufisso, cu.cellulare as cucellulare, cu.nome as cunome, cu.cognome as cucognome, cu.relazione as curelazione, re.id as reid, re.mail as remail, re.password as repassword, re.nome as renome, re.cognome as recognome, re.telefono as retelefono, re.localita as relocalita, re.via as revia, re.civico as recivico, re.tipoUt as retipoUt from Contatto_Urgenze cu join Registrato re on (cu.idRegistrato=re.id) where re.id = ?;";
 
     static void bindContatto(PreparedStatement pst, ContattoUrgenze cu) throws SQLException {
-        pst.setString(1, cu.getFisso());
-        pst.setString(2, cu.getCellulare());
-        pst.setString(3, cu.getNome());
-        pst.setString(4, cu.getCognome());
-        pst.setString(5, cu.getRelazione());
+        DAOUtils.setNormalizedString(pst, 1, cu.getFisso());
+        DAOUtils.setNormalizedString(pst, 2, cu.getCellulare());
+        DAOUtils.setNormalizedString(pst, 3, cu.getNome());
+        DAOUtils.setNormalizedString(pst, 4, cu.getCognome());
+        DAOUtils.setNormalizedString(pst, 5, cu.getRelazione());
         pst.setInt(6, cu.getRegistrato().getId());
     }
 

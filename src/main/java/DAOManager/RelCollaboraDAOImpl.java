@@ -22,7 +22,7 @@ public class RelCollaboraDAOImpl implements RelCollaboraDAO {
              PreparedStatement pst = con.prepareStatement(INSERT_RELCOLLABORA)) {
             pst.setInt(1, rc.getRegistratoId());
             pst.setInt(2, rc.getAttivitaGenId());
-            pst.setString(3, rc.getData());
+            DAOUtils.setNormalizedString(pst, 3, rc.getData());
             pst.executeUpdate();
         }
     }

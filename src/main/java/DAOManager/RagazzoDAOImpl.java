@@ -74,15 +74,15 @@ public class RagazzoDAOImpl implements RagazzoDAO {
     static void bindRagazzo(PreparedStatement pst, Ragazzo r) throws SQLException {
         IscrittoDAOMapper.bindCommonFields(pst, r);
         pst.setBoolean(9, r.getEntrataAnticipata());
-        pst.setString(10, r.getRichieste());
-        pst.setString(11, r.getNoteAlimentari());
+        DAOUtils.setNormalizedString(pst, 10, r.getRichieste());
+        DAOUtils.setNormalizedString(pst, 11, r.getNoteAlimentari());
         pst.setBoolean(12, r.getMensa());
         pst.setBoolean(13, r.getSaNuotare());
         pst.setBoolean(14, r.getFratelloIscritto());
         pst.setInt(15, r.getScuola().getId());
-        pst.setString(16, r.getSezione());
-        pst.setString(17, r.getClasse());
-        pst.setString(18, r.getNTessera());
+        DAOUtils.setNormalizedString(pst, 16, r.getSezione());
+        DAOUtils.setNormalizedString(pst, 17, r.getClasse());
+        DAOUtils.setNormalizedString(pst, 18, r.getNTessera());
     }
 
     @Override

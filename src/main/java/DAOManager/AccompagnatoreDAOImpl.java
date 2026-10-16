@@ -20,8 +20,8 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
     public void insert(Accompagnatore a) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(INSERT_ACCOMPAGNATORE, Statement.RETURN_GENERATED_KEYS)) {
-            pst.setString(1, a.getNome());
-            pst.setString(2, a.getCognome());
+            DAOUtils.setNormalizedString(pst, 1, a.getNome());
+            DAOUtils.setNormalizedString(pst, 2, a.getCognome());
             pst.setInt(3, a.getRegistrato().getId());
             pst.executeUpdate();
             DAOUtils.idGeneratoFromResultSet(pst, a::setId);
@@ -32,8 +32,8 @@ public class AccompagnatoreDAOImpl implements AccompagnatoreDAO {
     public void update(Accompagnatore a) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(UPDATE_ACCOMPAGNATORE)) {
-            pst.setString(1, a.getNome());
-            pst.setString(2, a.getCognome());
+            DAOUtils.setNormalizedString(pst, 1, a.getNome());
+            DAOUtils.setNormalizedString(pst, 2, a.getCognome());
             pst.setInt(3, a.getRegistrato().getId());
             pst.setInt(4, a.getId());
             pst.executeUpdate();

@@ -1,6 +1,7 @@
 package DAOManager.Mappers;
 
 import Domain.*;
+import Utility.DAOUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,10 +51,10 @@ public final class IscrittoDAOMapper {
     }
 
     public static void bindCommonFields(PreparedStatement pst, Iscritto iscritto) throws SQLException {
-        pst.setString(1, iscritto.getNome());
-        pst.setString(2, iscritto.getCognome());
+        DAOUtils.setNormalizedString(pst, 1, iscritto.getNome());
+        DAOUtils.setNormalizedString(pst, 2, iscritto.getCognome());
         pst.setDate(3, new java.sql.Date(iscritto.getDataNascita().getTime()));
-        pst.setString(4, iscritto.getPresenza());
+        DAOUtils.setNormalizedString(pst, 4, iscritto.getPresenza());
         pst.setInt(5, iscritto.getLaboratorio().getId());
         pst.setInt(6, iscritto.getParrocchia().getId());
         pst.setInt(7, iscritto.getRegistrato().getId());

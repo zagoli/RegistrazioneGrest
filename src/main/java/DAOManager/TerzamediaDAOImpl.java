@@ -65,15 +65,15 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
 
     static void bindTerzamedia(PreparedStatement pst, TerzaMedia t) throws SQLException {
         IscrittoDAOMapper.bindCommonFields(pst, t);
-        pst.setString(9, t.getRichieste());
-        pst.setString(10, t.getNoteAlimentari());
+        DAOUtils.setNormalizedString(pst, 9, t.getRichieste());
+        DAOUtils.setNormalizedString(pst, 10, t.getNoteAlimentari());
         pst.setBoolean(11, t.getSaNuotare());
         pst.setInt(12, t.getScuola().getId());
-        pst.setString(13, t.getSezione());
-        pst.setString(14, t.getNTessera());
-        pst.setString(15, t.getCellulare());
+        DAOUtils.setNormalizedString(pst, 13, t.getSezione());
+        DAOUtils.setNormalizedString(pst, 14, t.getNTessera());
+        DAOUtils.setNormalizedString(pst, 15, t.getCellulare());
         pst.setBoolean(16, t.getFestaPassaggio());
-        pst.setString(17, t.getMail());
+        DAOUtils.setNormalizedString(pst, 17, t.getMail());
     }
 
     @Override

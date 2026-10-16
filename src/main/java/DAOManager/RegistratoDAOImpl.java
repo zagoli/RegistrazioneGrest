@@ -25,12 +25,12 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     private static final String FIND_REGISTRATO_NOMINATIVO = "select * from Registrato where nome ilike ? and cognome ilike ?;";
 
     static void bindDatiPersonali(PreparedStatement pst, Registrato r, int start) throws SQLException {
-        pst.setString(start, r.getNome());
-        pst.setString(start + 1, r.getCognome());
-        pst.setString(start + 2, r.getTelefono());
-        pst.setString(start + 3, r.getLocalita());
-        pst.setString(start + 4, r.getVia());
-        pst.setString(start + 5, r.getCivico());
+        DAOUtils.setNormalizedString(pst, start, r.getNome());
+        DAOUtils.setNormalizedString(pst, start + 1, r.getCognome());
+        DAOUtils.setNormalizedString(pst, start + 2, r.getTelefono());
+        DAOUtils.setNormalizedString(pst, start + 3, r.getLocalita());
+        DAOUtils.setNormalizedString(pst, start + 4, r.getVia());
+        DAOUtils.setNormalizedString(pst, start + 5, r.getCivico());
         pst.setInt(start + 6, r.getTipoUt());
     }
 
@@ -38,7 +38,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     public void insert(Registrato r) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(INSERT_REGISTRATO)) {
-            pst.setString(1, r.getMail());
+            DAOUtils.setNormalizedString(pst, 1, r.getMail());
             pst.setString(2, r.getPassword());
             bindDatiPersonali(pst, r, 3);
             pst.executeUpdate();
@@ -49,7 +49,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     public void update(Registrato r) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(UPDATE_REGISTRATO)) {
-            pst.setString(1, r.getMail());
+            DAOUtils.setNormalizedString(pst, 1, r.getMail());
             bindDatiPersonali(pst, r, 2);
             pst.setInt(9, r.getId());
             pst.executeUpdate();
@@ -117,7 +117,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     public Registrato findByMail(String mail) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_MAIL)) {
-            pst.setString(1, mail);
+            DAOUtils.setNormalizedString(pst, 1, mail);
             try (ResultSet rs = pst.executeQuery()) {
                 return rs.next() ? RegistratoDAOMapper.registrato(rs, "") : null;
             }
@@ -128,8 +128,8 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     public Registrato findByNominativo(String nome, String cognome) throws SQLException {
         try (Connection con = DAOMan.getConnection();
              PreparedStatement pst = con.prepareStatement(FIND_REGISTRATO_NOMINATIVO)) {
-            pst.setString(1, nome);
-            pst.setString(2, cognome);
+            DAOUtils.setNormalizedString(pst, 1, nome);
+            DAOUtils.setNormalizedString(pst, 2, cognome);
             try (ResultSet rs = pst.executeQuery()) {
                 return rs.next() ? RegistratoDAOMapper.registrato(rs, "") : null;
             }

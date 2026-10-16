@@ -20,7 +20,7 @@ public final class RequestFields {
     public static void optionalText(HttpServletRequest request, String name, Consumer<String> setter) {
         String value = request.getParameter(name);
         if (value != null) {
-            setter.accept(value.isEmpty() ? null : value);
+            setter.accept(value);
         }
     }
 
@@ -53,25 +53,13 @@ public final class RequestFields {
     }
 
     public static void account(HttpServletRequest request, Registrato registrato) {
-        String telefono = requiredAccountText(request, "telefono");
-        String localita = requiredAccountText(request, "localita");
-        String via = requiredAccountText(request, "via");
-        String civico = requiredAccountText(request, "civico");
         registrato.setMail(request.getParameter("mail"));
         registrato.setNome(request.getParameter("nome"));
         registrato.setCognome(request.getParameter("cognome"));
-        registrato.setTelefono(telefono);
-        registrato.setLocalita(localita);
-        registrato.setVia(via);
-        registrato.setCivico(civico);
-    }
-
-    private static String requiredAccountText(HttpServletRequest request, String name) {
-        String value = request.getParameter(name);
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Campo account obbligatorio: " + name);
-        }
-        return value;
+        registrato.setTelefono(request.getParameter("telefono"));
+        registrato.setLocalita(request.getParameter("localita"));
+        registrato.setVia(request.getParameter("via"));
+        registrato.setCivico(request.getParameter("civico"));
     }
 
     public static void animatore(HttpServletRequest request, Animatore animatore) {
