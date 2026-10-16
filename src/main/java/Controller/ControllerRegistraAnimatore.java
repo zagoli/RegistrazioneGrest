@@ -7,14 +7,10 @@ import Domain.*;
 import Response.FreemarkerTemplate;
 import Response.RedirectResult;
 import Response.Response;
-import Utility.Checker;
-import Utility.DAOUtils;
-import Utility.ConfigProperties;
-import Utility.ConfigPropertyException;
-import Utility.Utils;
-import Utility.RequestFields;
+import Utility.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +28,7 @@ public class ControllerRegistraAnimatore implements ControllerInterface {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             template.setTitoloPagina("Registra Animatore");
-            String mail = DAOUtils.normalizeText(request.getParameter("mail"));
+            String mail = StringUtils.trimToNull(request.getParameter("mail"));
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(mail)) {
                 Animatore animatore = new Animatore();
                 IscrizioniUtils.populateIscrittoFromRequest(request, animatore);

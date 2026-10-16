@@ -3,7 +3,8 @@ package Domain;
 import java.util.Comparator;
 import java.util.Objects;
 
-public record CollaborazioneGen(int id, AttivitaGen attivitaGen, String periodo) implements Comparable<CollaborazioneGen>{
+public record CollaborazioneGen(int id, AttivitaGen attivitaGen,
+                                String periodo) implements Comparable<CollaborazioneGen> {
 
     @Override
     public int compareTo(CollaborazioneGen other) {

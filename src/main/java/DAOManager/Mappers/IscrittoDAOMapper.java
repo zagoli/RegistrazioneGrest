@@ -14,7 +14,7 @@ public final class IscrittoDAOMapper {
     }
 
     public static <T extends Iscritto> T commonFields(ResultSet rs, T iscritto, String prefix,
-                                               String tesseraColumn) throws SQLException {
+                                                      String tesseraColumn) throws SQLException {
         iscritto.setId(rs.getInt(prefix + "id"));
         iscritto.setNome(rs.getString(prefix + "nome"));
         iscritto.setCognome(rs.getString(prefix + "cognome"));

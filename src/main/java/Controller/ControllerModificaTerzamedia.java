@@ -3,16 +3,18 @@ package Controller;
 import Controller.Utils.IscrizioniUtils;
 import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
-import Domain.*;
+import Domain.Laboratorio;
+import Domain.RelPresenzaTer;
+import Domain.TerzaMedia;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.Checker;
-import Utility.DAOUtils;
 import Utility.ConfigPropertyException;
-import Utility.Utils;
 import Utility.RequestFields;
+import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +37,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
             template.addObject("idUtente", request.getSession().getAttribute("idUtente"));
             int idTerzamedia = Integer.parseInt(request.getParameter("id"));
             TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
-            String mail = DAOUtils.normalizeText(request.getParameter("mail"));
+            String mail = StringUtils.trimToNull(request.getParameter("mail"));
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(mail)) {
                 //INSERISCO IL TERZAMEDIA E FACCIO UNA REDIRECT
                 logger.info("Modifica terza media con id {}", t.getId());

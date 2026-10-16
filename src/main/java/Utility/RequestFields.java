@@ -1,11 +1,6 @@
 package Utility;
 
-import Domain.ContattoUrgenze;
-import Domain.Animatore;
-import Domain.Iscritto;
-import Domain.Ragazzo;
-import Domain.Registrato;
-import Domain.TerzaMedia;
+import Domain.*;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.text.ParseException;

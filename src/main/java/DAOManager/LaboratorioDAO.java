@@ -11,7 +11,9 @@ public interface LaboratorioDAO {
 
     // SELECT
     List<Laboratorio> findAll() throws SQLException;
+
     List<Laboratorio> findNonRiservato() throws SQLException;
+
     List<LaboratorioConNumeroIscritti> findAllConNumeroIscritti() throws SQLException;
 
     // INSERT

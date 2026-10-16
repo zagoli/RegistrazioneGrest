@@ -11,6 +11,8 @@ public interface AttivitaGenDAO {
 
     //SELECT
     List<AttivitaGen> findAll() throws SQLException;
+
     List<AttivitaGen> findByRegistratoId(int id) throws SQLException;
+
     List<CollaborazioneGen> findCollaborazioniByRegistratoId(int id) throws SQLException;
 }

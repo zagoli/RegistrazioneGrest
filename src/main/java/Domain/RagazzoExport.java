@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public record RagazzoExport (
+public record RagazzoExport(
         String nome,
         String cognome,
         Date dataNascita,
@@ -27,4 +27,5 @@ public record RagazzoExport (
         List<Integer> settimanePresenza,
         String pagato,
         BigDecimal importoPagamento
-) {}
+) {
+}

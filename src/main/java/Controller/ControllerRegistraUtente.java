@@ -5,13 +5,12 @@ import Domain.Registrato;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.Checker;
-import Utility.DAOUtils;
 import Utility.ConfigPropertyException;
-import Utility.Utils;
 import Utility.RequestFields;
-
+import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                 template.setView("user/registrautente.html");
             }
             if (request.getParameterMap().containsKey("nome")) {
-                if (Checker.checkMail(DAOUtils.normalizeText(request.getParameter("mail")))) {
+                if (Checker.checkMail(request.getParameter("mail"))) {
                     Registrato r = new Registrato();
                     r.setPassword(request.getParameter("password"));
                     RequestFields.account(request, r);

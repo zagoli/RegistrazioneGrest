@@ -17,6 +17,15 @@ public class ControllerModificaAnnotazioni implements ControllerInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerModificaAnnotazioni.class);
 
+    private static String getRedirectPath(String tipoIscritto, int idIscritto) {
+        return "/RegistrazioneGrest/App/Modifica" + switch (tipoIscritto) {
+            case "rag" -> "Ragazzo";
+            case "ter" -> "Terzamedia";
+            case "an" -> "Animatore";
+            default -> throw new IllegalArgumentException("Tipo iscritto non valido");
+        } + "?id=" + idIscritto + "#annotazioni";
+    }
+
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = null;
@@ -44,15 +53,6 @@ public class ControllerModificaAnnotazioni implements ControllerInterface {
             template = Utils.getErrorPageAndLogException(e, ControllerModificaAnimatore.class.getName());
         }
         return template;
-    }
-
-    private static String getRedirectPath(String tipoIscritto, int idIscritto) {
-        return "/RegistrazioneGrest/App/Modifica" + switch (tipoIscritto) {
-            case "rag" -> "Ragazzo";
-            case "ter" -> "Terzamedia";
-            case "an" -> "Animatore";
-            default -> throw new IllegalArgumentException("Tipo iscritto non valido");
-        } + "?id=" + idIscritto + "#annotazioni";
     }
 
 }

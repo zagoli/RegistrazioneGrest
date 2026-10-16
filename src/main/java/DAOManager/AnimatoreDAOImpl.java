@@ -1,7 +1,7 @@
 package DAOManager;
 
 import DAOManager.Mappers.IscrittoDAOMapper;
-import Domain.*;
+import Domain.Animatore;
 import Utility.DAOUtils;
 
 import java.sql.*;
@@ -9,12 +9,6 @@ import java.util.List;
 
 public class AnimatoreDAOImpl implements AnimatoreDAO {
 
-    // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private static final String INSERT_ANIMATORE = "insert into Animatore(nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,cellularePersonale,fasciaEtaRagazzi,mail,nTessera,codiceFiscale,isResponsabileSquadra,isResponsabileLaboratorio) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    private static final String UPDATE_ANIMATORE = "update Animatore set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, cellularePersonale = ?, fasciaEtaRagazzi = ?, mail = ?, nTessera = ?, codiceFiscale = ?, isResponsabileSquadra = ?, isResponsabileLaboratorio = ? where id = ?;";
-    private static final String UPDATE_SQUADRA_ANIMATORE = "update Animatore set squadra_id = ?, isResponsabileSquadra = ? where id = ?;";
-    private static final String UPDATE_LABORATORIO_ANIMATORE = "update Animatore set Laboratorio_id = ?, isResponsabileLaboratorio = ? where id = ?;";
-    private static final String DELETE_ANIMATORE = "delete from Animatore where id = ?;";
     static final String GENERIC_ANIMATORE_FIND =
             """
                     select
@@ -31,6 +25,12 @@ public class AnimatoreDAOImpl implements AnimatoreDAO {
                     join Registrato re on (an.Registrato_id = re.id)
                     left join Squadra sq on (an.squadra_id = sq.id)
                     """;
+    // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
+    private static final String INSERT_ANIMATORE = "insert into Animatore(nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,cellularePersonale,fasciaEtaRagazzi,mail,nTessera,codiceFiscale,isResponsabileSquadra,isResponsabileLaboratorio) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_ANIMATORE = "update Animatore set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, cellularePersonale = ?, fasciaEtaRagazzi = ?, mail = ?, nTessera = ?, codiceFiscale = ?, isResponsabileSquadra = ?, isResponsabileLaboratorio = ? where id = ?;";
+    private static final String UPDATE_SQUADRA_ANIMATORE = "update Animatore set squadra_id = ?, isResponsabileSquadra = ? where id = ?;";
+    private static final String UPDATE_LABORATORIO_ANIMATORE = "update Animatore set Laboratorio_id = ?, isResponsabileLaboratorio = ? where id = ?;";
+    private static final String DELETE_ANIMATORE = "delete from Animatore where id = ?;";
     private static final String FIND_ANIMATORE_ID = GENERIC_ANIMATORE_FIND + " where an.id = ?";
     private static final String FIND_ALL_ANIMATORE = GENERIC_ANIMATORE_FIND + " order by an.cognome, an.nome;";
     private static final String COUNT_ANIMATORE = "select count(*) from Animatore;";

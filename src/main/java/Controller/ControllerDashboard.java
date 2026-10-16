@@ -2,13 +2,14 @@ package Controller;
 
 import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
-import Domain.*;
+import Domain.Animatore;
+import Domain.Ragazzo;
+import Domain.TerzaMedia;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.ConfigProperties;
 import Utility.ConfigPropertyException;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

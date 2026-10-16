@@ -2,13 +2,15 @@
     <#list ["nome", "cognome"] as campo>
         <div class="form-group">
             <label for="${campo}">${campo?cap_first}</label>
-            <input class="form-control" type="text" required id="${campo}" name="${campo}" placeholder="${campo?cap_first}"<#if campo == "nome"> autofocus</#if>
+            <input class="form-control" type="text" required id="${campo}" name="${campo}"
+                   placeholder="${campo?cap_first}"<#if campo == "nome"> autofocus</#if>
                    data-parsley-length="[2, 50]"<#if modifica> value="${iscritto[campo]}"<#elseif tipo == "animatore"> value="${registrato[campo]}"</#if>>
         </div>
     </#list>
     <div class="form-group">
         <label for="dataNascita">Data di nascita</label>
-        <input class="form-control" type="date" required id="dataNascita" name="dataNascita"<#if modifica> value="${dataNascita}"</#if>>
+        <input class="form-control" type="date" required id="dataNascita"
+               name="dataNascita"<#if modifica> value="${dataNascita}"</#if>>
     </div>
 </#macro>
 
@@ -16,15 +18,18 @@
     <div class="form-group">
         <label>Presenza giornaliera al Grest</label> <br/>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="presenza" id="completo" value="C"<#if selezionata == "C"> checked</#if>>
+            <input class="form-check-input" type="radio" name="presenza" id="completo"
+                   value="C"<#if selezionata == "C"> checked</#if>>
             <label class="form-check-label" for="completo">Mattina e pomeriggio</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="presenza" id="mattina" value="M"<#if selezionata == "M"> checked</#if>>
+            <input class="form-check-input" type="radio" name="presenza" id="mattina"
+                   value="M"<#if selezionata == "M"> checked</#if>>
             <label class="form-check-label" for="mattina">Solo mattina</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="presenza" id="pomeriggio" value="P"<#if selezionata == "P"> checked</#if>>
+            <input class="form-check-input" type="radio" name="presenza" id="pomeriggio"
+                   value="P"<#if selezionata == "P"> checked</#if>>
             <label class="form-check-label" for="pomeriggio">Solo pomeriggio</label>
         </div>
     </div>
@@ -36,15 +41,19 @@
         <#if modifica>
             <#list calendari as cal, partecipa>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}" id="cal${cal.idSettimana?c}" name="cal"<#if partecipa> checked</#if>>
-                    <label class="form-check-label" for="cal${cal.idSettimana?c}">Settimana dal ${cal.daQuando} al ${cal.AQuando}</label>
+                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
+                           id="cal${cal.idSettimana?c}" name="cal"<#if partecipa> checked</#if>>
+                    <label class="form-check-label" for="cal${cal.idSettimana?c}">Settimana dal ${cal.daQuando}
+                        al ${cal.AQuando}</label>
                 </div>
             </#list>
         <#else>
             <#list calendari as cal>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}" id="cal${cal.idSettimana?c}" name="cal" checked>
-                    <label class="form-check-label" for="cal${cal.idSettimana?c}">Settimana dal ${cal.daQuando} al ${cal.AQuando}</label>
+                    <input class="form-check-input" type="checkbox" value="${cal.idSettimana?c}"
+                           id="cal${cal.idSettimana?c}" name="cal" checked>
+                    <label class="form-check-label" for="cal${cal.idSettimana?c}">Settimana dal ${cal.daQuando}
+                        al ${cal.AQuando}</label>
                 </div>
             </#list>
         </#if>
@@ -72,7 +81,8 @@
         <label for="parrocchia">Parrocchia di appartenenza</label>
         <select id="parrocchia" class="form-control" name="parrocchia">
             <#list parrocchie as par>
-                <option value="${par.id?c}"<#if par.id == selezionata> selected</#if>>Parrocchia di ${par.luogo?upper_case} - ${par.nome} </option>
+                <option value="${par.id?c}"<#if par.id == selezionata> selected</#if>>Parrocchia
+                    di ${par.luogo?upper_case} - ${par.nome} </option>
             </#list>
         </select>
     </div>
@@ -83,15 +93,20 @@
         <label for="circolo">Circolo di tesseramento NOI</label>
         <select id="circolo" class="form-control" name="circolo">
             <#list circoli as cir>
-                <option value="${cir.id?c}"<#if modifica && cir.id == iscritto.circolo.id> selected</#if>>${cir.nome} (${cir.luogo})</option>
+                <option value="${cir.id?c}"<#if modifica && cir.id == iscritto.circolo.id> selected</#if>>${cir.nome}
+                    (${cir.luogo})
+                </option>
             </#list>
         </select>
     </div>
     <div class="form-group">
-        <label for="nTessera">Numero tessera Circolo NOI <b><script type="text/javascript">var theDate = new Date();
-                                document.write(theDate.getFullYear());</script></b></label>
+        <label for="nTessera">Numero tessera Circolo NOI <b>
+                <script type="text/javascript">var theDate = new Date();
+                    document.write(theDate.getFullYear());</script>
+            </b></label>
         <input id="nTessera" name="nTessera" type="text" placeholder="Numero Tessera" class="form-control"
-               data-parsley-length="[11, 11]" aria-describedby="helpNTessera"<#if modifica && iscritto.NTessera??> value="${iscritto.NTessera}"</#if>>
+               data-parsley-length="[11, 11]"
+               aria-describedby="helpNTessera"<#if modifica && iscritto.NTessera??> value="${iscritto.NTessera}"</#if>>
         <small id="helpNTessera" class="form-text text-muted">
             Inserire il numero di tessera del Circolo NOI se non si è tesserati al Circolo NOI di Balconi.
         </small>
@@ -103,7 +118,8 @@
         <label for="scuola">Scuola</label>
         <select id="scuola" class="form-control" name="scuola">
             <#list scuole as scu>
-                <option value="${scu.id?c}"<#if modifica && scu.id == iscritto.scuola.id> selected</#if>>Scuola ${scu.grado} di ${scu.descrizione}</option>
+                <option value="${scu.id?c}"<#if modifica && scu.id == iscritto.scuola.id> selected</#if>>
+                    Scuola ${scu.grado} di ${scu.descrizione}</option>
             </#list>
         </select>
     </div>
@@ -120,7 +136,8 @@
     <div class="form-group">
         <label for="sezione">Sezione</label>
         <input class="form-control" type="text" required id="sezione" name="sezione"
-               data-parsley-length="<#if tipo == "terzamedia">[1, 1]<#else>[1, 5]</#if>" placeholder="A"<#if modifica> value="${iscritto.sezione}"</#if>>
+               data-parsley-length="<#if tipo == "terzamedia">[1, 1]<#else>[1, 5]</#if>"
+               placeholder="A"<#if modifica> value="${iscritto.sezione}"</#if>>
     </div>
 </#macro>
 
@@ -128,15 +145,18 @@
     <div class="form-group">
         <label>Fascia età ragazzi con cui vorrei compiere il servizio come animatore</label> <br/>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PIC" value="PIC"<#if selezionata == "PIC"> checked</#if>>
+            <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="PIC"
+                   value="PIC"<#if selezionata == "PIC"> checked</#if>>
             <label class="form-check-label" for="PIC">Piccoli (1°,2°,3°,4° della scuola primaria)</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="GRA" value="GRA"<#if selezionata == "GRA"> checked</#if>>
+            <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="GRA"
+                   value="GRA"<#if selezionata == "GRA"> checked</#if>>
             <label class="form-check-label" for="GRA">Grandi (5° primaria, 1°,2° media)</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="TER" value="TER"<#if selezionata == "TER"> checked</#if>>
+            <input class="form-check-input" type="radio" name="fasciaEtaRagazzi" id="TER"
+                   value="TER"<#if selezionata == "TER"> checked</#if>>
             <label class="form-check-label" for="TER">Animatori gruppo 3° media</label>
         </div>
     </div>
@@ -156,12 +176,14 @@
     </div>
     <div class="form-group">
         <label for="email">E-Mail</label>
-        <input class="form-control" type="email" required id="email" name="mail" placeholder="E-Mail"<#if modifica> value="${registrato.mail}"</#if>>
+        <input class="form-control" type="email" required id="email" name="mail"
+               placeholder="E-Mail"<#if modifica> value="${registrato.mail}"</#if>>
     </div>
     <div class="form-group">
         <label for="telefono">Numero di telefono</label>
         <input class="form-control" data-parsley-type="digits" data-parsley-length="[10, 10]"
-               required id="telefono" name="telefono" placeholder="Cellulare personale"<#if modifica && registrato.telefono??> value="${registrato.telefono}"</#if>>
+               required id="telefono" name="telefono"
+               placeholder="Cellulare personale"<#if modifica && registrato.telefono??> value="${registrato.telefono}"</#if>>
     </div>
     <div class="form-group">
         <label for="localita">Località</label>

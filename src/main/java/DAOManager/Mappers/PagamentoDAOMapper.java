@@ -1,6 +1,8 @@
 package DAOManager.Mappers;
 
-import Domain.*;
+import Domain.Pagamento;
+import Domain.PagamentoRiepilogo;
+import Domain.PagamentoTerzamedia;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +23,7 @@ public final class PagamentoDAOMapper {
     }
 
     public static void bindInsert(PreparedStatement pst, int ordineArrivo, float quota,
-                           int iscrittoId, int registratoId) throws SQLException {
+                                  int iscrittoId, int registratoId) throws SQLException {
         pst.setFloat(1, quota);
         pst.setInt(2, iscrittoId);
         pst.setInt(3, registratoId);

@@ -2,7 +2,10 @@ package DAOManager;
 
 import DAOManager.Mappers.IscrittoDAOMapper;
 import DAOManager.Mappers.PagamentoDAOMapper;
-import Domain.*;
+import Domain.DatiPagamento;
+import Domain.IscrittoPagamento;
+import Domain.PagamentoRiepilogo;
+import Domain.TerzaMedia;
 import Utility.DAOUtils;
 
 import java.sql.*;
@@ -10,12 +13,6 @@ import java.util.List;
 
 public class TerzamediaDAOImpl implements TerzamediaDAO {
 
-    // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private static final String INSERT_TERZAMEDIA = "insert into Terzamedia (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,richieste,noteAlimentari,saNuotare,Scuola_id,sezione,nTessera,cellulare,festaPassaggio,mail) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    private static final String UPDATE_TERZAMEDIA = "update Terzamedia set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?,  richieste = ?, noteAlimentari = ?,  saNuotare = ?,  Scuola_id = ?, sezione = ?,  nTessera = ?, cellulare = ?, festaPassaggio = ?, mail = ? where id = ?;";
-    private static final String UPDATE_SQUADRA_TERZAMEDIA = "update Terzamedia set squadra_id = ? where id = ?;";
-    private static final String UPDATE_LABORATORIO_TERZAMEDIA = "update Terzamedia set Laboratorio_id = ? where id = ?;";
-    private static final String DELETE_TERZAMEDIA = "delete from Terzamedia where id = ?;";
     static final String GENERIC_TERZAMEDIA_FIND =
             """
                     select
@@ -34,6 +31,12 @@ public class TerzamediaDAOImpl implements TerzamediaDAO {
                     join Scuola sc on (ter.Scuola_id = sc.id)
                     left join Squadra sq on (ter.squadra_id = sq.id)
                     """;
+    // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
+    private static final String INSERT_TERZAMEDIA = "insert into Terzamedia (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,richieste,noteAlimentari,saNuotare,Scuola_id,sezione,nTessera,cellulare,festaPassaggio,mail) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_TERZAMEDIA = "update Terzamedia set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?,  richieste = ?, noteAlimentari = ?,  saNuotare = ?,  Scuola_id = ?, sezione = ?,  nTessera = ?, cellulare = ?, festaPassaggio = ?, mail = ? where id = ?;";
+    private static final String UPDATE_SQUADRA_TERZAMEDIA = "update Terzamedia set squadra_id = ? where id = ?;";
+    private static final String UPDATE_LABORATORIO_TERZAMEDIA = "update Terzamedia set Laboratorio_id = ? where id = ?;";
+    private static final String DELETE_TERZAMEDIA = "delete from Terzamedia where id = ?;";
     private static final String FIND_TERZAMEDIA_ID = GENERIC_TERZAMEDIA_FIND + " where ter.id = ?;";
     private static final String FIND_ALL_TERZAMEDIA = GENERIC_TERZAMEDIA_FIND + " order by ter.cognome, ter.nome;";
     private static final String FIND_ALL_ISCRITTO_CON_PAGAMENTO = """

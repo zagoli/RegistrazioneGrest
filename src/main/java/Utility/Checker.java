@@ -1,19 +1,22 @@
 package Utility;
 
 import DAOManager.DAOMan;
-import Domain.*;
+import Domain.Iscritto;
+import Domain.Registrato;
 import jakarta.servlet.http.HttpServletRequest;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.JsonNode;
 import kong.unirest.core.Unirest;
 import kong.unirest.core.UnirestException;
 import kong.unirest.core.json.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Checker {
     private static final Logger logger = LoggerFactory.getLogger(Checker.class);
@@ -22,6 +25,7 @@ public class Checker {
         if (!ConfigProperties.getProperty("EMAIL_CHECKER_ENABLED").equals("true")) {
             return true;
         }
+        if (StringUtils.isBlank(mail)) return false;
         // http://172.16.0.8:8085/v0/check_email
         // usare self-hosted https://reacher.email/
         HttpResponse<JsonNode> response = Unirest.post(ConfigProperties.getProperty("EMAIL_CHECKER_ENDPOINT"))
@@ -68,7 +72,7 @@ public class Checker {
     }
 
     private static boolean checkOwnership(HttpServletRequest request, RecordFinder<Registrato> finder,
-                                           String errorMessage) {
+                                          String errorMessage) {
         int idRegistrato = (int) request.getSession().getAttribute("idUtente");
         int id = Integer.parseInt(request.getParameter("id"));
         try {
@@ -114,11 +118,6 @@ public class Checker {
         return tipoUt <= 1;
     }
 
-    @FunctionalInterface
-    private interface RecordFinder<T> {
-        T findById(int id) throws SQLException;
-    }
-
     public static boolean checkIsFromPescantina(String localita) {
         if (localita == null) {
             return false;
@@ -126,6 +125,11 @@ public class Checker {
         String[] dintorni = {"pescantina", "settimo", "balconi", "ospedaletto", "arce", "arcè", "arcé", "santa lucia"};
         localita = localita.trim().toLowerCase();
         return Arrays.stream(dintorni).anyMatch(localita::contains);
+    }
+
+    @FunctionalInterface
+    private interface RecordFinder<T> {
+        T findById(int id) throws SQLException;
     }
 
 }

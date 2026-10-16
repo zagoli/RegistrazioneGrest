@@ -4,63 +4,63 @@
     <div class="py-2 px-3">
         <div class="table-responsive">
             <table id="t_anim" class="table table-hover nowrap">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col" style="width: 6%;">Azioni</th>
-                <th scope="col">Cognome</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Nascita</th>
-                <th scope="col">Fiscale</th>
-                <th scope="col">Indirizzo</th>
-                <th scope="col">Parrocchia</th>
-                <th scope="col">Cellulare</th>
-                <th scope="col">Email</th>
-                <th scope="col">Laboratorio</th>
-                <th scope="col">Squadra</th>
-                <th scope="col">F. età</th>
-            </tr>
-            </thead>
-            <tbody class="list">
-            <#list animatori as ani>
+                <thead class="thead-dark">
                 <tr>
-                    <td>
-                        <a href="javascript:"
-                           onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoani&id=${ani.id?c}', 'Dettagli animatore', 'width=600, height=700, status, scrollbars=1, location');"><img
-                                    src="../img/octicons/search.svg" alt="dettagli"></a>
-                        <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id?c}"><img
-                                    src="../img/octicons/pencil.svg" alt="modifica"></a>
-                        <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id?c}"><img
-                                    src="../img/octicons/trashcan.svg" alt="elimina"></a>
-                    </td>
-                    <td>${ani.cognome?capitalize}</td>
-                    <td>${ani.nome?capitalize}</td>
-                    <td data-sort="${ani.dataNascita?string.iso}">${ani.dataNascita?string["dd/MM/yyyy"]}</td>
-                    <td>${ani.codiceFiscale}</td>
-                    <td>${(ani.registrato.via)?capitalize+" "+(ani.registrato.civico)+" "+(ani.registrato.localita)?capitalize}</td>
-                    <td title="${ani.parrocchia.nome}">${ani.parrocchia.luogo}</td>
-                    <td>${ani.cellulare}</td>
-                    <td>${ani.mail}</td>
-                    <td <#if ani.responsabileLaboratorio>class="mark"</#if>>${ani.laboratorio.descrizione}</td>
-                    <#-- con freemarker è molto brutto: devo aggiungere la parola mark alla lista delle classi-->
-                    <td class="badge-squadra-support <#if ani.responsabileSquadra>mark</#if>">
-                        <#if ani.squadra.id!=0>
-                            <div class="badge-squadra"
-                                 style="background-color: ${ani.squadra.colore}; margin-right: 5px;"></div> ${ani.squadra.nome}
-                        </#if>
-                    </td>
-                    <td>
-                        <#if ani.fasciaEtaRagazzi == "PIC">
-                            Piccoli
-                        <#elseif ani.fasciaEtaRagazzi == "GRA">
-                            Grandi
-                        <#elseif ani.fasciaEtaRagazzi == "TER">
-                            3 Media
-                        </#if>
-                    </td>
+                    <th scope="col" style="width: 6%;">Azioni</th>
+                    <th scope="col">Cognome</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Nascita</th>
+                    <th scope="col">Fiscale</th>
+                    <th scope="col">Indirizzo</th>
+                    <th scope="col">Parrocchia</th>
+                    <th scope="col">Cellulare</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Laboratorio</th>
+                    <th scope="col">Squadra</th>
+                    <th scope="col">F. età</th>
                 </tr>
-            </#list>
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="list">
+                <#list animatori as ani>
+                    <tr>
+                        <td>
+                            <a href="javascript:"
+                               onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=infoani&id=${ani.id?c}', 'Dettagli animatore', 'width=600, height=700, status, scrollbars=1, location');"><img
+                                        src="../img/octicons/search.svg" alt="dettagli"></a>
+                            <a href="/RegistrazioneGrest/App/ModificaAnimatore?id=${ani.id?c}"><img
+                                        src="../img/octicons/pencil.svg" alt="modifica"></a>
+                            <a href="/RegistrazioneGrest/App/EliminaAnimatore?id=${ani.id?c}"><img
+                                        src="../img/octicons/trashcan.svg" alt="elimina"></a>
+                        </td>
+                        <td>${ani.cognome?capitalize}</td>
+                        <td>${ani.nome?capitalize}</td>
+                        <td data-sort="${ani.dataNascita?string.iso}">${ani.dataNascita?string["dd/MM/yyyy"]}</td>
+                        <td>${ani.codiceFiscale}</td>
+                        <td>${(ani.registrato.via)?capitalize+" "+(ani.registrato.civico)+" "+(ani.registrato.localita)?capitalize}</td>
+                        <td title="${ani.parrocchia.nome}">${ani.parrocchia.luogo}</td>
+                        <td>${ani.cellulare}</td>
+                        <td>${ani.mail}</td>
+                        <td <#if ani.responsabileLaboratorio>class="mark"</#if>>${ani.laboratorio.descrizione}</td>
+                        <#-- con freemarker è molto brutto: devo aggiungere la parola mark alla lista delle classi-->
+                        <td class="badge-squadra-support <#if ani.responsabileSquadra>mark</#if>">
+                            <#if ani.squadra.id!=0>
+                                <div class="badge-squadra"
+                                     style="background-color: ${ani.squadra.colore}; margin-right: 5px;"></div> ${ani.squadra.nome}
+                            </#if>
+                        </td>
+                        <td>
+                            <#if ani.fasciaEtaRagazzi == "PIC">
+                                Piccoli
+                            <#elseif ani.fasciaEtaRagazzi == "GRA">
+                                Grandi
+                            <#elseif ani.fasciaEtaRagazzi == "TER">
+                                3 Media
+                            </#if>
+                        </td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

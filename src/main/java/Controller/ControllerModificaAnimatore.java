@@ -3,16 +3,18 @@ package Controller;
 import Controller.Utils.IscrizioniUtils;
 import Controller.Utils.PresenzeUtils;
 import DAOManager.DAOMan;
-import Domain.*;
+import Domain.Animatore;
+import Domain.Laboratorio;
+import Domain.RelPresenzaAn;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.Checker;
-import Utility.DAOUtils;
 import Utility.ConfigPropertyException;
-import Utility.Utils;
 import Utility.RequestFields;
+import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +37,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
             template.addObject("idUtente", request.getSession().getAttribute("idUtente"));
             template.setTitoloPagina("Modifica animatore");
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);
-            String mail = DAOUtils.normalizeText(request.getParameter("mail"));
+            String mail = StringUtils.trimToNull(request.getParameter("mail"));
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(mail)) {
                 //INSERISCO ANIMATORE E FACCIO UNA REDIRECT
                 logger.info("Modifica animatore {} {} con id {}", a.getNome(), a.getCognome(), idAnimatore);

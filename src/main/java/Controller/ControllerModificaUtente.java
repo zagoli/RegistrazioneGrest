@@ -6,12 +6,12 @@ import Response.FreemarkerTemplate;
 import Response.RedirectResult;
 import Response.Response;
 import Utility.Checker;
-import Utility.DAOUtils;
 import Utility.ConfigPropertyException;
-import Utility.Utils;
 import Utility.RequestFields;
+import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +28,7 @@ public class ControllerModificaUtente implements ControllerInterface {
         try {
             template.setTitoloPagina("Modifica account");
             int idUt = (int) request.getSession().getAttribute("idUtente");
-            String mail = DAOUtils.normalizeText(request.getParameter("mail"));
+            String mail = StringUtils.trimToNull(request.getParameter("mail"));
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(mail)) {
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
                 logger.info("Modifica utente con id {}", r.getId());

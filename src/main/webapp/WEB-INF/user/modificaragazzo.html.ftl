@@ -30,17 +30,14 @@
                 <div class="form-group">
                     <label for="noteAlimentari">Allergie o intolleranze alimentari o terapie in corso:</label>
                     <textarea class="form-control" rows="5" id="noteAlimentari"
-                              name="noteAlimentari" placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest. Specificare anche gli eventuali orari di assunzione.">
-                        <#if ragazzo.noteAlimentari??>${ragazzo.noteAlimentari}</#if>
-                    </textarea>
+                              name="noteAlimentari"
+                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest. Specificare anche gli eventuali orari di assunzione.">${ragazzo.noteAlimentari!}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="richieste">Eventuali richieste o proposte:</label>
                     <textarea class="form-control" rows="5" id="richieste" name="richieste"
-                              placeholder="specificare SOLO se presenti. Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili del Grest cercheranno di equilibrare le squadre anche in base alle richieste qui espresse. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta e di non richiedere cambiamenti, se non gravemente necessari.">
-                        <#if ragazzo.richieste??>${ragazzo.richieste}</#if>
-                    </textarea>
+                              placeholder="specificare SOLO se presenti. Si ricorda che, se si richiede di essere in squadra con qualche altro ragazzo, i responsabili del Grest cercheranno di equilibrare le squadre anche in base alle richieste qui espresse. Qualsiasi altra richiesta di cambio squadra durante il corso del Grest potrebbe quindi non essere soddisfatta. Si richiede pertanto di ponderare con attenzione la vostra scelta e di non richiedere cambiamenti, se non gravemente necessari.">${ragazzo.richieste!}</textarea>
                 </div>
 
                 <div class="form-check">

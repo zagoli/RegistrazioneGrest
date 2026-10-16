@@ -47,17 +47,13 @@
                     <label for="noteAlimentari">Allergie o intolleranze alimentari o terapie in corso:</label>
                     <textarea class="form-control" rows="5" id="noteAlimentari"
                               name="noteAlimentari"
-                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest. Specificare anche gli eventuali orari di assunzione.">
-                        <#if terzamedia.noteAlimentari??>${terzamedia.noteAlimentari}</#if>
-                    </textarea>
+                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest. Specificare anche gli eventuali orari di assunzione.">${terzamedia.noteAlimentari!}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="richieste">Eventuali richieste o proposte:</label>
                     <textarea class="form-control" rows="5" id="richieste"
-                              name="richieste" placeholder="specificare SOLO se presenti">
-                        <#if terzamedia.richieste??>${terzamedia.richieste}</#if>
-                    </textarea>
+                              name="richieste" placeholder="specificare SOLO se presenti">${terzamedia.richieste!}</textarea>
                 </div>
 
                 <div class="form-check">

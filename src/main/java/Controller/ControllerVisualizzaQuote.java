@@ -17,6 +17,13 @@ public class ControllerVisualizzaQuote implements ControllerInterface {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerVisualizzaQuote.class);
 
+    private static void addWeeklyPrices(FreemarkerTemplate template, String keySuffix, String propertySuffix)
+            throws ConfigPropertyException, IOException {
+        for (int week = 1; week <= 4; week++) {
+            template.addObject("prezzo_" + week + keySuffix, ConfigProperties.getProperty("PREZZO_" + week + propertySuffix));
+        }
+    }
+
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
@@ -44,12 +51,5 @@ public class ControllerVisualizzaQuote implements ControllerInterface {
             template = Utils.getErrorPageAndLogException(e, ControllerVisualizzaQuote.class.getName());
         }
         return template;
-    }
-
-    private static void addWeeklyPrices(FreemarkerTemplate template, String keySuffix, String propertySuffix)
-            throws ConfigPropertyException, IOException {
-        for (int week = 1; week <= 4; week++) {
-            template.addObject("prezzo_" + week + keySuffix, ConfigProperties.getProperty("PREZZO_" + week + propertySuffix));
-        }
     }
 }

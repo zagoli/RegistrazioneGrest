@@ -38,12 +38,13 @@
                             <#------------------------------>
                         </td>
                         <td class="cognome">${datirag[0].cognome}</td>
-                        <td><a href="javascript:" onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=inforag&id=${datirag[0].id?c}', 'Dettagli ragazzo', 'width=600, height=700, status, scrollbars=1, location');">
+                        <td><a href="javascript:"
+                               onClick="window.open('/RegistrazioneGrest/App/InfoDettaglio?target=inforag&id=${datirag[0].id?c}', 'Dettagli ragazzo', 'width=600, height=700, status, scrollbars=1, location');">
                                 <img src="../img/octicons/search.svg"></a></td>
                         <td><a href="/RegistrazioneGrest/App/InfoDettaglio?target=schedarag&id=${datirag[0].id?c}">
                                 <img src="../img/octicons/file.svg"></a></td>
                         <#if datirag[1]>
-                            <#--ha già pagato-->
+                        <#--ha già pagato-->
                             <td class="text-center">
                                 <span title="Evaso da ${datirag[2].nomeRegistrato + " " + datirag[2].cognomeRegistrato} il ${datirag[2].data}">
                                     ${datirag[2].ordineArrivo}
@@ -60,7 +61,7 @@
                                 </button>
                             </td>
                         <#else>
-                            <#--non ha già pagato-->
+                        <#--non ha già pagato-->
                             <td>
                                 <label>
                                     <input type="number"

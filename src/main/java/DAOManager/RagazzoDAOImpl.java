@@ -2,7 +2,10 @@ package DAOManager;
 
 import DAOManager.Mappers.IscrittoDAOMapper;
 import DAOManager.Mappers.PagamentoDAOMapper;
-import Domain.*;
+import Domain.DatiPagamento;
+import Domain.PagamentoRiepilogo;
+import Domain.Ragazzo;
+import Domain.RagazzoPagamento;
 import Utility.DAOUtils;
 
 import java.sql.*;
@@ -10,12 +13,6 @@ import java.util.List;
 
 public class RagazzoDAOImpl implements RagazzoDAO {
 
-    // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
-    private static final String INSERT_RAGAZZO = "insert into Ragazzo (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,entrataAnticipata,richieste,noteAlimentari,mensa,saNuotare,fratelloIscritto,Scuola_id,sezione,classe,nTessera) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-    private static final String UPDATE_RAGAZZO = "update Ragazzo set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, entrataAnticipata = ?, richieste = ?, noteAlimentari = ?, mensa = ?, saNuotare = ?, fratelloIscritto = ?, Scuola_id = ?, sezione = ?, classe = ?, nTessera = ? where id = ?;";
-    private static final String UPDATE_SQUADRA_RAGAZZO = "update Ragazzo set squadra_id = ? where id = ?;";
-    private static final String UPDATE_LABORATORIO_RAGAZZO = "update Ragazzo set Laboratorio_id = ? where id = ?;";
-    private static final String DELETE_RAGAZZO = "delete from Ragazzo where id = ?;";
     static final String GENERIC_RAGAZZO_FIND =
             """
                     select
@@ -34,22 +31,28 @@ public class RagazzoDAOImpl implements RagazzoDAO {
                     join Scuola sc on (ra.Scuola_id = sc.id)
                     left join Squadra sq on (ra.squadra_id = sq.id)
                     """;
+    // <editor-fold defaultstate="collapsed" desc="Tutte le query necessarie">
+    private static final String INSERT_RAGAZZO = "insert into Ragazzo (nome,cognome,dataNascita,presenza,Laboratorio_id,Parrocchia_id,Registrato_id,Circolo_id,entrataAnticipata,richieste,noteAlimentari,mensa,saNuotare,fratelloIscritto,Scuola_id,sezione,classe,nTessera) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_RAGAZZO = "update Ragazzo set nome = ?, cognome = ?, dataNascita = ?, presenza = ?, Laboratorio_id = ?, Parrocchia_id = ?, Registrato_id = ?, Circolo_id = ?, entrataAnticipata = ?, richieste = ?, noteAlimentari = ?, mensa = ?, saNuotare = ?, fratelloIscritto = ?, Scuola_id = ?, sezione = ?, classe = ?, nTessera = ? where id = ?;";
+    private static final String UPDATE_SQUADRA_RAGAZZO = "update Ragazzo set squadra_id = ? where id = ?;";
+    private static final String UPDATE_LABORATORIO_RAGAZZO = "update Ragazzo set Laboratorio_id = ? where id = ?;";
+    private static final String DELETE_RAGAZZO = "delete from Ragazzo where id = ?;";
     private static final String FIND_RAGAZZO_ID = GENERIC_RAGAZZO_FIND + " where ra.id = ?;";
     private static final String FIND_ALL_RAGAZZO = GENERIC_RAGAZZO_FIND + " order by ra.cognome, ra.nome;";
     private static final String FIND_ALL_ISCRITTO_CON_PAGAMENTO = """
-        select ra.id as raid, ra.nome as ranome, ra.cognome as racognome,
-               ra.mensa as ramensa, ra.fratelloIscritto as rafratelloIscritto,
-               ra.entrataAnticipata as raentrataAnticipata, re.localita as relocalita,
-               p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata,
-               p.quota as pquota, pre.nome as prenome, pre.cognome as precognome,
-               coalesce(pr.settimane, 0) as settimane
-        from Ragazzo ra
-        join Registrato re on (ra.Registrato_id = re.id)
-        left join Pagamento p on (p.Ragazzo_id = ra.id)
-        left join Registrato pre on (p.Registrato_id = pre.id)
-        left join (select Ragazzo_id, count(*) as settimane from presenzaRag group by Ragazzo_id) pr on (pr.Ragazzo_id = ra.id)
-        order by ra.cognome, ra.nome;
-        """;
+            select ra.id as raid, ra.nome as ranome, ra.cognome as racognome,
+                   ra.mensa as ramensa, ra.fratelloIscritto as rafratelloIscritto,
+                   ra.entrataAnticipata as raentrataAnticipata, re.localita as relocalita,
+                   p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata,
+                   p.quota as pquota, pre.nome as prenome, pre.cognome as precognome,
+                   coalesce(pr.settimane, 0) as settimane
+            from Ragazzo ra
+            join Registrato re on (ra.Registrato_id = re.id)
+            left join Pagamento p on (p.Ragazzo_id = ra.id)
+            left join Registrato pre on (p.Registrato_id = pre.id)
+            left join (select Ragazzo_id, count(*) as settimane from presenzaRag group by Ragazzo_id) pr on (pr.Ragazzo_id = ra.id)
+            order by ra.cognome, ra.nome;
+            """;
     private static final String FIND_ALL_CON_PAGAMENTO = """
             select iscritti.*, p.id as pid, p.ordineArrivo as pordineArrivo, p.data as pdata, p.quota as pquota,
                    pre.nome as prenome, pre.cognome as precognome

@@ -1,8 +1,6 @@
 package Controller.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -10,16 +8,6 @@ import java.util.Map;
 public final class SalvataggioLaboratoriSquadreUtils {
 
     private SalvataggioLaboratoriSquadreUtils() {
-    }
-
-    @FunctionalInterface
-    public interface FunzioneSalvataggio {
-        void salva(int id, Integer assignment) throws SQLException;
-    }
-
-    @FunctionalInterface
-    public interface FunzioneSalvataggioAnimatore {
-        void salva(int id, Integer assignment, boolean responsible) throws SQLException;
     }
 
     public static void salvataggio(String[] values, boolean optional, FunzioneSalvataggio funzioneSalvataggio) throws SQLException {
@@ -49,5 +37,15 @@ public final class SalvataggioLaboratoriSquadreUtils {
                 update.salva(Integer.parseInt(entry.getKey()), assignment, value.length == 2);
             }
         }
+    }
+
+    @FunctionalInterface
+    public interface FunzioneSalvataggio {
+        void salva(int id, Integer assignment) throws SQLException;
+    }
+
+    @FunctionalInterface
+    public interface FunzioneSalvataggioAnimatore {
+        void salva(int id, Integer assignment, boolean responsible) throws SQLException;
     }
 }

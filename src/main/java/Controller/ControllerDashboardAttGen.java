@@ -1,18 +1,14 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.AttivitaGen;
-import Domain.CollaborazioneGen;
-import Domain.RelCollabora;
 import Response.FreemarkerTemplate;
 import Response.Response;
 import Utility.Utils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Collections;
 
 public class ControllerDashboardAttGen implements ControllerInterface {
 

@@ -3,7 +3,7 @@ package Domain;
 import java.util.Date;
 import java.util.List;
 
-public record AnimatoreExport (
+public record AnimatoreExport(
         String nome,
         String cognome,
         Date dataNascita,
@@ -21,4 +21,5 @@ public record AnimatoreExport (
         Squadra squadra,
         String responsabileSquadra,
         Registrato registrato
-) {}
+) {
+}

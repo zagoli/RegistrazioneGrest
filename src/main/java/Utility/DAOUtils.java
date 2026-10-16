@@ -1,5 +1,7 @@
 package Utility;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,23 +14,8 @@ public final class DAOUtils {
     private DAOUtils() {
     }
 
-    /** Removes surrounding whitespace and represents absent text as null. */
-    public static String normalizeText(String value) {
-        if (value == null) {
-            return null;
-        }
-        String normalized = value.strip();
-        return normalized.isEmpty() ? null : normalized;
-    }
-
-    /** Binds normalized text without mutating the entity; DB constraints still apply. */
     public static void setNormalizedString(PreparedStatement pst, int index, String value) throws SQLException {
-        pst.setString(index, normalizeText(value));
-    }
-
-    @FunctionalInterface
-    public interface Mapper<T> {
-        T map(ResultSet rs) throws SQLException;
+        pst.setString(index, StringUtils.trimToNull(value));
     }
 
     public static <T> List<T> resultSetToList(ResultSet rs, Mapper<T> mapper) throws SQLException {
@@ -49,5 +36,10 @@ public final class DAOUtils {
                 setId.accept(rs.getInt(1));
             }
         }
+    }
+
+    @FunctionalInterface
+    public interface Mapper<T> {
+        T map(ResultSet rs) throws SQLException;
     }
 }

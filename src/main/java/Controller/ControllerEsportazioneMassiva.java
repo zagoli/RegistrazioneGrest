@@ -1,12 +1,7 @@
 package Controller;
 
 import DAOManager.DAOMan;
-import Domain.AnimatoreExport;
-import Domain.Circolo;
-import Domain.Parrocchia;
-import Domain.RagazzoExport;
-import Domain.Registrato;
-import Domain.TerzaMediaExport;
+import Domain.*;
 import Response.BinaryResult;
 import Response.Response;
 import Utility.Utils;
@@ -29,35 +24,6 @@ import java.util.stream.Collectors;
 public class ControllerEsportazioneMassiva implements ControllerInterface {
 
     private static final Logger logger = org.slf4j.LoggerFactory.getLogger(ControllerEsportazioneMassiva.class);
-
-    @Override
-    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
-
-        logger.info("Inizio esportazione massiva");
-
-        try (Workbook workbook = new XSSFWorkbook()) {
-            List<RagazzoExport> ragazzi = DAOMan.ragazzoExportDAO.findAll();
-            List<TerzaMediaExport> ragazziTerzaMedia = DAOMan.terzamediaExportDAO.findAll();
-            List<AnimatoreExport> animatori = DAOMan.animatoreExportDAO.findAll();
-
-            creaFoglioRagazzi(workbook, ragazzi);
-            creaFoglioRagazziTerzaMedia(workbook, ragazziTerzaMedia);
-            creaFoglioAnimatori(workbook, animatori);
-
-            ByteArrayOutputStream output = new ByteArrayOutputStream();
-            workbook.write(output);
-
-            logger.info("Foglio excel salvato in memoria. Invio la risposta");
-
-            return new BinaryResult("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    "export_grest.xlsx",
-                    output.toByteArray());
-        } catch (SQLException | IOException e) {
-            return Utils.getErrorPageAndLogException(e, ControllerEsportazioneMassiva.class.getSimpleName());
-        }
-
-
-    }
 
     private static void creaFoglioAnimatori(Workbook workbook, List<AnimatoreExport> animatori) {
         creaFoglio(workbook, "Animatori", animatori,
@@ -149,7 +115,7 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
     }
 
     private static void creaIntestazioneRagazzoTerzaMedia(Sheet sheet) {
-        creaRigaIntestazione(sheet, new String[] {
+        creaRigaIntestazione(sheet, new String[]{
                 "Nome",
                 "Cognome",
                 "Data di nascita",
@@ -217,7 +183,7 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
 
     private static void creaIntestazioneRagazzo(Sheet sheet) {
         creaRigaIntestazione(sheet,
-                new String[] {
+                new String[]{
                         "Nome",
                         "Cognome",
                         "Data di nascita",
@@ -244,11 +210,11 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
                         "Email genitore",
                         "Telefono genitore",
                         "Indirizzo"
-        });
+                });
     }
 
     private static <T> void creaFoglio(Workbook workbook, String name, List<T> dati,
-                                     Consumer<Sheet> header, BiConsumer<List<T>, Sheet> populate) {
+                                       Consumer<Sheet> header, BiConsumer<List<T>, Sheet> populate) {
         Sheet sheet = workbook.createSheet(WorkbookUtil.createSafeSheetName(name));
         header.accept(sheet);
         populate.accept(dati, sheet);
@@ -257,7 +223,7 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
     }
 
     private static void affiliazioneEPresenza(Row row, int firstColumn, Parrocchia parrocchia, Circolo circolo,
-                                             String tessera, List<Integer> settimane, String presenza) {
+                                              String tessera, List<Integer> settimane, String presenza) {
         row.createCell(firstColumn).setCellValue(parrocchia.getNome() + ", " + parrocchia.getLuogo());
         row.createCell(firstColumn + 1).setCellValue(circolo.getNome() + ", " + circolo.getLuogo());
         row.createCell(firstColumn + 2).setCellValue(tessera);
@@ -304,6 +270,35 @@ public class ControllerEsportazioneMassiva implements ControllerInterface {
         CellStyle style = workbook.createCellStyle();
         style.setFont(font);
         return style;
+    }
+
+    @Override
+    public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
+
+        logger.info("Inizio esportazione massiva");
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            List<RagazzoExport> ragazzi = DAOMan.ragazzoExportDAO.findAll();
+            List<TerzaMediaExport> ragazziTerzaMedia = DAOMan.terzamediaExportDAO.findAll();
+            List<AnimatoreExport> animatori = DAOMan.animatoreExportDAO.findAll();
+
+            creaFoglioRagazzi(workbook, ragazzi);
+            creaFoglioRagazziTerzaMedia(workbook, ragazziTerzaMedia);
+            creaFoglioAnimatori(workbook, animatori);
+
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            workbook.write(output);
+
+            logger.info("Foglio excel salvato in memoria. Invio la risposta");
+
+            return new BinaryResult("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    "export_grest.xlsx",
+                    output.toByteArray());
+        } catch (SQLException | IOException e) {
+            return Utils.getErrorPageAndLogException(e, ControllerEsportazioneMassiva.class.getSimpleName());
+        }
+
+
     }
 
 }

@@ -1,8 +1,9 @@
 package Servlet;
 
 import Controller.*;
+import Response.FreemarkerTemplate;
 import Response.RenderingContext;
-import Response.*;
+import Response.Response;
 import Utility.Checker;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;

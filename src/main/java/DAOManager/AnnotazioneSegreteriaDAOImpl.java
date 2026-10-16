@@ -1,8 +1,7 @@
 package DAOManager;
 
-import DAOManager.Mappers.RegistratoDAOMapper;
-
 import DAOManager.Mappers.IscrittoDAOMapper;
+import DAOManager.Mappers.RegistratoDAOMapper;
 import Domain.AnnotazioneSegreteria;
 import Utility.DAOUtils;
 

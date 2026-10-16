@@ -16,16 +16,6 @@ public final class PresenzeUtils {
     private PresenzeUtils() {
     }
 
-    @FunctionalInterface
-    public interface SqlConsumer<T> {
-        void accept(T value) throws SQLException;
-    }
-
-    @FunctionalInterface
-    public interface SqlFunction<T, R> {
-        R apply(T value) throws SQLException;
-    }
-
     public static <T> void insert(HttpServletRequest request, IntFunction<T> relation, SqlConsumer<T> insert) throws SQLException {
         for (String calId : request.getParameterValues("cal")) {
             insert.accept(relation.apply(Integer.parseInt(calId)));
@@ -33,7 +23,7 @@ public final class PresenzeUtils {
     }
 
     public static <T> void replace(HttpServletRequest request, List<T> previous, SqlConsumer<T> delete,
-                            IntFunction<T> relation, SqlConsumer<T> insert) throws SQLException {
+                                   IntFunction<T> relation, SqlConsumer<T> insert) throws SQLException {
         for (T value : previous) {
             delete.accept(value);
         }
@@ -53,7 +43,7 @@ public final class PresenzeUtils {
     }
 
     public static <T extends Iscritto, R> List<Object[]> printRows(List<T> iscritti,
-            SqlFunction<Integer, List<R>> presenze, ToIntFunction<R> calendarId, boolean contacts) throws SQLException {
+                                                                   SqlFunction<Integer, List<R>> presenze, ToIntFunction<R> calendarId, boolean contacts) throws SQLException {
         List<Object[]> rows = new LinkedList<>();
         for (T iscritto : iscritti) {
             String period = period(presenze.apply(iscritto.getId()), calendarId);
@@ -62,5 +52,15 @@ public final class PresenzeUtils {
                     : new Object[]{iscritto, period});
         }
         return rows;
+    }
+
+    @FunctionalInterface
+    public interface SqlConsumer<T> {
+        void accept(T value) throws SQLException;
+    }
+
+    @FunctionalInterface
+    public interface SqlFunction<T, R> {
+        R apply(T value) throws SQLException;
     }
 }

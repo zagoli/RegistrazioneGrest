@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public record TerzaMediaExport (
+public record TerzaMediaExport(
         String nome,
         String cognome,
         Date dataNascita,
@@ -26,4 +26,5 @@ public record TerzaMediaExport (
         Registrato registrato,
         String pagato,
         BigDecimal importoPagamento
-) {}
+) {
+}

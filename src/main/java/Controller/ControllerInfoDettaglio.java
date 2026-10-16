@@ -18,6 +18,31 @@ import java.util.List;
 
 public class ControllerInfoDettaglio implements ControllerInterface {
 
+    private static TerzaMedia commonTerzaMedia(int id, FreemarkerTemplate template) throws SQLException {
+        TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
+        template.addObject("terzamedia", t);
+        int idRegistrato = t.getRegistrato().getId();
+        InfoDettaglioUtils.popolaCu(template, idRegistrato);
+        List<Calendario> listCalendario = PresenzeUtils.calendars(
+                DAOMan.relPresenzaTerDAO.findByTerzamediaId(id), RelPresenzaTer::getCalendarioId);
+        template.addObject("attgen", DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato));
+        template.addObject("calendari", listCalendario);
+        return t;
+    }
+
+    private static Ragazzo commonRagazzo(int id, FreemarkerTemplate template) throws SQLException {
+        Ragazzo r = DAOMan.ragazzoDAO.findById(id);
+        template.addObject("ragazzo", r);
+        int idRegistrato = r.getRegistrato().getId();
+        InfoDettaglioUtils.popolaCu(template, idRegistrato);
+        InfoDettaglioUtils.popolaAccompagnatori(template, idRegistrato);
+        List<Calendario> listCalendario = PresenzeUtils.calendars(
+                DAOMan.relPresenzaRagDAO.findByRagazzoId(id), RelPresenzaRag::getCalendarioId);
+        template.addObject("attgen", DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato));
+        template.addObject("calendari", listCalendario);
+        return r;
+    }
+
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
@@ -90,31 +115,6 @@ public class ControllerInfoDettaglio implements ControllerInterface {
         }
         return template;
 
-    }
-
-    private static TerzaMedia commonTerzaMedia(int id, FreemarkerTemplate template) throws SQLException {
-        TerzaMedia t = DAOMan.terzamediaDAO.findById(id);
-        template.addObject("terzamedia", t);
-        int idRegistrato = t.getRegistrato().getId();
-        InfoDettaglioUtils.popolaCu(template, idRegistrato);
-        List<Calendario> listCalendario = PresenzeUtils.calendars(
-                DAOMan.relPresenzaTerDAO.findByTerzamediaId(id), RelPresenzaTer::getCalendarioId);
-        template.addObject("attgen", DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato));
-        template.addObject("calendari", listCalendario);
-        return t;
-    }
-
-    private static Ragazzo commonRagazzo(int id, FreemarkerTemplate template) throws SQLException {
-        Ragazzo r = DAOMan.ragazzoDAO.findById(id);
-        template.addObject("ragazzo", r);
-        int idRegistrato = r.getRegistrato().getId();
-        InfoDettaglioUtils.popolaCu(template, idRegistrato);
-        InfoDettaglioUtils.popolaAccompagnatori(template, idRegistrato);
-        List<Calendario> listCalendario = PresenzeUtils.calendars(
-                DAOMan.relPresenzaRagDAO.findByRagazzoId(id), RelPresenzaRag::getCalendarioId);
-        template.addObject("attgen", DAOMan.attivitaGenDAO.findByRegistratoId(idRegistrato));
-        template.addObject("calendari", listCalendario);
-        return r;
     }
 
 }
