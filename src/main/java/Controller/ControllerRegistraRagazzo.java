@@ -70,6 +70,8 @@ public class ControllerRegistraRagazzo implements ControllerInterface {
                 PresenzeUtils.insert(request, calId -> new RelPresenzaRag(calId, ragazzo.getId()),
                         DAOMan.relPresenzaRagDAO::insert);
 
+                logger.info("Ragazzo {} {} registrato", ragazzo.getNome(), ragazzo.getCognome());
+
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             }
         } catch (final RuntimeException | IOException | SQLException | ParseException | ConfigPropertyException e) {

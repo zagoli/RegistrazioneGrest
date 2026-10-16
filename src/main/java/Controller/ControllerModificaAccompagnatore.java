@@ -8,10 +8,14 @@ import Response.Response;
 import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 
 public class ControllerModificaAccompagnatore implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerModificaAccompagnatore.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -27,9 +31,11 @@ public class ControllerModificaAccompagnatore implements ControllerInterface {
                 template.addObject("accompagnatore", a);
             } else {
                 Accompagnatore a = DAOMan.accompagnatoreDAO.findById(idAccompagnatore);
+                logger.info("Modifica accompagnatore {} {} con id {}", a.getNome(), a.getCognome(), idAccompagnatore);
                 a.setNome(request.getParameter("nome"));
                 a.setCognome(request.getParameter("cognome"));
                 DAOMan.accompagnatoreDAO.update(a);
+                logger.info("Accompagnatore con id {} salvato come {} {}", idAccompagnatore, a.getNome(), a.getCognome());
                 return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }
         } catch (final RuntimeException | SQLException e) {

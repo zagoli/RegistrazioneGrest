@@ -12,6 +12,8 @@ import Utility.Utils;
 import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ControllerModificaTerzamedia implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerModificaTerzamedia.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -33,6 +37,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
             TerzaMedia t = DAOMan.terzamediaDAO.findById(idTerzamedia);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO IL TERZAMEDIA E FACCIO UNA REDIRECT
+                logger.info("Modifica terza media con id {}", t.getId());
                 IscrizioniUtils.populateIscrittoFromRequest(request, t);
                 t.setScuola(DAOMan.scuolaDAO.findById(Integer.parseInt(request.getParameter("scuola"))));
                 RequestFields.terzaMedia(request, t);
@@ -40,6 +45,7 @@ public class ControllerModificaTerzamedia implements ControllerInterface {
                 PresenzeUtils.replace(request, DAOMan.relPresenzaTerDAO.findByTerzamediaId(idTerzamedia),
                         DAOMan.relPresenzaTerDAO::delete, calId -> new RelPresenzaTer(calId, idTerzamedia),
                         DAOMan.relPresenzaTerDAO::insert);
+                logger.info("Terza media con id {} modificata", t.getId());
                 return IscrizioniUtils.getPaginaRedirectDopoModifica(request, "ter");
             } else {
                 //PREPARO I DATI PER LA PAGINA

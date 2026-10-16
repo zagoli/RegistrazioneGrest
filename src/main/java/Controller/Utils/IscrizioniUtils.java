@@ -9,9 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class IscrizioniUtils {
 
@@ -25,8 +23,8 @@ public final class IscrizioniUtils {
         iscritto.setCircolo(DAOMan.circoloDAO.findById(Integer.parseInt(request.getParameter("circolo"))));
     }
 
-    public static Map<Calendario, Boolean> getSettimaneSelezionate(List<Calendario> all, List<Calendario> selected) {
-        Map<Calendario, Boolean> calendari = new HashMap<>();
+    public static SortedMap<Calendario, Boolean> getSettimaneSelezionate(List<Calendario> all, List<Calendario> selected) {
+        SortedMap<Calendario, Boolean> calendari = new TreeMap<>();
         all.forEach(calendario -> calendari.put(calendario, selected.contains(calendario)));
         return calendari;
     }

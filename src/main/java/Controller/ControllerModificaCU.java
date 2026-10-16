@@ -9,10 +9,14 @@ import Utility.Utils;
 import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 
 public class ControllerModificaCU implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerModificaCU.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -27,8 +31,10 @@ public class ControllerModificaCU implements ControllerInterface {
                 template.addObject("contatto", cu);
             } else {
                 ContattoUrgenze cu = DAOMan.contattoUrgenzeDAO.findById(idCU);
+                logger.info("Modifica contatto telefonico urgenze {} {} con id {}", cu.getNome(), cu.getCognome(), idCU);
                 RequestFields.contatto(request, cu);
                 DAOMan.contattoUrgenzeDAO.update(cu);
+                logger.info("Contatto telefonico urgenze con id {} modificato", idCU);
                 return new RedirectResult("/RegistrazioneGrest/App/AccompagnatoriContatti");
             }
         } catch (final RuntimeException | SQLException e) {

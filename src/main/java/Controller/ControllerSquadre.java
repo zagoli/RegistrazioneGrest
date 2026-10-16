@@ -8,10 +8,14 @@ import Response.Response;
 import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 
 public class ControllerSquadre implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerSquadre.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -31,6 +35,7 @@ public class ControllerSquadre implements ControllerInterface {
                     } else {
                         //salvo le modifiche
                         SalvataggioLaboratoriSquadreUtils.salvataggio(request.getParameterValues("squadra"), true, DAOMan.ragazzoDAO::updateSquadra);
+                        logger.info("Squadre ragazzi salvate");
                         return new RedirectResult("/RegistrazioneGrest/App/Squadre?target=rag");
                     }
                     break;
@@ -42,6 +47,7 @@ public class ControllerSquadre implements ControllerInterface {
                     } else {
                         //salvo le modifiche
                         SalvataggioLaboratoriSquadreUtils.salvataggio(request.getParameterValues("squadra"), true, DAOMan.terzamediaDAO::updateSquadra);
+                        logger.info("Squadre terzamedia salvate");
                         return new RedirectResult("/RegistrazioneGrest/App/Squadre?target=ter");
                     }
                     break;
@@ -53,6 +59,7 @@ public class ControllerSquadre implements ControllerInterface {
                     } else {
                         //salvo le modifiche
                         SalvataggioLaboratoriSquadreUtils.salvataggioAnimatori(request, true, DAOMan.animatoreDAO::updateSquadra);
+                        logger.info("Squadre animatori salvate");
                         return new RedirectResult("/RegistrazioneGrest/App/Squadre?target=an");
                     }
                     break;

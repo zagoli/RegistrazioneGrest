@@ -2,6 +2,7 @@ package Controller;
 
 import DAOManager.DAOMan;
 import Domain.AttivitaGen;
+import Domain.CollaborazioneGen;
 import Domain.RelCollabora;
 import Response.FreemarkerTemplate;
 import Response.Response;
@@ -11,9 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ControllerDashboardAttGen implements ControllerInterface {
 
@@ -24,15 +23,10 @@ public class ControllerDashboardAttGen implements ControllerInterface {
             template.addObject("TITOLOPAGINA", "Attività genitori");
             template.setView("user/dashboardattgen.html");
             int idUt = (int) request.getSession().getAttribute("idUtente");
-            Map<AttivitaGen, Object[]> mapAttivitaGen = new HashMap<>();
-            List<RelCollabora> listRelCollabora = DAOMan.relCollaboraDAO.findByRegistratoId(idUt);
-            if (!listRelCollabora.isEmpty()) {
-                for (RelCollabora rc : listRelCollabora) {
-                    AttivitaGen ag = DAOMan.attivitaGenDAO.findById(rc.getAttivitaGenId());
-                    Object[] o = {rc.getData(), rc.getId()};
-                    mapAttivitaGen.put(ag, o);
-                }
-                template.addObject("attivita", mapAttivitaGen);
+            var collaborazioneGen = DAOMan.attivitaGenDAO.findCollaborazioniByRegistratoId(idUt);
+            if (!collaborazioneGen.isEmpty()) {
+                Collections.sort(collaborazioneGen);
+                template.addObject("attivita", collaborazioneGen);
             }
             template.addObject("allattivita", DAOMan.attivitaGenDAO.findAll());
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");

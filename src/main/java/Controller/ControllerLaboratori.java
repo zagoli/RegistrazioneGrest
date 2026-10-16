@@ -8,10 +8,14 @@ import Response.Response;
 import Utility.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 
 public class ControllerLaboratori implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerLaboratori.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -20,8 +24,8 @@ public class ControllerLaboratori implements ControllerInterface {
             Integer tipoUt = (Integer) request.getSession().getAttribute("tipoUtente");
             template.addObject("tipoUt", tipoUt);
             template.addObject("TITOLOPAGINA", "Assegnazione Laboratori");
-            //preparo gli oggetti per la pagina
             if (!request.getParameterMap().containsKey("submitted")) {
+                //preparo gli oggetti per la pagina
                 switch (request.getParameter("target")) {
                     case "rag":
                         template.addObject("ragazzi", DAOMan.ragazzoDAO.findAll());
@@ -44,14 +48,17 @@ public class ControllerLaboratori implements ControllerInterface {
                 switch (request.getParameter("target")) {
                     case "rag": {
                         SalvataggioLaboratoriSquadreUtils.salvataggio(request.getParameterValues("laboratorio"), false, DAOMan.ragazzoDAO::updateLaboratorio);
+                        logger.info("Laboratori ragazzi salvati");
                         return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=rag");
                     }
                     case "ter": {
                         SalvataggioLaboratoriSquadreUtils.salvataggio(request.getParameterValues("laboratorio"), false, DAOMan.terzamediaDAO::updateLaboratorio);
+                        logger.info("Laboratori terzamedia salvati");
                         return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=ter");
                     }
                     case "an": {
                         SalvataggioLaboratoriSquadreUtils.salvataggioAnimatori(request, false, DAOMan.animatoreDAO::updateLaboratorio);
+                        logger.info("Laboratori animatori salvati");
                         return new RedirectResult("/RegistrazioneGrest/App/Laboratori?target=an");
                     }
                 }

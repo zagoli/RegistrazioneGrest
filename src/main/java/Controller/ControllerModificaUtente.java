@@ -11,11 +11,15 @@ import Utility.Utils;
 import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class ControllerModificaUtente implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerModificaUtente.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -26,8 +30,10 @@ public class ControllerModificaUtente implements ControllerInterface {
             template.addObject("tipoUt", request.getSession().getAttribute("tipoUtente"));
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 Registrato r = DAOMan.registratoDAO.findById(idUt);
+                logger.info("Modifica utente con id {}", r.getId());
                 RequestFields.account(request, r);
                 DAOMan.registratoDAO.update(r);
+                logger.info("Utente con id {} modificato", r.getId());
                 return new RedirectResult("/RegistrazioneGrest/App/Dashboard");
             } else {
                 if (request.getParameterMap().containsKey("mail") && !Checker.checkMail(request.getParameter("mail"))) {

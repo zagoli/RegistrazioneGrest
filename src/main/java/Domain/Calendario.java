@@ -14,6 +14,6 @@ public class Calendario implements Comparable<Calendario> {
 
     @Override
     public int compareTo(Calendario other) {
-        return other.idSettimana - this.idSettimana;
+        return this.idSettimana - other.idSettimana;
     }
 }

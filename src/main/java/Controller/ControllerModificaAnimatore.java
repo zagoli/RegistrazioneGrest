@@ -12,6 +12,8 @@ import Utility.Utils;
 import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ControllerModificaAnimatore implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerModificaAnimatore.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -33,6 +37,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
             Animatore a = DAOMan.animatoreDAO.findById(idAnimatore);
             if (request.getParameterMap().containsKey("nome") && Checker.checkMail(request.getParameter("mail"))) {
                 //INSERISCO ANIMATORE E FACCIO UNA REDIRECT
+                logger.info("Modifica animatore {} {} con id {}", a.getNome(), a.getCognome(), idAnimatore);
                 a.setId(Integer.parseInt(request.getParameter("id")));
                 IscrizioniUtils.populateIscrittoFromRequest(request, a);
                 RequestFields.animatore(request, a);
@@ -40,6 +45,7 @@ public class ControllerModificaAnimatore implements ControllerInterface {
                 PresenzeUtils.replace(request, DAOMan.relPresenzaAnDAO.findByAnimatoreId(idAnimatore),
                         DAOMan.relPresenzaAnDAO::delete, calId -> new RelPresenzaAn(a.getId(), calId),
                         DAOMan.relPresenzaAnDAO::insert);
+                logger.info("Animatore con id {} modificato", a.getId());
                 return IscrizioniUtils.getPaginaRedirectDopoModifica(request, "an");
             } else {
                 //PREPARO I DATI PER LA PAGINA

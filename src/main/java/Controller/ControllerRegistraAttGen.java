@@ -9,10 +9,14 @@ import Utility.Utils;
 import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 
 public class ControllerRegistraAttGen implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerRegistraAttGen.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -27,6 +31,7 @@ public class ControllerRegistraAttGen implements ControllerInterface {
             rc.setRegistratoId(idUt);
             rc.setAttivitaGenId(idAttivita);
             DAOMan.relCollaboraDAO.insert(rc);
+            logger.info("Collaborazione genitore con id {} aggiunta a registrato {}", idAttivita, idUt);
             return new RedirectResult("/RegistrazioneGrest/App/DashboardAttGen");
         } catch (final RuntimeException | SQLException e) {
             template = Utils.getErrorPageAndLogException(e, ControllerRegistraAttGen.class.getName());

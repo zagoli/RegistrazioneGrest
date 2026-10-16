@@ -10,6 +10,8 @@ import Utility.Utils;
 import Utility.RequestFields;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -17,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ControllerModificaRagazzo implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerModificaRagazzo.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -45,6 +49,7 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                 template.setView("user/modificaragazzo.html");
             } else {
                 //INSERISCO IL RAGAZZO E FACCIO UNA REDIRECT
+                logger.info("Modifica ragazzo con id {}", r.getId());
                 r.setId(Integer.parseInt(request.getParameter("id")));
                 IscrizioniUtils.populateIscrittoFromRequest(request, r);
                 r.setScuola(DAOMan.scuolaDAO.findById(Integer.parseInt(request.getParameter("scuola"))));
@@ -57,6 +62,7 @@ public class ControllerModificaRagazzo implements ControllerInterface {
                         DAOMan.relPresenzaRagDAO::delete, calId -> new RelPresenzaRag(calId, r.getId()),
                         DAOMan.relPresenzaRagDAO::insert);
 
+                logger.info("Ragazzo con id {} modificato", r.getId());
                 return IscrizioniUtils.getPaginaRedirectDopoModifica(request, "rag");
 
             }

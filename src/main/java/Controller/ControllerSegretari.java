@@ -38,15 +38,17 @@ public class ControllerSegretari implements ControllerInterface {
             } else if (request.getParameterMap().containsKey("changeUserType")) {
                 //problema in caso di più utenti omonimi, ma nel caso sistemo direttamente nel db
                 Registrato r = DAOMan.registratoDAO.findByNominativo(request.getParameter("nome"), request.getParameter("cognome"));
-                int oldLevel = r.getTipoUt();
-                int level = Integer.parseInt(request.getParameter("level"));
-                if (level > 0) {
-                    //non ci si promuove ad amministratori dal portale!
-                    r.setTipoUt(Integer.parseInt(request.getParameter("level")));
-                    DAOMan.registratoDAO.update(r);
-                    logger.info("Registrato {} {} passato da tipo utente {} a {}.", r.getNome(), r.getCognome(), oldLevel, level);
-                } else {
-                    logger.warn("Registrato {} {} non promosso ad amministratore.", r.getNome(), r.getCognome());
+                if (r != null) {
+                    int oldLevel = r.getTipoUt();
+                    int level = Integer.parseInt(request.getParameter("level"));
+                    if (level > 0) {
+                        //non ci si promuove ad amministratori dal portale!
+                        r.setTipoUt(Integer.parseInt(request.getParameter("level")));
+                        DAOMan.registratoDAO.update(r);
+                        logger.info("Registrato {} {} passato da tipo utente {} a {}.", r.getNome(), r.getCognome(), oldLevel, level);
+                    } else {
+                        logger.warn("Registrato {} {} non promosso ad amministratore.", r.getNome(), r.getCognome());
+                    }
                 }
                 return new RedirectResult("/RegistrazioneGrest/App/GestisciSegretari");
             }

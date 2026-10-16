@@ -26,15 +26,12 @@
 
                 <@iscrizione.partecipazioneGrest tipo="ragazzo" calendari=calendari/>
 
-                <h3 class="text-center font-weight-bold text-uppercase"> 3 - scelta del laboratorio per i ragazzi
-                    iscritti
-                    al grest </h3>
-                <p>Durante il Grest scelgo di svolgere la seguente attività</p>
+                <h3 class="text-center font-weight-bold text-uppercase">3 - scelta del laboratorio</h3>
 
                 <@iscrizione.laboratorioIscritto laboratori=laboratori/>
 
                 <p>
-                    In relazione al numero di ragazzi, ai laboratori scelti e al numero di  animatori iscritti,
+                    In relazione al numero di ragazzi, ai laboratori scelti e al numero di animatori iscritti,
                     non siamo certi di poter assicurare le preferenze espresse.
                     Gli eventuali cambiamenti saranno discussi insieme.
                 </p>
@@ -80,10 +77,12 @@
                             <input class="form-check-input" type="checkbox" id="fratelloIscritto"
                                    name="fratelloIscritto" data-ha-altro-ragazzo="${haAltroRagazzoIscritto?c}"
                                    onclick="toggleAvvisoFratelloIscritto(this);">
-                            <label class="form-check-label" for="fratelloIscritto"> Che il/la proprio/a figlio/a <b>ha già uno o più</b> fratelli/sorelle iscritti al grest.</label>
+                            <label class="form-check-label" for="fratelloIscritto"> Che il/la proprio/a figlio/a <b>ha
+                                    già uno o più</b> fratelli/sorelle iscritti al grest.</label>
                         </div>
                         <div id="avvisoFratelloIscritto" class="alert alert-warning mt-2 d-none" role="alert">
-                            Attenzione: non abbiamo trovato altri ragazzi già registrati tramite il tuo profilo. Controlla di aver selezionato l'opzione corretta.
+                            Attenzione: non abbiamo trovato altri ragazzi già registrati tramite il tuo profilo.
+                            Controlla di aver selezionato l'opzione corretta.
                         </div>
                     </li>
                     <li><input type="checkbox"/> di autorizzare il/la figlio/a a tornare a casa al termine del Grest

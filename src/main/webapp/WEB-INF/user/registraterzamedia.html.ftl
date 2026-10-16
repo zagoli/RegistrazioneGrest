@@ -44,12 +44,11 @@
                 <@iscrizione.partecipazioneGrest tipo="terzamedia" calendari=calendari/>
 
                 <h3 class="text-center font-weight-bold text-uppercase"> 3 - scelta del laboratorio</h3>
-                <p>Durante il Grest scelgo di svolgere la seguente attività</p>
 
                 <@iscrizione.laboratorioIscritto laboratori=laboratori/>
 
                 <p>
-                    In relazione al numero di ragazzi, ai laboratori scelti e al numero di  animatori iscritti,
+                    In relazione al numero di ragazzi, ai laboratori scelti e al numero di animatori iscritti,
                     non siamo certi di poter assicurare le preferenze espresse.
                     Gli eventuali cambiamenti saranno discussi insieme.
                 </p>
@@ -61,7 +60,8 @@
                     <label for="noteAlimentari" class="sr-only">Allergie o intolleranze alimentari o terapie in
                         corso</label>
                     <textarea class="form-control" rows="5" id="noteAlimentari" name="noteAlimentari"
-                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest. Specificare anche gli eventuali orari di assunzione."></textarea>
+                              placeholder="specificare SOLO allergie certificate (non cibi che non piacciono) ed eventuali farmaci da assumere durante il Grest. Specificare anche gli eventuali orari di assunzione.">
+                    </textarea>
                 </div>
 
                 <h3 class="text-center font-weight-bold text-uppercase"> 5 - Eventuali richieste o

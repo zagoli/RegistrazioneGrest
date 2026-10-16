@@ -22,7 +22,7 @@ public class RegistratoDAOImpl implements RegistratoDAO {
     private static final String FIND_AMMINISTRATORI = "select * from Registrato where tipoUt = 0";
     private static final String COUNT_USERS = "select count(*) from Registrato where tipoUt = 3;";
     private static final String FIND_REGISTRATO_MAIL = "select * from Registrato where mail = ?;";
-    private static final String FIND_REGISTRATO_NOMINATIVO = "select * from Registrato where nome = ? and cognome = ?;";
+    private static final String FIND_REGISTRATO_NOMINATIVO = "select * from Registrato where nome ilike ? and cognome ilike ?;";
 
     static void bindDatiPersonali(PreparedStatement pst, Registrato r, int start) throws SQLException {
         pst.setString(start, r.getNome());

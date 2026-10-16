@@ -8,15 +8,21 @@ import Utility.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class ControllerVisualizzaQuote implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerVisualizzaQuote.class);
+
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
         FreemarkerTemplate template = new FreemarkerTemplate();
         try {
             if (request.getParameterMap().containsKey("ragazzi")) {
+                logger.info("Visualizzazione quote ragazzi");
                 template.addObject("TITOLOPAGINA", "Quote ragazzi");
                 template.addObject("supplemento_anticipo", ConfigProperties.getProperty("SUPPLEMENTO_ENTRATA_ANTICIPATA_RAGAZZI"));
                 template.addObject("supplemento_fuoricomune", ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_RAGAZZI"));
@@ -26,6 +32,7 @@ public class ControllerVisualizzaQuote implements ControllerInterface {
                 addWeeklyPrices(template, "_fratelli_mensa", "_FRATELLI_MENSA_RAGAZZI");
                 template.setView("user/quoteragazzi.html");
             } else if (request.getParameterMap().containsKey("terzamedia")) {
+                logger.info("Visualizzazione quote terzamedia");
                 template.addObject("TITOLOPAGINA", "Quote ragazzi di terza media");
                 template.addObject("supplemento_fuoricomune", ConfigProperties.getProperty("SUPPLEMENTO_FUORI_COMUNE_TERZAMEDIA"));
                 addWeeklyPrices(template, "", "_TERZAMEDIA");

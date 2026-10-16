@@ -11,11 +11,15 @@ import Utility.RequestFields;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class ControllerRegistraUtente implements ControllerInterface {
+
+    private static final Logger logger = LoggerFactory.getLogger(ControllerRegistraUtente.class);
 
     @Override
     public Response handleRequest(HttpServletRequest request, HttpServletResponse response) {
@@ -42,6 +46,7 @@ public class ControllerRegistraUtente implements ControllerInterface {
                         r.setTipoUt(3);
                     }
                     DAOMan.registratoDAO.insert(r);
+                    logger.info("Utente {} {} registrato. Tipo utente {}", r.getNome(), r.getCognome(), r.getTipoUt());
                     template.addObject("TITOLOPAGINA", "Utente Registrato");
                     template.addObject("DONE", true);
                 } else {

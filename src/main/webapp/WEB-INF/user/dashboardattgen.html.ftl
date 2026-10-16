@@ -16,14 +16,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#list attivita as att, dataid>
+                    <#list attivita as collaborazione>
                         <#assign count = count + 1>
                         <tr>
                             <th scope="row">${count}</th>
-                            <td>${att.descrizione}</td>
-                            <td><#if dataid[0]??>${dataid[0]}</#if></td>
+                            <td>${collaborazione.attivitaGen.descrizione}</td>
+                            <td>${collaborazione.periodo!}</td>
                             <td class="text-center">
-                                <a href="/RegistrazioneGrest/App/EliminaPrenotazioneAttGen?id=${dataid[1]}">
+                                <a href="/RegistrazioneGrest/App/EliminaPrenotazioneAttGen?id=${collaborazione.id}">
                                     <img src="../img/octicons/trashcan.svg" alt="elimina">
                                 </a>
                             </td>
